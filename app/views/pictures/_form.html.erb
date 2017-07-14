@@ -1,0 +1,45 @@
+<!-- form_for usage doc: http://api.rubyonrails.org/v5.1.2/classes/ActionView/Helpers/FormHelper.html#method-i-form_for-label-Resource-oriented+style -->
+
+<%= form_for @picture do |f| %>
+
+  <% if @picture.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@picture.errors.count, "error") %>
+        prohibited this picture from being saved:
+      </h2>
+      <ul>
+        <% @picture.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </p>
+
+  <p>
+    <%= f.label :category %><br>
+    <%= f.select :category_id, options_for_select(Category.all.map{|category|[category.name, category.id]}) %>
+    <span>Need  to create a new category?</span>
+    <%= link_to 'Create category', new_category_path %>
+  </p>
+
+  <p>
+    <%= f.label :author %><br>
+    <%= f.text_field :author %>
+  </p>
+
+  <p>
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </p>
+
+  <p>
+    <%= f.submit %>
+  </p>
+
+<% end %>

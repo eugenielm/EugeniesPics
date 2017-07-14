@@ -1,0 +1,23 @@
+
+<p>
+  <strong>Title:</strong>
+  <%= @picture.title %>
+</p>
+
+<p>
+  <strong>Author:</strong>
+  <%= @picture.author %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @picture.category.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @picture.description %>
+</p>
+
+<%= link_to 'Edit', edit_picture_path(@picture) %>
+<%= link_to 'Back to "' + @category.name + '" category', category_pictures_path %>
