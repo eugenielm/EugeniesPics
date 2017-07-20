@@ -37,6 +37,9 @@ gem 'jbuilder', '2.6.4'
 # needed to use has_secure_password to hash passwords
 gem 'bcrypt'
 
+# needed to set up an admin interface
+gem 'activeadmin', github: 'activeadmin'
+
 group :development, :test do
   gem 'sqlite3', '1.3.13'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
