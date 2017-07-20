@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :users
+  resources :users # only for the admin to signup/log in (no links displqyed in views)
   resources :categories do
     resources :pictures, :except => [:destroy, :create, :edit, :new, :update]
   end
