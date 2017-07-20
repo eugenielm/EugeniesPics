@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :users
   resources :categories do
     resources :pictures, :except => [:destroy, :create, :edit, :new, :update]
   end
