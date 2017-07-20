@@ -34,6 +34,9 @@ gem 'jbuilder', '2.6.4'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# needed to use has_secure_password to hash passwords
+gem 'bcrypt'
+
 group :development, :test do
   gem 'sqlite3', '1.3.13'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
