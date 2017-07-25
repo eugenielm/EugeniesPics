@@ -19,5 +19,11 @@
   <%= @picture.description %>
 </p>
 
-<%= link_to 'Edit', edit_picture_path(@picture) %>
-<%= link_to 'Back to "' + @category.name + '" category', category_pictures_path %>
+<p><%= link_to 'Edit picture', edit_admin_category_picture_path(@picture) %> |
+<%= link_to 'Delete picture', admin_category_picture_path(@picture),
+        method: :delete,
+        data: { confirm: 'Are you sure?' } %></p>
+
+<p><%= link_to 'Back to "' + @category.name + '" category', category_pictures_path %> |
+  <%= link_to 'Back to all categories', categories_path %> |
+  <%= link_to 'Back to the index', "/" %></p>

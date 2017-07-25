@@ -1,12 +1,12 @@
 class PicturesController < ApplicationController
-  before_action :require_category, :except => [:destroy, :create, :edit, :new, :update]
+  before_action :require_category, :only => [:show, :index]
+  before_action :require_picture, :except => [:index, :new, :create]
 
   def index
     @pictures = @category.pictures
   end
 
   def show
-    @picture = Picture.find(params[:id])
   end
 
   def new
@@ -14,7 +14,6 @@ class PicturesController < ApplicationController
   end
 
   def edit
-    @picture = Picture.find(params[:id])
   end
 
   def create
@@ -32,27 +31,26 @@ class PicturesController < ApplicationController
   end
 
   def update
-    @picture = Picture.find(params[:id])
-
     respond_to do |format|
       if @picture.update(picture_params) # returns false if the params are invalid
-        @category = Category.find(@picture.category_id)
         format.html { redirect_to :controller => 'pictures', :action => 'show',
-                                  :category_id => @category.id , :id => params[:id],
+                                  :category_id => @picture.category.id , :id => params[:id],
                                   notice: 'Picture was successfully updated.' }
         format.json { render :show, status: :ok, location: @picture }
       else
-        format.html { render :new }
+        format.html { render :edit }
         format.json { render json: @picture.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def destroy
-    @picture = Picture.find(params[:id])
+    cat_id = @picture.category.id
     @picture.destroy
     respond_to do |format|
-      format.html { redirect_to categories_url, notice: 'Picture was successfully destroyed.' }
+      format.html { redirect_to :controller => 'category', :action => 'show',
+                                :category_id => cat_id,
+                                notice: 'Picture was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -69,4 +67,7 @@ class PicturesController < ApplicationController
       @category = Category.find(params[:category_id])
     end
 
+    def require_picture
+      @picture = Picture.find(params[:id])
+    end
 end

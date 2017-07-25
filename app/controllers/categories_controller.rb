@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-  before_action :set_category, only: [:show, :edit, :update, :destroy]
+  before_action :get_category, except: [:index, :new]
 
   # GET /categories
   # GET /categories.json
@@ -48,7 +48,8 @@ class CategoriesController < ApplicationController
   def update
     respond_to do |format|
       if @category.update(category_params)
-        format.html { redirect_to categories_url, notice: '"' + @category.name + '" category was successfully updated.' }
+        format.html { redirect_to categories_url,
+                      notice: '"' + @category.name + '" category was successfully updated.' }
         format.json { render :show, status: :ok, location: @category }
       else
         format.html { render :edit }
@@ -69,7 +70,7 @@ class CategoriesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_category
+    def get_category
       @category = Category.find(params[:id])
     end
 
