@@ -1,8 +1,16 @@
 Rails.application.routes.draw do
-  resources :users # only for the admin to signup/log in (no links displqyed in views)
-  resources :categories do
-    resources :pictures, :except => [:destroy, :create, :edit, :new, :update]
+  ActiveAdmin.routes(self) # users resources and pictures/categories 'CUD' methods
+
+  namespace :admin do
+    resources :users
+    resources :categories do
+      resources :pictures
+    end
   end
-  resources :pictures, :only => [:destroy, :create, :edit, :new, :update]
+
+  resources :categories do
+    resources :pictures, :only => [:index, :show]
+  end
+
   root 'welcome#index'
 end
