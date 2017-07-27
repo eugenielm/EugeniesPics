@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
+
+  root to: 'welcome#index'
+
   ActiveAdmin.routes(self)
 
   resources :users
+  get '/users', to: 'welcome#index'
+  get '/signup', to: 'users#new'
 
   namespace :admin do
     resources :categories do
@@ -13,5 +18,4 @@ Rails.application.routes.draw do
     resources :pictures, :only => [:index, :show]
   end
 
-  root to: 'welcome#index'
 end
