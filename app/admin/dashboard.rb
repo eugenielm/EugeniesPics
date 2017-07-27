@@ -1,6 +1,6 @@
 ActiveAdmin.register_page "Dashboard" do
 
-  # scope_to :current_user, if: proc{ current_user.admin? }
+  # scope_to :current_user, if: proc{ current_user.superadmin? }
 
   menu priority: 1, label: proc{ I18n.t("active_admin.dashboard") }
 

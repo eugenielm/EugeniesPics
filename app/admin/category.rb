@@ -7,8 +7,8 @@ ActiveAdmin.register Category do
   show do
     attributes_table(*category.attributes.keys) do
       row :pictures do
-        nb = Picture.where(params[:id]).length.to_s
-        link_to "Pictures (" + nb + ")", admin_category_pictures_path(Category.find(params[:id]))
+        nb = Picture.where("category_id = ?", params[:id])
+        link_to "Pictures (" + nb.length.to_s + ")", admin_category_pictures_path(Category.find(params[:id]))
       end
     end
   end

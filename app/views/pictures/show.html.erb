@@ -19,8 +19,8 @@
   <%= @picture.description %>
 </p>
 
-<p><%= link_to 'Edit picture', edit_admin_category_picture_path(@picture) %> |
-<%= link_to 'Delete picture', admin_category_picture_path(@picture),
+<p><%= link_to 'Edit picture', edit_admin_category_picture_path(@category, @picture) %> |
+<%= link_to 'Delete picture', admin_category_picture_path(@category, @picture),
         method: :delete,
         data: { confirm: 'Are you sure?' } %></p>
 

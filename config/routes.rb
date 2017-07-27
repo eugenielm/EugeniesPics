@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
-  ActiveAdmin.routes(self) # users resources and pictures/categories 'CUD' methods
+  ActiveAdmin.routes(self)
+
+  resources :users
 
   namespace :admin do
-    resources :users
     resources :categories do
       resources :pictures
     end
@@ -12,5 +13,5 @@ Rails.application.routes.draw do
     resources :pictures, :only => [:index, :show]
   end
 
-  root 'welcome#index'
+  root to: 'welcome#index'
 end

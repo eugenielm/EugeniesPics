@@ -34,11 +34,8 @@ gem 'jbuilder', '2.6.4'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-# needed to use has_secure_password to hash passwords
-gem 'bcrypt'
-
 # needed to set up an admin interface
-gem 'activeadmin', github: 'activeadmin'
+gem 'activeadmin', '1.0.0'
 
 group :development, :test do
   gem 'sqlite3', '1.3.13'
@@ -64,3 +61,6 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# Added at 2017-07-26 17:28:36 -0700 by EGlelek:
+gem "bcrypt", "~> 3.1"
