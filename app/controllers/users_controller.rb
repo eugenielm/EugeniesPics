@@ -21,7 +21,8 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        # session[:user_id] = @user.id
+        log_in @user # log_in method implemented in SessionsHelper which is included in ApplicationController
+        flash[:success] = "You're now registered and logged in!"
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
