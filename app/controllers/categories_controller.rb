@@ -81,6 +81,7 @@ class CategoriesController < ApplicationController
     def get_category
       @category = Category.find(params[:id]) rescue @category = nil
       if @category.nil?
+        flash[:danger] = "The required category doesn't exist"
         redirect_to categories_path
       end
     end
@@ -88,6 +89,7 @@ class CategoriesController < ApplicationController
     def admin_power
       if !is_superadmin?
         session[:prev_url] = request.fullpath
+        flash[:danger] = "You need to be logged in as an admin for this action"
         redirect_to login_path
       end
     end

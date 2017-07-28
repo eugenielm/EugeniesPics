@@ -11,7 +11,6 @@ Rails.application.routes.draw do
     resources :pictures
   end
 
-  # a user can't see all the other users
   get '/users', to: 'welcome#index'
   resources :users, :except => [:index]
   get '/signup', to: 'users#new'

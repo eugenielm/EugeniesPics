@@ -10,9 +10,9 @@
 
   <body>
 
-    <!-- <% flash.each do |name, msg| -%>
+    <% flash.each do |name, msg| -%>
       <%= content_tag :div, msg, class: name %>
-    <% end -%> -->
+    <% end -%>
 
     <% if logged_in? %>
       <%= link_to "Log out", logout_path, method: :delete %>

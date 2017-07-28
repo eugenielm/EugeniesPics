@@ -66,6 +66,7 @@ class PicturesController < ApplicationController
     def require_category
       @category = Category.find(params[:category_id]) rescue @category = nil
       if @category.nil?
+        flash[:danger] = "The required category doesn't exist"
         redirect_to categories_path
       end
     end
@@ -73,6 +74,7 @@ class PicturesController < ApplicationController
     def require_picture
       @picture = Picture.find(params[:id]) rescue @picture = nil
       if @picture.nil?
+        flash[:danger] = "The required picture doesn't exist"
         redirect_to category_pictures_path(@category)
       end
     end
@@ -80,6 +82,7 @@ class PicturesController < ApplicationController
     def admin_power
       if !is_superadmin?
         session[:prev_url] = request.fullpath
+        flash[:danger] = "You need to be logged in as an admin for this action"
         redirect_to login_path
       end
     end
