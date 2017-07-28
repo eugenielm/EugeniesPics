@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :check_authentication, :only => [:show, :edit, :update]
   # if bcrypt and has_secure_password are used
   protect_from_forgery
 
@@ -57,13 +58,26 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:username, :email, :password, :password_confirmation, :superadmin)
+    end
+
+    # Use callbacks to share common setup or constraints between actions.
+    def set_user
+      @user = User.find(params[:id]) rescue @user = nil
+      if @user.nil?
+        redirect_to root_path
+      end
+    end
+
+    def check_authentication
+      if !logged_in?
+        session[:prev_url] = request.fullpath
+        redirect_to login_path
+      elsif !(current_user.id == params[:id])
+        redirect_to root_path
+      end
     end
 end

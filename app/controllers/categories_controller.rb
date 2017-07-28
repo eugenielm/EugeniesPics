@@ -79,7 +79,10 @@ class CategoriesController < ApplicationController
     end
 
     def get_category
-      @category = Category.find(params[:id])
+      @category = Category.find(params[:id]) rescue @category = nil
+      if @category.nil?
+        redirect_to categories_path
+      end
     end
 
     def admin_power

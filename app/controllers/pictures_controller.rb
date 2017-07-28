@@ -64,11 +64,17 @@ class PicturesController < ApplicationController
     end
 
     def require_category
-      @category = Category.find(params[:category_id])
+      @category = Category.find(params[:category_id]) rescue @category = nil
+      if @category.nil?
+        redirect_to categories_path
+      end
     end
 
     def require_picture
-      @picture = Picture.find(params[:id])
+      @picture = Picture.find(params[:id]) rescue @picture = nil
+      if @picture.nil?
+        redirect_to category_pictures_path(@category)
+      end
     end
 
     def admin_power
