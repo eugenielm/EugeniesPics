@@ -10,8 +10,8 @@
   <%= @user.email %>
 </p>
 
-<% if @user.superadmin? %>
-  <p>Super admin: yes</strong></p>
+<% if is_superadmin? %>
+  <p><b>Super admin</b></p>
 <% end %>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |

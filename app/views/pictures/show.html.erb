@@ -19,10 +19,12 @@
   <%= @picture.description %>
 </p>
 
-<p><%= link_to 'Edit picture', edit_admin_category_picture_path(@category, @picture) %> |
-<%= link_to 'Delete picture', admin_category_picture_path(@category, @picture),
-        method: :delete,
-        data: { confirm: 'Are you sure?' } %></p>
+<% if is_superadmin? %>
+  <p><%= link_to 'Edit picture', edit_admin_category_picture_path(@category, @picture) %> |
+     <%= link_to 'Delete picture', admin_category_picture_path(@category, @picture),
+         method: :delete,
+         data: { confirm: 'Are you sure?' } %></p>
+<% end %>
 
 <p><%= link_to 'Back to "' + @category.name + '" category', category_pictures_path %> |
   <%= link_to 'Back to all categories', categories_path %> |
