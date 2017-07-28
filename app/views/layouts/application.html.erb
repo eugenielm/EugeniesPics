@@ -9,19 +9,13 @@
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
 
-    <% flash.each do |name, msg| -%>
+    <!-- <% flash.each do |name, msg| -%>
       <%= content_tag :div, msg, class: name %>
-    <% end -%>
+    <% end -%> -->
 
     <% if logged_in? %>
       <%= link_to "Log out", logout_path, method: :delete %>
-    <% end %>
-
-    <% if is_superadmin? %>
-      <%= link_to 'Admin interface', '/admin' %>
     <% end %>
 
     <%= yield %>

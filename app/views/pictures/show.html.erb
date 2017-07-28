@@ -20,8 +20,8 @@
 </p>
 
 <% if is_superadmin? %>
-  <p><%= link_to 'Edit picture', edit_admin_category_picture_path(@category, @picture) %> |
-     <%= link_to 'Delete picture', admin_category_picture_path(@category, @picture),
+  <p><%= link_to 'Edit picture', edit_category_picture_path(@category, @picture) %> |
+     <%= link_to 'Delete picture', category_picture_path(@category, @picture),
          method: :delete,
          data: { confirm: 'Are you sure?' } %></p>
 <% end %>

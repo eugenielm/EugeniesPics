@@ -7,23 +7,13 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
+  resources :categories do
+    resources :pictures
+  end
+
   # a user can't see all the other users
   get '/users', to: 'welcome#index'
-
-  resources :users
+  resources :users, :except => [:index]
   get '/signup', to: 'users#new'
-
-  # access to admin dashboard -when logged in as admin- to CUD categories and pictures
-  ActiveAdmin.routes(self)
-  namespace :admin do
-    resources :categories do
-      resources :pictures
-    end
-  end
-
-  # when visiting the website
-  resources :categories do
-    resources :pictures, :only => [:index, :show]
-  end
 
 end

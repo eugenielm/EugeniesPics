@@ -5,7 +5,7 @@
 </br>
 <p><%= link_to 'Back to the index', '/' %>
 <% if is_superadmin? %>
-  <%= link_to 'New Category', new_admin_category_path %>
+  <%= link_to 'New Category', new_category_path %>
 <% end %></p>
 </br>
 
@@ -23,7 +23,7 @@
         <td><%= category.name %></td>
         <td><%= link_to 'Show', category_pictures_path(category) %></td>
         <% if is_superadmin? %>
-          <td><%= link_to 'Edit', edit_admin_category_path(category) %></td>
+          <td><%= link_to 'Edit', edit_category_path(category) %></td>
           <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
       </tr>

@@ -1,12 +1,13 @@
 class CategoriesController < ApplicationController
-  before_action :get_category, except: [:index, :new]
+  before_action :get_category, except: [:index, :new, :create]
+  before_action :admin_power, :except => [:index, :show]
 
   # GET /categories
   # GET /categories.json
   def index
     if Category.all.nil?
       @categories = nil
-      redirect_to '/'
+      redirect_to root_url
     else
       @categories = Category.all
     end
@@ -70,14 +71,21 @@ class CategoriesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def get_category
-      @category = Category.find(params[:id])
-    end
-
     # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
       params.require(:category).permit(:name, pictures_attributes: [
                                               :title, :author, :description
                                               ])
+    end
+
+    def get_category
+      @category = Category.find(params[:id])
+    end
+
+    def admin_power
+      if !is_superadmin?
+        session[:prev_url] = request.fullpath
+        redirect_to login_path
+      end
     end
 end

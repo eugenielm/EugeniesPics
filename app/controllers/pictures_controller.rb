@@ -1,6 +1,7 @@
 class PicturesController < ApplicationController
-  before_action :require_category, :only => [:show, :index]
+  before_action :require_category
   before_action :require_picture, :except => [:index, :new, :create]
+  before_action :admin_power, :except => [:index, :show]
 
   def index
     @pictures = @category.pictures
@@ -34,7 +35,7 @@ class PicturesController < ApplicationController
     respond_to do |format|
       if @picture.update(picture_params) # returns false if the params are invalid
         format.html { redirect_to :controller => 'pictures', :action => 'show',
-                                  :category_id => @picture.category.id , :id => params[:id],
+                                  :category_id => @picture.category.id , :id => @picture.id,
                                   notice: 'Picture was successfully updated.' }
         format.json { render :show, status: :ok, location: @picture }
       else
@@ -45,11 +46,10 @@ class PicturesController < ApplicationController
   end
 
   def destroy
-    cat_id = @picture.category.id
     @picture.destroy
     respond_to do |format|
-      format.html { redirect_to :controller => 'category', :action => 'show',
-                                :category_id => cat_id,
+      format.html { redirect_to :controller => 'pictures', :action => 'index',
+                                :category_id => @category.id,
                                 notice: 'Picture was successfully destroyed.' }
       format.json { head :no_content }
     end
@@ -69,5 +69,12 @@ class PicturesController < ApplicationController
 
     def require_picture
       @picture = Picture.find(params[:id])
+    end
+
+    def admin_power
+      if !is_superadmin?
+        session[:prev_url] = request.fullpath
+        redirect_to login_path
+      end
     end
 end
