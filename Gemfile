@@ -28,14 +28,8 @@ gem 'turbolinks', '5.0.1'
 gem 'jbuilder', '2.6.4'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
-# needed to set up an admin interface
-gem 'activeadmin', '1.0.0'
 
 group :development, :test do
   gem 'sqlite3', '1.3.13'
@@ -62,5 +56,5 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-# Added at 2017-07-26 17:28:36 -0700 by EGlelek:
+# Added at 2017-07-26 17:28:36 by EGlelek to use ActiveModel has_secure_password:
 gem "bcrypt", "~> 3.1"
