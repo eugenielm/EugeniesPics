@@ -1,6 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+# valid user but not superadmin
 one:
-  usermame: one
-  email: one@two.com
-  password_digest: <%= User.digest('password') %>
+  id: 1
+  username: oneone
+  email: one@one.com
+  password_digest: <%= User.digest('password1') %>
+  superadmin: false
+
+# valid user superadmin
+two:
+  id: 2
+  username: twotwo
+  email: twotwo@two.com
+  password_digest: <%= User.digest('password2') %>
+  superadmin: true

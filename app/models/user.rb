@@ -5,12 +5,12 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
-  validates :username, presence: true, length: { minimum: 6, maximum: 72 },
+  validates :username, presence: true, length: { minimum: 4, maximum: 72 },
             uniqueness: { case_sensitive: false }
 
+  #http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html
   has_secure_password
-  validates :password, presence: true, length: { minimum: 6, maximum: 72 }
-  validates :password_confirmation, presence: true, length: { minimum: 6, maximum: 72 }
+  validates :password, presence: true, length: { minimum: 6 }
 
   # Returns the hash digest of the given string (needeed for fixtures)
   def User.digest(string)
