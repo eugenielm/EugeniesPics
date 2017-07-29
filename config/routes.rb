@@ -7,12 +7,11 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
+  resources :users
+  get '/signup', to: 'users#new'
+
   resources :categories do
     resources :pictures
   end
-
-  get '/users', to: 'welcome#index'
-  resources :users, :except => [:index]
-  get '/signup', to: 'users#new'
 
 end

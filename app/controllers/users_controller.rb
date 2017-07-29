@@ -1,8 +1,19 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :check_authentication, :only => [:show, :edit, :update]
+  before_action :check_authentication, :only => [:show, :edit, :update, :destroy]
   # if bcrypt and has_secure_password are used
   protect_from_forgery
+
+  def index
+    if !logged_in?
+      session[:prev_url] = request.fullpath
+      redirect_to login_path
+    elsif !is_superadmin?
+      flash[:danger] = "Unauthorized action"
+      redirect_to root_path
+    else
+      @users = User.all
+    end
+  end
 
   def show
   end
@@ -51,32 +62,39 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to 'root', notice: 'User was successfully destroyed.' }
+      if is_superadmin?
+        format.html { redirect_to users_path, notice: 'User was successfully destroyed.' }
+      else
+        format.html { redirect_to root_path, notice: 'User was successfully destroyed.' }
+      end
       format.json { head :no_content }
     end
   end
 
   private
-
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:username, :email, :password, :password_confirmation, :superadmin)
     end
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id]) rescue @user = nil
+    def check_authentication
+      @user = User.find(params[:id]) rescue nil
+
       if @user.nil?
         redirect_to root_path
-      end
-    end
 
-    def check_authentication
-      if !logged_in?
-        session[:prev_url] = request.fullpath
-        redirect_to login_path
-      elsif !(current_user.id == params[:id])
-        redirect_to root_path
+      else
+        if !logged_in?
+          session[:prev_url] = request.fullpath
+          redirect_to login_path
+        else
+          if !is_superadmin?
+            if !(current_user.id == params[:id].to_i)
+              flash[:danger] = "Unauthorized action"
+              redirect_to root_path
+            end
+          end
+        end
       end
     end
 end

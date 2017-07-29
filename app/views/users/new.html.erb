@@ -4,3 +4,4 @@
 
 </br>
 <%= link_to 'All categories', categories_path %>
+<% if is_superadmin? %>| <%= link_to 'View all users', users_path %><% end %>
