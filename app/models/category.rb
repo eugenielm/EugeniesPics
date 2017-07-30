@@ -4,5 +4,6 @@ class Category < ApplicationRecord
   # WARNING: This validation must not be used on both ends of an association. Doing so will lead to a circular dependency and cause infinite recursion.
   # validates_associated :pictures
   accepts_nested_attributes_for :pictures, allow_destroy: true
-  validates :name, presence: true, length: { minimum: 2, maximum: 30 }
+  validates :name, presence: true, length: { minimum: 2, maximum: 30 },
+            uniqueness: { case_sensitive: false }
 end
