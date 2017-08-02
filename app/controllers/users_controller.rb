@@ -6,9 +6,10 @@ class UsersController < ApplicationController
   def index
     if !logged_in?
       session[:prev_url] = request.fullpath
+      flash[:info] = 'You need to be logged in for this action.'
       redirect_to login_path
     elsif !is_superadmin?
-      flash[:danger] = "Unauthorized action"
+      flash[:danger] = "Unauthorized action."
       redirect_to root_path
     else
       @users = User.all
@@ -22,19 +23,17 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  # GET /users/1/edit
   def edit
   end
 
-  # POST /users
-  # POST /users.json
   def create
     @user = User.new(user_params)
 
     respond_to do |format|
       if @user.save
+        flash[:success] = "You're now registered and logged in!"
         log_in @user # log_in method implemented in SessionsHelper which is included in ApplicationController
-        format.html { redirect_to @user, notice: "You're now registered and logged in!" }
+        format.html { redirect_to @user }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -43,12 +42,11 @@ class UsersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'Your profile was successfully updated.' }
+        flash[:info] = 'User was successfully updated.'
+        format.html { redirect_to @user }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -57,15 +55,14 @@ class UsersController < ApplicationController
     end
   end
 
-  # DELETE /users/1
-  # DELETE /users/1.json
   def destroy
     @user.destroy
     respond_to do |format|
+      flash[:info] = "User was successfully destroyed."
       if is_superadmin?
-        format.html { redirect_to users_path, notice: 'User was successfully destroyed.' }
+        format.html { redirect_to users_path }
       else
-        format.html { redirect_to root_path, notice: 'User was successfully destroyed.' }
+        format.html { redirect_to root_path }
       end
       format.json { head :no_content }
     end
@@ -82,19 +79,13 @@ class UsersController < ApplicationController
 
       if @user.nil?
         redirect_to root_path
-
-      else
-        if !logged_in?
-          session[:prev_url] = request.fullpath
-          redirect_to login_path
-        else
-          if !is_superadmin?
-            if !(current_user.id == params[:id].to_i)
-              flash[:danger] = "Unauthorized action"
-              redirect_to root_path
-            end
-          end
-        end
+      elsif !logged_in?
+        session[:prev_url] = request.fullpath
+        flash[:info] = "You need to be logged in for this action."
+        redirect_to login_path
+      elsif !is_superadmin? && !(current_user.id == params[:id].to_i)
+        flash[:danger] = "Unauthorized action."
+        redirect_to root_path
       end
     end
 end

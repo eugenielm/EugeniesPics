@@ -5,7 +5,7 @@ one:
   id: 1
   username: oneone
   email: one@one.com
-  password_digest: <%= User.digest('password1') %>
+  password_digest: <%= User.digest('nonadminpassword') %>
   superadmin: false
 
 # valid user superadmin
@@ -13,5 +13,5 @@ two:
   id: 2
   username: twotwo
   email: twotwo@two.com
-  password_digest: <%= User.digest('password2') %>
+  password_digest: <%= User.digest('adminpassword') %>
   superadmin: true
