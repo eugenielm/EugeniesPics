@@ -2,8 +2,6 @@ class CategoriesController < ApplicationController
   before_action :get_category, except: [:index, :new, :create]
   before_action :admin_power, :except => [:index, :show]
 
-  # GET /categories
-  # GET /categories.json
   def index
     if Category.all.nil?
       @categories = nil
@@ -13,29 +11,24 @@ class CategoriesController < ApplicationController
     end
   end
 
-  # GET /categories/1 redirected to get /categories/1/pictures/ in routes.rb
-  # GET /categories/1.json
   def show
     redirect_to category_pictures_url(@category)
   end
 
-  # GET /categories/new
   def new
     @category = Category.new
   end
 
-  # GET /categories/1/edit
   def edit
   end
 
-  # POST /categories
-  # POST /categories.json
   def create
     @category = Category.new(category_params)
 
     respond_to do |format|
       if @category.save
-        format.html { redirect_to @category, notice: 'Category was successfully created.' }
+        flash[:info] = "Category was successfully created."
+        format.html { redirect_to @category }
         format.json { render :show, status: :created, location: @category }
       else
         format.html { render :new }
@@ -44,13 +37,11 @@ class CategoriesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /categories/1
-  # PATCH/PUT /categories/1.json
   def update
     respond_to do |format|
       if @category.update(category_params)
-        format.html { redirect_to categories_url,
-                      notice: '"' + @category.name + '" category was successfully updated.' }
+        flash[:info] = '"' + @category.name + '" category was successfully updated.'
+        format.html { redirect_to categories_url }
         format.json { render :show, status: :ok, location: @category }
       else
         format.html { render :edit }
@@ -59,38 +50,38 @@ class CategoriesController < ApplicationController
     end
   end
 
-  # DELETE /categories/1
-  # DELETE /categories/1.json
   def destroy
     @category.destroy
+    flash[:info] = '"' + @category.name + '" category was successfully destroyed.'
     respond_to do |format|
-      format.html { redirect_to categories_url, notice: '"' + @category.name + '" category was successfully destroyed.' }
+      format.html { redirect_to categories_url }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
       params.require(:category).permit(:name, pictures_attributes: [
-                                              :title, :author, :description
-                                              ])
+                                              :title, :author, :description ])
     end
 
     def get_category
       @category = Category.find(params[:id]) rescue @category = nil
       if @category.nil?
-        flash[:danger] = "The required category doesn't exist"
+        flash[:danger] = "The required category doesn't exist."
         redirect_to categories_path
       end
     end
 
     def admin_power
-      if !is_superadmin?
+      if !logged_in?
         session[:prev_url] = request.fullpath
-        flash[:danger] = "You need to be logged in as an admin for this action"
+        flash[:info] = "You need to be logged in for this action."
         redirect_to login_path
+      elsif !is_superadmin?
+        flash[:danger] = "Unauthorized action."
+        redirect_to root_path
       end
     end
 end
