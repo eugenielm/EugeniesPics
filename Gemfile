@@ -58,3 +58,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Added at 2017-07-26 17:28:36 by EGlelek to use ActiveModel has_secure_password:
 gem "bcrypt", "~> 3.1"
+
+# Added at 2017-08-01 19:11:44 -0700 by EGlelek (to be able to use assert_template in tests):
+gem "rails-controller-testing", "~> 1.0"
