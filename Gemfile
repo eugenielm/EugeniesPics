@@ -61,3 +61,6 @@ gem "bcrypt", "~> 3.1"
 
 # Added at 2017-08-01 19:11:44 -0700 by EGlelek (to be able to use assert_template in tests):
 gem "rails-controller-testing", "~> 1.0"
+
+# Added at 2017-08-02 18:19:06 -0700 by EGlelek:
+gem "paperclip", "~> 5.1"

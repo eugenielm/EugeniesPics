@@ -61,7 +61,8 @@ class PicturesController < ApplicationController
     # see strong parameters: http://weblog.rubyonrails.org/2012/3/21/strong-parameters/
     def picture_params
       # :category_id needs to be allowed to get the association with the category model
-      params.require(:picture).permit(:title, :author, :description, :category_id)
+      params.require(:picture).permit(:title, :author, :description,
+                                      :category_id, :picfile)
     end
 
     def require_category
