@@ -1,24 +1,127 @@
-# README
+EugeniesPics
+==========
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+'EugeniesPics' is a WIP photography gallery website, whose backend is implemented
+with Ruby on Rails - the frontend will be implemented using React.
 
-Things you may want to cover:
+More about Ruby on Rails web framework: http://guides.rubyonrails.org/
 
-* Ruby version
 
-* System dependencies
+Repository content
+------------------
++ an app directory, containing:
+  + assets directory
+  + channels directory
+  + controllers directory
+  + helpers directory
+  + jobs directory
+  + mailers directory
+  + models directory
+  + views directory
 
-* Configuration
++ a bin directory containig the folowing files: bundle, rails, rake, setup, spring,
+update, yarn
 
-* Database creation
++ a config directory containing:
+  + environment directory, containing development.rb, production.rb, test.rb
+  + initializers directory, containing application_controller_renderer.rb,
+  assets.rb, backtrace_silencers.rb, cookies_serializer.rb,
+  filter_parameter_logging.rb, inflections.rb, mime_types.rb, wrap_parameters.rb
+  + locales directory
+  + application.rb
+  + boot.rb
+  + cable.yml
+  + database.yml
+  + environment.rb
+  + puma.rb
+  + routes.rb
+  + secrets.yml
+  + spring.rb
 
-* Database initialization
++ db directory, containing:
+  + a migrate directory with migration files
+  + schema.rb
+  + seeds.rb
 
-* How to run the test suite
++ lib directory, containing 2 empty directories: assets and tasks
 
-* Services (job queues, cache servers, search engines, etc.)
++ a public directory containing: 404.html, 422.html, 500.html,
+apple-touch-icon-precomposed.png, apple-touch-icon.png, favicon.ico, robots.txt
 
-* Deployment instructions
++ a test directory, containing:
+  + a controllers directory, containing the tests for the categories, pictures,
+  sessions, users and welcome controllers
+  + a fixtures directory, containing a files directory (empty), and 3 files:
+  categories.yml, pictures.yml and users.yml
+  + a helpers directory (empty)
+  + an integration directory (empty)
+  + a mailers directory (empty)
+  + a models directory, containg the tests for the user, category, and picture
+  models
+  + a system directgory, containing categories_test.rb and users_test.rb
+  + application_system_test_case.rb
+  + test_helper.rb
 
-* ...
++ a vendor directory (empty)
+
++ .gitignore: containing the names of the files which are not to be committed in
+version control
++ Gemfile
++ Gemfile.lock
++ Procfile
++ README.md
++ Rakefile
++ config.ru
++ package.json
+
+
+How does it work
+----------------
+In order to be able to set up EugeniesPics (locally), you need to:
+
+1. Make sure you have Ruby installed on your computer
+
+2. Clone this repository
+
+3. Open the terminal, navigate to this repository and run the following command:
+    ```sh
+    bundle exec rails server
+    ```
+NB: by default the server will run locally on port 3000
+To use another port:
+```sh
+bundle exec rails server -p <port>
+```
+
+4. To create a superadmin user profile:
+  + go to the URL: 'http://localhost:3000/signup'
+  + use the form to sign up
+  + in the command line, run
+  ```sh
+  rails console
+  ```
+  + once in the rails console, type in:
+  ```sh
+  u = User.last
+  ```
+  + and finally you can run:
+  ```sh
+  u.update_column :superadmin, true
+  ```
+
+5. With your rails server still running locally on port 3000, you can log in on
+'http://localhost:3000/login' and create/update/delete categories and pictures!
+
+
+How to run the tests
+--------------------
+In the command line, navigate to the project directory and run the following command:
+  ```sh
+  rails test
+  ```
+
+
+Room for improvement
+--------------------
+This project is still WIP:
+- need to implement the front-end with React
