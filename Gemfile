@@ -62,5 +62,8 @@ gem "bcrypt", "~> 3.1"
 # Added at 2017-08-01 19:11:44 -0700 by EGlelek (to be able to use assert_template in tests):
 gem "rails-controller-testing", "~> 1.0"
 
-# Added at 2017-08-02 18:19:06 -0700 by EGlelek:
+# Added at 2017-08-02 18:19:06 -0700 by EGlelek (needed for file attachment to pictures):
 gem "paperclip", "~> 5.1"
+
+# Added at 2017-08-02 20:04:27 -0700 by EGlelek (Paperclip storage adapter for AWS S3):
+gem "aws-sdk", "~> 2.10"
