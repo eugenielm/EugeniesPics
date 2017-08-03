@@ -20,6 +20,13 @@ test:
   <<: *default
   database: db/test.sqlite3
 
+# https://devcenter.heroku.com/articles/getting-started-with-rails5#database
 production:
-  <<: *default
-  database: db/production.sqlite3
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see Rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  database: eugeniespics_production
+  username: eugeniespics
+  # password: <%= ENV['EUGENIESPICS_DATABASE_PASSWORD'] %>
