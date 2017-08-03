@@ -44,7 +44,12 @@ class PicturesControllerTest < ActionDispatch::IntegrationTest
   test "authenticated admin user should create picture" do
     post login_url, params: { session: { email: @user_admin.email, password: "adminpassword" }}
     assert_difference('Picture.count') do
-      post category_pictures_url(@category), params: { picture: { title: 'new picture', author: 'EG', description: 'blah', category_id: @category.id } }
+      post category_pictures_url(@category),
+                                params: { picture: { title: 'new picture',
+                                                     author: 'EG',
+                                                     description: 'blah',
+                                                     category_id: @category.id,
+                                                     picfile: fixture_file_upload('files/test_pict.jpg', 'image/jpg') }}
     end
     assert_redirected_to category_pictures_url(@category)
     follow_redirect!
