@@ -1,8 +1,8 @@
 EugeniesPics
 ==========
 
-'EugeniesPics' is a WIP photography gallery website, whose backend is implemented
-with Ruby on Rails - the frontend will be implemented using React.
+'EugeniesPics' is a photography gallery website (WIP!), whose backend is
+implemented with Ruby on Rails - the frontend will be implemented using React.
 
 More about Ruby on Rails web framework: http://guides.rubyonrails.org/
 
@@ -58,7 +58,7 @@ apple-touch-icon-precomposed.png, apple-touch-icon.png, favicon.ico, robots.txt
   + a mailers directory (empty)
   + a models directory, containg the tests for the user, category, and picture
   models
-  + a system directgory, containing categories_test.rb and users_test.rb
+  + a system directory, containing categories_test.rb and users_test.rb
   + application_system_test_case.rb
   + test_helper.rb
 
@@ -81,9 +81,18 @@ In order to be able to set up EugeniesPics (locally), you need to:
 
 1. Make sure you have Ruby installed on your computer
 
-2. Clone this repository
+2. Install ImageMagick on your computer - if you are on Mac, you can install it
+with brew:
+  ```sh
+  brew install imagemagick
+  ```
 
-3. Open the terminal, navigate to this repository and run the following command:
+  If you are on Windows, you'll need the Unix 'file' command. See:
+  https://github.com/thoughtbot/paperclip#file
+
+3. Clone this repository
+
+4. Open the terminal, navigate to this repository and run the following command:
     ```sh
     bundle exec rails server
     ```
@@ -93,7 +102,7 @@ To use another port:
 bundle exec rails server -p <port>
 ```
 
-4. To create a superadmin user profile:
+5. To create a superadmin user profile:
   + go to the URL: 'http://localhost:3000/signup'
   + use the form to sign up
   + in the command line, run
@@ -104,12 +113,12 @@ bundle exec rails server -p <port>
   ```sh
   u = User.last
   ```
-  + and finally you can run:
+  + and finally you can run the following command to be allowed to CRUD objects:
   ```sh
   u.update_column :superadmin, true
   ```
 
-5. With your rails server still running locally on port 3000, you can log in on
+6. With your rails server still running locally on port 3000, you can log in on
 'http://localhost:3000/login' and create/update/delete categories and pictures!
 
 
@@ -124,4 +133,4 @@ In the command line, navigate to the project directory and run the following com
 Room for improvement
 --------------------
 This project is still WIP:
-- need to implement the front-end with React
+- need to implement the front-end with React framework
