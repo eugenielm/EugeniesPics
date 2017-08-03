@@ -1,3 +1,6 @@
+<p><%= link_to 'Back to "' + @category.name + '" category', category_pictures_path %> |
+  <%= link_to 'Back to all categories', categories_path %> |
+  <%= link_to 'Back to the index', "/" %></p>
 
 <p>
   <strong>Title:</strong>
@@ -19,13 +22,14 @@
   <%= @picture.description %>
 </p>
 
+<p>
+  <%= image_tag @picture.picfile.url(:medium) %>
+</p>
+
+
 <% if is_superadmin? %>
   <p><%= link_to 'Edit picture', edit_category_picture_path(@category, @picture) %> |
      <%= link_to 'Delete picture', category_picture_path(@category, @picture),
          method: :delete,
          data: { confirm: 'Are you sure?' } %></p>
 <% end %>
-
-<p><%= link_to 'Back to "' + @category.name + '" category', category_pictures_path %> |
-  <%= link_to 'Back to all categories', categories_path %> |
-  <%= link_to 'Back to the index', "/" %></p>

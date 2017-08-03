@@ -10,27 +10,19 @@
 </br>
 
 <table>
-  <tr>
-    <th>Title</th>
-    <th>Author</th>
-    <th>Description</th>
-    <th>Category</th>
-  </tr>
-
   <% @pictures.each do |picture| %>
-    <tr>
-      <td><%= picture.title %></td>
-      <td><%= picture.author %></td>
-      <td><%= picture.description %></td>
-      <td><%= picture.category.name %></td>
-      <td><%= link_to 'Show', category_picture_path(picture.category_id, picture) %></td>
-      <% if is_superadmin? %>
-        <td><%= link_to 'Edit', edit_category_picture_path(picture.category_id, picture) %></td>
-        <!-- see working with JS in Rails: http://guides.rubyonrails.org/working_with_javascript_in_rails.html -->
-        <td><%= link_to 'Destroy', category_picture_path(picture.category_id, picture),
+    <div>
+      <% if picture.picfile.exists? %>
+        <p><%= link_to(image_tag(picture.picfile.url), category_picture_path(picture.category_id, picture)) %></p>
+        <% if is_superadmin? %>
+          <p><%= link_to 'Edit', edit_category_picture_path(picture.category_id, picture) %> |
+          <!-- see working with JS in Rails: http://guides.rubyonrails.org/working_with_javascript_in_rails.html -->
+          <%= link_to 'Destroy', category_picture_path(picture.category_id, picture),
               method: :delete,
-              data: { confirm: 'Are you sure?' } %></td>
-      <% end %>
-    </tr>
+              data: { confirm: 'Are you sure?' } %></p>
+        <% end %>
+      </br>
+    <% end %>
+    </div>
   <% end %>
 </table>
