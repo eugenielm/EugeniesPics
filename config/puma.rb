@@ -20,9 +20,12 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 # the concurrency of the application would be max `threads` * `workers`.
 # Workers do not work on JRuby or Windows (both of which do not support
 # processes).
-#
 # workers ENV.fetch("WEB_CONCURRENCY") { 2 }
 
+# https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server#config
+workers Integer(ENV['WEB_CONCURRENCY'] || 2)
+threads_count = Integer(ENV['RAILS_MAX_THREADS'] || 5)
+threads threads_count, threads_count
 # Use the `preload_app!` method when specifying a `workers` number.
 # This directive tells Puma to first boot the application and load code
 # before forking the application. This takes advantage of Copy On Write
@@ -30,7 +33,16 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 # you need to make sure to reconnect any threads in the `on_worker_boot`
 # block.
 #
-# preload_app!
+preload_app!
+rackup      DefaultRackup
+port        ENV['PORT']     || 3000
+environment ENV['RACK_ENV'] || 'development'
+
+on_worker_boot do
+  # Worker specific setup for Rails 4.1+
+  # See: https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server#on-worker-boot
+  ActiveRecord::Base.establish_connection
+end
 
 # If you are preloading your application and using Active Record, it's
 # recommended that you close any connections to the database before workers
