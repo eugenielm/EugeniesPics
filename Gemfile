@@ -69,3 +69,6 @@ gem "aws-sdk", "~> 2.10"
 
 # Added at 2017-08-04 11:56:51 -0700 by EGlelek:
 gem "ruby", "~> 0.1.0"
+
+# Added at 2017-08-08 10:50:53 -0700 by EGlelek (for ReactJS integration - need to have yarn >= 0.20.1 installed):
+gem "webpacker", "~> 2.0"

@@ -73,3 +73,5 @@ bower.json
 manual.txt
 
 
+/public/packs
+/node_modules
