@@ -4,10 +4,27 @@ class PicturesController < ApplicationController
   before_action :admin_power, :except => [:index, :show]
 
   def index
-    @pictures = @category.pictures
+    @pictures = Array.new
+    # @pictures is used to pass data to React via the picture#index view
+    @category.pictures.all.each do |pic|
+      @pictures.push({
+        id: pic.id,
+        title: pic.title,
+        category_id: pic.category.id,
+        pic_url: pic.picfile.url,
+      })
+    end
+    
   end
 
   def show
+    photo_url = @picture.picfile.url(:medium) rescue (Rails.public_path + "/nopicture-sm.jpg")
+    # @pic_details is used to pass data to React via the picture#show view
+    @pic_details = {pic_url: photo_url,
+                    pic_title: @picture.title,
+                    pic_category: @picture.category.name,
+                    pic_description: @picture.description,
+                    }
   end
 
   def new
@@ -66,7 +83,7 @@ class PicturesController < ApplicationController
     end
 
     def require_category
-      @category = Category.find(params[:category_id]) rescue @category = nil
+      @category = Category.find(params[:category_id]) rescue nil
       if @category.nil?
         flash[:danger] = "The required category doesn't exist."
         redirect_to categories_path
@@ -74,10 +91,12 @@ class PicturesController < ApplicationController
     end
 
     def require_picture
-      @picture = Picture.find(params[:id]) rescue @picture = nil
-      if @picture.nil?
+      pic = Picture.find(params[:id]) rescue nil
+      if pic.nil?
         flash[:danger] = "The required picture doesn't exist."
         redirect_to category_pictures_path(@category)
+      else
+        @picture = Picture.find(params[:id])
       end
     end
 
