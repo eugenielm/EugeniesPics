@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/packs-test/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 188);
+/******/ 	return __webpack_require__(__webpack_require__.s = 195);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -22297,7 +22297,34 @@ module.exports = ReactDOMInvalidARIAHook;
 /***/ }),
 /* 183 */,
 /* 184 */,
-/* 185 */,
+/* 185 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
+
+
+
+var BackToCategoryLink = function BackToCategoryLink(props) {
+  var path = window.location.pathname;
+  if (path.split('/').length == 5) {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      'a',
+      { href: "/categories/" + path.split('/')[2] },
+      'Back to ',
+      props.data.pic_category
+    );
+  }
+  return null;
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (BackToCategoryLink);
+
+/***/ }),
 /* 186 */,
 /* 187 */,
 /* 188 */
@@ -22366,6 +22393,57 @@ if (true) {
   module.exports = require('./factoryWithThrowingShims')();
 }
 
+
+/***/ }),
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Logout_jsx__ = __webpack_require__(188);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__BackToCategoryLink_jsx__ = __webpack_require__(185);
+
+
+
+
+
+var Navibar = function Navibar(props) {
+  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    'div',
+    null,
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      'a',
+      { href: '/' },
+      'Home'
+    ),
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      'a',
+      { href: '/categories' },
+      'Going places'
+    ),
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__BackToCategoryLink_jsx__["default"], { data: props.data }),
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      'a',
+      { href: '/about' },
+      'About me'
+    ),
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Logout_jsx__["default"], { user: window.user })
+  );
+};
+
+document.addEventListener('turbolinks:load', function () {
+  var picture_details = document.getElementById('pic_details') ? JSON.parse(document.getElementById('pic_details').getAttribute('data')) : null;
+  __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Navibar, { data: picture_details }), document.getElementById('navibar'));
+});
 
 /***/ })
 /******/ ]);
