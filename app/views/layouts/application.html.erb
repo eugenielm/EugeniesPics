@@ -4,27 +4,35 @@
     <title>Eugeniespics</title>
     <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'Logout' %>
+    <%= javascript_pack_tag 'Navibar' %>
+    <%= javascript_pack_tag 'CategoriesIndex' %>
+    <%= javascript_pack_tag 'PicturesIndex' %>
+    <%= javascript_pack_tag 'PictureDetailsComponent' %>
+    <%= javascript_pack_tag 'HomePage' %>
+    <%= javascript_pack_tag 'AboutPage' %>
 
     <script>
       <% if current_user %>
-      window.user = {
-        name: <%= current_user.username.to_json.html_safe %>,
-        superadmin: <%= current_user.superadmin.to_json.html_safe %>
-      };
+        window.user = {
+          name: <%= current_user.username.to_json.html_safe %>,
+          superadmin: <%= current_user.superadmin.to_json.html_safe %>
+        };
       <% end %>
     </script>
   </head>
 
+
   <body>
+
+    <div id="navibar"></div>
+
+    <p id="notice"><%= notice %></p>
 
     <% flash.each do |name, msg| -%>
       <%= content_tag :div, msg, class: name %>
     <% end -%>
-
-    <div id="logout-link"></div>
 
     <%= yield %>
     <%= debug(params) if Rails.env.development? %>
