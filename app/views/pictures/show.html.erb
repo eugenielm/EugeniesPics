@@ -1,35 +1,6 @@
-<p><%= link_to 'Back to "' + @category.name + '" category', category_pictures_path %> |
-  <%= link_to 'Back to all categories', categories_path %> |
-  <%= link_to 'Back to the index', "/" %></p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @picture.title %>
-</p>
-
-<p>
-  <strong>Author:</strong>
-  <%= @picture.author %>
-</p>
-
-<p>
-  <strong>Category:</strong>
-  <%= @picture.category.name %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @picture.description %>
-</p>
-
-<p>
-  <%= image_tag @picture.picfile.url(:medium) %>
-</p>
-
-
-<% if is_superadmin? %>
-  <p><%= link_to 'Edit picture', edit_category_picture_path(@category, @picture) %> |
-     <%= link_to 'Delete picture', category_picture_path(@category, @picture),
-         method: :delete,
-         data: { confirm: 'Are you sure?' } %></p>
+<%= content_tag :div,
+id: "pic_details",
+data: @pic_details.to_json do %>
 <% end %>
+
+<div id="picture-details-component"></div>
