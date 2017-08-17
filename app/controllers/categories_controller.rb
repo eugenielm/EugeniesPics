@@ -6,9 +6,8 @@ class CategoriesController < ApplicationController
     if Category.all.nil?
       @categories = nil
       redirect_to root_url
-    else
-      @categories = Category.all
     end
+    @categories = Category.all
   end
 
   def show
@@ -67,7 +66,7 @@ class CategoriesController < ApplicationController
     end
 
     def get_category
-      @category = Category.find(params[:id]) rescue @category = nil
+      @category = Category.find(params[:id]) rescue nil
       if @category.nil?
         flash[:danger] = "The required category doesn't exist."
         redirect_to categories_path

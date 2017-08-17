@@ -1,32 +1,6 @@
-<p id="notice"><%= notice %></p>
+<%= content_tag :div,
+  id: "categories_data",
+  data: @categories.to_json do %>
+<% end %>
 
-<h1>Categories</h1>
-
-</br>
-<p><%= link_to 'Back to the index', '/' %>
-<% if is_superadmin? %>
-  <%= link_to 'New Category', new_category_path %>
-<% end %></p>
-</br>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @categories.each do |category| %>
-      <tr>
-        <td><%= category.name %></td>
-        <td><%= link_to 'Show', category_pictures_path(category) %></td>
-        <% if is_superadmin? %>
-          <td><%= link_to 'Edit', edit_category_path(category) %></td>
-          <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div id="categories_index"></div>
