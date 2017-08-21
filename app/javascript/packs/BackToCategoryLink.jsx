@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 
 const BackToCategoryLink = props => {
   const path = window.location.pathname;
-  if (path.split('/').length == 5) {
+  if (path.split('/').length == 5 && props.data) {
     return (
       <a href={"/categories/" + path.split('/')[2]}>Back to {props.data.pic_category}</a>
     );
