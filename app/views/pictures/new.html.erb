@@ -1,3 +1,16 @@
-<h1>New Picture</h1>
+<%= content_tag :div,
+id: "csrf_token",
+data: csrf_meta_tags do %>
+<% end %>
 
-<%= render 'form' %>
+<%= content_tag :div,
+id: "all_categories",
+data: @categories.to_json do %>
+<% end %>
+
+<%= content_tag :div,
+id: "category_instance",
+data: @category.to_json do %>
+<% end %>
+
+<div id="picture_form"></div>

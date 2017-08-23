@@ -83,6 +83,7 @@ class PicturesController < ApplicationController
     end
 
     def require_category
+      @categories = Category.all rescue nil
       @category = Category.find(params[:category_id]) rescue nil
       if @category.nil?
         flash[:danger] = "The required category doesn't exist."
