@@ -13,4 +13,14 @@ id: "category_instance",
 data: @category.to_json do %>
 <% end %>
 
+<%= content_tag :div,
+id: "picture_instance",
+data: @picture.to_json do %>
+<% end %>
+
+<%= content_tag :div,
+id: "picture_errors",
+data: @picture.errors.full_messages.to_json do %>
+<% end %>
+
 <div id="picture_form"></div>

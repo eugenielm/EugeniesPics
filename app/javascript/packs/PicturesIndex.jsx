@@ -21,7 +21,7 @@ document.addEventListener('turbolinks:load', () => {
     const pictures = JSON.parse(document.getElementById('pictures-data').getAttribute('data'));
     const category = JSON.parse(document.getElementById('category-data').getAttribute('data'));
     ReactDOM.render(
-      <PicturesIndex data={pictures} user={window.user} cat={category} />,
+      <PicturesIndex data={pictures} cat={category} />,
       document.getElementById('pictures_index'),
     );
   }

@@ -40,7 +40,8 @@ class PicturesController < ApplicationController
     respond_to do |format|
       if @picture.save # returns false if the params are invalid
         flash[:info] = 'Picture was successfully created.'
-        format.html { redirect_to category_pictures_url(@category) }
+        format.html { redirect_to :controller => 'pictures', :action => 'index',
+                      :category_id => @picture.category.id }
         format.json { render :show, status: :created, location: @picture }
       else
         format.html { render :new }
