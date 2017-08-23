@@ -3,6 +3,7 @@
   "BackToCategoryLink.js": "/packs-test/BackToCategoryLink.js",
   "CategoriesIndex.js": "/packs-test/CategoriesIndex.js",
   "CategoryComponent.js": "/packs-test/CategoryComponent.js",
+  "CategoryForm.js": "/packs-test/CategoryForm.js",
   "EditDeleteCategory.js": "/packs-test/EditDeleteCategory.js",
   "EditDeletePicture.js": "/packs-test/EditDeletePicture.js",
   "HomePage.js": "/packs-test/HomePage.js",
@@ -12,6 +13,7 @@
   "NewPictureLink.js": "/packs-test/NewPictureLink.js",
   "PictureComponent.js": "/packs-test/PictureComponent.js",
   "PictureDetailsComponent.js": "/packs-test/PictureDetailsComponent.js",
+  "PictureForm.js": "/packs-test/PictureForm.js",
   "PicturesIndex.js": "/packs-test/PicturesIndex.js",
   "application.js": "/packs-test/application.js"
 }
