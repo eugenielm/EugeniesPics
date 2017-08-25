@@ -8,4 +8,9 @@ id: "category_instance",
 data: @category.to_json do %>
 <% end %>
 
+<%= content_tag :div,
+id: "category_errors",
+data: @category.errors.full_messages.to_json do %>
+<% end %>
+
 <div id="category_form"></div>
