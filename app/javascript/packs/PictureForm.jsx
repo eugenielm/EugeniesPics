@@ -2,25 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import CategorySelect from './CategorySelect'
 import NewCategoryLink from './NewCategoryLink'
+import ErrorsComponent from './ErrorsComponent'
 
-
-const ErrorListElement = props => {
-    return (<li>{props.err}</li>)
-};
-
-const ErrorsComponent = props => {
-    if (props.errors) {
-        return (
-            <div id="error_explanation">
-                <h2>The following error(s) prohibited this picture from being saved:</h2>
-                <ul>
-                    {props.errors.map(e => <ErrorListElement err={e} key={props.errors.indexOf(e)} />)}
-                </ul>
-            </div>
-        );
-    }
-    return null;
-};
 
 class PictureForm extends React.Component {
     constructor(props) {
@@ -74,10 +57,10 @@ class PictureForm extends React.Component {
         if (!this.state.title) {
             alerts += "A picture title must be at least 1 character long (max 30 char). "
         }
-        if (this.state.author.length < 2) {
+        if (!this.state.author || this.state.author.length < 2) {
             alerts += "A picture author name must be at least 2 characters long (max 30 char). ";
         }
-        if (this.state.description.length < 4) {
+        if (!this.state.description || this.state.description.length < 4) {
             alerts += "A picture description must be at least 4 characters long (max 500 char). ";
         }
         if (!this.state.picfile_file_name) {
@@ -90,9 +73,11 @@ class PictureForm extends React.Component {
     }
 
     render() {
-        const page_title = (!this.picture) ? "New picture" : "Edit picture";
-        const form_action = this.picture ? ("/categories/" + this.category.id + "/pictures/" + this.picture.id) : ("/categories/" + this.category.id + "/pictures")
-        const input_edit = (this.picture) ? React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'}) : null;
+        const page_title = !this.picture ? "New picture" : "Edit picture";
+        const form_action = this.picture ?
+                            ("/categories/" + (this.state.category_id ? this.state.category_id : this.category.id) + "/pictures/" + this.picture.id) :
+                            ("/categories/" + (this.state.category_id ? this.state.category_id : this.category.id) + "/pictures");
+        const input_edit = this.picture ? React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'}) : null;
         return (
             <div>
                 <h1>{page_title}</h1>
@@ -103,7 +88,7 @@ class PictureForm extends React.Component {
                     {input_edit}
                     
                     <p>Choose a category:</p>
-                    <CategorySelect cat_id={this.category.id} data={this.categories}/>
+                    <CategorySelect cat_id={this.state.category_id ? this.state.category_id : this.category.id} data={this.categories}/>
 
                     <NewCategoryLink />
                     
@@ -141,7 +126,8 @@ document.addEventListener('turbolinks:load', () => {
     const category = JSON.parse(document.getElementById('category_instance').getAttribute('data'));
     const picture = document.getElementById('picture_instance') ?
                     JSON.parse(document.getElementById('picture_instance').getAttribute('data')) : null;
-    const errors = JSON.parse(document.getElementById('picture_errors').getAttribute('data')).length > 0 ? JSON.parse(document.getElementById('picture_errors').getAttribute('data')) : null;
+    const errors = JSON.parse(document.getElementById('picture_errors').getAttribute('data')).length > 0 ?
+                   JSON.parse(document.getElementById('picture_errors').getAttribute('data')) : null;
     const csrf_token = document.getElementById('csrf_token').getAttribute('data').split('content=')[2].slice(1, -4);
     ReactDOM.render(
         <PictureForm cats={categories} cat={category} pic={picture} token={csrf_token} errs={errors} />,
