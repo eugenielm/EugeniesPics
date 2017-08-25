@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/packs-test/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 381);
+/******/ 	return __webpack_require__(__webpack_require__.s = 390);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -22489,45 +22489,20 @@ module.exports = ReactDOMInvalidARIAHook;
 /* 374 */,
 /* 375 */,
 /* 376 */,
-/* 377 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(90);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
-
-
-
-var EditDeleteCategory = function EditDeleteCategory(props) {
-    if (window.user && window.user.superadmin) {
-        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'p',
-            null,
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'a',
-                { href: "/categories/" + props.category_id + "/edit" },
-                'Edit category'
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'a',
-                { 'data-method': 'delete', href: "/categories/" + props.category_id },
-                'Delete category'
-            )
-        );
-    }
-    return null;
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (EditDeleteCategory);
-
-/***/ }),
+/* 377 */,
 /* 378 */,
 /* 379 */,
 /* 380 */,
-/* 381 */
+/* 381 */,
+/* 382 */,
+/* 383 */,
+/* 384 */,
+/* 385 */,
+/* 386 */,
+/* 387 */,
+/* 388 */,
+/* 389 */,
+/* 390 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -22536,38 +22511,113 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__EditDeleteCategory__ = __webpack_require__(377);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 
 
 
-function getImgUrl() {
-  return "/nopicture-sm.jpg";
-}
+var LoginForm = function (_React$Component) {
+    _inherits(LoginForm, _React$Component);
 
-var CategoryComponent = function CategoryComponent(props) {
-  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-    'div',
-    { id: "category_" + props.data.id },
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-      'p',
-      null,
-      props.data.name
-    ),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__EditDeleteCategory__["default"], { category_id: props.data.id }),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-      'p',
-      null,
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'a',
-        { href: "/categories/" + props.data.id + "/pictures" },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: getImgUrl(), alt: props.data.name + "'s category'" })
-      )
-    )
-  );
-};
+    function LoginForm(props) {
+        _classCallCheck(this, LoginForm);
 
-/* harmony default export */ __webpack_exports__["default"] = (CategoryComponent);
+        var _this = _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).call(this, props));
+
+        _this.token = props.token;
+        _this.state = { email: '', password: '' };
+        _this.handleEmailChange = _this.handleEmailChange.bind(_this);
+        _this.handlePasswordChange = _this.handlePasswordChange.bind(_this);
+        _this.handleSubmit = _this.handleSubmit.bind(_this);
+        return _this;
+    }
+
+    _createClass(LoginForm, [{
+        key: 'handleEmailChange',
+        value: function handleEmailChange(event) {
+            this.setState({ email: event.target.value });
+        }
+    }, {
+        key: 'handlePasswordChange',
+        value: function handlePasswordChange(event) {
+            this.setState({ password: event.target.value });
+        }
+    }, {
+        key: 'handleSubmit',
+        value: function handleSubmit(event) {
+            var alerts = "";
+            if (!this.state.email || this.state.email.length > 255 || this.state.email.match(/\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i) !== null) {
+                alerts += "Please enter a valid email address. ";
+            }
+            if (!this.state.password || this.state.password.length < 6) {
+                alerts += "Your password must be at least 6 characters long. ";
+            }
+            if (alerts) {
+                alert(alerts);
+                event.preventDefault();
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'h1',
+                    null,
+                    'Login'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'form',
+                    { action: '/login', method: 'post', acceptCharset: 'UTF-8', onSubmit: this.handleSubmit },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'utf8', type: 'hidden', value: '\u2713' }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'hidden', name: 'authenticity_token', value: this.token, readOnly: true }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'field' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'session_email' },
+                            'Email'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'user_email', type: 'email', name: 'session[email]', value: this.state.email || '', onChange: this.handleEmailChange })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'field' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'session_password' },
+                            'Password'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'user_password', type: 'password', name: 'session[password]', value: this.state.password || '', onChange: this.handlePasswordChange })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'actions' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'submit', name: 'commit', value: 'Log in' })
+                    )
+                )
+            );
+        }
+    }]);
+
+    return LoginForm;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+document.addEventListener('turbolinks:load', function () {
+    if (document.getElementById('login_form')) {
+        var csrf_token = document.getElementById('csrf_token').getAttribute('data').split('content=')[2].slice(1, -4);
+        __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(LoginForm, { token: csrf_token }), document.getElementById('login_form'));
+    }
+});
 
 /***/ })
 /******/ ]);

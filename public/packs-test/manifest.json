@@ -4,9 +4,12 @@
   "CategoriesIndex.js": "/packs-test/CategoriesIndex.js",
   "CategoryComponent.js": "/packs-test/CategoryComponent.js",
   "CategoryForm.js": "/packs-test/CategoryForm.js",
+  "CategorySelect.js": "/packs-test/CategorySelect.js",
   "EditDeleteCategory.js": "/packs-test/EditDeleteCategory.js",
   "EditDeletePicture.js": "/packs-test/EditDeletePicture.js",
+  "ErrorsComponent.js": "/packs-test/ErrorsComponent.js",
   "HomePage.js": "/packs-test/HomePage.js",
+  "LoginForm.js": "/packs-test/LoginForm.js",
   "Logout.js": "/packs-test/Logout.js",
   "Navibar.js": "/packs-test/Navibar.js",
   "NewCategoryLink.js": "/packs-test/NewCategoryLink.js",
@@ -15,5 +18,8 @@
   "PictureDetailsComponent.js": "/packs-test/PictureDetailsComponent.js",
   "PictureForm.js": "/packs-test/PictureForm.js",
   "PicturesIndex.js": "/packs-test/PicturesIndex.js",
+  "UserComponent.js": "/packs-test/UserComponent.js",
+  "UserForm.js": "/packs-test/UserForm.js",
+  "UsersIndex.js": "/packs-test/UsersIndex.js",
   "application.js": "/packs-test/application.js"
 }

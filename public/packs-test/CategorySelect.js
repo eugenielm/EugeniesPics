@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/packs-test/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 381);
+/******/ 	return __webpack_require__(__webpack_require__.s = 382);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -22489,45 +22489,12 @@ module.exports = ReactDOMInvalidARIAHook;
 /* 374 */,
 /* 375 */,
 /* 376 */,
-/* 377 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(90);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
-
-
-
-var EditDeleteCategory = function EditDeleteCategory(props) {
-    if (window.user && window.user.superadmin) {
-        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'p',
-            null,
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'a',
-                { href: "/categories/" + props.category_id + "/edit" },
-                'Edit category'
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'a',
-                { 'data-method': 'delete', href: "/categories/" + props.category_id },
-                'Delete category'
-            )
-        );
-    }
-    return null;
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (EditDeleteCategory);
-
-/***/ }),
+/* 377 */,
 /* 378 */,
 /* 379 */,
 /* 380 */,
-/* 381 */
+/* 381 */,
+/* 382 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -22536,38 +22503,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__EditDeleteCategory__ = __webpack_require__(377);
 
 
 
-
-function getImgUrl() {
-  return "/nopicture-sm.jpg";
-}
-
-var CategoryComponent = function CategoryComponent(props) {
-  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-    'div',
-    { id: "category_" + props.data.id },
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-      'p',
-      null,
-      props.data.name
-    ),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__EditDeleteCategory__["default"], { category_id: props.data.id }),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-      'p',
-      null,
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'a',
-        { href: "/categories/" + props.data.id + "/pictures" },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: getImgUrl(), alt: props.data.name + "'s category'" })
-      )
-    )
-  );
+var CategoryChoice = function CategoryChoice(props) {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'option',
+        { value: props.data.id },
+        props.data.name
+    );
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (CategoryComponent);
+var CategorySelect = function CategorySelect(props) {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'select',
+        { defaultValue: props.cat_id, name: 'picture[category_id]', id: 'picture_category_id' },
+        props.data.map(function (c) {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(CategoryChoice, { key: c.id, data: c });
+        })
+    );
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (CategorySelect);
 
 /***/ })
 /******/ ]);

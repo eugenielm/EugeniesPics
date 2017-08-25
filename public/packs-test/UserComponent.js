@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/packs-test/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 381);
+/******/ 	return __webpack_require__(__webpack_require__.s = 395);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -22489,7 +22489,25 @@ module.exports = ReactDOMInvalidARIAHook;
 /* 374 */,
 /* 375 */,
 /* 376 */,
-/* 377 */
+/* 377 */,
+/* 378 */,
+/* 379 */,
+/* 380 */,
+/* 381 */,
+/* 382 */,
+/* 383 */,
+/* 384 */,
+/* 385 */,
+/* 386 */,
+/* 387 */,
+/* 388 */,
+/* 389 */,
+/* 390 */,
+/* 391 */,
+/* 392 */,
+/* 393 */,
+/* 394 */,
+/* 395 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -22501,73 +22519,115 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-var EditDeleteCategory = function EditDeleteCategory(props) {
+var AllUsersLink = function AllUsersLink(props) {
     if (window.user && window.user.superadmin) {
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'p',
+            'a',
+            { href: '/users' },
+            'Back to all users'
+        );
+    }
+    return null;
+};
+
+var UserComponent = function UserComponent(props) {
+    if (window.user && (window.user.superadmin || window.user.id == window.location.pathname.split('/').pop())) {
+        var user = props.data;
+        var admin = props.data.superadmin ? 'yes' : 'no';
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
             null,
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'a',
-                { href: "/categories/" + props.category_id + "/edit" },
-                'Edit category'
+                'h1',
+                null,
+                'Profile details of \'',
+                user.username,
+                '\''
             ),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'a',
-                { 'data-method': 'delete', href: "/categories/" + props.category_id },
-                'Delete category'
+                'p',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(AllUsersLink, null)
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'strong',
+                    null,
+                    'Username:'
+                ),
+                ' ',
+                user.username
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'strong',
+                    null,
+                    'Email:'
+                ),
+                ' ',
+                user.email
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'strong',
+                    null,
+                    'Admin:'
+                ),
+                ' ',
+                admin
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'strong',
+                    null,
+                    'Created:'
+                ),
+                ' ',
+                user.created_at
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'strong',
+                    null,
+                    'Updated:'
+                ),
+                ' ',
+                user.updated_at
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'a',
+                    { href: "/users/" + user.id + "/edit" },
+                    'Edit user '
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'a',
+                    { 'data-method': 'delete', href: "/users/" + user.id },
+                    'Delete user'
+                )
             )
         );
     }
     return null;
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (EditDeleteCategory);
-
-/***/ }),
-/* 378 */,
-/* 379 */,
-/* 380 */,
-/* 381 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(90);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__EditDeleteCategory__ = __webpack_require__(377);
-
-
-
-
-function getImgUrl() {
-  return "/nopicture-sm.jpg";
-}
-
-var CategoryComponent = function CategoryComponent(props) {
-  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-    'div',
-    { id: "category_" + props.data.id },
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-      'p',
-      null,
-      props.data.name
-    ),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__EditDeleteCategory__["default"], { category_id: props.data.id }),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-      'p',
-      null,
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'a',
-        { href: "/categories/" + props.data.id + "/pictures" },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: getImgUrl(), alt: props.data.name + "'s category'" })
-      )
-    )
-  );
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (CategoryComponent);
+document.addEventListener('turbolinks:load', function () {
+    if (document.getElementById('user_data')) {
+        __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(UserComponent, { data: JSON.parse(document.getElementById('user_data').getAttribute('data')) }), document.getElementById('user_page'));
+    }
+});
 
 /***/ })
 /******/ ]);
