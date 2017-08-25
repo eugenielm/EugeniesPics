@@ -4,7 +4,7 @@ class Picture < ApplicationRecord
   belongs_to :category
   validates :category, presence: true
   validates :title, presence: true, length: { minimum: 1, maximum: 30 },
-            uniqueness: { case_sensitive: true }
+            uniqueness: { case_sensitive: false }
   validates :author, presence: true, length: { minimum: 2, maximum: 30 }
   validates :description, presence: true, length: { minimum: 4, maximum: 500 }
   # http://www.rubydoc.info/gems/paperclip/Paperclip/ClassMethods
