@@ -14,11 +14,15 @@
     <%= javascript_pack_tag 'AboutPage' %>
     <%= javascript_pack_tag 'CategoryForm' %>
     <%= javascript_pack_tag 'PictureForm' %>
+    <%= javascript_pack_tag 'UsersIndex' %>
+    <%= javascript_pack_tag 'UserComponent' %>
+    <%= javascript_pack_tag 'UserForm' %>
+    <%= javascript_pack_tag 'LoginForm' %>
 
     <script>
       <% if current_user %>
         window.user = {
-          name: <%= current_user.username.to_json.html_safe %>,
+          id: <%= current_user.id.to_json.html_safe %>,
           superadmin: <%= current_user.superadmin.to_json.html_safe %>
         };
       <% end %>
