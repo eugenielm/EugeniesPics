@@ -19,7 +19,7 @@ Repository content
   + models directory
   + views directory
 
-+ a bin directory containig the folowing files: bundle, rails, rake, setup, spring,
++ a bin directory containing the following files: bundle, rails, rake, setup, spring,
 update, yarn
 
 + a config directory containing:
@@ -79,7 +79,7 @@ How does it work
 ----------------
 In order to be able to set up EugeniesPics (locally), you need to:
 
-1. Make sure you have Ruby installed on your computer
+1. Make sure you have Ruby and Yarn installed on your computer
 
 2. Install ImageMagick on your computer - if you are on Mac, you can install it
 with brew:
