@@ -1,22 +1,6 @@
-<h1>User <%= @user.username %>'s details</h1>
-
-<p>
-  <strong>Username:</strong>
-  <%= @user.username %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-
-<% if is_superadmin? %>
-  <p><b>Super admin</b></p>
+<%= content_tag :div,
+id: "user_data",
+data: @user.to_json do %>
 <% end %>
 
-<%= link_to 'Edit profile', edit_user_path(@user) %> |
-<%= link_to 'Delete profile', user_path(@user),
-                              method: :delete,
-                              data: { confirm: 'Are you sure?' }  %> |
-<% if is_superadmin? %><%= link_to 'View all users', users_path %> |<% end %>
-<%= link_to 'Back to the show!', '/' %>
+<div id="user_page"></div>

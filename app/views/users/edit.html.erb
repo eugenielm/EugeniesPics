@@ -1,6 +1,16 @@
-<h1>Editing User</h1>
+<%= content_tag :div,
+id: "csrf_token",
+data: csrf_meta_tags do %>
+<% end %>
 
-<%= render 'form' %>
+<%= content_tag :div,
+id: "user_instance",
+data: @user.to_json do %>
+<% end %>
 
-</br>
-<%= link_to 'All categories', categories_path %>
+<%= content_tag :div,
+id: "user_errors",
+data: @user.errors.full_messages.to_json do %>
+<% end %>
+
+<div id="user_form"></div>
