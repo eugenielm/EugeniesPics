@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170803022011) do
+ActiveRecord::Schema.define(version: 20170826223216) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20170803022011) do
     t.integer "picfile_file_size"
     t.datetime "picfile_updated_at"
     t.index ["category_id"], name: "index_pictures_on_category_id"
+    t.index ["picfile_file_name"], name: "index_pictures_on_picfile_file_name", unique: true
     t.index ["title"], name: "index_pictures_on_title", unique: true
   end
 
