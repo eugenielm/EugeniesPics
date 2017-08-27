@@ -7,7 +7,13 @@ class CategoriesController < ApplicationController
       @categories = nil
       redirect_to root_url
     end
-    @categories = Category.all
+    # @categories is used in CategoriesIndex.jsx
+    @categories = Array.new
+    Category.all.each do |c|
+      @categories.push({id: c.id,
+                        name: c.name,
+                        catpic_url: c.catpic.url,})
+    end
   end
 
   def show
@@ -61,8 +67,8 @@ class CategoriesController < ApplicationController
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
-      params.require(:category).permit(:name, pictures_attributes: [
-                                              :title, :author, :description ])
+      params.require(:category).permit(:name, :catpic,
+                                       pictures_attributes: [:title, :author, :description, :picfile])
     end
 
     def get_category

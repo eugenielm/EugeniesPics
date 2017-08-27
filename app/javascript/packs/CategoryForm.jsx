@@ -8,8 +8,9 @@ class CategoryForm extends React.Component {
         this.token = props.token;
         this.category = props.data.id ? props.data : null;
         this.errors = props.errs ? props.errs : null;
-        this.state = {name: props.data.name};
+        this.state = {name: props.data.name, catpic_file_name: ""};
         this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleCatpic = this.handleCatpic.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -17,6 +18,14 @@ class CategoryForm extends React.Component {
         if (event.target.value.match(/^[0-9a-zA-Z -]*$/) !== null) {
             this.setState({name: event.target.value});
         }  
+    }
+
+    handleCatpic(event) {
+        if (event.target.files[0].size < 1000000) {
+            this.setState({catpic_file_name: event.target.files[0]});
+        } else {
+            alert("The picture you uploaded exceeded the max size of 1Mb (" + (event.target.files[0].size / 1000) + "ko)");
+        }
     }
 
     handleSubmit(event) {
@@ -34,7 +43,7 @@ class CategoryForm extends React.Component {
             <div>
                 <h1>{page_title}</h1>
                 <ErrorsComponent errors={this.errors} model={"category"} />
-                <form action={form_action} method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
+                <form encType="multipart/form-data" action={form_action} method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
                     <input name="utf8" type="hidden" value="✓" />
                     <input type="hidden" name="authenticity_token" value={this.token} readOnly={true} />
                     {input_edit}
@@ -42,6 +51,10 @@ class CategoryForm extends React.Component {
                         <label htmlFor="category_name">Name</label>
                         <input id="category_name" type="text" name="category[name]" value={this.state.name || ''} onChange={this.handleNameChange} />
                     </div>
+                    <p>
+                        <label htmlFor="category_upload_picture">Upload picture</label>
+                        <input id="category_catpic" accept=".png, .jpg, .jpeg" type="file" name="category[catpic]" onChange={this.handleCatpic} />
+                    </p>
                     <div className="actions">
                         <input type="submit" name="commit" value="Submit" />
                     </div>
@@ -56,7 +69,8 @@ document.addEventListener('turbolinks:load', () => {
     const category = document.getElementById('category_instance') ?
                      JSON.parse(document.getElementById('category_instance').getAttribute('data')) : null;
     const csrf_token = document.getElementById('csrf_token').getAttribute('data').split('content=')[2].slice(1, -4);
-    const errors = JSON.parse(document.getElementById('category_errors').getAttribute('data')).length > 0 ? JSON.parse(document.getElementById('category_errors').getAttribute('data')) : null;
+    const errors = JSON.parse(document.getElementById('category_errors').getAttribute('data')).length > 0 ?
+                   JSON.parse(document.getElementById('category_errors').getAttribute('data')) : null;
     ReactDOM.render(
         <CategoryForm data={category} token={csrf_token} errs={errors} />,
         document.getElementById('category_form')
