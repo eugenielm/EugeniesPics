@@ -3,3 +3,15 @@
 one:
   id: 1
   name: MyCat1
+  catpic_file_name: test_file.jpg
+  catpic_content_type: image/jpeg
+  catpic_file_size: 1048576
+  catpic_updated_at: 2016-04-20 10:30:19 Z
+
+two:
+  id: 2
+  name: MyCat2
+  catpic_file_name: test_file2.jpg
+  catpic_content_type: image/jpeg
+  catpic_file_size: 1048576
+  catpic_updated_at: 2016-04-20 10:30:19 Z

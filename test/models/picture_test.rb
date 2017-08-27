@@ -7,58 +7,58 @@ class PictureTest < ActiveSupport::TestCase
   end
 
   test "picture title shouldn't be blank" do
-    pict = Picture.new(title: '',
-                       author: 'EG',
-                       description: 'blah',
-                       category_id: 1)
-    assert_not pict.valid?
+    pictures(:Pict1).title = ''
+    assert_not pictures(:Pict1).valid?
   end
 
   test "picture title shouldn't be more than 30 characters" do
-    pict = Picture.new(title: 'a' * 31,
-                       author: 'EG',
-                       description: 'blah',
-                       category_id: 1)
-    assert_not pict.valid?
+    pictures(:Pict1).title = 'a' * 31
+    assert_not pictures(:Pict1).valid?
+  end
+
+  test "picture title should be unique" do
+    pictures(:Pict1).title = 'Picture2'
+    assert_not pictures(:Pict1).valid?
   end
 
   test "picture author shouldn't be blank" do
-    pict = Picture.new(title: 'MyPict',
-                       author: '',
-                       description: 'blah',
-                       category_id: 1)
-    assert_not pict.valid?
+    pictures(:Pict1).author = ''
+    assert_not pictures(:Pict1).valid?
   end
 
   test "picture author shouldn't be more than 30 characters" do
-    pict = Picture.new(title: 'MyPict',
-                       author: 'a' * 31,
-                       description: 'blah',
-                       category_id: 1)
-    assert_not pict.valid?
+    pictures(:Pict1).author = 'a' * 31
+    assert_not pictures(:Pict1).valid?
   end
 
   test "picture description should be at least 4 characters" do
-    pict = Picture.new(title: 'MyPict',
-                       author: 'EG',
-                       description: 'bla',
-                       category_id: 1)
-    assert_not pict.valid?
+    pictures(:Pict1).description = 'aaa'
+    assert_not pictures(:Pict1).valid?
   end
 
   test "picture description shouldn't be more than 500 characters" do
-    pict = Picture.new(title: 'MyPict',
-                       author: 'EG',
-                       description: 'a' * 501,
-                       category_id: 1)
-    assert_not pict.valid?
+    pictures(:Pict1).description = 'a' * 501
+    assert_not pictures(:Pict1).valid?
   end
 
   test "picture category shouldn't be blank" do
-    pict = Picture.new(title: 'MyPict',
-                       author: 'EG',
-                       description: 'Blah')
-    assert_not pict.valid?
+    pictures(:Pict1).category_id = nil
+    assert_not pictures(:Pict1).valid?
+  end
+
+  test "picture must have a image file attached" do
+    pictures(:Pict1).picfile_file_name = nil
+    assert_not pictures(:Pict1).valid?
+  end
+
+  test "picfile_file_name should be unique" do
+    pictures(:Pict1).picfile_file_name = 'test_file2.jpg'
+    assert_not pictures(:Pict1).valid?
+  end
+
+  test "picfile_file_size should be less than 1Mb (= 1048576 bytes) inclusive" do
+    pictures(:Pict1).picfile_file_size = 1048577
+    assert_not pictures(:Pict1).valid?
   end
 
   test "picture should be deleted if its category is destroyed" do

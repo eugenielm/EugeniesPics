@@ -9,4 +9,15 @@ Pict1:
   picfile_file_name: test_file.jpg
   picfile_content_type: image/jpeg
   picfile_file_size: 223312
-  picfile_updated_at: 2015-02-29 10:30:19 Z 
+  picfile_updated_at: 2015-02-29 10:30:19 Z
+
+Pict2:
+  id: 2
+  title: Picture2
+  author: EG
+  category_id: 1
+  description: MyText
+  picfile_file_name: test_file2.jpg
+  picfile_content_type: image/jpeg
+  picfile_file_size: 223312
+  picfile_updated_at: 2015-02-29 10:30:19 Z

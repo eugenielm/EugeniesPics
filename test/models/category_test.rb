@@ -1,26 +1,44 @@
 require 'test_helper'
 
 class CategoryTest < ActiveSupport::TestCase
-  setup do
-    @cat2 = Category.new(name: "")
-    @cat3 = Category.new(name: "c")
-    @cat4 = Category.new(name: "a" * 31)
-  end
 
   test "category should be valid" do
     assert categories(:one).valid?
   end
 
-  test "name should be present" do
-    assert_not @cat2.valid?
+  test "pictureless-category should be valid" do
+    pic = Category.new(name: 'PictureLessCat')
+    assert pic.valid?
   end
 
-  test "name shouldn't be at least 2 characters long" do
-    assert_not @cat3.valid?
+  test "name should be present" do
+    categories(:one).name = ''
+    assert_not categories(:one).valid?
+  end
+
+  test "name should be at least 2 characters long" do
+    categories(:one).name = 'a'
+    assert_not categories(:one).valid?
   end
 
   test "name shouldn't be more than 30 characters long" do
-    assert_not @cat4.valid?
+    categories(:one).name = 'a' * 31
+    assert_not categories(:one).valid?
+  end
+
+  test "name should be unique (case insensitive)" do
+    categories(:one).name = 'MYCAT2'
+    assert_not categories(:one).valid?
+  end
+  
+  test "catpic_file_size should be less than 1Mb (= 1048576 bytes) inclusive" do
+    categories(:one).catpic_file_size = 1048577
+    assert_not categories(:one).valid?
+  end
+
+  test "catpic_file_name should be unique" do
+    categories(:one).catpic_file_name = 'test_file2.jpg'
+    assert_not categories(:one).valid?
   end
 
 end
