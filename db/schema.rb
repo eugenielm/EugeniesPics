@@ -10,12 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170826223216) do
+ActiveRecord::Schema.define(version: 20170826224547) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "catpic_file_name"
+    t.string "catpic_content_type"
+    t.integer "catpic_file_size"
+    t.datetime "catpic_updated_at"
+    t.index ["catpic_file_name"], name: "index_categories_on_catpic_file_name", unique: true
     t.index ["name"], name: "index_categories_on_name", unique: true
   end
 
