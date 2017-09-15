@@ -48,7 +48,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to category_url(Category.last)
     follow_redirect!
-    assert_equal 'Category was successfully created.', flash[:info]
+    assert_equal '"new category" category was successfully created.', flash[:info]
   end
 
   # show
