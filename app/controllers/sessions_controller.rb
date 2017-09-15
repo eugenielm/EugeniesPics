@@ -9,9 +9,9 @@ class SessionsController < ApplicationController
       # SessionsHelper is included in application_controller
       log_in user
       flash[:info] = "You've been logged in."
-      !session[:prev_url].nil? ? prev_url = session[:prev_url] : prev_url = root_path
+      !session[:prev_url].nil? ? redirect_path = session[:prev_url] : redirect_path = root_path
       session.delete(:prev_url) unless session[:prev_url].nil?
-      redirect_to prev_url
+      redirect_to redirect_path
     else
       flash[:danger] = 'Invalid email/password combination'
       render 'new'

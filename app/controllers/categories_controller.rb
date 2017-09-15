@@ -7,17 +7,23 @@ class CategoriesController < ApplicationController
       @categories = nil
       redirect_to root_url
     end
-    # @categories is used in CategoriesIndex.jsx
     @categories = Array.new
     Category.all.each do |c|
       @categories.push({id: c.id,
                         name: c.name,
                         catpic_url: c.catpic.url,})
     end
+    respond_to do |format|
+      format.html
+      format.json {render :json => @categories}
+    end
   end
 
   def show
-    redirect_to category_pictures_url(@category)
+    respond_to do |format|
+      format.html { redirect_to category_pictures_url(@category) }
+      format.json
+    end
   end
 
   def new
@@ -25,6 +31,10 @@ class CategoriesController < ApplicationController
   end
 
   def edit
+    respond_to do |format|
+      format.html
+      format.json {render :json => @category}
+    end
   end
 
   def create
@@ -32,12 +42,12 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       if @category.save
-        flash[:info] = "Category was successfully created."
+        flash[:info] = '"' + @category.name + '" category was successfully created.'
         format.html { redirect_to @category }
         format.json { render :show, status: :created, location: @category }
       else
         format.html { render :new }
-        format.json { render json: @category.errors, status: :unprocessable_entity }
+        # format.json { render json: @category.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -50,7 +60,7 @@ class CategoriesController < ApplicationController
         format.json { render :show, status: :ok, location: @category }
       else
         format.html { render :edit }
-        format.json { render json: @category.errors, status: :unprocessable_entity }
+        # format.json { render json: @category.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -81,10 +91,18 @@ class CategoriesController < ApplicationController
 
     def admin_power
       if !logged_in?
+        if request.format == :json
+          head :unauthorized
+          return
+        end
         session[:prev_url] = request.fullpath
         flash[:info] = "You need to be logged in for this action."
         redirect_to login_path
       elsif !is_superadmin?
+        if request.format == :json
+          head :unauthorized
+          return
+        end
         flash[:danger] = "Unauthorized action."
         redirect_to root_path
       end

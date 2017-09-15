@@ -1,19 +1,31 @@
 class UsersController < ApplicationController
-  before_action :check_authentication, :only => [:show, :edit, :update, :destroy]
+  before_action :check_authentication, :except => [:index, :new, :create]
+  before_action :get_user, :only => [:show, :edit, :update, :destroy]
   # if bcrypt and has_secure_password are used
   protect_from_forgery
 
   def index
-    if !logged_in?
-      session[:prev_url] = request.fullpath
-      flash[:info] = 'You need to be logged in for this action.'
-      redirect_to login_path
-    elsif !is_superadmin?
-      flash[:danger] = "Unauthorized action."
-      redirect_to root_path
+    if request.format == :json
+      if !logged_in? || !is_superadmin?
+        head :unauthorized
+        return
+      end
     else
-      @users = User.all
+      if !logged_in?
+        session[:prev_url] = request.fullpath
+        flash[:info] = 'You need to be logged in for this action.'
+        redirect_to login_path
+      elsif !is_superadmin?
+        flash[:danger] = "Unauthorized action."
+        redirect_to root_path
+      end
     end
+
+    respond_to do |format|
+      format.html
+      format.json { render json: User.all }
+    end
+    
   end
 
   def show
@@ -37,7 +49,7 @@ class UsersController < ApplicationController
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        # format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -50,7 +62,7 @@ class UsersController < ApplicationController
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        # format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -74,18 +86,28 @@ class UsersController < ApplicationController
       params.require(:user).permit(:username, :email, :password, :password_confirmation, :superadmin)
     end
 
-    def check_authentication
+    def get_user
       @user = User.find(params[:id]) rescue nil
-
       if @user.nil?
         redirect_to root_path
-      elsif !logged_in?
-        session[:prev_url] = request.fullpath
-        flash[:info] = "You need to be logged in for this action."
-        redirect_to login_path
-      elsif !is_superadmin? && !(current_user.id == params[:id].to_i)
-        flash[:danger] = "Unauthorized action."
-        redirect_to root_path
+      end
+    end
+
+    def check_authentication
+      if request.format == :json
+        if !logged_in? || !(is_superadmin? || current_user.id == params[:id].to_i)
+          head :unauthorized
+          return
+        end
+      else
+        if !logged_in?
+          session[:prev_url] = request.fullpath
+          flash[:info] = "You need to be logged in for this action."
+          redirect_to login_path
+        elsif !(is_superadmin? || current_user.id == params[:id].to_i)
+          flash[:danger] = "Unauthorized action."
+          redirect_to root_path
+        end
       end
     end
 end

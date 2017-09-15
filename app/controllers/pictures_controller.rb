@@ -5,26 +5,24 @@ class PicturesController < ApplicationController
 
   def index
     @pictures = Array.new
-    # @pictures is used to pass data to React via the picture#index view
     @category.pictures.all.each do |pic|
       @pictures.push({
         id: pic.id,
         title: pic.title,
-        category_id: pic.category.id,
+        category_name: pic.category.name,
         pic_url: pic.picfile.url,
       })
+    end
+    @pictures.push(@category.name)
+    @pictures.push(@categories)
+    respond_to do |format|
+      format.html
+      format.json {render :json => @pictures}
     end
     
   end
 
   def show
-    photo_url = @picture.picfile.url(:medium) rescue (Rails.public_path + "/nopicture-sm.jpg")
-    # @pic_details is used to pass data to React via the picture#show view
-    @pic_details = {pic_url: photo_url,
-                    pic_title: @picture.title,
-                    pic_category: @picture.category.name,
-                    pic_description: @picture.description,
-                    }
   end
 
   def new
@@ -38,28 +36,26 @@ class PicturesController < ApplicationController
     @picture = Picture.new(picture_params)
 
     respond_to do |format|
-      if @picture.save # returns false if the params are invalid
+      if @picture.save
         flash[:info] = 'Picture was successfully created.'
         format.html { redirect_to :controller => 'pictures', :action => 'index',
                       :category_id => @picture.category.id }
         format.json { render :show, status: :created, location: @picture }
       else
         format.html { render :new }
-        format.json { render json: @picture.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def update
     respond_to do |format|
-      if @picture.update(picture_params) # returns false if the params are invalid
+      if @picture.update(picture_params)
         flash[:info] = 'Picture was successfully updated.'
         format.html { redirect_to :controller => 'pictures', :action => 'show',
                                   :category_id => @picture.category.id , :id => @picture.id }
         format.json { render :show, status: :ok, location: @picture }
       else
         format.html { render :edit }
-        format.json { render json: @picture.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -93,21 +89,27 @@ class PicturesController < ApplicationController
     end
 
     def require_picture
-      pic = Picture.find(params[:id]) rescue nil
-      if pic.nil?
+      @picture = Picture.find(params[:id]) rescue nil
+      if @picture.nil?
         flash[:danger] = "The required picture doesn't exist."
         redirect_to category_pictures_path(@category)
-      else
-        @picture = Picture.find(params[:id])
       end
     end
 
     def admin_power
       if !logged_in?
+        if request.format == :json
+          head :unauthorized
+          return
+        end
         session[:prev_url] = request.fullpath
         flash[:info] = "You need to be logged in for this action."
         redirect_to login_path
       elsif !is_superadmin?
+        if request.format == :json
+          head :unauthorized
+          return
+        end
         flash[:danger] = "Unauthorized action."
         redirect_to root_path
       end
