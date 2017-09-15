@@ -1,5 +1,5 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 const AboutPage = props => (
     <div>
@@ -8,11 +8,4 @@ const AboutPage = props => (
     </div>
 );
 
-document.addEventListener('turbolinks:load', () => {
-  if (document.getElementById('about_page')) {
-    ReactDOM.render(
-      <AboutPage />,
-      document.getElementById('about_page'),
-    );
-  }
-});
+export default AboutPage;

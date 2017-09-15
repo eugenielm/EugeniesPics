@@ -1,10 +1,9 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 class LoginForm extends React.Component {
     constructor(props) {
         super(props);
-        this.token = props.token;
         this.state = {email: '', password: ''};
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
@@ -39,7 +38,7 @@ class LoginForm extends React.Component {
                 <h1>Login</h1>
                 <form action='/login' method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
                     <input name="utf8" type="hidden" value="✓" />
-                    <input type="hidden" name="authenticity_token" value={this.token} readOnly={true} />
+                    <input type="hidden" name="authenticity_token" value={this.props.token} readOnly={true} />
                     <div className="field">
                         <label htmlFor="session_email">Email</label>
                         <input id="user_email" type="email" name="session[email]" value={this.state.email || ''} onChange={this.handleEmailChange} />
@@ -57,14 +56,4 @@ class LoginForm extends React.Component {
     }
 }
 
-
-
-document.addEventListener('turbolinks:load', () => {
-    if (document.getElementById('login_form')) {
-        const csrf_token = document.getElementById('csrf_token').getAttribute('data').split('content=')[2].slice(1, -4);
-        ReactDOM.render(
-            <LoginForm token={csrf_token} />,
-            document.getElementById('login_form'),
-        );
-    }
-});
+export default LoginForm;

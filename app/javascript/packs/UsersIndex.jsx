@@ -1,5 +1,6 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
 
 const UserComponent = props => {
     const user = props.data;
@@ -10,41 +11,49 @@ const UserComponent = props => {
             <td>{user.email}</td>
             <td>{user.id}</td>
             <td>{admin}</td>
-            <td><a href={ "/users/" + user.id } >View user</a></td>
+            <td><Link to={ "/users/" + user.id } >View user</Link></td>
             <td><a href={ "/users/" + user.id + "/edit" } >Edit user</a></td>
             <td><a data-method="delete" href={ "/users/" + user.id } >Delete user</a></td>
         </tr>
     );
 };
 
-const UsersIndex = props => {
-    return (
-        <div>
-            <h1>Users</h1>
-            <p id="new_user_link"><a href="/users/new">New user</a></p>
-            <div id="all_users">
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>ID</th>
-                            <th>Admin</th>
-                        </tr>
-                        { props.data.map(user => <UserComponent key={user.id} data={user}/>) }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    );
-};
+class UsersIndex extends React.Component {
+    componentWillMount() {
+        this.setState({ users: [] })
+    }
 
-document.addEventListener('turbolinks:load', () => {
-    if (document.getElementById('users_data') && window.user && window.user.superadmin) {
-        const users = JSON.parse(document.getElementById('users_data').getAttribute('data'));
-        ReactDOM.render(
-            <UsersIndex data={users} />,
-            document.getElementById('users_index'),
+    componentDidMount() {
+        fetch('/users.json', {credentials: 'same-origin'})
+        .then(function(resp) {
+            return resp.json()
+        })
+        .then(function(res) {
+            this.setState({ users: res });
+        }.bind(this))
+    }
+
+    render() {
+        return (
+            <div>
+                <h1>Users</h1>
+                <p id="new_user_link"><a href="/users/new">New user</a></p>
+                <div id="all_users">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>ID</th>
+                                <th>Admin</th>
+                            </tr>
+                            { this.state.users.map(user => <UserComponent key={user.id} data={user}/>) }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         );
     }
-});
+}
+
+export default UsersIndex;

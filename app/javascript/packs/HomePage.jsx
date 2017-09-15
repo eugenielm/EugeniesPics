@@ -1,5 +1,5 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 const HomePage = props => {
         return (
@@ -12,11 +12,4 @@ const HomePage = props => {
         );
 };
 
-document.addEventListener('turbolinks:load', () => {
-  if (document.getElementById('welcome_page')) {
-    ReactDOM.render(
-      <HomePage />,
-      document.getElementById('welcome_page'),
-    );
-  }
-});
+export default HomePage;

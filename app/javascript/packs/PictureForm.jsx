@@ -1,25 +1,58 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import CategorySelect from './CategorySelect'
-import NewCategoryLink from './NewCategoryLink'
-import ErrorsComponent from './ErrorsComponent'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ErrorsComponent from './ErrorsComponent';
 
+
+const CategoryChoice = props => {
+    return <option value={props.data.id}>{props.data.name}</option>
+};
 
 class PictureForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.token = props.token;
-        this.categories = props.cats;
-        this.category = props.cat;
-        this.picture = props.pic.id ? props.pic : null;
-        this.errors = props.errs ? props.errs : null;
-        this.state = {title: props.pic.title, category_id: props.pic.category_id, author: props.pic.author, description: props.pic.description, picfile_file_name: ""};
+
+    componentWillMount() {
+        this.setState({ category_id: this.props.picture_data.category_id || this.props.match.params.category_id,
+                        picture_id: this.props.match.params.picture_id || null,
+                        title: this.props.picture_data.title || '',
+                        author: this.props.picture_data.author || '',
+                        description: this.props.picture_data.description || '',
+                        pic_url: '',
+                        prev_pic_url: '',
+                        pic_name: '',
+                        all_categories: [],
+                        user: this.props.user || null,
+                        token: this.props.token,
+                        errors: this.props.picture_errors || null });
         this.handleTitle = this.handleTitle.bind(this);
         this.handleAuthor = this.handleAuthor.bind(this);
         this.handleDescription = this.handleDescription.bind(this);
         this.handlePicfile = this.handlePicfile.bind(this);
         this.handleCategoryId = this.handleCategoryId.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    componentDidMount() {
+        fetch('/categories/' + this.state.category_id + '/pictures.json', {
+            credentials: 'same-origin'
+          })
+        .then(function(resp) {
+            return resp.json();
+          })
+          .then(function(category) {
+            const all_categories = category.pop();
+            this.setState({ all_categories });
+          }.bind(this))
+
+        if (this.state.picture_id) {
+            fetch('/categories/' + this.state.category_id + '/pictures/' + this.state.picture_id + '.json',
+                 {credentials: 'same-origin'}
+                 )
+            .then(function(resp) {
+                return resp.json();
+              })
+              .then(function(picture) {
+                this.setState({ pic_url: picture.pic_url.small, prev_pic_url: picture.pic_url.small });
+              }.bind(this))
+        }
     }
 
     handleTitle(event) {
@@ -42,7 +75,7 @@ class PictureForm extends React.Component {
 
     handlePicfile(event) {
         if (event.target.files[0].size < 1000000) {
-            this.setState({picfile_file_name: event.target.files[0]});
+            this.setState({ pic_url: event.target.files[0], pic_name: event.target.files[0].name });
         } else {
             alert("The picture you uploaded exceeded the max size of 1Mb (" + (event.target.files[0].size / 1000) + "ko)");
         }
@@ -63,7 +96,7 @@ class PictureForm extends React.Component {
         if (!this.state.description || this.state.description.length < 4) {
             alerts += "A picture description must be at least 4 characters long (max 500 char). ";
         }
-        if (!this.state.picfile_file_name) {
+        if (!this.state.pic_url) {
             alerts += "You must upload a picture (max size = 1Mb).";
         }
         if (alerts) {
@@ -73,24 +106,31 @@ class PictureForm extends React.Component {
     }
 
     render() {
-        const page_title = !this.picture ? "New picture" : "Edit picture";
-        const form_action = this.picture ?
-                            ("/categories/" + (this.state.category_id ? this.state.category_id : this.category.id) + "/pictures/" + this.picture.id) :
-                            ("/categories/" + (this.state.category_id ? this.state.category_id : this.category.id) + "/pictures");
-        const input_edit = this.picture ? React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'}) : null;
+        console.log('this.state in render in PictureForm: ', this.state);
+        const page_title = this.state.picture_id ? "Edit picture" : "New picture";
+        const form_action = this.state.picture_id ?
+                            ("/categories/" + (this.state.category_id) + "/pictures/" + this.state.picture_id) :
+                            ("/categories/" + (this.state.category_id) + "/pictures");
+        const input_edit = this.state.picture_id ? React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'}) : null;
+        const newCatLink = (this.state.user && this.state.user.superadmin) ? (<p id="new_cat_link"><a href="/categories/new">New category</a></p>) : null;
+        const pic_info = this.state.picture_id ? (
+            this.state.pic_url == this.state.prev_pic_url ? (<div><p>Current picture:</p><img src={this.state.pic_url} /></div>) : (<p>Picture about to be uploaded: {this.state.pic_name}</p>)
+        ) : (this.state.pic_url ? (<p>Picture about to be uploaded: {this.state.pic_name}</p>) : null)
         return (
             <div>
                 <h1>{page_title}</h1>
-                <ErrorsComponent errors={this.errors} />
+                {this.state.errors ? (<ErrorsComponent errors={this.state.errors} />) : null}
                 <form encType="multipart/form-data" action={form_action} method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
                     <input name="utf8" type="hidden" value="✓" />
-                    <input type="hidden" name="authenticity_token" value={this.token} readOnly={true} />
+                    <input type="hidden" name="authenticity_token" value={this.state.token} readOnly={true} />
                     {input_edit}
                     
                     <p>Choose a category:</p>
-                    <CategorySelect cat_id={this.state.category_id ? this.state.category_id : this.category.id} data={this.categories}/>
+                    <select value={this.state.category_id} name="picture[category_id]" id="picture_category_id" onChange={this.handleCategoryId}>
+                        { this.state.all_categories.map(c => <CategoryChoice key={c.id} data={c} />) }
+                    </select>
 
-                    <NewCategoryLink />
+                    {newCatLink}
                     
                     <p>
                         <label htmlFor="picture_title">Title</label>
@@ -107,12 +147,14 @@ class PictureForm extends React.Component {
                         <textarea id="picture_description" type="text" name="picture[description]" value={this.state.description || ''} maxLength="500" rows="10" cols="50" onChange={this.handleDescription}></textarea>
                     </p>
 
+                    {pic_info}
+                    
                     <p>
                         <label htmlFor="picture_upload_picture">Upload picture</label>
                         <input id="picture_picfile" accept=".png, .jpg, .jpeg" type="file" name="picture[picfile]" onChange={this.handlePicfile} />
                     </p>
                     <div className="actions">
-                        <input type="submit" name="commit" value="Submit" />
+                        <input type="submit" name="commit" value={this.state.picture_id ? "Save changes" : "Create picture"} />
                     </div>
                 </form>
             </div>
@@ -120,18 +162,4 @@ class PictureForm extends React.Component {
     }
 }
 
-document.addEventListener('turbolinks:load', () => {
-  if (document.getElementById('picture_form')) {
-    const categories = JSON.parse(document.getElementById('all_categories').getAttribute('data'));
-    const category = JSON.parse(document.getElementById('category_instance').getAttribute('data'));
-    const picture = document.getElementById('picture_instance') ?
-                    JSON.parse(document.getElementById('picture_instance').getAttribute('data')) : null;
-    const errors = JSON.parse(document.getElementById('picture_errors').getAttribute('data')).length > 0 ?
-                   JSON.parse(document.getElementById('picture_errors').getAttribute('data')) : null;
-    const csrf_token = document.getElementById('csrf_token').getAttribute('data').split('content=')[2].slice(1, -4);
-    ReactDOM.render(
-        <PictureForm cats={categories} cat={category} pic={picture} token={csrf_token} errs={errors} />,
-        document.getElementById('picture_form')
-    )
-  }
-})
+export default PictureForm;

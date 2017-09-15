@@ -1,62 +1,90 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import ErrorsComponent from './ErrorsComponent'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ErrorsComponent from './ErrorsComponent';
+
 
 class CategoryForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.token = props.token;
-        this.category = props.data.id ? props.data : null;
-        this.errors = props.errs ? props.errs : null;
-        this.state = {name: props.data.name, catpic_file_name: ""};
+
+    componentWillMount() {
+        this.setState({ token: this.props.token,
+                        errors: this.props.category_errors || null,
+                        user: this.props.user || null,
+                        category_id: this.props.category_data.id || '',
+                        cat_name: this.props.category_data.name || '',
+                        catpic_url: '',
+                        prev_catpic_url: '',
+                        catpic_name: '' })
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleCatpic = this.handleCatpic.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentDidMount() {
+
+        if (this.state.category_id) {
+            fetch('/categories/' + this.state.category_id + '.json',
+                 {credentials: 'same-origin'}
+                 )
+            .then(function(resp) {
+                return resp.json();
+              })
+              .then(function(category) {
+                this.setState({ catpic_url: category.catpic_url.small, prev_catpic_url: category.catpic_url.small, catpic_name: category.catpic_file_name });
+              }.bind(this))
+        }
+    }
+
     handleNameChange(event) {
         if (event.target.value.match(/^[0-9a-zA-Z -]*$/) !== null) {
-            this.setState({name: event.target.value});
+            this.setState({cat_name: event.target.value});
         }  
     }
 
     handleCatpic(event) {
         if (event.target.files[0].size < 1000000) {
-            this.setState({catpic_file_name: event.target.files[0]});
+            this.setState({ catpic_url: event.target.files[0], catpic_name: event.target.files[0].name });
         } else {
             alert("The picture you uploaded exceeded the max size of 1Mb (" + (event.target.files[0].size / 1000) + "ko)");
         }
     }
 
     handleSubmit(event) {
-        if (!this.state.name || this.state.name.length < 2 || this.state.name.length > 30) {
+        if (!this.state.cat_name || this.state.cat_name.length < 2 || this.state.cat_name.length > 30) {
             alert("A category name must be at least 2 characters long and at most 30 characters.")
             event.preventDefault();
         }
     }
 
     render() {
-        const page_title = (!this.category) ? "New category" : "Edit category";
-        const form_action = (this.category) ? ("/categories/" + this.category.id) : ("/categories");
-        const input_edit = (this.category) ? React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'}) : null;
+        const form_action = this.state.category_id ? ("/categories/" + this.state.category_id) : ("/categories");
+        const input_edit = this.state.category_id ? React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'}) : null;
+        const catpic_info = this.state.category_id ? (this.state.catpic_url == this.state.prev_catpic_url ? 
+                                                        (<div><p>Current picture:</p><img src={this.state.catpic_url} /></div>) :
+                                                        (<p>Picture about to be uploaded: {this.state.catpic_name}</p>)
+                                                    ) :
+                                                        (this.state.catpic_url ? (<p>Picture about to be uploaded: {this.state.catpic_name}</p>) : null);
+
         return (
             <div>
-                <h1>{page_title}</h1>
-                <ErrorsComponent errors={this.errors} model={"category"} />
+                <h1>{ this.state.category_id ? "Edit category" : "New category"}</h1>
+                { this.state.errors ? (<ErrorsComponent errors={this.state.errors} model={"category"} />) : null }
                 <form encType="multipart/form-data" action={form_action} method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
                     <input name="utf8" type="hidden" value="✓" />
-                    <input type="hidden" name="authenticity_token" value={this.token} readOnly={true} />
+                    <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />
                     {input_edit}
                     <div className="field">
                         <label htmlFor="category_name">Name</label>
-                        <input id="category_name" type="text" name="category[name]" value={this.state.name || ''} onChange={this.handleNameChange} />
+                        <input id="category_name" type="text" name="category[name]" value={this.state.cat_name} onChange={this.handleNameChange} />
                     </div>
+
+                    { catpic_info }
+
                     <p>
                         <label htmlFor="category_upload_picture">Upload picture</label>
                         <input id="category_catpic" accept=".png, .jpg, .jpeg" type="file" name="category[catpic]" onChange={this.handleCatpic} />
                     </p>
                     <div className="actions">
-                        <input type="submit" name="commit" value="Submit" />
+                        <input type="submit" name="commit" value={ this.state.category_id ? "Edit category" : "Create category"} />
                     </div>
                 </form>
             </div>
@@ -64,16 +92,4 @@ class CategoryForm extends React.Component {
     }
 }
 
-document.addEventListener('turbolinks:load', () => {
-  if (document.getElementById('category_form')) {
-    const category = document.getElementById('category_instance') ?
-                     JSON.parse(document.getElementById('category_instance').getAttribute('data')) : null;
-    const csrf_token = document.getElementById('csrf_token').getAttribute('data').split('content=')[2].slice(1, -4);
-    const errors = JSON.parse(document.getElementById('category_errors').getAttribute('data')).length > 0 ?
-                   JSON.parse(document.getElementById('category_errors').getAttribute('data')) : null;
-    ReactDOM.render(
-        <CategoryForm data={category} token={csrf_token} errs={errors} />,
-        document.getElementById('category_form')
-    )
-  }
-})
+export default CategoryForm;

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/packs-test/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 424);
+/******/ 	return __webpack_require__(__webpack_require__.s = 423);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -22535,8 +22535,7 @@ module.exports = ReactDOMInvalidARIAHook;
 /* 420 */,
 /* 421 */,
 /* 422 */,
-/* 423 */,
-/* 424 */
+/* 423 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -22556,96 +22555,80 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-var LoginForm = function (_React$Component) {
-    _inherits(LoginForm, _React$Component);
+var EditDeletePicture = function EditDeletePicture(props) {
+  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    'p',
+    null,
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      'a',
+      { href: "/categories/" + props.cat_id + "/pictures/" + props.pic_id + "/edit" },
+      'Edit picture'
+    ),
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      'a',
+      { href: "/categories/" + props.cat_id + "/pictures/" + props.pic_id, 'data-method': 'delete' },
+      'Delete picture'
+    )
+  );
+};
 
-    function LoginForm(props) {
-        _classCallCheck(this, LoginForm);
+var PictureDetails = function (_React$Component) {
+  _inherits(PictureDetails, _React$Component);
 
-        var _this = _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).call(this, props));
+  function PictureDetails() {
+    _classCallCheck(this, PictureDetails);
 
-        _this.state = { email: '', password: '' };
-        _this.handleEmailChange = _this.handleEmailChange.bind(_this);
-        _this.handlePasswordChange = _this.handlePasswordChange.bind(_this);
-        _this.handleSubmit = _this.handleSubmit.bind(_this);
-        return _this;
+    return _possibleConstructorReturn(this, (PictureDetails.__proto__ || Object.getPrototypeOf(PictureDetails)).apply(this, arguments));
+  }
+
+  _createClass(PictureDetails, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      this.setState({ title: '', description: '', category_name: '', pic_url: '' });
     }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var url = '/categories/' + this.props.match.params.category_id + '/pictures/' + this.props.match.params.picture_id + '.json';
+      fetch(url).then(function (resp) {
+        return resp.json();
+      }).then(function (picture) {
+        this.setState({ title: picture.title,
+          description: picture.description,
+          category_name: picture.category.name, // see show.json.builder
+          pic_url: picture.pic_url.medium }); // see show.json.builder
+      }.bind(this));
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { id: 'picture_details' },
+        this.props.user && this.props.user.superadmin ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(EditDeletePicture, { cat_id: this.props.match.params.category_id, pic_id: this.props.match.params.picture_id }) : null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: this.state.pic_url }),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'p',
+          null,
+          this.state.category_name,
+          ' | ',
+          this.state.title,
+          ' | ',
+          this.state.description
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'p',
+          null,
+          '(c) Eugenie Le Moulec - all rights reserved'
+        )
+      );
+    }
+  }]);
 
-    _createClass(LoginForm, [{
-        key: 'handleEmailChange',
-        value: function handleEmailChange(event) {
-            this.setState({ email: event.target.value });
-        }
-    }, {
-        key: 'handlePasswordChange',
-        value: function handlePasswordChange(event) {
-            this.setState({ password: event.target.value });
-        }
-    }, {
-        key: 'handleSubmit',
-        value: function handleSubmit(event) {
-            var alerts = "";
-            if (!this.state.email || this.state.email.length > 255 || this.state.email.match(/\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i) !== null) {
-                alerts += "Please enter a valid email address. ";
-            }
-            if (!this.state.password || this.state.password.length < 6) {
-                alerts += "Your password must be at least 6 characters long. ";
-            }
-            if (alerts) {
-                alert(alerts);
-                event.preventDefault();
-            }
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'h1',
-                    null,
-                    'Login'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'form',
-                    { action: '/login', method: 'post', acceptCharset: 'UTF-8', onSubmit: this.handleSubmit },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'utf8', type: 'hidden', value: '\u2713' }),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'hidden', name: 'authenticity_token', value: this.props.token, readOnly: true }),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'field' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'session_email' },
-                            'Email'
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'user_email', type: 'email', name: 'session[email]', value: this.state.email || '', onChange: this.handleEmailChange })
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'field' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'session_password' },
-                            'Password'
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'user_password', type: 'password', name: 'session[password]', value: this.state.password || '', onChange: this.handlePasswordChange })
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'actions' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'submit', name: 'commit', value: 'Log in' })
-                    )
-                )
-            );
-        }
-    }]);
-
-    return LoginForm;
+  return PictureDetails;
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (LoginForm);
+/* harmony default export */ __webpack_exports__["default"] = (PictureDetails);
 
 /***/ })
 /******/ ]);

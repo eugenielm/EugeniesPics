@@ -1,18 +1,19 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import ErrorsComponent from './ErrorsComponent'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ErrorsComponent from './ErrorsComponent';
 
 class UserForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.token = props.token;
-        this.user = props.u.id ? props.u : null;
-        this.errors = props.errs ? props.errs : null;
-        this.state = {username: props.u.username,
-                      email: props.u.email,
-                      password: "",
-                      password_confirmation: "",
-                      superadmin: false};
+
+    componentWillMount() {
+        this.setState({ token: this.props.token,
+                        errors: this.props.user_errors || null,
+                        id: this.props.user_data.id || null,
+                        username: this.props.user_data.username || '',
+                        email: this.props.user_data.email || '',
+                        password: '',
+                        password_confirmation: '',
+                        user: this.props.user,
+                        })
         this.handleUsername = this.handleUsername.bind(this);
         this.handleEmail = this.handleEmail.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
@@ -59,16 +60,17 @@ class UserForm extends React.Component {
     }
 
     render() {
-        const page_title = !this.user ? "New user" : "Edit user";
-        const form_action = this.user ? ("/users/" + this.user.id) : ("/users");
-        const input_edit = this.user ? React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'}) : null;
+        const page_title = !this.state.id ? "Create user" : "Edit user";
+        const form_action = this.state.id ? ("/users/" + this.state.id) : ("/users");
+        const input_edit = this.state.id ? React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'}) : null;
         return (
             <div>
                 <h1>{page_title}</h1>
-                <ErrorsComponent errors={this.errors} model={"user"} />
+                <p>{ (this.state.user && this.state.user.superadmin) ? <a href="/users">Back to all users</a> : null }</p>
+                <ErrorsComponent errors={this.state.errors} model={"user"} />
                 <form encType="multipart/form-data" action={form_action} method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
                     <input name="utf8" type="hidden" value="✓" />
-                    <input type="hidden" name="authenticity_token" value={this.token} readOnly={true} />
+                    <input type="hidden" name="authenticity_token" value={this.state.token} readOnly={true} />
                     {input_edit}
 
                     <p>
@@ -91,7 +93,7 @@ class UserForm extends React.Component {
                         <input id="user_password_confirmation" type="password" name="user[password_confirmation]" value={this.state.password_confirmation || ''} onChange={this.handlePasswordConfirmation} />
                     </p>
                     <div className="actions">
-                        <input type="submit" name="commit" value="Submit" />
+                        <input type="submit" name="commit" value={this.state.id ? "Submit changes" : "Create user"} />
                     </div>
                 </form>
             </div>
@@ -99,15 +101,4 @@ class UserForm extends React.Component {
     }
 }
 
-document.addEventListener('turbolinks:load', () => {
-  if (document.getElementById('user_form')) {
-    const user = document.getElementById('user_instance') ?
-                 JSON.parse(document.getElementById('user_instance').getAttribute('data')) : null;
-    const errors = JSON.parse(document.getElementById('user_errors').getAttribute('data')).length > 0 ? JSON.parse(document.getElementById('user_errors').getAttribute('data')) : null;
-    const csrf_token = document.getElementById('csrf_token').getAttribute('data').split('content=')[2].slice(1, -4);
-    ReactDOM.render(
-        <UserForm u={user} token={csrf_token} errs={errors} />,
-        document.getElementById('user_form')
-    )
-  }
-});
+export default UserForm;

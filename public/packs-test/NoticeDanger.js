@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/packs-test/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 424);
+/******/ 	return __webpack_require__(__webpack_require__.s = 429);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -22536,7 +22536,12 @@ module.exports = ReactDOMInvalidARIAHook;
 /* 421 */,
 /* 422 */,
 /* 423 */,
-/* 424 */
+/* 424 */,
+/* 425 */,
+/* 426 */,
+/* 427 */,
+/* 428 */,
+/* 429 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -22556,96 +22561,58 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-var LoginForm = function (_React$Component) {
-    _inherits(LoginForm, _React$Component);
+var SingleNotice = function SingleNotice(props) {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'p',
+        null,
+        props.flash
+    );
+};
 
-    function LoginForm(props) {
-        _classCallCheck(this, LoginForm);
+var NoticeDanger = function (_React$Component) {
+    _inherits(NoticeDanger, _React$Component);
 
-        var _this = _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).call(this, props));
+    function NoticeDanger() {
+        _classCallCheck(this, NoticeDanger);
 
-        _this.state = { email: '', password: '' };
-        _this.handleEmailChange = _this.handleEmailChange.bind(_this);
-        _this.handlePasswordChange = _this.handlePasswordChange.bind(_this);
-        _this.handleSubmit = _this.handleSubmit.bind(_this);
-        return _this;
+        return _possibleConstructorReturn(this, (NoticeDanger.__proto__ || Object.getPrototypeOf(NoticeDanger)).apply(this, arguments));
     }
 
-    _createClass(LoginForm, [{
-        key: 'handleEmailChange',
-        value: function handleEmailChange(event) {
-            this.setState({ email: event.target.value });
+    _createClass(NoticeDanger, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            this.setState({ flash_danger: this.props.flash_danger,
+                display: true });
         }
     }, {
-        key: 'handlePasswordChange',
-        value: function handlePasswordChange(event) {
-            this.setState({ password: event.target.value });
-        }
-    }, {
-        key: 'handleSubmit',
-        value: function handleSubmit(event) {
-            var alerts = "";
-            if (!this.state.email || this.state.email.length > 255 || this.state.email.match(/\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i) !== null) {
-                alerts += "Please enter a valid email address. ";
-            }
-            if (!this.state.password || this.state.password.length < 6) {
-                alerts += "Your password must be at least 6 characters long. ";
-            }
-            if (alerts) {
-                alert(alerts);
-                event.preventDefault();
-            }
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            window.setTimeout(function () {
+                this.setState({ flash_danger: null, display: false });
+            }.bind(this), 10000);
         }
     }, {
         key: 'render',
         value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'h1',
-                    null,
-                    'Login'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'form',
-                    { action: '/login', method: 'post', acceptCharset: 'UTF-8', onSubmit: this.handleSubmit },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'utf8', type: 'hidden', value: '\u2713' }),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'hidden', name: 'authenticity_token', value: this.props.token, readOnly: true }),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'field' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'session_email' },
-                            'Email'
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'user_email', type: 'email', name: 'session[email]', value: this.state.email || '', onChange: this.handleEmailChange })
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'field' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'session_password' },
-                            'Password'
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'user_password', type: 'password', name: 'session[password]', value: this.state.password || '', onChange: this.handlePasswordChange })
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'actions' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'submit', name: 'commit', value: 'Log in' })
-                    )
-                )
-            );
+            var _this2 = this;
+
+            if (this.state.display) {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { id: 'notice_danger' },
+                    this.state.flash_danger.map(function (f) {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(SingleNotice, { key: _this2.state.flash_danger.indexOf(f), flash: f });
+                    })
+                );
+            }
+            return null;
         }
     }]);
 
-    return LoginForm;
+    return NoticeDanger;
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (LoginForm);
+/* harmony default export */ __webpack_exports__["default"] = (NoticeDanger);
 
 /***/ })
 /******/ ]);
