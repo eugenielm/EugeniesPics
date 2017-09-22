@@ -13,3 +13,52 @@
  *= require_tree .
  *= require_self
  */
+
+ 
+/* html {
+    height: 100%;
+    width: 100%;
+}
+
+body { min-width: 100% } */
+
+#app-container {
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+  }
+
+/* NAVBAR SECTION */
+
+span.active.navbar-brand {
+    color: white;
+    background: #3c3c3c;
+}
+span.active.navbar-brand:hover {
+    background: #3c3c3c;
+}
+
+/* navbar dropdown menu */
+div.navbar-collapse.collapse > ul.nav.navbar-nav > li.dropdown > a:hover { background-image: linear-gradient(to bottom,#3c3c3c 0,#222 100%) }
+div.navbar-collapse.collapse > ul.nav.navbar-nav > li.dropdown.open > a { background-image: linear-gradient(to bottom,#3c3c3c 0,#222 100%) }
+/* navbar dropdown menu when active */
+li.active.dropdown a#categories-nav-dropdown { background: #3c3c3c }
+/* navbar dropdown menu categories when active */
+div.navbar-collapse.collapse > ul.nav.navbar-nav > li.active > a { background: #3c3c3c }
+
+/* Page header */
+#page-header {
+    text-align: center;
+    background: #D2C1C1;
+    padding: 20px;
+}
+
+.navbar {
+    background-color: #D2C1C1;
+    max-width: 280px;
+    margin: 0px auto;
+}
+
+#id-button {
+    float: right;
+}

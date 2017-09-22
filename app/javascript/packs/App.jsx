@@ -19,7 +19,7 @@ import NoticeDanger from './NoticeDanger';
 
 const App = (props) => (
     <Router>
-      <div>
+      <div id="app-container">
         <Route path="/" render={(props2) => <Navibar {...props} {...props2} />} />
         { props.flash_danger.length > 0 ? (<NoticeDanger flash_danger={props.flash_danger} />) : null }
         { props.flash_info.length > 0 ? (<NoticeInfo flash_info={props.flash_info} />) : null }
@@ -75,6 +75,6 @@ document.addEventListener('turbolinks:load', () => {
          picture_data={picture_data}
          flash_info={flash_info}
          flash_danger={flash_danger} />, 
-    document.getElementById('app')
+    document.getElementById('app-component')
   );
 })

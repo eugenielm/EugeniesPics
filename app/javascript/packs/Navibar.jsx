@@ -1,59 +1,97 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
+import { Button, ButtonGroup, ButtonToolbar, SplitButton, MenuItem, Navbar, Nav, NavItem, NavDropdown, Jumbotron, Grid, Row, Col, Well, PageHeader } from 'react-bootstrap';
+import { LinkContainer, IndexLinkContainer } from 'react-router-bootstrap';
+
+
+const CategoriesDropdownElement = (props) => {
+  return (<LinkContainer to={'/categories/' + props.cat_id + '/pictures'}>
+            <MenuItem bsSize="small" eventKey={"1." + (2 + props.index).toString()} active={props.path == '/categories/' + props.cat_id + '/pictures' ? true : false}>
+              {props.cat_name}
+            </MenuItem>
+          </LinkContainer>);
+}
 
 
 class Navibar extends React.Component {
 
-  componentWillMount() {
-    this.setState({ catLink: null, pathParams: this.props.location.pathname.split('/').slice(1) });
+  constructor(props) {
+    super(props);
+    this.state = {categories: [], path: this.props.location.pathname, dropdownOpen: false};
+    this.handleDropdown = this.handleDropdown.bind(this);
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
   componentDidMount() {
-    if (!this.state.catLink && this.state.pathParams.length > 3) {
-      const category_id = this.state.pathParams[1];
-      fetch('/categories/' + category_id + '/pictures.json')
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(catData) {
-        catData.pop();
-        const category_name = catData.pop();
-        this.setState({ catLink: (<a href={"/categories/" + category_id + "/pictures"}>Back to {category_name}</a>) })
-      }.bind(this));
-    }
+    fetch('/categories.json')
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(catData) {
+      this.setState({ categories: catData })
+    }.bind(this));
   }
 
   componentWillReceiveProps(nextProps) {
-    const newPathParams = nextProps.location.pathname.split('/').slice(1);
-    this.setState({ pathParams: newPathParams });
-    if (this.state.catLink && newPathParams.length < 4) {
-      this.setState({ catLink: null });
-    } 
-    if (!this.state.catLink && newPathParams.length > 3) {
-      const category_id = newPathParams[1];
-      fetch('/categories/' + category_id + '/pictures.json')
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(catData) {
-        catData.pop();
-        const category_name = catData.pop();
-        this.setState({ catLink: (<Link to={"/categories/" + category_id + "/pictures"}>Back to {category_name}</Link>) })
-      }.bind(this))
-    }
+    this.setState({ path: nextProps.location.pathname, dropdownOpen: false })
+  }
+
+  handleDropdown() {
+    this.setState({ dropdownOpen: !this.state.dropdownOpen })
+  }
+
+  handleOpen() {
+    this.setState({ dropdownOpen: true })
+  }
+
+  handleClose() {
+    this.setState({ dropdownOpen: false })
   }
 
   render () {
-    const path = window.location.pathname;
+
+    const dropdown = <NavDropdown eventKey={1} title="Going places" id="categories-nav-dropdown" noCaret onToggle={this.handleDropdown}
+                      onMouseEnter={ this.handleOpen } onMouseLeave={ this.handleClose } open={this.state.dropdownOpen}
+                      active={!(this.state.path == '/' || this.state.path == '/about') ? true : false} >
+                      { this.state.path == '/categories' ?
+                        <MenuItem eventKey={1.1} href="/categories" active={true}>Overview</MenuItem>
+                        :
+                        <IndexLinkContainer to='/categories'>
+                          <MenuItem eventKey={1.1}>Overview</MenuItem>
+                        </IndexLinkContainer>
+                      }
+                        <MenuItem divider />
+                        { this.state.categories.map(c => <CategoriesDropdownElement key={c.id} cat_id={c.id} cat_name={c.name} path={this.state.path} index={this.state.categories.indexOf(c)} />) }
+                    </NavDropdown>
+
     return (
-      <div>
-        <Link to="/">Home</Link>
-        {path == '/categories' ? <a href="/categories">Going places</a> : <Link to="/categories">Going places</Link>}
-        {this.state.catLink}
-        <Link to="/about">About me</Link>
-        {this.props.user ? <a data-method="delete" href="/logout">Log out</a> : null}
+
+      <div id="page-header">
+        { this.props.user ? <Button id="id-button" bsStyle="default" bsSize="small" data-method="delete" href="/logout">Log out</Button> : null }
+        <p>EUGENIE'S PICS</p>
+        <p>Photographs by Eugénie Le Moulec</p>
+     
+        <Navbar inverse collapseOnSelect>
+          <Navbar.Header>
+            <IndexLinkContainer to='/'>
+              <Navbar.Brand>Home</Navbar.Brand>
+            </IndexLinkContainer>
+            <Navbar.Toggle />
+          </Navbar.Header>
+
+          <Navbar.Collapse>
+            <Nav>
+              {dropdown}
+              <LinkContainer to='/about'>
+                <NavItem eventKey={2}>About</NavItem>
+              </LinkContainer>
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
       </div>
+
     )
   }
 };
