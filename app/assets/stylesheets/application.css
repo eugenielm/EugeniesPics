@@ -19,7 +19,7 @@
 #page-header {
     text-align: center;
     background: #e8dede;
-    padding: 20px;
+    padding: 15px 15px 5px 15px;
 }
 
 a#home-link {
@@ -37,9 +37,54 @@ a.active.btn.btn-default, a.btn.btn-default:hover {
     color: #09a2a9;
 }
 
-#id-button {
+#logout-button {
     position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;
+    top: 110px;
+    right: 2px;
+    color: white;
+}
+
+#menuitems a, #menuitems li > a {
+    font-family: ubuntu;
+    text-decoration: overline;
+}
+
+#allcats { 
+    display: inline;
+ }
+
+button#allcats {
+    background: #e8dede;
+    border-color: #fff2f2;
+    box-shadow: none;
+    padding: 3px 6px 0px 6px;
+}
+
+ul.dropdown-menu.dropdown-menu-right > li.active > a {
+    background: #d6b9b9;
+}
+
+#site-name {
+    font-family: italiana;
+    font-size: 2em;
+}
+
+#site-name-2 {
+    font-family: italiana;
+    font-size: 1.2em;
+}
+
+/* Fonts from fontsquirrel.com */
+@font-face {
+    font-family: 'italiana';
+    src: url('italiana-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ubuntu';
+    src: url('UbuntuMono-R.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
