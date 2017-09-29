@@ -14,6 +14,39 @@
  *= require_self
  */
 
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    margin: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+div#app-component {
+    width: 100%;
+    height: 100%;
+}
+
+#app-container {
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    height: 100%;
+    background-color: #f3f3f3;
+}
+
+
+/* Admin buttons */
+#logout-button {
+    position: fixed;
+    top: 110px;
+    left: 2px;
+    color: white;
+}
+
+
 /* Page header */
 
 #page-header {
@@ -35,13 +68,6 @@ a.btn.btn-default, a.active.btn.btn-default, a.btn.btn-default:active {
 
 a.active.btn.btn-default, a.btn.btn-default:hover {
     color: #09a2a9;
-}
-
-#logout-button {
-    position: fixed;
-    top: 110px;
-    right: 2px;
-    color: white;
 }
 
 #menuitems a, #menuitems li > a {
@@ -87,4 +113,54 @@ ul.dropdown-menu.dropdown-menu-right > li.active > a {
     src: url('UbuntuMono-R.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
+}
+
+/* Home / index page */
+
+#home-page {
+    text-align: center;
+    width: 98%;
+    margin: auto;
+    height: 65vh;
+}
+
+div#home-page-title {
+    font-size: 1.2em;
+    margin: 1vh;
+}
+
+div#pic-element {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+    width: 1100px;
+    height: 1100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+div#catname {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+div#displayed-pic {
+    width: 1000px;
+    height: 1000px;
+    margin: auto;
+    max-height: 90%;
+    max-width: 90%;
+    position: relative;
+}
+
+div#displayed-pic img { 
+    max-height: 100%;
+    max-width: 100%;
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
 }

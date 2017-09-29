@@ -25,6 +25,7 @@ const App = (props) => (
         { props.flash_info.length > 0 ? (<NoticeInfo flash_info={props.flash_info} />) : null }
         <Switch>
           <Route exact path="/" component={HomePage}/>
+          <Route exact path="/index" component={HomePage} />
           <Route exact path="/about" component={AboutPage}/>
           <Route exact path="/categories" render={(props2) => props.category_errors ? (<CategoryForm {...props} {...props2} />) : (<CategoriesIndex {...props} {...props2} />)} />
           <Route exact path="/categories/new" render={(props2) => <CategoryForm {...props} {...props2} />}/>
