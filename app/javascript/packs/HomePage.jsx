@@ -2,25 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 
-
-const PicElement = props => {
-    return  (
-            <div id="pic-element">
-                <div id="displayed-pic">
-                    <Link to={"/categories/" + (props.picture.selectionPicCatId) + "/pictures"}>
-                        <img src={props.picture.selectionPicUrl} />
-                    </Link>
-                </div>
-                <div id="catname">{props.picture.selectionPicCatName}</div>
-            </div>
-            );
-};
-
 class HomePage extends React.Component {
 
     componentWillMount() {
         this.setState({ picsSelection: [], picIndex: 0 });
         this.changePic = this.changePic.bind(this);
+        this.changeSlides = this.changeSlides.bind(this);
         this.timer = setInterval(this.changePic, 5000);
     }
 
@@ -30,6 +17,24 @@ class HomePage extends React.Component {
         } else {
             this.setState({ picIndex: 0 })
         }
+    }
+
+    changeSlides(n) {
+        clearInterval(this.timer);
+        if (n == 1) {
+            if (this.state.picIndex < this.state.picsSelection.length - 1) {
+                this.setState({ picIndex: this.state.picIndex + 1 });
+            } else {
+                this.setState({ picIndex: 0 });
+            }
+        } else {
+            if (this.state.picIndex == 0) {
+                this.setState({ picIndex: this.state.picsSelection.length - 1 });
+            } else {
+                this.setState({ picIndex: this.state.picIndex - 1 });
+            }
+        }
+        this.timer = setInterval(this.changePic, 5000);
     }
 
     componentDidMount() {
@@ -50,8 +55,16 @@ class HomePage extends React.Component {
         return (
             <div id="home-page">
                 <div id="home-page-title">Welcome to Eugénie's photography gallery!</div>
+                
                 {this.state.picsSelection.length > 0 ?
-                    <PicElement picture={this.state.picsSelection[this.state.picIndex]} />
+                    (<div id="pic-element">
+                        <Link to={"/categories/" + (this.state.picsSelection[this.state.picIndex].selectionPicCatId) + "/pictures"}>
+                            <img src={this.state.picsSelection[this.state.picIndex].selectionPicUrl} />
+                            <div id="category_name">{this.state.picsSelection[this.state.picIndex].selectionPicCatName.toUpperCase()}</div>
+                        </Link>
+                        <div className="prev" onClick={() => this.changeSlides(-1)}><span className="glyphicon glyphicon-chevron-left"></span></div>
+                        <div className="next" onClick={() => this.changeSlides(1)}><span className="glyphicon glyphicon-chevron-right"></span></div>
+                    </div>)
                     : null
                 }
             </div>

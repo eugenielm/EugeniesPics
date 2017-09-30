@@ -41,7 +41,7 @@ div#app-component {
 /* Admin buttons */
 #logout-button {
     position: fixed;
-    top: 110px;
+    top: 75px;
     left: 2px;
     color: white;
 }
@@ -121,46 +121,73 @@ ul.dropdown-menu.dropdown-menu-right > li.active > a {
     text-align: center;
     width: 98%;
     margin: auto;
-    height: 65vh;
+    height: 70vh;
 }
 
 div#home-page-title {
-    font-size: 1.2em;
-    margin: 1vh;
+    font-size: large;
+    margin: 2vh;
 }
 
 div#pic-element {
     position: relative;
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 95%;
+    max-height: 95%;
     margin: auto;
-    width: 1100px;
-    height: 1100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-div#catname {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
-}
-
-div#displayed-pic {
     width: 1000px;
     height: 1000px;
-    margin: auto;
-    max-height: 90%;
-    max-width: 90%;
-    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 20px;
+    background-color: white;
 }
 
-div#displayed-pic img { 
-    max-height: 100%;
-    max-width: 100%;
+div#pic-element img { 
+    max-height: 95%;
+    max-width: 95%;
     margin: auto;
     position: absolute;
     top: 0; left: 0; bottom: 0; right: 0;
+    box-shadow: 5px 5px 12px darkgrey;
+}
+
+#category_name {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    opacity: 0.5;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 105%;
+    font-size: 3em;
+    font-family: ubuntu;
+    font: black;
+    border-top: solid thin #d8d8d8;
+    border-bottom: solid thin #d8d8d8;
+}
+
+.next, .prev { 
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    right: -2px;
+    z-index: 10;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
+
+.prev { left: -2px; }
+
+.next { right: -2px; }
+
+.prev span, .next span { top: 10%; }
+
+.next:hover, .prev:hover {
+    background-color: #e8dede;
+    opacity: 0.5;
+    cursor: pointer;
 }
