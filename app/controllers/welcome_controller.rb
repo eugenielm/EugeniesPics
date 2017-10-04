@@ -4,10 +4,10 @@ class WelcomeController < ApplicationController
     
     Category.all.each do |cat|
       randomPicId = cat.pictures.ids.sample(1)[0] # sample() returns a list
-      randomPic = Picture.find(randomPicId)
-      @picsSelection.push({selectionPicUrl: randomPic.picfile.url(:medium),
-                           selectionPicCatId: randomPic.category_id,
-                           selectionPicCatName: randomPic.category.name})
+      selectionPicUrl = randomPicId ? Picture.find(randomPicId).picfile.url(:medium) : cat.catpic.url(:medium)
+      @picsSelection.push({selectionPicUrl: selectionPicUrl,
+                           selectionPicCatId: cat.id,
+                           selectionPicCatName: cat.name})
     end
 
     if @picsSelection.empty?
