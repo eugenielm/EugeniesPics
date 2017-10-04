@@ -76,7 +76,7 @@ class Navibar extends React.Component {
             
         </div>
                   
-        { this.props.user ? <Button id="logout-button" bsStyle="primary" bsSize="small" data-method="delete" href="/logout">Log out</Button> : null }
+        { this.props.user ? <Button id="logout-button" bsStyle="danger" bsSize="xsmall" data-method="delete" href="/logout">Log out</Button> : null }
       </div>
 
     )
