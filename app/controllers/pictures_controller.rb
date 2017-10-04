@@ -10,7 +10,8 @@ class PicturesController < ApplicationController
         id: pic.id,
         title: pic.title,
         category_name: pic.category.name,
-        pic_url: pic.picfile.url,
+        pic_url_small: pic.picfile.url(:small),
+        pic_url_medium: pic.picfile.url(:medium),
       })
     end
     @pictures.push(@category.name)
