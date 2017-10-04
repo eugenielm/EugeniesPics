@@ -207,6 +207,29 @@ div#pic-element a:hover img, div#pic-element a:hover #category-name { opacity: 0
     padding: 5px;
 }
 
+*[id^="category_"] img {
+    max-height: 95%;
+    max-width: 95%;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+*[id^="category_"] #catname {
+    position: absolute;
+    display: block;
+    bottom: 20px; left: 0; right: 0;
+    z-index: 10;
+    background-color: #f3f3f3;
+    opacity: 0.8;
+    width: 60%;
+    margin: auto;
+    font-family: ubuntu;
+    font-size: 1em;
+}
+
 .cat_pic {
     height: 100%;
     width: 100%;
@@ -227,20 +250,23 @@ div#pic-element a:hover img, div#pic-element a:hover #category-name { opacity: 0
 
 .cat_pic:hover img { opacity: 0.8 }
 
-*[id^="category_"] #catname {
+#edit-delete-cat {
     position: absolute;
-    display: block;
-    bottom: 20px; left: 0; right: 0;
-    z-index: 10;
-    background-color: #f3f3f3;
-    opacity: 0.8;
-    width: 60%;
-    margin: auto;
-    font-family: ubuntu;
-    font-size: 1em;
+    top: 5px; right: 5px;
 }
 
-*[id^="category_"] img {
+.edit-category { margin-right: 5px }
+
+
+/*********************************************************************/
+/* pictures index */
+
+.picture-element.col-lg-3.col-md-4.col-sm-6 {
+    height: 310px;
+    padding: 5px;
+}
+
+.picture-element img {
     max-height: 95%;
     max-width: 95%;
     margin: auto;
@@ -250,13 +276,27 @@ div#pic-element a:hover img, div#pic-element a:hover #category-name { opacity: 0
     transform: translate(-50%, -50%);
 }
 
-#edit-delete-cat {
+.picture_pic {
+    height: 100%;
+    width: 100%;
+    max-width: 310px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+    background-color: white;
+    border-radius: 3px;
+    position: relative;
+    box-shadow: 5px 5px 12px darkgrey;
+}
+
+.picture_pic:hover img { opacity: 0.8 }
+
+#edit-delete-pic {
     position: absolute;
     top: 5px; right: 5px;
 }
 
-.edit-category { margin-right: 5px }
-
+.edit-picture { margin-right: 5px }
 
 /*********************************************************************/
 /* Fonts from fontsquirrel.com */
