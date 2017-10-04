@@ -1,27 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
-
+import { Button, Grid, Row, Col, Image } from 'react-bootstrap';
 
 const EditDeleteCategory = props => {
     return (
-      <p>
-        <a href={ "/categories/" + props.cat_id + "/edit" }>Edit {props.cat_name} category</a>
-        <a href={ "/categories/" + props.cat_id } data-method="delete">Delete {props.cat_name} category</a>
-      </p>
+      <div id="edit-delete-cat">
+        <Button className="edit-category" bsSize="xsmall" bsStyle="info" href={ "/categories/" + props.cat_id + "/edit" }>Edit</Button>
+        <Button bsSize="xsmall" bsStyle="danger" href={ "/categories/" + props.cat_id } data-method="delete">Delete</Button>
+      </div>
     );
 };
 
 const CategoryComponent = props => {
   return (
-    <div id={"category_" + props.category.id}>
-      <p>{props.category.name}</p>
-      <p><Link to={"/categories/" + props.category.id + "/pictures"}>
-        <img src={props.category.catpic_url} alt={props.category.name + "'s category'"} />
-      </Link></p>
-      { (props.user && props.user.superadmin) ? (<EditDeleteCategory cat_id={props.category.id} cat_name={props.category.name} />) : null }
-      <br />
-    </div>
+    <Col lg={3} md={4} sm={6} id={"category_" + props.category.id}>
+      <div className="cat_pic">
+        <Link to={"/categories/" + props.category.id + "/pictures"}>
+          <p id="catname">{props.category.name}</p>
+          <Image src={props.category.catpic_url} alt={props.category.name + "'s category'"} responsive />
+        </Link>
+        { (props.user && props.user.superadmin) ?
+          (<EditDeleteCategory cat_id={props.category.id} />) : null }
+      </div>
+    </Col>
   );
 };
 
@@ -43,13 +45,14 @@ class CategoriesIndex extends React.Component {
   
   render() {
     return (
-      <div>
-          <h1>Going places</h1>
-          { (this.props.user && this.props.user.superadmin) ? (<p id="new_cat_link"><a href="/categories/new">New category</a></p>) : null }
-          <br />
-          <div id="all_categories">
-            { this.state.categories.map(c => <CategoryComponent user={this.props.user} key={c.id} category={c}/>) }
-          </div>
+      <div className="cats-and-pics-pages">
+          <div className="page-title">Going places</div>
+          { (this.props.user && this.props.user.superadmin) ? (<Button className="new-category-button" bsStyle="success" bsSize="xsmall" href="/categories/new">New category</Button>) : null }
+          <Grid>
+            <Row id="all_categories" className="show-grid">
+              { this.state.categories.map(c => <CategoryComponent user={this.props.user} key={c.id} category={c}/>) }
+            </Row>
+          </Grid>
       </div>
     );
   }

@@ -14,39 +14,58 @@
  *= require_self
  */
 
-html {
-    width: 100%;
-    height: 100%;
-}
+/*********************************************************************/
 
-body {
-    margin: 0px;
-    width: 100%;
-    height: 100%;
-}
+html { background-color: #f3f3f3 }
 
-div#app-component {
-    width: 100%;
-    height: 100%;
-}
+body { margin: 0px }
 
 #app-container {
     font-family: Arial, Helvetica, sans-serif;
-    width: 100%;
     height: 100%;
     background-color: #f3f3f3;
 }
 
-
+/*********************************************************************/
 /* Admin buttons */
+
 #logout-button {
-    position: fixed;
-    top: 75px;
+    position: absolute;
+    top: 83px;
     left: 2px;
     color: white;
 }
 
+a.new-category-button, a.new-picture-button {
+    color: white;
+    position: absolute;
+    left: 2px;
+    top: 111px
+}
 
+/*********************************************************************/
+/* all pages */
+
+a.btn { color: white }
+
+.page-title {
+    font-size: 1.5em;
+    margin: 1vh;
+    font-family: ubuntu;
+    text-decoration: overline;
+}
+
+.cats-and-pics-pages {
+    width: 98%;
+    margin: auto;
+    max-width: 1600px;
+    text-align: center;
+}
+
+.container { width: 94% }
+
+
+/*********************************************************************/
 /* Page header */
 
 #page-header {
@@ -59,6 +78,8 @@ a#home-link {
     text-decoration: none;
     color: black;
 }
+
+a.btn.btn-default { color: black; }
 
 a.btn.btn-default, a.active.btn.btn-default, a.btn.btn-default:active {
     background: #e8dede;
@@ -100,47 +121,29 @@ ul.dropdown-menu.dropdown-menu-right > li.active > a {
     font-size: 1.2em;
 }
 
-/* Fonts from fontsquirrel.com */
-@font-face {
-    font-family: 'italiana';
-    src: url('italiana-regular-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'ubuntu';
-    src: url('UbuntuMono-R.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
+/*********************************************************************/
 /* Home / index page */
 
 #home-page {
     text-align: center;
     width: 98%;
     margin: auto;
-    height: 70vh;
-}
-
-div#home-page-title {
-    font-size: large;
-    margin: 2vh;
+    height: 100%;
 }
 
 div#pic-element {
     position: relative;
     max-width: 95%;
-    max-height: 95%;
-    margin: auto;
+    max-height: 65vh;
+    margin: 2vh auto;
     width: 1000px;
     height: 1000px;
     display: inline-flex;
     flex-direction: column;
     justify-content: center;
-    border-radius: 20px;
+    border-radius: 10px;
     background-color: white;
+    box-shadow: 5px 5px 12px darkgrey;
 }
 
 div#pic-element img { 
@@ -149,10 +152,14 @@ div#pic-element img {
     margin: auto;
     position: absolute;
     top: 0; left: 0; bottom: 0; right: 0;
-    box-shadow: 5px 5px 12px darkgrey;
+    box-shadow: 2px 2px 10px darkgrey;
 }
 
-#category_name {
+div#pic-element a { color: black; }
+
+div#pic-element a:hover img, div#pic-element a:hover #category-name { opacity: 0.7; }
+
+#category-name {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -190,4 +197,79 @@ div#pic-element img {
     background-color: #e8dede;
     opacity: 0.5;
     cursor: pointer;
+}
+
+/*********************************************************************/
+/* categories index */
+
+*[id^="category_"].col-lg-3.col-md-4.col-sm-6 {
+    height: 310px;
+    padding: 5px;
+}
+
+.cat_pic {
+    height: 100%;
+    width: 100%;
+    max-width: 310px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+    background-color: white;
+    border-radius: 3px;
+    position: relative;
+    box-shadow: 5px 5px 12px darkgrey;
+}
+
+.cat_pic:hover #catname {
+    opacity: 1;
+    color: black;
+}
+
+.cat_pic:hover img { opacity: 0.8 }
+
+*[id^="category_"] #catname {
+    position: absolute;
+    display: block;
+    bottom: 20px; left: 0; right: 0;
+    z-index: 10;
+    background-color: #f3f3f3;
+    opacity: 0.8;
+    width: 60%;
+    margin: auto;
+    font-family: ubuntu;
+    font-size: 1em;
+}
+
+*[id^="category_"] img {
+    max-height: 95%;
+    max-width: 95%;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#edit-delete-cat {
+    position: absolute;
+    top: 5px; right: 5px;
+}
+
+.edit-category { margin-right: 5px }
+
+
+/*********************************************************************/
+/* Fonts from fontsquirrel.com */
+@font-face {
+    font-family: 'italiana';
+    src: url('italiana-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ubuntu';
+    src: url('UbuntuMono-R.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
