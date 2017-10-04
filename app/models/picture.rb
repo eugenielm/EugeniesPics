@@ -8,7 +8,7 @@ class Picture < ApplicationRecord
   validates :author, presence: true, length: { minimum: 2, maximum: 30 }
   validates :description, presence: true, length: { minimum: 4, maximum: 500 }
   # http://www.rubydoc.info/gems/paperclip/Paperclip/ClassMethods
-  has_attached_file :picfile, styles: { medium: "1000x800>", small: "200x160>" },
+  has_attached_file :picfile, styles: { medium: "1000x1000>", small: "300x300>" },
                     default_style: 'small'
   validates_attachment :picfile, presence: true,
                        size: { in: 0..1500.kilobytes }
