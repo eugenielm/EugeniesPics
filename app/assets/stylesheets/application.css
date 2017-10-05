@@ -362,6 +362,34 @@ button.close {
 #chevron-left, #chevron-right { top: 50% }
 
 /*********************************************************************/
+/* Forms */
+
+.form-layout, .user-info {
+    width: 90%;
+    max-width: 700px;
+    margin: auto;
+}
+
+.form-layout h2 { margin-bottom: 20vh }
+
+#picture_description { display: block }
+
+div.actions input {
+    border-radius: 3px;
+    color: white;
+    /* BS color 'success' style */
+    background-image: linear-gradient(to bottom,#5cb85c 0,#419641 100%);
+}
+
+button.back-link a {
+    color: white;
+    text-decoration: none;
+    background: none;
+}
+
+div.actions { margin-top: 20px }
+
+/*********************************************************************/
 /* Fonts from fontsquirrel.com */
 @font-face {
     font-family: 'italiana';

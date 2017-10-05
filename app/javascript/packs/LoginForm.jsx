@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Table } from 'react-bootstrap';
 
 class LoginForm extends React.Component {
     constructor(props) {
@@ -34,19 +35,26 @@ class LoginForm extends React.Component {
 
     render() {
         return (
-            <div>
-                <h1>Login</h1>
+            <div className="form-layout">
+                <h2>Login</h2>
                 <form action='/login' method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
                     <input name="utf8" type="hidden" value="✓" />
                     <input type="hidden" name="authenticity_token" value={this.props.token} readOnly={true} />
-                    <div className="field">
-                        <label htmlFor="session_email">Email</label>
-                        <input id="user_email" type="email" name="session[email]" value={this.state.email || ''} onChange={this.handleEmailChange} />
-                    </div>
-                    <div className="field">
-                        <label htmlFor="session_password">Password</label>
-                        <input id="user_password" type="password" name="session[password]" value={this.state.password || ''} onChange={this.handlePasswordChange} />
-                    </div>
+                    
+                    <Table>
+                        <tbody>
+                            <tr>
+                                <td><label htmlFor="session_email">Email</label></td>
+                                <td><input id="user_email" type="email" name="session[email]" value={this.state.email || ''} onChange={this.handleEmailChange} /></td>
+                            </tr>
+                            <tr>
+                                <td><label htmlFor="session_password">Password</label></td>
+                                <td><input id="user_password" type="password" name="session[password]" value={this.state.password || ''} onChange={this.handlePasswordChange} /></td>
+                            </tr>
+                            <tr><td></td><td></td></tr>
+                        </tbody>
+                    </Table>
+
                     <div className="actions">
                         <input type="submit" name="commit" value="Log in" />
                     </div>

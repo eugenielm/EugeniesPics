@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
+import { Button, Table } from 'react-bootstrap';
 import ErrorsComponent from './ErrorsComponent';
 
 class UserForm extends React.Component {
@@ -63,35 +65,38 @@ class UserForm extends React.Component {
         const page_title = !this.state.id ? "Create user" : "Edit user";
         const form_action = this.state.id ? ("/users/" + this.state.id) : ("/users");
         const input_edit = this.state.id ? React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'}) : null;
+        const back_to_users = this.state.user && this.state.user.superadmin ? <Button bsStyle="primary" bsSize="xsmall" className="back-link"><Link to="/users">See users list</Link></Button> : null;
         return (
-            <div>
-                <h1>{page_title}</h1>
-                <p>{ (this.state.user && this.state.user.superadmin) ? <a href="/users">Back to all users</a> : null }</p>
+            <div className="form-layout">
+                <h2>{page_title} {back_to_users}</h2>
                 <ErrorsComponent errors={this.state.errors} model={"user"} />
                 <form encType="multipart/form-data" action={form_action} method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
                     <input name="utf8" type="hidden" value="✓" />
                     <input type="hidden" name="authenticity_token" value={this.state.token} readOnly={true} />
                     {input_edit}
 
-                    <p>
-                        <label htmlFor="user_username">Username</label>
-                        <input id="user_username" type="text" name="user[username]" maxLength="72" value={this.state.username || ''} onChange={this.handleUsername} />
-                    </p>
+                    <Table>
+                        <tbody>
+                            <tr>
+                                <td><label htmlFor="user_username">Username</label></td>
+                                <td><input id="user_username" type="text" name="user[username]" maxLength="72" value={this.state.username || ''} onChange={this.handleUsername} /></td>
+                            </tr>
+                            <tr>
+                                <td><label htmlFor="user_email">Email address</label></td>
+                                <td><input id="user_email" type="email" name="user[email]" maxLength="255" value={this.state.email || ''} onChange={this.handleEmail} /></td>
+                            </tr>
+                            <tr>
+                                <td><label htmlFor="user_password">Password</label></td>
+                                <td><input id="user_password" type="password" name="user[password]" value={this.state.password || ''} onChange={this.handlePassword} /></td>
+                            </tr>
+                            <tr>
+                                <td><label htmlFor="user_password_confirmation">Password confirmation</label></td>
+                                <td><input id="user_password_confirmation" type="password" name="user[password_confirmation]" value={this.state.password_confirmation || ''} onChange={this.handlePasswordConfirmation} /></td>
+                            </tr>
+                            <tr><td></td><td></td></tr>
+                        </tbody>
+                    </Table>
 
-                    <p>
-                        <label htmlFor="user_email">Email address</label>
-                        <input id="user_email" type="email" name="user[email]" maxLength="255" value={this.state.email || ''} onChange={this.handleEmail} />
-                    </p>
-
-                    <p>
-                        <label htmlFor="user_password">Password</label>
-                        <input id="user_password" type="password" name="user[password]" value={this.state.password || ''} onChange={this.handlePassword} />
-                    </p>
-
-                    <p>
-                        <label htmlFor="user_password_confirmation">Password confirmation</label>
-                        <input id="user_password_confirmation" type="password" name="user[password_confirmation]" value={this.state.password_confirmation || ''} onChange={this.handlePasswordConfirmation} />
-                    </p>
                     <div className="actions">
                         <input type="submit" name="commit" value={this.state.id ? "Submit changes" : "Create user"} />
                     </div>
