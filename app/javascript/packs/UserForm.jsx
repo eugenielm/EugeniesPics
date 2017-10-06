@@ -75,7 +75,7 @@ class UserForm extends React.Component {
                     <input type="hidden" name="authenticity_token" value={this.state.token} readOnly={true} />
                     {input_edit}
 
-                    <Table>
+                    <Table responsive>
                         <tbody>
                             <tr>
                                 <td><label htmlFor="user_username">Username</label></td>

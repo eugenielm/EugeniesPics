@@ -75,7 +75,7 @@ class CategoryForm extends React.Component {
                     <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />
                     {input_edit}
                     
-                    <Table>
+                    <Table responsive>
                         <tbody>
                             <tr>
                                 <td><label htmlFor="category_name">Name</label></td>

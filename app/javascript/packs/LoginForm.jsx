@@ -41,7 +41,7 @@ class LoginForm extends React.Component {
                     <input name="utf8" type="hidden" value="✓" />
                     <input type="hidden" name="authenticity_token" value={this.props.token} readOnly={true} />
                     
-                    <Table>
+                    <Table responsive>
                         <tbody>
                             <tr>
                                 <td><label htmlFor="session_email">Email</label></td>

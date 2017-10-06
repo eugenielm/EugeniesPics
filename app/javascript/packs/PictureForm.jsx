@@ -127,7 +127,7 @@ class PictureForm extends React.Component {
                     <input type="hidden" name="authenticity_token" value={this.state.token} readOnly={true} />
                     {input_edit}
                     
-                    <Table>
+                    <Table responsive>
                         <tbody>
                             <tr>
                                 <td><label htmlFor="choose-cat" style={{display: "block"}}>Category</label>{newCatLink}</td>
