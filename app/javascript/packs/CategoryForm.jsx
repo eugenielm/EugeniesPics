@@ -68,7 +68,7 @@ class CategoryForm extends React.Component {
 
         return (
             <div className="form-layout">
-                <h2>{ this.state.category_id ? "Edit category" : "New category"} <Button bsStyle="primary" bsSize="xsmall" className="back-link"><Link to="/categories">Back to categories</Link></Button></h2>
+                <h2>{ this.state.category_id ? "Edit category" : "New category"} <Button bsStyle="primary" bsSize="xsmall" className="back-link" href="/categories">Back to categories</Button></h2>
                 { this.state.errors ? (<ErrorsComponent errors={this.state.errors} model={"category"} />) : null }
                 <form encType="multipart/form-data" action={form_action} method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
                     <input name="utf8" type="hidden" value="✓" />
