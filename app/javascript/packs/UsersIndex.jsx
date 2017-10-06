@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
+import { Button, Table } from 'react-bootstrap';
 
 const UserComponent = props => {
     const user = props.data;
@@ -11,9 +12,9 @@ const UserComponent = props => {
             <td>{user.email}</td>
             <td>{user.id}</td>
             <td>{admin}</td>
-            <td><Link to={ "/users/" + user.id } >View user</Link></td>
-            <td><a href={ "/users/" + user.id + "/edit" } >Edit user</a></td>
-            <td><a data-method="delete" href={ "/users/" + user.id } >Delete user</a></td>
+            <td style={{textAlign: "center"}}><Link to={ "/users/" + user.id } ><span className="glyphicon glyphicon-eye-open"></span></Link></td>
+            <td style={{textAlign: "center"}}><a href={ "/users/" + user.id + "/edit" } ><span className="glyphicon glyphicon-edit"></span></a></td>
+            <td style={{textAlign: "center"}}><a data-method="delete" href={ "/users/" + user.id } ><span className="glyphicon glyphicon-trash"></span></a></td>
         </tr>
     );
 };
@@ -35,22 +36,27 @@ class UsersIndex extends React.Component {
 
     render() {
         return (
-            <div>
-                <h1>Users</h1>
-                <p id="new_user_link"><a href="/users/new">New user</a></p>
-                <div id="all_users">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th>Username</th>
-                                <th>Email</th>
-                                <th>ID</th>
-                                <th>Admin</th>
-                            </tr>
-                            { this.state.users.map(user => <UserComponent key={user.id} data={user}/>) }
-                        </tbody>
-                    </table>
-                </div>
+            <div className="user-info">
+                <h2>Users <Button href="/users/new" bsSize="xsmall" bsStyle="success">New user</Button></h2>
+                <br/>
+
+                <Table striped bordered condensed hover responsive>
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>ID</th>
+                            <th>Admin</th>
+                            <th style={{textAlign: "center"}}>View User</th>
+                            <th style={{textAlign: "center"}}>Edit User</th>
+                            <th style={{textAlign: "center"}}>Delete User</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        { this.state.users.map(user => <UserComponent key={user.id} data={user}/>) }
+                    </tbody>
+                </Table>
+            
             </div>
         );
     }

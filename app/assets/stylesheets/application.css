@@ -362,6 +362,11 @@ button.close {
 #chevron-left, #chevron-right { top: 50% }
 
 /*********************************************************************/
+/* Users index and details */
+
+.user-info td > a:hover { background-color: transparent }
+
+/*********************************************************************/
 /* Forms */
 
 .form-layout, .user-info {
@@ -370,7 +375,7 @@ button.close {
     margin: auto;
 }
 
-.form-layout h2 { margin-bottom: 20vh }
+.form-layout h2 { margin-bottom: 15vh }
 
 #picture_description { display: block }
 
