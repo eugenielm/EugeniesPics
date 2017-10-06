@@ -1,40 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
+import { Carousel } from 'react-bootstrap';
+
+
+const CustomCarousel = props => {
+    return (
+        <Carousel.Item>
+            <img width={1000} height={800} src={props.url} alt={props.catname ? props.catname : 'no category'} />
+            <Carousel.Caption>
+                <h4>{props.catname ? props.catname : 'no category yet'}</h4>
+            </Carousel.Caption>
+        </Carousel.Item>
+    )
+};
 
 class HomePage extends React.Component {
 
     componentWillMount() {
-        this.setState({ picsSelection: [], picIndex: 0 });
-        this.changePic = this.changePic.bind(this);
-        this.changeSlides = this.changeSlides.bind(this);
-        this.timer = setInterval(this.changePic, 3000);
-    }
-
-    changePic() {
-        if (this.state.picIndex < this.state.picsSelection.length - 1) {
-            this.setState({ picIndex: this.state.picIndex + 1 })
-        } else {
-            this.setState({ picIndex: 0 })
-        }
-    }
-
-    changeSlides(n) {
-        clearInterval(this.timer);
-        if (n == 1) {
-            if (this.state.picIndex < this.state.picsSelection.length - 1) {
-                this.setState({ picIndex: this.state.picIndex + 1 });
-            } else {
-                this.setState({ picIndex: 0 });
-            }
-        } else {
-            if (this.state.picIndex == 0) {
-                this.setState({ picIndex: this.state.picsSelection.length - 1 });
-            } else {
-                this.setState({ picIndex: this.state.picIndex - 1 });
-            }
-        }
-        this.timer = setInterval(this.changePic, 3000);
+        this.setState({ picsSelection: [] });
     }
 
     componentDidMount() {
@@ -47,28 +31,29 @@ class HomePage extends React.Component {
         }.bind(this))
     }
 
-    componentWillUnmount() {
-        clearInterval(this.timer);
-    }
-
     render() {
         return (
             <div id="home-page">
                 <div className="page-title">Welcome!</div>
                 
                 {this.state.picsSelection.length > 0 ?
-                    (<div id="pic-element">
-                        <Link to={"/categories/" + (this.state.picsSelection[this.state.picIndex].selectionPicCatId) + "/pictures"}>
-                            <img src={this.state.picsSelection[this.state.picIndex].selectionPicUrl} />
-                            <div id="category-name">{this.state.picsSelection[this.state.picIndex].selectionPicCatName.toUpperCase()}</div>
-                        </Link>
-                        <div className="prev" onClick={() => this.changeSlides(-1)}><span className="glyphicon glyphicon-chevron-left"></span></div>
-                        <div className="next" onClick={() => this.changeSlides(1)}><span className="glyphicon glyphicon-chevron-right"></span></div>
-                    </div>)
+                    (<Carousel>
+                        {/* {this.state.picsSelection.map(p => <CustomCarousel url={p.selectionPicUrl}
+                                                                           catname={p.selectionPicCatName}
+                                                                           key={p.selectionPicCatId ? p.selectionPicCatId : 0} />)} */}
+                        {this.state.picsSelection.map(p => (<Carousel.Item key={p.selectionPicCatId ? p.selectionPicCatId : 0}>
+                                                                <img src={p.selectionPicUrl}
+                                                                     alt={p.selectionPicCatName ? p.selectionPicCatName : 'no category'} />
+                                                                <Carousel.Caption>
+                                                                    <p>{p.selectionPicCatName ? p.selectionPicCatName : 'no category yet'}</p>
+                                                                </Carousel.Caption>
+                                                            </Carousel.Item>)
+                        )}
+                    </Carousel>)
                     : null
                 }
             </div>
-        );
+        )
     }
 }
 

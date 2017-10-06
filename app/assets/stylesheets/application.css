@@ -131,72 +131,40 @@ ul.dropdown-menu.dropdown-menu-right > li.active > a {
     height: 100%;
 }
 
-div#pic-element {
-    position: relative;
-    max-width: 95%;
-    max-height: 65vh;
-    margin: 2vh auto;
+div.carousel.slide {
     width: 1000px;
     height: 1000px;
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: center;
-    border-radius: 10px;
-    background-color: white;
-    box-shadow: 5px 5px 12px darkgrey;
-}
-
-div#pic-element img { 
-    max-height: 95%;
     max-width: 95%;
-    margin: auto;
-    position: absolute;
-    top: 0; left: 0; bottom: 0; right: 0;
-    box-shadow: 2px 2px 10px darkgrey;
+    max-height: 65vh;
+    margin: 5vh auto;
+    background-color: #4c4c4c;
 }
 
-div#pic-element a { color: black; }
 
-div#pic-element a:hover img, div#pic-element a:hover #category-name { opacity: 0.7; }
+div.carousel.slide div.carousel-inner {
+    height: 100%;
+    width: 100%;
+}
 
-#category-name {
+div.carousel.slide div.carousel-inner div.item {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+div.carousel.slide div.carousel-inner div.item img {
+    max-width: 94%;
+    max-height: 94%;
     position: absolute;
-    top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    opacity: 0.5;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    width: 105%;
-    font-size: 3em;
-    font-family: ubuntu;
-    font: black;
-    border-top: solid thin #d8d8d8;
-    border-bottom: solid thin #d8d8d8;
-}
-
-.next, .prev { 
-    position: absolute;
     top: 50%;
-    transform: translate(0, -50%);
-    right: -2px;
-    z-index: 10;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
+    -webkit-transform: translateY(-50%) translateX(-50%);
+    border: solid white;
 }
 
-.prev { left: -2px; }
-
-.next { right: -2px; }
-
-.prev span, .next span { top: 10%; }
-
-.next:hover, .prev:hover {
-    background-color: #e8dede;
-    opacity: 0.5;
-    cursor: pointer;
+div.carousel.slide div.carousel-inner div.item div.carousel-caption p {
+    font-family: ubuntu;
+    font-size: 1.3em;
 }
 
 /*********************************************************************/
