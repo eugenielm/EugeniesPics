@@ -395,6 +395,24 @@ button.back-link a {
 div.actions { margin-top: 20px }
 
 /*********************************************************************/
+/* notices (Rails flash layout) */
+
+div.notice.alert {
+    min-width: 280px;
+    max-width: 100%;
+    padding: 5px;
+    position: fixed;
+    top: 110px;
+    right: 2px;
+    z-index: 10;
+}
+
+div.notice.alert button.close {
+    top: -8px;
+    right: -5px;
+}
+
+/*********************************************************************/
 /* Fonts from fontsquirrel.com */
 @font-face {
     font-family: 'italiana';

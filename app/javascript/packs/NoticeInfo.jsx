@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Alert } from 'react-bootstrap';
 
 const SingleNotice = props => {
     return <p>{props.flash}</p>
@@ -7,22 +8,25 @@ const SingleNotice = props => {
 
 class NoticeInfo extends React.Component {
     componentWillMount() {
-        this.setState({ flash_info: this.props.flash_info,
-                        display: true })
+        this.setState({ alertVisible: true });
+        this.handleAlertDismiss = this.handleAlertDismiss.bind(this);
+        console.log("componentWillMount in NoticeInfo");
     }
 
-    componentDidMount() {
-        window.setTimeout(function() {
-            this.setState({ flash_info: null, display: false })
-        }.bind(this), 10000)
+    componentWillUnmount() {
+        this.setState({ alertVisible: false });
+    }
+
+    handleAlertDismiss() {
+        this.setState({ alertVisible: false });
     }
 
     render() {
-        if (this.state.display) {
+        if (this.state.alertVisible) {
             return (
-                <div id="notice_info">
-                    {this.state.flash_info.map(f => <SingleNotice key={this.state.flash_info.indexOf(f)} flash={f}/>)}
-                </div>
+                <Alert bsStyle="info" onDismiss={this.handleAlertDismiss} className="notice">
+                    {this.props.flash_info.map(f => <SingleNotice key={this.props.flash_info.indexOf(f)} flash={f}/>)}
+                </Alert>
             );
         }
         return null;
