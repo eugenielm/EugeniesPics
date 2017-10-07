@@ -76,10 +76,10 @@ class PictureForm extends React.Component {
     }
 
     handlePicfile(event) {
-        if (event.target.files[0].size < 1000000) {
+        if (event.target.files[0].size < 1500000) {
             this.setState({ pic_url: event.target.files[0], pic_name: event.target.files[0].name });
         } else {
-            alert("The picture you uploaded exceeded the max size of 1Mb (" + (event.target.files[0].size / 1000) + "ko)");
+            alert("The picture you uploaded exceeded the max size of 1.5Mb (" + (event.target.files[0].size / 1000) + "ko)");
         }
     }
 
@@ -99,7 +99,7 @@ class PictureForm extends React.Component {
             alerts += "A picture description must be at least 4 characters long (max 500 char). ";
         }
         if (!this.state.pic_url) {
-            alerts += "You must upload a picture (max size = 1Mb).";
+            alerts += "You must upload a picture (max size = 1.5Mb).";
         }
         if (alerts) {
             alert(alerts);

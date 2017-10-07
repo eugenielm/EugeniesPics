@@ -43,10 +43,10 @@ class CategoryForm extends React.Component {
     }
 
     handleCatpic(event) {
-        if (event.target.files[0].size < 1000000) {
+        if (event.target.files[0].size < 1500000) {
             this.setState({ catpic_url: event.target.files[0], catpic_name: event.target.files[0].name });
         } else {
-            alert("The picture you uploaded exceeded the max size of 1Mb (" + (event.target.files[0].size / 1000) + "ko)");
+            alert("The picture you uploaded exceeded the max size of 1.5Mb (" + (event.target.files[0].size / 1000) + "ko)");
         }
     }
 
