@@ -95,9 +95,6 @@ class PictureForm extends React.Component {
         if (!this.state.author || this.state.author.length < 2) {
             alerts += "A picture author name must be at least 2 characters long (max 30 char). ";
         }
-        if (!this.state.description || this.state.description.length < 4) {
-            alerts += "A picture description must be at least 4 characters long (max 500 char). ";
-        }
         if (!this.state.pic_url) {
             alerts += "You must upload a picture (max size = 1.5Mb).";
         }

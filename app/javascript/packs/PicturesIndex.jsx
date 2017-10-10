@@ -1,7 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
-import { Button, Grid, Row, Col, Image, Modal } from 'react-bootstrap';
+import { Button, Grid, Row, Col, Image, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap';
+
+
+const tooltip = (
+    <Tooltip id="tooltip">Click me for more info!</Tooltip>
+);
 
 
 const EditDeletePicture = props => {
@@ -17,10 +22,11 @@ const EditDeletePicture = props => {
 class PictureComponent extends React.Component {
 
     componentWillMount() {
-        this.setState({ show: false, picIndex: 0 });
+        this.setState({ show: false, showDescription: false, picIndex: 0 });
         this.showModal = this.showModal.bind(this);
         this.hideModal = this.hideModal.bind(this);
         this.handleDisplayedPic = this.handleDisplayedPic.bind(this);
+        this.handleDescription = this.handleDescription.bind(this);
     }
 
     showModal() {
@@ -28,7 +34,13 @@ class PictureComponent extends React.Component {
     }
     
     hideModal() {
-        this.setState({show: false});
+        this.setState({show: false, showDescription: false});
+    }
+
+    handleDescription() {
+        if (this.state.show) {
+            this.setState({showDescription: !this.state.showDescription});
+        }
     }
     
     handleDisplayedPic(n) {
@@ -65,11 +77,30 @@ class PictureComponent extends React.Component {
                     </Modal.Header>
                     <Modal.Body>
                         <div className="prev-pic" onClick={() => this.handleDisplayedPic(-1)}><span id="chevron-left" className="glyphicon glyphicon-chevron-left"></span></div>
-                        <Image src={this.props.pictures[this.state.picIndex].pic_url_medium} alt={this.props.pictures[this.state.picIndex].title} responsive />
+                        
+                        {(this.state.show && !this.state.showDescription && this.props.pictures[this.state.picIndex].description) ?
+                            
+                            <OverlayTrigger placement="bottom" overlay={tooltip}>
+                                <Image src={this.props.pictures[this.state.picIndex].pic_url_medium}
+                                    alt={this.props.pictures[this.state.picIndex].title}
+                                    onClick={() => this.handleDescription()}
+                                    responsive />
+                            </OverlayTrigger>
+
+                            : <Image src={this.props.pictures[this.state.picIndex].pic_url_medium}
+                                    alt={this.props.pictures[this.state.picIndex].title}
+                                    onClick={() => this.handleDescription()}
+                                    responsive />
+                        }
+
+                        {this.state.showDescription ?
+                            <span className="pic-description">{this.props.pictures[this.state.picIndex].description}</span>
+                            : null}
+                        
                         <div className="next-pic" onClick={() => this.handleDisplayedPic(1)}><span id="chevron-right" className="glyphicon glyphicon-chevron-right"></span></div>
                     </Modal.Body>
                     <Modal.Footer>
-                        (c) Eugénie Le Moulec - all rights reserved
+                        (c) {this.props.pictures[this.state.picIndex].author} - all rights reserved
                     </Modal.Footer>
                 </Modal>
                 {this.props.user && this.props.user.superadmin ?

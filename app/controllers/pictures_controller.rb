@@ -9,6 +9,8 @@ class PicturesController < ApplicationController
       @pictures.push({
         id: pic.id,
         title: pic.title,
+        author: pic.author,
+        description: pic.description,
         category_name: pic.category.name,
         pic_url_small: pic.picfile.url(:small),
         pic_url_medium: pic.picfile.url(:medium),
@@ -41,7 +43,7 @@ class PicturesController < ApplicationController
         flash[:info] = 'Picture was successfully created.'
         format.html { redirect_to :controller => 'pictures', :action => 'index',
                       :category_id => @picture.category.id }
-        format.json { render :show, status: :created, location: @picture }
+        format.json { render :index, status: :created }
       else
         format.html { render :new }
       end
@@ -52,9 +54,9 @@ class PicturesController < ApplicationController
     respond_to do |format|
       if @picture.update(picture_params)
         flash[:info] = 'Picture was successfully updated.'
-        format.html { redirect_to :controller => 'pictures', :action => 'show',
-                                  :category_id => @picture.category.id , :id => @picture.id }
-        format.json { render :show, status: :ok, location: @picture }
+        format.html { redirect_to :controller => 'pictures', :action => 'index',
+                                  :category_id => @picture.category.id }
+        format.json { render :index, status: :ok }
       else
         format.html { render :edit }
       end

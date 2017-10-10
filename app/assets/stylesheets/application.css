@@ -60,7 +60,7 @@ a.btn { color: white }
 
 .page-title {
     font-size: 1.5em;
-    margin: 1vh;
+    margin: 1vh auto;
     font-family: ubuntu;
     text-decoration: overline;
 }
@@ -200,6 +200,7 @@ div.carousel.slide div.carousel-inner div.item div.carousel-caption p {
     font-size: 1.3em;
 }
 
+
 /*********************************************************************/
 /* categories index */
 
@@ -312,11 +313,14 @@ div.carousel.slide div.carousel-inner div.item div.carousel-caption p {
 .modal-content {
     height: 100%;
     width: 100%;
+    font-size: 12px;
 }
 
 .modal-body {
-    height: calc(100% - 80px);
+    height: calc(100% - 84px);
     padding: 0px !important;
+    /* needed to center picture description */
+    text-align: center;
 }
 
 .modal-body img {
@@ -358,9 +362,20 @@ button.close {
 
 .prev-pic:hover, .next-pic:hover {
     cursor: pointer;
+    background-color: #f1f1f1;
 }
 
 #chevron-left, #chevron-right { top: 50% }
+
+span.pic-description {
+    position: absolute;
+    bottom: 10px;
+    background-color: black;
+    color: white;
+    opacity: 0.6;
+    max-width: 80%;
+    padding: 5px 10px;
+}
 
 /*********************************************************************/
 /* Users index and details */
@@ -390,7 +405,7 @@ button.close {
 div.actions input {
     border-radius: 3px;
     color: white;
-    /* BS color 'success' style */
+    /* BS 'success' style color */
     background-image: linear-gradient(to bottom,#5cb85c 0,#419641 100%);
 }
 
