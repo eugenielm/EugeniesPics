@@ -16,14 +16,24 @@
 
 /*********************************************************************/
 
-html { background-color: #f3f3f3 }
+html {
+    background-color: #f3f3f3;
+    height: 100%;
+}
 
-body { margin: 0px }
+body {
+    margin: 0px;
+    height: 100%;
+    min-height: 100vh;
+ }
+
+#app-component, #app-container { min-height: 100vh }
 
 #app-container {
     font-family: Arial, Helvetica, sans-serif;
-    height: 100%;
     background-color: #f3f3f3;
+    /* needed for footer absolute position */
+    position: relative;
 }
 
 /*********************************************************************/
@@ -40,7 +50,7 @@ a.new-category-button, a.new-picture-button {
     color: white;
     position: absolute;
     left: 2px;
-    top: 111px
+    top: 111px;
 }
 
 /*********************************************************************/
@@ -56,10 +66,11 @@ a.btn { color: white }
 }
 
 .cats-and-pics-pages {
-    width: 98%;
+    width: 100%;
     margin: auto;
-    max-width: 1600px;
     text-align: center;
+    /* needed for proper footer layout */
+    padding-bottom: 40px;
 }
 
 .container { width: 94% }
@@ -122,6 +133,27 @@ ul.dropdown-menu.dropdown-menu-right > li.active > a {
 }
 
 /*********************************************************************/
+/* Page footer */
+
+#footer {
+    background: #e8dede;
+    text-align: center;
+    height: 30px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    display: table;
+}
+
+#footer p {
+    font-size: 12px;
+    font-family: italiana;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+
+/*********************************************************************/
 /* Home / index page */
 
 #home-page {
@@ -129,6 +161,8 @@ ul.dropdown-menu.dropdown-menu-right > li.active > a {
     width: 98%;
     margin: auto;
     height: 100%;
+    /* needed for proper footer layout */
+    padding-bottom: 40px;
 }
 
 div.carousel.slide {
@@ -136,10 +170,9 @@ div.carousel.slide {
     height: 1000px;
     max-width: 95%;
     max-height: 65vh;
-    margin: 5vh auto;
+    margin: 3vh auto;
     background-color: #4c4c4c;
 }
-
 
 div.carousel.slide div.carousel-inner {
     height: 100%;
@@ -341,6 +374,8 @@ button.close {
     width: 90%;
     max-width: 700px;
     margin: auto;
+    /* needed for proper footer layout */
+    padding-bottom: 50px;
 }
 
 .form-layout h2 { margin-bottom: 10vh }

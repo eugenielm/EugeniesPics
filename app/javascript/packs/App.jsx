@@ -15,6 +15,7 @@ import UserForm from './UserForm';
 import UserDetails from './UserDetails';
 import NoticeInfo from './NoticeInfo';
 import NoticeDanger from './NoticeDanger';
+import Footer from './Footer';
 
 
 const App = (props) => (
@@ -41,6 +42,7 @@ const App = (props) => (
           <Route exact path="/users/:user_id/edit" render={(props2) => <UserForm {...props} {...props2} /> } />
           <Route exact path="/users/:user_id" render={(props2) => props.user_errors ? (<UserForm {...props} {...props2} />) : (<UserDetails {...props} {...props2} />)} />
         </Switch>
+        <Route path="/" component={Footer} />
       </div>
     </Router>
   )
