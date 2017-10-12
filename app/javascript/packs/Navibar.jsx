@@ -5,6 +5,15 @@ import { Button, ButtonGroup, ButtonToolbar, DropdownButton, SplitButton, MenuIt
 import { LinkContainer, IndexLinkContainer } from 'react-router-bootstrap';
 
 
+const AdminMenuItems = (props) => (
+  <div id="admin-menu-items">
+    <IndexLinkContainer to='/languages'><Button>&gt;languages&lt;</Button></IndexLinkContainer>
+    <IndexLinkContainer to='/presentations'><Button>&gt;presentations&lt;</Button></IndexLinkContainer>
+    <IndexLinkContainer to='/users'><Button>&gt;users&lt;</Button></IndexLinkContainer>
+    <Button style={{color: 'red'}} data-method="delete" href="/logout">&gt;log out&lt;</Button>
+  </div>
+);
+
 const CategoriesLinks = (props) => {
   if (props.dropdown) {
     return (<IndexLinkContainer to={'/categories/' + props.cat_id + '/pictures'}>
@@ -58,6 +67,10 @@ class Navibar extends React.Component {
         </Link>
                     
         <div className="d-flex justify-content-around" id="menuitems">
+            
+            {this.props.user && this.props.user.superadmin ? 
+              <AdminMenuItems /> : null}
+
             <IndexLinkContainer to='/about'><Button>About</Button></IndexLinkContainer>
             
             { this.state.path == '/categories' ?
@@ -76,7 +89,9 @@ class Navibar extends React.Component {
             
         </div>
                   
-        { this.props.user ? <Button id="logout-button" bsStyle="danger" bsSize="xsmall" data-method="delete" href="/logout">Log out</Button> : null }
+        { this.props.user && !this.props.user.superadmin ?
+          <Button id="logout-button" bsStyle="danger" bsSize="xsmall" data-method="delete" href="/logout">Log out</Button>
+          : null }
       </div>
 
     )
