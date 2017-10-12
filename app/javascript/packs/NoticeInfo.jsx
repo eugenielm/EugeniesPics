@@ -10,7 +10,6 @@ class NoticeInfo extends React.Component {
     componentWillMount() {
         this.setState({ alertVisible: true });
         this.handleAlertDismiss = this.handleAlertDismiss.bind(this);
-        console.log("componentWillMount in NoticeInfo");
     }
 
     componentWillUnmount() {
