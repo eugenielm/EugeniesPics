@@ -77,6 +77,30 @@
       <% end %>
     <% end %>
 
+    <% if @presentation %>
+      <%= content_tag :div,
+      id: "presentation_data",
+      data: @presentation.to_json do %>
+      <% end %>
+
+      <%= content_tag :div,
+      id: "presentation_errors",
+      data: @presentation.errors.full_messages.to_json do %>
+      <% end %>
+    <% end %>
+
+    <% if @language %>
+      <%= content_tag :div,
+      id: "language_data",
+      data: @language.to_json do %>
+      <% end %>
+
+      <%= content_tag :div,
+      id: "language_errors",
+      data: @language.errors.full_messages.to_json do %>
+      <% end %>
+    <% end %>
+
 
     <div id="app-component"></div>
 
