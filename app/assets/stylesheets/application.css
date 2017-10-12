@@ -42,15 +42,8 @@ body {
 #logout-button {
     position: absolute;
     top: 83px;
-    left: 2px;
+    right: 2px;
     color: white;
-}
-
-a.new-category-button, a.new-picture-button {
-    color: white;
-    position: absolute;
-    left: 2px;
-    top: 111px;
 }
 
 /*********************************************************************/
@@ -60,17 +53,14 @@ a.btn { color: white }
 
 .page-title {
     font-size: 1.5em;
-    margin: 1vh auto;
+    margin: 1.2vh auto;
     font-family: ubuntu;
     text-decoration: overline;
 }
 
-.cats-and-pics-pages {
-    width: 100%;
-    margin: auto;
-    text-align: center;
-    /* needed for proper footer layout */
-    padding-bottom: 40px;
+.admin-page-title {
+    font-size: 1.5em;
+    margin: 1.2vh auto;
 }
 
 .container { width: 94% }
@@ -99,7 +89,7 @@ a.btn.btn-default, a.active.btn.btn-default, a.btn.btn-default:active {
 }
 
 a.active.btn.btn-default, a.btn.btn-default:hover {
-    color: #09a2a9;
+    color: #a9a9a9;
 }
 
 #menuitems a, #menuitems li > a {
@@ -132,6 +122,14 @@ ul.dropdown-menu.dropdown-menu-right > li.active > a {
     font-size: 1.2em;
 }
 
+/* Admin menu items */
+
+#admin-menu-items a {
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
 /*********************************************************************/
 /* Page footer */
 
@@ -152,6 +150,34 @@ ul.dropdown-menu.dropdown-menu-right > li.active > a {
     vertical-align: middle;
 }
 
+/*********************************************************************/
+/* languages and presentations index */
+
+#languages, #presentations {
+    width: 96%;
+    margin: auto;
+    max-width: 800px;
+    text-align: center;
+    height: 100%;
+    /* needed for proper footer layout */
+    padding-bottom: 40px;
+}
+
+.single-presentation {
+    background-color: #eee;
+    max-width: 1000px;
+    text-align: justify;
+    padding: 20px;
+    margin: 20px auto;
+}
+
+.single-presentation h3 {
+    border-bottom: solid thin;
+    padding-bottom: 20px;
+    margin: 0 0 20px 0;
+}
+
+#language-table { margin-top: 30px }
 
 /*********************************************************************/
 /* Home / index page */
@@ -202,7 +228,25 @@ div.carousel.slide div.carousel-inner div.item div.carousel-caption p {
 
 
 /*********************************************************************/
+/* about/contact page */
+
+#about-contact {
+    width: 96%;
+    margin: auto;
+    max-width: 1000px;
+}
+
+
+/*********************************************************************/
 /* categories index */
+
+#categories-page {
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    /* needed for proper footer layout */
+    padding-bottom: 40px;
+}
 
 *[id^="category_"].col-lg-3.col-md-4.col-sm-6 {
     height: 310px;
@@ -262,6 +306,14 @@ div.carousel.slide div.carousel-inner div.item div.carousel-caption p {
 
 /*********************************************************************/
 /* pictures index */
+
+#pictures-page {
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    /* needed for proper footer layout */
+    padding-bottom: 40px;
+}
 
 .picture-element.col-lg-3.col-md-4.col-sm-6 {
     height: 310px;
@@ -393,7 +445,7 @@ span.pic-description {
     padding-bottom: 50px;
 }
 
-.form-layout h2 { margin-bottom: 10vh }
+.form-layout h2 { margin-bottom: 5vh }
 
 .form-layout img {
     max-height: 50vh;
