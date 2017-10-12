@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170826224547) do
+ActiveRecord::Schema.define(version: 20171010213525) do
+
+  create_table "cat_descriptions", force: :cascade do |t|
+    t.text "content"
+    t.integer "language_id"
+    t.integer "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_cat_descriptions_on_category_id"
+    t.index ["language_id"], name: "index_cat_descriptions_on_language_id"
+  end
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -22,6 +32,25 @@ ActiveRecord::Schema.define(version: 20170826224547) do
     t.datetime "catpic_updated_at"
     t.index ["catpic_file_name"], name: "index_categories_on_catpic_file_name", unique: true
     t.index ["name"], name: "index_categories_on_name", unique: true
+  end
+
+  create_table "languages", force: :cascade do |t|
+    t.string "name"
+    t.string "abbreviation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["abbreviation"], name: "index_languages_on_abbreviation", unique: true
+    t.index ["name"], name: "index_languages_on_name", unique: true
+  end
+
+  create_table "pic_descriptions", force: :cascade do |t|
+    t.text "content"
+    t.integer "language_id"
+    t.integer "picture_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["language_id"], name: "index_pic_descriptions_on_language_id"
+    t.index ["picture_id"], name: "index_pic_descriptions_on_picture_id"
   end
 
   create_table "pictures", force: :cascade do |t|
@@ -38,6 +67,14 @@ ActiveRecord::Schema.define(version: 20170826224547) do
     t.index ["category_id"], name: "index_pictures_on_category_id"
     t.index ["picfile_file_name"], name: "index_pictures_on_picfile_file_name", unique: true
     t.index ["title"], name: "index_pictures_on_title", unique: true
+  end
+
+  create_table "presentations", force: :cascade do |t|
+    t.text "content"
+    t.integer "language_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["language_id"], name: "index_presentations_on_language_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
