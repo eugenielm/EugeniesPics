@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 const AboutPage = props => (
-    <div>
-        <h1>Who is Eugenie?</h1>
+    <div id="about-contact">
+        <div className="page-title">Who is Eugenie?</div>
         <p>BLAH BLAH BLAH smart and interesting stuff BLAH BLAH BLAH</p>
     </div>
 );

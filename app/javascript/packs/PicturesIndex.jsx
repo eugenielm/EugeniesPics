@@ -148,11 +148,17 @@ class PicturesIndex extends React.Component {
     }
 
     render() {
+        const new_picture_link = this.props.user && this.props.user.superadmin ?
+                                    <Button style={{marginLeft: 10 + 'px', fontFamily: 'Arial, Helvetica, sans-serif'}} 
+                                            bsStyle="success" 
+                                            bsSize="xsmall" 
+                                            href={"/categories/" + this.props.match.params.category_id + "/pictures/new"}>
+                                            New picture
+                                    </Button>
+                                    : null;
         return (
-            <div className="cats-and-pics-pages">
-                <div className="page-title">A tour in {this.state.category_name}</div>
-                {this.props.user && this.props.user.superadmin ?
-                (<Button className="new-picture-button" bsStyle="success" bsSize="xsmall" href={"/categories/" + this.props.match.params.category_id + "/pictures/new"}>New picture</Button>) : null}
+            <div id="pictures-page">
+                <div className="page-title">A tour in {this.state.category_name} {new_picture_link}</div>
                 <Grid>
                     <Row id='all_pictures' className="show-grid">
                         {this.state.pictures.map(pic => <PictureComponent

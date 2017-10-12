@@ -44,10 +44,17 @@ class CategoriesIndex extends React.Component {
   }
   
   render() {
+    const new_cat_link = this.props.user && this.props.user.superadmin ?
+                          <Button style={{marginLeft: 10 + 'px', fontFamily: 'Arial, Helvetica, sans-serif'}} 
+                                  bsStyle="success" 
+                                  bsSize="xsmall" 
+                                  href="/categories/new">
+                                  New category
+                          </Button>
+                          : null;
     return (
-      <div className="cats-and-pics-pages">
-          <div className="page-title">Going places</div>
-          { (this.props.user && this.props.user.superadmin) ? (<Button className="new-category-button" bsStyle="success" bsSize="xsmall" href="/categories/new">New category</Button>) : null }
+      <div id="categories-page">
+          <div className="page-title">Going places {new_cat_link}</div>
           <Grid>
             <Row id="all_categories" className="show-grid">
               { this.state.categories.map(c => <CategoryComponent user={this.props.user} key={c.id} category={c}/>) }
