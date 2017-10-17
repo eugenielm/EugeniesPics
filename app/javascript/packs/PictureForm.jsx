@@ -93,15 +93,15 @@ class PictureForm extends React.Component {
     }
 
     handleTitle(event) {
-        if (event.target.value.match(/^[\w\ \u00E0-\u00FC\-¨()&[\]\^]{0,30}$/)) {
+        if (event.target.value.match(/^[\w\ \u00E0-\u00FC\-¨()[\]_&=+*ˆ@#%\^]{0,30}$/)) {
             this.setState({picture_title: event.target.value});
         }  
     }
 
     handleAuthor(event) {
-        if (event.target.value.match(/^[\w\ \u00E0-\u00FC\-¨()\^]{0,30}$/)) {
+        if (event.target.value.match(/^[\w\ \u00E0-\u00FC\-¨()!?.\^]{0,30}$/)) {
             this.setState({author: event.target.value});
-      }
+        }
     }
 
     handlePicfile(event) {
@@ -228,7 +228,7 @@ class PictureForm extends React.Component {
                             </tr>
                             <tr>
                                 <td><label htmlFor="picture_title">Title</label></td>
-                                <td><input id="picture_title" type="text" name="picture[title]" maxLength="30" value={this.state.title || ''} onChange={this.handleTitle} /></td>
+                                <td><input id="picture_title" type="text" name="picture[title]" maxLength="30" value={this.state.picture_title || ''} onChange={this.handleTitle} /></td>
                             </tr>
 
                             <tr>
