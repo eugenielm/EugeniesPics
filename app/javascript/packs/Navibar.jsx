@@ -33,7 +33,7 @@ class Navibar extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {categories: [], path: this.props.location.pathname, open: false, display: "none"};
+    this.state = {categories: [], path: this.props.location.pathname, open: false};
     this.handleCollapse = this.handleCollapse.bind(this);
   }
 
@@ -43,7 +43,7 @@ class Navibar extends React.Component {
       return response.json();
     })
     .then(function(catData) {
-      this.setState({ categories: catData, display: "block" })
+      this.setState({ categories: catData })
     }.bind(this));
   }
 
@@ -60,7 +60,7 @@ class Navibar extends React.Component {
     
     return (
       
-      <div id="page-header" style={{display: this.state.display}}>
+      <div id="page-header">
         <Link to='/' id="home-link">
           <p id="site-name">EUGENIE'S PICS</p>
           <p id="site-name-2">Photographs by Eugénie Le Moulec</p>
