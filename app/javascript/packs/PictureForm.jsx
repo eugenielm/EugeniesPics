@@ -93,8 +93,8 @@ class PictureForm extends React.Component {
     }
 
     handleTitle(event) {
-        if (event.target.value.match(/^[\w\ \u00E0-\u00FC\-¨()[\]\^]{0,30}$/)) {
-            this.setState({title: event.target.value});
+        if (event.target.value.match(/^[\w\ \u00E0-\u00FC\-¨()&[\]\^]{0,30}$/)) {
+            this.setState({picture_title: event.target.value});
         }  
     }
 
