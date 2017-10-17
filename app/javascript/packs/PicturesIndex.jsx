@@ -12,8 +12,14 @@ const tooltip = (
 const EditDeletePicture = props => {
     return (
         <div id="edit-delete-pic">
-            <Button className="edit-picture" bsSize="xsmall" bsStyle="info" href={ "/categories/" + props.cat_id + "/pictures/" + props.pic_id + "/edit" }>Edit</Button>
-            <Button bsSize="xsmall" bsStyle="danger"  href={ "/categories/" + props.cat_id + "/pictures/" + props.pic_id } data-method="delete" >Delete</Button>
+            <Button className="edit-picture" bsSize="xsmall" bsStyle="info" 
+                    href={ "/categories/" + props.cat_id + "/pictures/" + props.pic_id + "/edit" }>
+                    <span className="glyphicon glyphicon-edit"></span>
+            </Button>
+            <Button bsSize="xsmall" bsStyle="danger" 
+                    href={ "/categories/" + props.cat_id + "/pictures/" + props.pic_id } data-method="delete" >
+                    <span className="glyphicon glyphicon-trash"></span>
+            </Button>
         </div>
     )
 };
@@ -152,13 +158,33 @@ class PicturesIndex extends React.Component {
                                     <Button style={{marginLeft: 10 + 'px', fontFamily: 'Arial, Helvetica, sans-serif'}} 
                                             bsStyle="success" 
                                             bsSize="xsmall" 
+                                            style={{marginLeft: 10 + 'px'}}
                                             href={"/categories/" + this.props.match.params.category_id + "/pictures/new"}>
                                             New picture
                                     </Button>
                                     : null;
+        const edit_cat_link = this.props.user && this.props.user.superadmin ?
+                                <Button style={{marginLeft: 10 + 'px', fontFamily: 'Arial, Helvetica, sans-serif'}} 
+                                        bsStyle="primary" 
+                                        bsSize="xsmall" 
+                                        style={{marginLeft: 10 + 'px'}}
+                                        href={"/categories/" + this.props.match.params.category_id + "/edit"}>
+                                    <span className="glyphicon glyphicon-edit"></span>
+                                </Button>
+                                : null;
+        const delete_cat_link = this.props.user && this.props.user.superadmin ?
+                                    <Button style={{marginLeft: 10 + 'px', fontFamily: 'Arial, Helvetica, sans-serif'}} 
+                                            bsStyle="danger" 
+                                            bsSize="xsmall" 
+                                            style={{marginLeft: 10 + 'px'}}
+                                            href={"/categories/" + this.props.match.params.category_id}
+                                            data-method="delete" >
+                                        <span className="glyphicon glyphicon-trash"></span>
+                                    </Button>
+                                    : null;
         return (
             <div id="pictures-page">
-                <div className="page-title">A tour in {this.state.category_name} {new_picture_link}</div>
+                <div className="page-title">A tour in {this.state.category_name}</div>{edit_cat_link} {delete_cat_link} {new_picture_link}
                 <Grid>
                     <Row id='all_pictures' className="show-grid">
                         {this.state.pictures.map(pic => <PictureComponent
