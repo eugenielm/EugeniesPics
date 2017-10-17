@@ -12,7 +12,7 @@ class CatDescriptionsController < ApplicationController
                                     :language_id => desc.language.id,
                                     :content => desc.content})
         end
-        @cat_descriptions.push(@picture.name)
+        @cat_descriptions.push(@category.name)
         respond_to do |format|
             format.html
             format.json {render :json => @cat_descriptions}
