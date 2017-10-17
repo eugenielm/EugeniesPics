@@ -118,7 +118,7 @@ class PictureForm extends React.Component {
 
     handleSubmit(event) {
         var alerts = "";
-        if (!this.state.title) {
+        if (!this.state.picture_title) {
             alerts += "A picture title must be at least 1 character long (max 30 char). "
         }
         if (!this.state.author || this.state.author.length < 2) {
