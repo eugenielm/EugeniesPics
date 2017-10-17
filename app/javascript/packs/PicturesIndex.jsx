@@ -84,23 +84,23 @@ class PictureComponent extends React.Component {
                     <Modal.Body>
                         <div className="prev-pic" onClick={() => this.handleDisplayedPic(-1)}><span id="chevron-left" className="glyphicon glyphicon-chevron-left"></span></div>
                         
-                        {(this.state.show && !this.state.showDescription && this.props.pictures[this.state.picIndex].description) ?
+                        {(this.state.show && !this.state.showDescription && Object.keys(this.props.pictures[this.state.picIndex].descriptions).includes('EN')) ?
                             
                             <OverlayTrigger placement="bottom" overlay={tooltip}>
                                 <Image src={this.props.pictures[this.state.picIndex].pic_url_medium}
-                                    alt={this.props.pictures[this.state.picIndex].title}
-                                    onClick={() => this.handleDescription()}
-                                    responsive />
+                                       alt={this.props.pictures[this.state.picIndex].title}
+                                       onClick={() => this.handleDescription()}
+                                       responsive />
                             </OverlayTrigger>
 
                             : <Image src={this.props.pictures[this.state.picIndex].pic_url_medium}
-                                    alt={this.props.pictures[this.state.picIndex].title}
-                                    onClick={() => this.handleDescription()}
-                                    responsive />
+                                     alt={this.props.pictures[this.state.picIndex].title}
+                                     onClick={() => this.handleDescription()}
+                                     responsive />
                         }
 
-                        {this.state.showDescription ?
-                            <span className="pic-description">{this.props.pictures[this.state.picIndex].description}</span>
+                        {this.state.showDescription && Object.keys(this.props.pictures[this.state.picIndex].descriptions).includes('EN') ?
+                            <span className="pic-description">{this.props.pictures[this.state.picIndex].descriptions['EN']}</span>
                             : null}
                         
                         <div className="next-pic" onClick={() => this.handleDisplayedPic(1)}><span id="chevron-right" className="glyphicon glyphicon-chevron-right"></span></div>

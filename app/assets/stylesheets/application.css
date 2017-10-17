@@ -383,7 +383,7 @@ div.carousel.slide div.carousel-inner div.item div.carousel-caption p {
 }
 
 .modal-body {
-    height: calc(100% - 84px);
+    height: calc(100% - 82px);
     padding: 0px !important;
     /* needed to center picture description */
     text-align: center;
@@ -435,7 +435,8 @@ button.close {
 
 span.pic-description {
     position: absolute;
-    bottom: 10px;
+    bottom: 10px; left: 0; right: 0;
+    margin: 0 auto;
     background-color: black;
     color: white;
     opacity: 0.6;

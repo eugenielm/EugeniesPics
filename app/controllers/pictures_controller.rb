@@ -6,11 +6,15 @@ class PicturesController < ApplicationController
   def index
     @pictures = Array.new
     @category.pictures.all.each do |pic|
+      all_descriptions = {}
+      pic.pic_descriptions.each do |d|
+        all_descriptions[d.language.abbreviation] = d.content
+      end  
       @pictures.push({
         id: pic.id,
         title: pic.title,
         author: pic.author,
-        descriptions: pic.pic_descriptions,
+        descriptions: all_descriptions,
         category_name: pic.category.name,
         pic_url_small: pic.picfile.url(:small),
         pic_url_medium: pic.picfile.url(:medium),
