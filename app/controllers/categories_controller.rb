@@ -1,6 +1,7 @@
 class CategoriesController < ApplicationController
   before_action :get_category, except: [:index, :new, :create]
   before_action :admin_power, :except => [:index, :show]
+  before_action :get_back_link, only: [:new, :edit, :destroy]
 
   def index
     if Category.all.nil?
@@ -20,9 +21,21 @@ class CategoriesController < ApplicationController
   end
 
   def show
+    @cat_with_descriptions = []
+    @category.cat_descriptions.each do |d|
+      @cat_with_descriptions.push({:description_id => d.id,
+                                   :language_name => d.language.name,
+                                   :language_abbr => d.language.abbreviation,
+                                   :language_id => d.language.id,
+                                   :content => d.content})
+    end
+    @cat_with_descriptions.push({ category_name: @category.name,
+                                  catpic_url: @category.catpic.url(:small),
+                                  catpic_name: @category.catpic_file_name })
+
     respond_to do |format|
       format.html { redirect_to category_pictures_url(@category) }
-      format.json
+      format.json { render :json => @cat_with_descriptions }
     end
   end
 
@@ -39,15 +52,19 @@ class CategoriesController < ApplicationController
 
   def create
     @category = Category.new(category_params)
-
     respond_to do |format|
       if @category.save
-        flash[:info] = '"' + @category.name + '" category was successfully created.'
-        format.html { redirect_to @category }
+        flash[:success] = '"' + @category.name + '" category was successfully created.'
+        if session[:redirect_to_pic_edit].nil?
+          format.html { redirect_to edit_category_url(@category) }
+        else
+          redirect_link = session[:redirect_to_pic_edit]
+          session.delete(:redirect_to_pic_edit)
+          format.html { redirect_to redirect_link}
+        end
         format.json { render :show, status: :created, location: @category }
       else
         format.html { render :new }
-        # format.json { render json: @category.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -55,21 +72,32 @@ class CategoriesController < ApplicationController
   def update
     respond_to do |format|
       if @category.update(category_params)
-        flash[:info] = '"' + @category.name + '" category was successfully updated.'
-        format.html { redirect_to categories_url }
+        flash[:success] = '"' + @category.name + '" category was successfully updated.'
+        if session[:redirect_to_pic_edit].nil?
+          format.html { redirect_to @category }
+        else
+          redirect_link = session[:redirect_to_pic_edit]
+          session.delete(:redirect_to_pic_edit)
+          format.html { redirect_to redirect_link}
+        end
         format.json { render :show, status: :ok, location: @category }
       else
         format.html { render :edit }
-        # format.json { render json: @category.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def destroy
     @category.destroy
-    flash[:info] = '"' + @category.name + '" category was successfully destroyed.'
+    flash[:danger] = '"' + @category.name + '" category was destroyed.'
     respond_to do |format|
-      format.html { redirect_to categories_url }
+      if session[:redirect_to_pic_edit].nil?
+        format.html { redirect_to categories_url }
+      else
+        redirect_link = session[:redirect_to_pic_edit]
+        session.delete(:redirect_to_pic_edit)
+        format.html { redirect_to redirect_link }
+      end
       format.json { head :no_content }
     end
   end
@@ -96,7 +124,7 @@ class CategoriesController < ApplicationController
           return
         end
         session[:prev_url] = request.fullpath
-        flash[:info] = "You need to be logged in for this action."
+        flash[:danger] = "You need to be logged in for this action."
         redirect_to login_path
       elsif !is_superadmin?
         if request.format == :json
@@ -105,6 +133,12 @@ class CategoriesController < ApplicationController
         end
         flash[:danger] = "Unauthorized action."
         redirect_to root_path
+      end
+    end
+
+    def get_back_link
+      if params[:redirect_to_pic_edit]
+          session[:redirect_to_pic_edit] = params[:redirect_to_pic_edit]
       end
     end
 end

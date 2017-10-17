@@ -1,8 +1,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Link } from 'react-router-dom';
-import { Button, Table } from 'react-bootstrap';
+import { Button, Table, Popover, OverlayTrigger } from 'react-bootstrap';
 import ErrorsComponent from './ErrorsComponent';
+
+
+const CategoryContent = props => {
+    const sentences = props.cat_description.content.split('\r\n');
+    return (
+        <Popover id="popover-positioned-bottom" 
+                 positionLeft={props.positionLeft} 
+                 positionTop={props.positionTop} 
+                 placement="bottom" 
+                 title={props.cat_description.language_name + " description"}>
+            {sentences.map((s, index) => <p key={index}>{s}</p>)}
+            <Button bsStyle="primary" 
+                    bsSize="xsmall"
+                    href={"/categories/" + props.category_id 
+                        + "/cat_descriptions/" + props.cat_description.description_id 
+                        + "/edit?redirect_to_cat_edit=" + props.current_url}>
+                <span className="glyphicon glyphicon-edit"></span>
+            </Button>
+            <Button bsStyle="danger" 
+                    bsSize="xsmall"
+                    style={{marginLeft: 5 + 'px'}}
+                    href={"/categories/" + props.category_id 
+                        + "/cat_descriptions/" + props.cat_description.description_id
+                        + + "?redirect_to_cat_edit=" + props.current_url}
+                    data-method="delete">
+                <span className="glyphicon glyphicon-trash"></span>
+            </Button>
+        </Popover>
+    )
+};
 
 
 class CategoryForm extends React.Component {
@@ -11,11 +40,12 @@ class CategoryForm extends React.Component {
         this.setState({ token: this.props.token,
                         errors: this.props.category_errors || null,
                         user: this.props.user || null,
-                        category_id: this.props.category_data.id || '',
-                        cat_name: this.props.category_data.name || '',
+                        category_id: this.props.match.params ? this.props.match.params.category_id : '',
+                        category_name: '',
                         catpic_url: '',
                         prev_catpic_url: '',
-                        catpic_name: '' })
+                        catpic_name: '',
+                        cat_descriptions: [] })
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleCatpic = this.handleCatpic.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,14 +61,19 @@ class CategoryForm extends React.Component {
                 return resp.json();
               })
               .then(function(category) {
-                this.setState({ catpic_url: category.catpic_url.small, prev_catpic_url: category.catpic_url.small, catpic_name: category.catpic_file_name });
+                const cat_info = category.pop();
+                this.setState({ category_name: cat_info.category_name,
+                                catpic_url: cat_info.catpic_url, 
+                                prev_catpic_url: cat_info.catpic_url, 
+                                catpic_name: cat_info.catpic_name,
+                                cat_descriptions: category });
               }.bind(this))
         }
     }
 
     handleNameChange(event) {
         if (event.target.value.match(/^[0-9a-zA-Z -]*$/) !== null) {
-            this.setState({cat_name: event.target.value});
+            this.setState({category_name: event.target.value});
         }  
     }
 
@@ -51,50 +86,92 @@ class CategoryForm extends React.Component {
     }
 
     handleSubmit(event) {
-        if (!this.state.cat_name || this.state.cat_name.length < 2 || this.state.cat_name.length > 30) {
+        if (!this.state.category_name || this.state.category_name.length < 2 || this.state.category_name.length > 30) {
             alert("A category name must be at least 2 characters long and at most 30 characters.")
             event.preventDefault();
         }
     }
 
     render() {
-        const form_action = this.state.category_id ? ("/categories/" + this.state.category_id) : ("/categories");
-        const input_edit = this.state.category_id ? React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'}) : null;
-        const catpic_info = this.state.category_id ? (this.state.catpic_url == this.state.prev_catpic_url ? 
-                                                        (<div><p>Current picture:</p><img src={this.state.catpic_url} /></div>) :
-                                                        (<p>Picture about to be uploaded: {this.state.catpic_name}</p>)
-                                                    ) :
-                                                        (this.state.catpic_url ? (<p>Picture about to be uploaded: {this.state.catpic_name}</p>) : null);
+        const input_edit = React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'});
+        const catpic_info = this.state.catpic_url == this.state.prev_catpic_url ? 
+                                (<div><p>Current picture:</p><img src={this.state.catpic_url} /></div>)
+                                : (<p>Picture about to be uploaded: {this.state.catpic_name}</p>);
 
+        const descriptions_popovers = this.state.cat_descriptions.map((d, index) => 
+                                        (<OverlayTrigger key={index} trigger="click" 
+                                                         placement="bottom"
+                                                         overlay={<CategoryContent {...this.props} 
+                                                                                   cat_description={d} 
+                                                                                   category_name={this.state.category_name}
+                                                                                   category_id={this.state.category_id}
+                                                                                   current_url={encodeURIComponent(this.props.match.url)} />}>
+                                            <Button bsSize="xsmall" style={{marginLeft: 5 + 'px'}}>{d.language_abbr}</Button>
+                                        </OverlayTrigger>));
+
+        const category_form = this.state.category_id ?
+                            (<form encType="multipart/form-data" action={"/categories/" + this.state.category_id} method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
+                                <input name="utf8" type="hidden" value="✓" />
+                                <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />
+                                {input_edit}
+                                <Table striped bordered responsive>
+                                    <tbody>
+                                        <tr>
+                                            <td><label htmlFor="category_name">Name</label></td>
+                                            <td><input id="category_name" type="text" name="category[name]" value={this.state.category_name} onChange={this.handleNameChange} /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><label htmlFor="category_descriptions">Category descriptions</label></td>
+                                            <td><Button bsStyle="success" 
+                                                        bsSize="xsmall"
+                                                        href={"/categories/" + this.props.match.params.category_id 
+                                                             + "/cat_descriptions/new?redirect_to_cat_edit=" + encodeURIComponent(this.props.match.url)}>
+                                                    <span style={{paddingLeft: 2 + 'px'}} className="glyphicon glyphicon-plus"></span>
+                                                </Button>
+                                                {descriptions_popovers}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label htmlFor="category_file">Category picture</label></td>
+                                            <td><input id="category_catpic" accept=".png, .jpg, .jpeg" type="file" name="category[catpic]" onChange={this.handleCatpic} /></td>
+                                        </tr>
+                                    </tbody>
+                                </Table>
+                                { catpic_info }
+                                <div className="actions">
+                                    <input type="submit" name="commit" value="Submit changes" />
+                                </div>
+                            </form>)
+
+                            :   (<form encType="multipart/form-data" action="/categories" method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
+                                    <input name="utf8" type="hidden" value="✓" />
+                                    <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />                            
+                                    <Table responsive bordered>
+                                        <tbody>
+                                            <tr>
+                                                <td><label htmlFor="category_name">Category name</label></td>
+                                                <td><input id="category_name" type="text" name="category[name]" value={this.state.category_name} onChange={this.handleNameChange} /></td>
+                                            </tr>
+                                        </tbody>
+                                    </Table>
+                                    <div className="actions">
+                                        <input type="submit" name="commit" value="Create category" />
+                                    </div>
+                                </form>);
+        
         return (
-            <div className="form-layout">
-                <h2>{ this.state.category_id ? "Edit category" : "New category"} <Button bsStyle="primary" bsSize="xsmall" className="back-link" href="/categories">Back to categories</Button></h2>
+            <div className="form-layout" style={{display: this.state.display}}>
+                
+                <h3>{ this.state.category_id ? ("Edit '" + this.state.category_name + "' category") : "New category"} 
+                    <Button bsStyle="primary" bsSize="xsmall" className="back-link" href="/categories" style={{marginLeft: 5 + 'px'}}>
+                        Back to categories
+                    </Button>
+                </h3>
+                
                 { this.state.errors ? (<ErrorsComponent errors={this.state.errors} model={"category"} />) : null }
-                <form encType="multipart/form-data" action={form_action} method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
-                    <input name="utf8" type="hidden" value="✓" />
-                    <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />
-                    {input_edit}
-                    
-                    <Table responsive>
-                        <tbody>
-                            <tr>
-                                <td><label htmlFor="category_name">Name</label></td>
-                                <td><input id="category_name" type="text" name="category[name]" value={this.state.cat_name} onChange={this.handleNameChange} /></td>
-                            </tr>
-                            <tr>
-                                <td><label htmlFor="category_file">Category picture</label></td>
-                                <td><input id="category_catpic" accept=".png, .jpg, .jpeg" type="file" name="category[catpic]" onChange={this.handleCatpic} /></td>
-                            </tr>
-                            <tr><td></td><td></td></tr>
-                        </tbody>
-                    </Table>
-
-                    { catpic_info }
-
-                    <div className="actions">
-                        <input type="submit" name="commit" value={ this.state.category_id ? "Edit category" : "Create category"} />
-                    </div>
-                </form>
+                
+                {category_form}
+                
             </div>
         );
     }

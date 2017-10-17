@@ -3,8 +3,7 @@ class CatDescription < ApplicationRecord
   validates :language, presence: true
 
   belongs_to :category
-  # another CatDescription instance can't have the same category
-  validates :category, presence: true, uniqueness: true
+  validates :category, presence: true
 
   validates :content, presence: true, length: { minimum: 2, maximum: 1000 }
 end

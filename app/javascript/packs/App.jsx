@@ -20,6 +20,8 @@ import Languages from './Languages';
 import LanguageForm from './LanguageForm';
 import Presentations from './Presentations';
 import PresentationForm from './PresentationForm';
+import CatDescriptionForm from './CatDescriptionForm';
+
 
 const App = (props) => (
     <Router>
@@ -141,6 +143,8 @@ document.addEventListener('turbolinks:load', () => {
                             JSON.parse(document.getElementById('presentation_data').getAttribute('data')) : null;
   const language_data = document.getElementById('language_data') ?
                         JSON.parse(document.getElementById('language_data').getAttribute('data')) : null;
+  const cat_description_data = document.getElementById('cat_description_data') ?
+                               JSON.parse(document.getElementById('cat_description_data').getAttribute('data')) : null;
   
   const flash_info = [];
   document.getElementsByClassName('info') ?
@@ -162,11 +166,13 @@ document.addEventListener('turbolinks:load', () => {
          user_errors={user_errors} 
          presentation_errors={presentation_errors} 
          language_errors={language_errors} 
+         cat_description_errors={cat_description_errors}
          user_data={user_data} 
          category_data={category_data} 
          picture_data={picture_data} 
          presentation_data={presentation_data} 
          language_data={language_data} 
+         cat_description_data={cat_description_data}
          flash_info={flash_info}
          flash_danger={flash_danger}
          flash_success={flash_success} />, 

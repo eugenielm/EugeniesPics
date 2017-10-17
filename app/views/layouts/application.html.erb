@@ -101,6 +101,17 @@
       <% end %>
     <% end %>
 
+    <% if @cat_description %>
+      <%= content_tag :div,
+      id: "cat_description_data",
+      data: @cat_description.to_json do %>
+      <% end %>
+
+      <%= content_tag :div,
+      id: "cat_description_errors",
+      data: @cat_description.errors.full_messages.to_json do %>
+      <% end %>
+    <% end %>
 
     <div id="app-component"></div>
 
