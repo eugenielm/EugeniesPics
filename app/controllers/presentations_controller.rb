@@ -34,7 +34,7 @@ class PresentationsController < ApplicationController
         @presentation = Presentation.new(presentation_params)
         respond_to do |format|
             if @presentation.save
-                flash[:info] = @presentation.language.name + ' presentation was successfully created.'
+                flash[:success] = @presentation.language.name + ' presentation was successfully created.'
                 format.html { redirect_to presentations_url }
                 format.json { render :show, status: :created, location: @presentation }
             else
@@ -46,7 +46,7 @@ class PresentationsController < ApplicationController
     def update
         respond_to do |format|
             if @presentation.update(presentation_params)
-                flash[:info] = @presentation.language.name + ' presentation was successfully updated.'
+                flash[:success] = @presentation.language.name + ' presentation was successfully updated.'
                 format.html { redirect_to presentations_url }
                 format.json { render :show, status: :ok, location: @presentation }
             else
@@ -57,7 +57,7 @@ class PresentationsController < ApplicationController
 
     def destroy
         @presentation.destroy
-        flash[:info] = @presentation.language.name + ' presentation was successfully destroyed.'
+        flash[:danger] = @presentation.language.name + ' presentation was successfully destroyed.'
         respond_to do |format|
           format.html { redirect_to presentations_url }
           format.json { head :no_content }
@@ -77,7 +77,7 @@ class PresentationsController < ApplicationController
                     return
                 end
                 session[:prev_url] = request.fullpath
-                flash[:info] = "You need to be logged in for this action."
+                flash[:danger] = "You need to be logged in for this action."
                 redirect_to login_path
             elsif !is_superadmin?
                 if request.format == :json
