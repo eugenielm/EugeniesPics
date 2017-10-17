@@ -18,7 +18,7 @@ const CustomCarousel = props => {
 class HomePage extends React.Component {
 
     componentWillMount() {
-        this.setState({ picsSelection: [] });
+        this.setState({ picsSelection: [], display: "none" });
     }
 
     componentDidMount() {
@@ -27,20 +27,17 @@ class HomePage extends React.Component {
             return resp.json();
         })
         .then(function(picsSelection) {
-        this.setState({ picsSelection })
+        this.setState({ picsSelection, display: "block" })
         }.bind(this))
     }
 
     render() {
         return (
-            <div id="home-page">
+            <div id="home-page" style={{display: this.state.display}}>
                 <div className="page-title">Welcome!</div>
                 
                 {this.state.picsSelection.length > 0 ?
                     (<Carousel>
-                        {/* {this.state.picsSelection.map(p => <CustomCarousel url={p.selectionPicUrl}
-                                                                           catname={p.selectionPicCatName}
-                                                                           key={p.selectionPicCatId ? p.selectionPicCatId : 0} />)} */}
                         {this.state.picsSelection.map(p => (<Carousel.Item key={p.selectionPicCatId ? p.selectionPicCatId : 0}>
                                                                 <img src={p.selectionPicUrl}
                                                                      alt={p.selectionPicCatName ? p.selectionPicCatName : 'no category'} />

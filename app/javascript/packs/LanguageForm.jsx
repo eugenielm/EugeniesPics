@@ -36,7 +36,7 @@ class LanguageForm extends React.Component {
 
     handleLanguageName(event) {
         if (event.target.value.length <= 30) {
-            this.setState({language_name: event.target.value.toLowerCase()});
+            this.setState({language_name: event.target.value[0].toUpperCase() + event.target.value.slice(1).toLowerCase()});
         } 
     }
 
@@ -58,7 +58,7 @@ class LanguageForm extends React.Component {
         const input_edit = this.state.language_id ? React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'}) : null;
 
         return (
-            <div className="form-layout">
+            <div className="form-layout" style={{display: this.state.display}}>
                 <h2>{ this.state.language_id ? "Edit language" : "New language"} <Button bsStyle="primary" bsSize="xsmall" className="back-link" href="/languages">Back to languages</Button></h2>
                 { this.state.errors ? (<ErrorsComponent errors={this.state.errors} model={"language"} />) : null }
                 <form encType="multipart/form-data" action={form_action} method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
@@ -81,7 +81,7 @@ class LanguageForm extends React.Component {
                     </Table>
 
                     <div className="actions">
-                        <input type="submit" name="commit" value={ this.state.language_id ? "Edit language" : "Create language"} />
+                        <input type="submit" name="commit" value={ this.state.language_id ? "Submit changes" : "Create language"} />
                     </div>
                 </form>
             </div>

@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap';
 
 class UserDetails extends React.Component {
     componentWillMount() {
-        this.setState({ user: undefined });
+        this.setState({ user: undefined, display: "none" });
     }
 
     componentDidMount() {
@@ -15,7 +15,7 @@ class UserDetails extends React.Component {
             return resp.json();
         })
         .then(function(user) {
-            this.setState({ user })
+            this.setState({ user, display: "block" })
         }.bind(this))
     }
 
@@ -24,7 +24,7 @@ class UserDetails extends React.Component {
             if (this.props.user && this.props.user.superadmin || this.state.user.id == this.props.match.params.user_id) {
                 const admin = this.state.user.superadmin ? 'yes' : 'no';
                 return (
-                    <div className="user-info">
+                    <div className="user-info" style={{display: this.state.display}}>
                         <h2>
                             Profile details of '{this.state.user.username}' 
                             { this.props.user.superadmin ?

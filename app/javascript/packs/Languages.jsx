@@ -29,7 +29,7 @@ const LanguageComponent = props => (
 class Languages extends React.Component {
     
       componentWillMount() {
-        this.setState({ languages: [] });
+        this.setState({ languages: [], display: "none" });
       }
     
       componentDidMount() {
@@ -38,13 +38,13 @@ class Languages extends React.Component {
           return resp.json();
         })
         .then(function(languages) {
-          this.setState({ languages })
+          this.setState({ languages, display: "block" })
         }.bind(this))
       }
       
       render() {
         return (
-          <div id="languages">
+          <div id="languages" style={{display: this.state.display}}>
             <div className="admin-page-title">
               Available languages <Button className="new-language-button" 
                                           bsStyle="success" 

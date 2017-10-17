@@ -6,8 +6,12 @@ import { Button, Grid, Row, Col, Image } from 'react-bootstrap';
 const EditDeleteCategory = props => {
     return (
       <div id="edit-delete-cat">
-        <Button className="edit-category" bsSize="xsmall" bsStyle="info" href={ "/categories/" + props.cat_id + "/edit" }>Edit</Button>
-        <Button bsSize="xsmall" bsStyle="danger" href={ "/categories/" + props.cat_id } data-method="delete">Delete</Button>
+        <Button className="edit-category" bsSize="xsmall" bsStyle="info" href={ "/categories/" + props.cat_id + "/edit" }>
+          <span className="glyphicon glyphicon-edit"></span>
+        </Button>
+        <Button bsSize="xsmall" bsStyle="danger" href={ "/categories/" + props.cat_id } data-method="delete">
+          <span className="glyphicon glyphicon-trash"></span>
+        </Button>
       </div>
     );
 };

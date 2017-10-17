@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       # SessionsHelper is included in application_controller
       log_in user
-      flash[:info] = "You've been logged in."
+      flash[:success] = "You've been logged in."
       !session[:prev_url].nil? ? redirect_path = session[:prev_url] : redirect_path = root_path
       session.delete(:prev_url) unless session[:prev_url].nil?
       redirect_to redirect_path
@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
 
   def destroy
     log_out
-    flash[:info] = "You've been logged out."
+    flash[:success] = "You've been logged out."
     redirect_back(fallback_location: root_path)
   end
 

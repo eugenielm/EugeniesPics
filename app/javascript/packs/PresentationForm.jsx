@@ -13,7 +13,8 @@ const LanguageChoice = props => {
 class PresentationForm extends React.Component {
 
     componentWillMount() {
-        this.setState({ token: this.props.token,
+        this.setState({ display: "none",
+                        token: this.props.token,
                         errors: this.props.presentation_errors || null,
                         user: this.props.user || null,
                         languages: [],
@@ -32,21 +33,9 @@ class PresentationForm extends React.Component {
             return resp.json();
           })
           .then(function(languages) {
-            this.setState({ languages });
+            this.setState({ languages, display: "block" });
           }.bind(this))
 
-        if (this.state.presentation_id) {
-            fetch('/presentations/' + this.state.presentation_id + '.json',
-                 {credentials: 'same-origin'}
-                 )
-            .then(function(resp) {
-                return resp.json();
-              })
-              .then(function(pres) {
-                this.setState({ presentation_content: pres.content,
-                                presentation_language_id: pres.lang_id });
-              }.bind(this))
-        }
     }
 
     handleContent(event) {
@@ -60,7 +49,6 @@ class PresentationForm extends React.Component {
     }
 
     handleSubmit(event) {
-        console.log("this.state.presentation_language_id: ", this.state.presentation_language_id, "this.state.presentation_content: ", this.state.presentation_content);
         let alerts = '';
         if (this.state.presentation_content.length < 10) {
             alerts += "A presentation must be at least 10 characters long and at most 1000 characters. "
@@ -78,11 +66,15 @@ class PresentationForm extends React.Component {
         const form_action = this.state.presentation_id ? ("/presentations/" + this.state.presentation_id) : ("/presentations");
         const input_edit = this.state.presentation_id ? React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'}) : null;
         const newLangLink = (this.state.user && this.state.user.superadmin) ?
-                            (<Button id="new_lang_link" bsSize="xsmall" bsStyle="success" href="/languages/new">New language</Button>) : null;
+                            (<Button id="new_lang_link" bsSize="xsmall" bsStyle="success" style={{marginLeft: 5 + 'px', paddingRight: 3 + 'px'}}
+                                     href={"/languages/new?redirect_to_presentation_edit=" + encodeURIComponent(this.props.match.url)}>
+                                     <span className="glyphicon glyphicon-plus"></span>
+                            </Button>)
+                            : null;
         const page_title = this.state.presentation_id ? "Edit presentation" : "New presentation";
 
         return (
-            <div className="form-layout">
+            <div className="form-layout" style={{display: this.state.display}}>
                 <h2>{page_title} <Button bsStyle="primary" bsSize="xsmall" className="back-link" href="/presentations">Back to presentations</Button></h2>
                 { this.state.errors ? (<ErrorsComponent errors={this.state.errors} model={"presentation"} />) : null }
                 <form encType="multipart/form-data" action={form_action} method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
@@ -90,10 +82,10 @@ class PresentationForm extends React.Component {
                     <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />
                     {input_edit}
                     
-                    <Table responsive>
+                    <Table responsive striped bordered>
                         <tbody>
                             <tr>
-                                <td><label htmlFor="choose-language" style={{display: "block"}}>Language</label>{newLangLink}</td>
+                                <td><label htmlFor="choose-language">Language</label>{newLangLink}</td>
                                 <td>
                                     <FormGroup controlId="formControlsSelect">
                                         <FormControl componentClass="select" value={this.state.presentation_language_id || "-- select --"} name="presentation[language_id]" onChange={this.handleLanguageId}>
@@ -116,12 +108,11 @@ class PresentationForm extends React.Component {
                                     </FormGroup>
                                 </td>
                             </tr>
-                            <tr><td></td><td></td></tr>
                         </tbody>
                     </Table>
 
                     <div className="actions">
-                        <input type="submit" name="commit" value={ this.state.presentation_id ? "Edit presentation" : "Create presentation"} />
+                        <input type="submit" name="commit" value={ this.state.presentation_id ? "Submit changes" : "Create presentation"} />
                     </div>
                 </form>
             </div>

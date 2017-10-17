@@ -21,7 +21,7 @@ const UserComponent = props => {
 
 class UsersIndex extends React.Component {
     componentWillMount() {
-        this.setState({ users: [] })
+        this.setState({ users: [], display: "none" })
     }
 
     componentDidMount() {
@@ -30,13 +30,13 @@ class UsersIndex extends React.Component {
             return resp.json()
         })
         .then(function(res) {
-            this.setState({ users: res });
+            this.setState({ users: res, display: "block" });
         }.bind(this))
     }
 
     render() {
         return (
-            <div className="user-info">
+            <div className="user-info" style={{display: this.state.display}}>
                 <h2>Users <Button href="/users/new" bsSize="xsmall" bsStyle="success">New user</Button></h2>
                 <br/>
 

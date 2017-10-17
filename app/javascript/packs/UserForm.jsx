@@ -75,7 +75,7 @@ class UserForm extends React.Component {
                     <input type="hidden" name="authenticity_token" value={this.state.token} readOnly={true} />
                     {input_edit}
 
-                    <Table responsive>
+                    <Table responsive bordered striped>
                         <tbody>
                             <tr>
                                 <td><label htmlFor="user_username">Username</label></td>
@@ -93,7 +93,6 @@ class UserForm extends React.Component {
                                 <td><label htmlFor="user_password_confirmation">Password confirmation</label></td>
                                 <td><input id="user_password_confirmation" type="password" name="user[password_confirmation]" value={this.state.password_confirmation || ''} onChange={this.handlePasswordConfirmation} /></td>
                             </tr>
-                            <tr><td></td><td></td></tr>
                         </tbody>
                     </Table>
 

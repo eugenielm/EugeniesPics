@@ -102,7 +102,7 @@ class UsersController < ApplicationController
       else
         if !logged_in?
           session[:prev_url] = request.fullpath
-          flash[:info] = "You need to be logged in for this action."
+          flash[:danger] = "You need to be logged in for this action."
           redirect_to login_path
         elsif !(is_superadmin? || current_user.id == params[:id].to_i)
           flash[:danger] = "Unauthorized action."
