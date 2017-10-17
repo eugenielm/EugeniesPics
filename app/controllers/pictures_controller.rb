@@ -10,7 +10,7 @@ class PicturesController < ApplicationController
         id: pic.id,
         title: pic.title,
         author: pic.author,
-        description: pic.description,
+        descriptions: pic.pic_descriptions,
         category_name: pic.category.name,
         pic_url_small: pic.picfile.url(:small),
         pic_url_medium: pic.picfile.url(:medium),
@@ -26,6 +26,22 @@ class PicturesController < ApplicationController
   end
 
   def show
+    @pic_with_descriptions = []
+    @picture.pic_descriptions.each do |d|
+      @pic_with_descriptions.push({:description_id => d.id,
+                                   :language_name => d.language.name,
+                                   :language_abbr => d.language.abbreviation,
+                                   :language_id => d.language.id,
+                                   :content => d.content})
+    end
+    @pic_with_descriptions.push({ picture_title: @picture.title,
+                                  picfile_url: @picture.picfile.url(:small),
+                                  picfile_name: @picture.picfile_file_name })
+
+    respond_to do |format|
+      format.html { redirect_to category_pictures_url(@category) }
+      format.json { render :json => @pic_with_descriptions }
+    end
   end
 
   def new
@@ -40,9 +56,8 @@ class PicturesController < ApplicationController
 
     respond_to do |format|
       if @picture.save
-        flash[:info] = 'Picture was successfully created.'
-        format.html { redirect_to :controller => 'pictures', :action => 'index',
-                      :category_id => @picture.category.id }
+        flash[:success] = 'Picture was successfully created.'
+        format.html { redirect_to edit_category_picture_url(@category, @picture) }
         format.json { render :index, status: :created }
       else
         format.html { render :new }
@@ -53,7 +68,7 @@ class PicturesController < ApplicationController
   def update
     respond_to do |format|
       if @picture.update(picture_params)
-        flash[:info] = 'Picture was successfully updated.'
+        flash[:success] = 'Picture was successfully updated.'
         format.html { redirect_to :controller => 'pictures', :action => 'index',
                                   :category_id => @picture.category.id }
         format.json { render :index, status: :ok }
@@ -66,7 +81,7 @@ class PicturesController < ApplicationController
   def destroy
     @picture.destroy
     respond_to do |format|
-      flash[:info] = 'Picture was successfully destroyed.'
+      flash[:danger] = 'Picture was destroyed.'
       format.html { redirect_to :controller => 'pictures', :action => 'index',
                                 :category_id => @category.id }
       format.json { head :no_content }
@@ -78,8 +93,7 @@ class PicturesController < ApplicationController
     # see strong parameters: http://weblog.rubyonrails.org/2012/3/21/strong-parameters/
     def picture_params
       # :category_id needs to be allowed to get the association with the category model
-      params.require(:picture).permit(:title, :author, :description,
-                                      :category_id, :picfile)
+      params.require(:picture).permit(:title, :author, :category_id, :picfile)
     end
 
     def require_category
@@ -106,7 +120,7 @@ class PicturesController < ApplicationController
           return
         end
         session[:prev_url] = request.fullpath
-        flash[:info] = "You need to be logged in for this action."
+        flash[:danger] = "You need to be logged in for this action."
         redirect_to login_path
       elsif !is_superadmin?
         if request.format == :json

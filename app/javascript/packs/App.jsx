@@ -21,6 +21,7 @@ import LanguageForm from './LanguageForm';
 import Presentations from './Presentations';
 import PresentationForm from './PresentationForm';
 import CatDescriptionForm from './CatDescriptionForm';
+import PicDescriptionForm from './PicDescriptionForm';
 
 
 const App = (props) => (
@@ -69,6 +70,17 @@ const App = (props) => (
           <Route exact path="/categories/:category_id/pictures/:picture_id" 
                  render={(props2) => props.picture_errors ? (<PictureForm {...props} {...props2} />) 
                                                           : (<HomePage {...props} {...props2} />)} />
+          
+          <Route exact path="/categories/:category_id/pictures/:picture_id/pic_descriptions" 
+                 render={(props2) => props.pic_description_errors ? (<PicDescriptionForm {...props} {...props2} />) 
+                                                                  : (<HomePage {...props} {...props2} />)} />
+          <Route exact path="/categories/:category_id/pictures/:picture_id/pic_descriptions/new" 
+                 render={(props2) => <PicDescriptionForm {...props} {...props2} />} />
+          <Route exact path="/categories/:category_id/pictures/:picture_id/pic_descriptions/:pic_description/edit" 
+                 render={(props2) => <PicDescriptionForm {...props} {...props2} />} />
+          <Route exact path="/categories/:category_id/pictures/:picture_id/pic_descriptions/:pic_descriptions_id"
+                 render={(props2) => props.pic_description_errors ? (<PicDescriptionForm {...props} {...props2} />) 
+                                                                  : (<HomePage {...props} {...props2} />)} />
 
           <Route path="/login" render={(props2) => <LoginForm {...props} {...props2} />} />
 
@@ -132,6 +144,9 @@ document.addEventListener('turbolinks:load', () => {
   const cat_description_errors = document.getElementById('cat_description_errors') 
                                  && JSON.parse(document.getElementById('cat_description_errors').getAttribute('data')).length > 0 ?
                                  JSON.parse(document.getElementById('cat_description_errors').getAttribute('data')) : null;
+  const pic_description_errors = document.getElementById('pic_description_errors') 
+                                 && JSON.parse(document.getElementById('pic_description_errors').getAttribute('data')).length > 0 ?
+                                 JSON.parse(document.getElementById('pic_description_errors').getAttribute('data')) : null;              
   
   const user_data = document.getElementById('user_data') ?
                     JSON.parse(document.getElementById('user_data').getAttribute('data')) : null;
@@ -145,6 +160,8 @@ document.addEventListener('turbolinks:load', () => {
                         JSON.parse(document.getElementById('language_data').getAttribute('data')) : null;
   const cat_description_data = document.getElementById('cat_description_data') ?
                                JSON.parse(document.getElementById('cat_description_data').getAttribute('data')) : null;
+  const pic_description_data = document.getElementById('pic_description_data') ?
+                               JSON.parse(document.getElementById('pic_description_data').getAttribute('data')) : null;
   
   const flash_info = [];
   document.getElementsByClassName('info') ?
@@ -167,12 +184,14 @@ document.addEventListener('turbolinks:load', () => {
          presentation_errors={presentation_errors} 
          language_errors={language_errors} 
          cat_description_errors={cat_description_errors}
+         pic_description_errors={pic_description_errors} 
          user_data={user_data} 
          category_data={category_data} 
          picture_data={picture_data} 
          presentation_data={presentation_data} 
          language_data={language_data} 
          cat_description_data={cat_description_data}
+         pic_description_data={pic_description_data} 
          flash_info={flash_info}
          flash_danger={flash_danger}
          flash_success={flash_success} />, 

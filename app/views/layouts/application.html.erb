@@ -113,6 +113,19 @@
       <% end %>
     <% end %>
 
+    <% if @pic_description %>
+      <%= content_tag :div,
+      id: "pic_description_data",
+      data: @pic_description.to_json do %>
+      <% end %>
+
+      <%= content_tag :div,
+      id: "pic_description_errors",
+      data: @pic_description.errors.full_messages.to_json do %>
+      <% end %>
+    <% end %>
+
+
     <div id="app-component"></div>
 
 
