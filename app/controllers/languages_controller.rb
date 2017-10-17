@@ -1,6 +1,7 @@
 class LanguagesController < ApplicationController
     before_action :admin_power
     before_action :get_language, except: [:index, :new, :create]
+    before_action :get_back_link, only: [:new, :edit, :destroy]
     
     def index
         @languages = Language.all
@@ -8,6 +9,10 @@ class LanguagesController < ApplicationController
             format.html
             format.json {render :json => @languages}
         end
+    end
+
+    def show
+        render :json => @language
     end
 
     def new
@@ -25,8 +30,14 @@ class LanguagesController < ApplicationController
         @language = Language.new(language_params)
         respond_to do |format|
             if @language.save
-                flash[:info] = @language.name + ' language was successfully created.'
-                format.html { redirect_to languages_url }
+                flash[:success] = @language.name + ' language was successfully created.'
+                if session[:back_to_link].nil?
+                    format.html { redirect_to languages_url }
+                else
+                    redirect_link = session[:back_to_link]
+                    session.delete(:back_to_link)
+                    format.html { redirect_to redirect_link }
+                end
                 format.json { render :show, status: :created, location: @language }
             else
                 format.html { render :new }
@@ -37,8 +48,14 @@ class LanguagesController < ApplicationController
     def update
         respond_to do |format|
             if @language.update(language_params)
-                flash[:info] = @language.name + ' language was successfully updated.'
-                format.html { redirect_to languages_url }
+                flash[:success] = @language.name + ' language was successfully updated.'
+                if session[:back_to_link].nil?
+                    format.html { redirect_to languages_url }
+                else
+                    redirect_link = session[:back_to_link]
+                    session.delete(:back_to_link)
+                    format.html { redirect_to redirect_link }
+                end
                 format.json { render :show, status: :ok, location: @language }
             else
                 format.html { render :edit }
@@ -48,10 +65,16 @@ class LanguagesController < ApplicationController
 
     def destroy
         @language.destroy
-        flash[:info] = @language.name + ' language was successfully destroyed.'
+        flash[:danger] = @language.name + ' language was destroyed.'
         respond_to do |format|
-          format.html { redirect_to languages_url }
-          format.json { head :no_content }
+            if session[:back_to_link].nil?
+                format.html { redirect_to languages_url }
+            else
+                redirect_link = session[:back_to_link]
+                session.delete(:back_to_link)
+                format.html { redirect_to redirect_link }
+            end
+            format.json { head :no_content }
         end
     end
 
@@ -71,7 +94,7 @@ class LanguagesController < ApplicationController
                     return
                 end
                 session[:prev_url] = request.fullpath
-                flash[:info] = "You need to be logged in for this action."
+                flash[:danger] = "You need to be logged in for this action."
                 redirect_to login_path
             elsif !is_superadmin?
                 if request.format == :json
@@ -88,6 +111,18 @@ class LanguagesController < ApplicationController
             if @language.nil?
                 flash[:danger] = "The required language doesn't exist."
                 redirect_to languages_path
+            end
+        end
+
+        def get_back_link
+            if params[:redirect_to_cat_desc_edit]
+                session[:back_to_link] = params[:redirect_to_cat_desc_edit]
+            elsif params[:redirect_to_pic_desc_edit]
+                session[:back_to_link] = params[:redirect_to_pic_desc_edit]
+            elsif params[:redirect_to_presentation_edit]
+                session[:back_to_link] = params[:redirect_to_presentation_edit]
+            else
+                session[:back_to_link] = nil
             end
         end
 end
