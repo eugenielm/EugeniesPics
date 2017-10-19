@@ -36,6 +36,10 @@ body {
     position: relative;
 }
 
+:root {
+    --site-tone: #e8dede;
+  }
+
 /*********************************************************************/
 /* Admin buttons */
 
@@ -84,7 +88,7 @@ a#home-link {
 a.btn.btn-default { color: black; }
 
 a.btn.btn-default, a.active.btn.btn-default, a.btn.btn-default:active {
-    background: #e8dede;
+    background: var(--site-tone);
     border: none;
     box-shadow: none;
 }
@@ -198,7 +202,9 @@ div.carousel.slide {
     max-width: 95%;
     max-height: 65vh;
     margin: 3vh auto;
-    background-color: #4c4c4c;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 5px 5px 12px darkgrey;
 }
 
 div.carousel.slide div.carousel-inner {
@@ -219,14 +225,34 @@ div.carousel.slide div.carousel-inner div.item img {
     left: 50%;
     top: 50%;
     -webkit-transform: translateY(-50%) translateX(-50%);
-    border: solid white;
+    box-shadow: 5px 5px 12px darkgrey;
 }
 
 div.carousel.slide div.carousel-inner div.item div.carousel-caption p {
     font-family: ubuntu;
     font-size: 1.3em;
+    text-shadow: 1px 1px 4px #000;
 }
 
+a.carousel-control {
+    background: none !important;
+    color: white;
+    opacity: .9;
+}
+
+a.carousel-control:hover {
+    background-color: none;
+}
+
+a.carousel-control:hover span.glyphicon {
+    text-shadow: 3px 3px 10px black;
+}
+
+ol.carousel-indicators li {
+    border-color: #797979;
+}
+
+ol.carousel-indicators li.active { background-color: #797979 }
 
 /*********************************************************************/
 /* about/contact page */
@@ -235,6 +261,24 @@ div.carousel.slide div.carousel-inner div.item div.carousel-caption p {
     width: 96%;
     margin: auto;
     max-width: 1000px;
+}
+
+button.languagesButtons {
+    margin-left: 5px;
+    background-image: none;
+    background-color: #f3f3f3;
+}
+
+button.languagesButtons:hover {
+    background-color: white;
+    border-color: #dbdbdb;
+    box-shadow: 1px 1px 4px #AAAAAA;
+}
+
+button.languagesButtons.active, button.languagesButtons.active:hover {
+    cursor: default;
+    background-color: white !important;
+    box-shadow: 1px 1px 4px;
 }
 
 
@@ -426,10 +470,7 @@ button.close {
 .prev-pic { left: 0 }
 .next-pic { right: 0 }
 
-.prev-pic:hover, .next-pic:hover {
-    cursor: pointer;
-    background-color: #f1f1f1;
-}
+.prev-pic:hover, .next-pic:hover { cursor: pointer }
 
 #chevron-left, #chevron-right { top: 50% }
 
