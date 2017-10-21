@@ -135,7 +135,7 @@ class PicDescriptionForm extends React.Component {
                                     <FormGroup controlId="formControlsTextarea">
                                         <FormControl componentClass="textarea" 
                                                      placeholder={"Describe " + this.state.picture_title}
-                                                     style={{height: 500 + 'px'}}
+                                                     style={{height: 100 + 'px'}}
                                                      name="pic_description[content]" 
                                                      value={this.state.content || ''} 
                                                      onChange={this.handleContent} />
