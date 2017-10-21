@@ -6,7 +6,7 @@ class AboutPage extends React.Component {
     componentWillMount() {
         this.setState({presentationContent: [],
                        pageTitle: '',
-                       language: '',
+                       language: this.props.langPref || '',
                        presentations: {}, // Presentation model content attribute
                        availableLanguages: [], 
                        display: 'none'});
@@ -21,9 +21,13 @@ class AboutPage extends React.Component {
         .then(function(presentations) {
           const availableLanguages = Object.keys(presentations);
           // default presentation will be in English if it exists, else it'll be any random one
-          const presentation = Object.entries(presentations).length > 0 ? (presentations['EN'] ? presentations['EN'][0] 
-                                                                        : Object.entries(presentations)[0][1][0]) : '';
-          const language = Object.entries(presentations).length > 0 ? (presentations['EN'] ? 'EN' : Object.entries(presentations)[0][0]) : '';
+          const language = this.state.language ? this.state.language : 
+                                                 (presentations ? (presentations['EN'] ? 'EN' : Object.entries(presentations)[0][0]) : '');
+          const presentation = Object.entries(presentations).length > 0 ? (language ? presentations[language][0] 
+                                                                                    : (presentations['EN'] ? presentations['EN'][0] 
+                                                                                                           : Object.entries(presentations)[0][1][0])
+                                                                          )
+                                                                          : '';
           const presentationContent = presentation.split('\r\n');
           const pageTitle = presentationContent.shift();
           this.setState({ presentations, availableLanguages, presentationContent, pageTitle, language, display: "block" })
@@ -35,6 +39,7 @@ class AboutPage extends React.Component {
         const presentation = this.state.presentations[lang][0];
         const presentationContent = presentation.split('\r\n');
         const pageTitle = presentationContent.shift();
+        this.props.updateLangPref(lang); // update language preference in App component
         this.setState({presentation, presentationContent, pageTitle, language: lang});
     }
 
@@ -44,12 +49,12 @@ class AboutPage extends React.Component {
                                                      key={i} 
                                                      active={lang == this.state.language ? true : false}
                                                      disabled={lang == this.state.language ? true : false}
-                                                     style={{outline: 'none'}}
-                                                     className='languagesButtons'
+                                                     className='lang_btns'
                                                      onClick={() => this.handleContent(lang)}>{lang}</Button>);
         return (
-            <div id="about-contact">
-                <div className="page-title">{this.state.pageTitle}</div> {languageButtons}
+            <div id="about_contact">
+                <div className="page-title" style={{marginTop: 0 + 'px'}}>{this.state.pageTitle}</div>
+                <div id="language_buttons">{languageButtons}</div>
                 {this.state.presentationContent.map((s, index) => <p key={index}>{s}</p>)}
             </div>
             )

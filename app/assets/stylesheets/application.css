@@ -70,6 +70,7 @@ a.btn { color: white }
 
 .container { width: 94% }
 
+.inline {display: inline}
 
 /*********************************************************************/
 /* Page header */
@@ -190,7 +191,7 @@ ul.dropdown-menu.dropdown-menu-right > li.active > a {
 #home-page {
     text-align: center;
     width: 98%;
-    margin: auto;
+    margin: 7vh auto 0 auto;
     height: 100%;
     /* needed for proper footer layout */
     padding-bottom: 40px;
@@ -257,25 +258,34 @@ ol.carousel-indicators li.active { background-color: #797979 }
 /*********************************************************************/
 /* about/contact page */
 
-#about-contact {
+#about_contact {
     width: 96%;
+    max-width: 600px;
     margin: auto;
-    max-width: 1000px;
+    padding: 20px;
+    height: 100%;
+    background-color: #fff;
 }
 
-button.languagesButtons {
+#language_buttons {
+    display: inline-block;
+    float: right;
+}
+
+button.lang_btns {
     margin-left: 5px;
     background-image: none;
     background-color: #f3f3f3;
+    outline: 'none';
 }
 
-button.languagesButtons:hover {
+button.lang_btns:hover {
     background-color: white;
     border-color: #dbdbdb;
     box-shadow: 1px 1px 4px #AAAAAA;
 }
 
-button.languagesButtons.active, button.languagesButtons.active:hover {
+button.lang_btns.active, button.lang_btns.active:hover {
     cursor: default;
     background-color: white !important;
     box-shadow: 1px 1px 4px;
@@ -371,6 +381,29 @@ button.languagesButtons.active, button.languagesButtons.active:hover {
     text-align: center;
     /* needed for proper footer layout */
     padding-bottom: 40px;
+}
+
+#pictures-page .panel {
+    width: 96%;
+    max-width: 600px;
+    margin: -5px auto 20px auto;
+    border: none;
+}
+
+#cat_desc_btn {
+    margin-top: -8px;
+    margin-left: 10px;
+    outline: none;
+    padding-bottom: 0px;
+}
+
+#category_description {
+    margin: 0 auto 30px auto;
+    padding: 10px;
+    width: 100%;
+    max-width: 800px;
+    background-color: #fff;
+    border-radius: 3px;
 }
 
 .picture-element.col-lg-3.col-md-4.col-sm-6 {
@@ -472,7 +505,17 @@ button.close {
 
 .prev-pic:hover, .next-pic:hover { cursor: pointer }
 
-#chevron-left, #chevron-right { top: 50% }
+#chevron-left, #chevron-right { 
+    top: 50%;
+    font-size: 30px;
+    color: #fff;
+    margin-top: -10px;
+    text-shadow: 3px 3px 10px black;;
+}
+
+.prev-pic:hover #chevron-left, .next-pic:hover #chevron-right {
+    text-shadow: 5px 5px 12px black; 
+}
 
 span.pic-description {
     position: absolute;

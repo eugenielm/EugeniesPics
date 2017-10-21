@@ -130,7 +130,7 @@ class CatDescriptionForm extends React.Component {
                                     <FormGroup controlId="formControlsTextarea">
                                         <FormControl componentClass="textarea" 
                                                      placeholder={"Describe " + this.state.category_name}
-                                                     style={{height: 500 + 'px'}}
+                                                     style={{height: 200 + 'px'}}
                                                      name="cat_description[content]" 
                                                      value={this.state.content || ''} 
                                                      onChange={this.handleContent} />

@@ -100,7 +100,7 @@ class PresentationForm extends React.Component {
                                 <td>
                                     <FormGroup controlId="formControlsTextarea">
                                         <FormControl componentClass="textarea" 
-                                                     placeholder="Tell your story" 
+                                                     placeholder={"Mention the title of this page on the first line!\r\nTell your story"} 
                                                      style={{height: 500 + 'px'}}
                                                      name="presentation[content]" 
                                                      value={this.state.presentation_content || ''} 

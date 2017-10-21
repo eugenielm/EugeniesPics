@@ -14,16 +14,30 @@ class PicturesController < ApplicationController
         id: pic.id,
         title: pic.title,
         author: pic.author,
-        descriptions: all_descriptions,
+        descriptions: all_descriptions, # {'EN': EN_content, 'FR': FR_content}
         category_name: pic.category.name,
         pic_url_small: pic.picfile.url(:small),
         pic_url_medium: pic.picfile.url(:medium),
       })
     end
+    category_descriptions = {}
+    @category.cat_descriptions.each do |d|
+      category_descriptions[d.language.abbreviation] = d.content
+    end
+    @pictures.push(category_descriptions)
     @pictures.push(@category.name)
     @pictures.push(@categories)
+
+    puts "@pictures: ", @pictures
+    
     respond_to do |format|
       format.html
+      # @pictures = [{id, title, author, descriptions, category_name, pic_url_small, pic_url_medium}, 
+      #              {PictN2},
+      #              {PictN3},
+      #              {category_lang_abbr1: category_content1, category_lang_abbrN: category_contentN},
+      #              category_name,
+      #              [all_categories]]
       format.json {render :json => @pictures}
     end
     
