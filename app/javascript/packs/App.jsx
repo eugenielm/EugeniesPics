@@ -88,7 +88,7 @@ class App extends React.Component {
                                                                         : (<HomePage langPref={this.state.langPref} updateLangPref={this.updateLangPref} />)} />
             <Route exact path="/categories/:category_id/pictures/:picture_id/pic_descriptions/new" 
                   render={(props2) => <PicDescriptionForm {...this.props} {...props2} />} />
-            <Route exact path="/categories/:category_id/pictures/:picture_id/pic_descriptions/:pic_description/edit" 
+            <Route exact path="/categories/:category_id/pictures/:picture_id/pic_descriptions/:pic_description_id/edit" 
                   render={(props2) => <PicDescriptionForm {...this.props} {...props2} />} />
             <Route exact path="/categories/:category_id/pictures/:picture_id/pic_descriptions/:pic_descriptions_id"
                   render={(props2) => this.props.pic_description_errors ? (<PicDescriptionForm {...this.props} {...props2} />) 
