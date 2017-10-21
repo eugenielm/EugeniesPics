@@ -89,8 +89,8 @@ class PicDescriptionForm extends React.Component {
                             </Button>)
                             : null;
         const page_title = this.state.pic_description_id ?
-                                ("Edit '" + this.state.picture_name + "' description")
-                                : ("Create description for " + this.state.picture_title);
+                                ("Edit '" + this.state.picture_title + "' description")
+                                : ("Create description for '" + this.state.picture_title + "'");
 
         return (
             <div className="form-layout" style={{display: this.state.display}}>
