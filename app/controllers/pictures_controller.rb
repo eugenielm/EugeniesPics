@@ -27,8 +27,6 @@ class PicturesController < ApplicationController
     @pictures.push(category_descriptions)
     @pictures.push(@category.name)
     @pictures.push(@categories)
-
-    puts "@pictures: ", @pictures
     
     respond_to do |format|
       format.html
