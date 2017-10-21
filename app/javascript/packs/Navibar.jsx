@@ -71,19 +71,19 @@ class Navibar extends React.Component {
             {this.props.user && this.props.user.superadmin ? 
               <AdminMenuItems /> : null}
 
-            <IndexLinkContainer to='/about'><Button>About</Button></IndexLinkContainer>
+            <IndexLinkContainer to='/about'><Button><span className="glyphicon glyphicon-eye-open"></span></Button></IndexLinkContainer>
             
             { this.state.path == '/categories' ?
-                <Button href="/categories" active={true}>Going places</Button>
+                <Button href="/categories" active={true}>~Galleries~</Button>
                   :
-                <IndexLinkContainer to='/categories'><Button>Going places</Button></IndexLinkContainer>
+                <IndexLinkContainer to='/categories'><Button>~Galleries~</Button></IndexLinkContainer>
             }
 
             <div id="allcats" className="hidden-xs hidden-sm">
               { this.state.categories.map(c => <CategoriesLinks key={c.id} cat_id={c.id} cat_name={c.name} path={this.state.path} index={this.state.categories.indexOf(c)} />) }
             </div>
 
-            <DropdownButton pullRight noCaret id="allcats" title={<span className="glyphicon glyphicon-eye-open"></span>} open={this.state.open} onToggle={this.handleCollapse} className="visible-xs visible-sm">
+            <DropdownButton pullRight noCaret id="allcats" title={<span className="glyphicon glyphicon-list"></span>} open={this.state.open} onToggle={this.handleCollapse} className="visible-xs visible-sm">
               { this.state.categories.map(c => <CategoriesLinks key={c.id} cat_id={c.id} cat_name={c.name} path={this.state.path} dropdown={true} index={this.state.categories.indexOf(c)} />) }
             </DropdownButton>
             
