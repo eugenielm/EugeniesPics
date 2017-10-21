@@ -21,9 +21,7 @@ class HomePage extends React.Component {
 
     render() {
         return (
-            <div id="home-page" style={{display: this.state.display}}>
-                <div className="page-title">Welcome!</div>
-                
+            <div id="home-page" style={{display: this.state.display}}>                
                 {this.state.picsSelection.length > 0 ?
                     (<Carousel>
                         {this.state.picsSelection.map(p => (<Carousel.Item key={p.selectionPicCatId ? p.selectionPicCatId : 0}>
