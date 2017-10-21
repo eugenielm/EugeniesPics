@@ -1,5 +1,5 @@
 class PresentationsController < ApplicationController
-    before_action :admin_power
+    before_action :admin_power, except: [:index]
     before_action :get_presentation, except: [:index, :new, :create]
     
     def index
