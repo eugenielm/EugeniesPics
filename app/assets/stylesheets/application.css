@@ -40,15 +40,6 @@ body {
     --site-tone: #e8dede;
   }
 
-/*********************************************************************/
-/* Admin buttons */
-
-#logout-button {
-    position: absolute;
-    top: 83px;
-    right: 2px;
-    color: white;
-}
 
 /*********************************************************************/
 /* all pages */
@@ -114,7 +105,7 @@ button#allcats {
     padding: 3px 6px 0px 6px;
 }
 
-ul.dropdown-menu.dropdown-menu-right > li.active > a {
+ul.dropdown-menu > li.active > a {
     background: #d6b9b9;
 }
 
@@ -128,11 +119,22 @@ ul.dropdown-menu.dropdown-menu-right > li.active > a {
     font-size: 1.2em;
 }
 
+#about_button {
+    border: solid thin;
+    background: #e8dede;
+    border-color: #fff2f2;
+    padding: 1px 5px 0px 5px;
+}
+
 /* Admin menu items */
 
-#admin-menu-items a {
-    text-decoration: none;
-    font-family: Arial, Helvetica, sans-serif;
+button#admin_dropdown {
+    margin-left: 10px;
+    background: #e8dede;
+    border-color: #fff2f2;
+    box-shadow: none;
+    padding: 0px 6px 2px 6px;
+    font-family: ubuntu;
 }
 
 
@@ -586,8 +588,8 @@ div.notice.alert {
     max-width: 80%;
     padding: 5px;
     position: fixed;
-    top: 110px;
-    right: 2px;
+    top: 123px;
+    right: 15px;
     z-index: 10;
 }
 

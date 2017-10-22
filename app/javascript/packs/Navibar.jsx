@@ -5,15 +5,6 @@ import { Button, ButtonGroup, ButtonToolbar, DropdownButton, SplitButton, MenuIt
 import { LinkContainer, IndexLinkContainer } from 'react-router-bootstrap';
 
 
-const AdminMenuItems = (props) => (
-  <div id="admin-menu-items">
-    <IndexLinkContainer to='/languages'><Button>&gt;languages&lt;</Button></IndexLinkContainer>
-    <IndexLinkContainer to='/presentations'><Button>&gt;presentations&lt;</Button></IndexLinkContainer>
-    <IndexLinkContainer to='/users'><Button>&gt;users&lt;</Button></IndexLinkContainer>
-    <Button style={{color: 'red'}} data-method="delete" href="/logout">&gt;log out&lt;</Button>
-  </div>
-);
-
 const CategoriesLinks = (props) => {
   if (props.dropdown) {
     return (<IndexLinkContainer to={'/categories/' + props.cat_id + '/pictures'}>
@@ -33,8 +24,9 @@ class Navibar extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {categories: [], path: this.props.location.pathname, open: false};
+    this.state = {categories: [], path: this.props.location.pathname, open: false, openAdmin: false};
     this.handleCollapse = this.handleCollapse.bind(this);
+    this.handleCollapseAdmin = this.handleCollapseAdmin.bind(this);
   }
 
   componentDidMount() {
@@ -55,9 +47,13 @@ class Navibar extends React.Component {
     this.setState({ open: !this.state.open })
   }
 
+  handleCollapseAdmin() {
+    this.setState({ openAdmin: !this.state.openAdmin })
+  }
+
 
   render () {
-    
+    const numberOfCategories = this.state.categories.length;
     return (
       
       <div id="page-header">
@@ -67,11 +63,8 @@ class Navibar extends React.Component {
         </Link>
                     
         <div className="d-flex justify-content-around" id="menuitems">
-            
-            {this.props.user && this.props.user.superadmin ? 
-              <AdminMenuItems /> : null}
 
-            <IndexLinkContainer to='/about'><Button><span className="glyphicon glyphicon-eye-open"></span></Button></IndexLinkContainer>
+            <IndexLinkContainer to='/about' id="about_button"><Button><span className="glyphicon glyphicon-eye-open"></span></Button></IndexLinkContainer>
             
             { this.state.path == '/categories' ?
                 <Button href="/categories" active={true}>~Galleries~</Button>
@@ -86,6 +79,17 @@ class Navibar extends React.Component {
             <DropdownButton pullRight noCaret id="allcats" title={<span className="glyphicon glyphicon-list"></span>} open={this.state.open} onToggle={this.handleCollapse} className="visible-xs visible-sm">
               { this.state.categories.map(c => <CategoriesLinks key={c.id} cat_id={c.id} cat_name={c.name} path={this.state.path} dropdown={true} index={this.state.categories.indexOf(c)} />) }
             </DropdownButton>
+
+            {this.props.user && this.props.user.superadmin ? 
+              <DropdownButton id="admin_dropdown" title="Admin" open={this.state.openAdmin} onToggle={this.handleCollapseAdmin}>
+                <IndexLinkContainer to='/languages'><MenuItem eventKey={(numberOfCategories + 2).toString() + '.1'}>languages</MenuItem></IndexLinkContainer>
+                <IndexLinkContainer to='/presentations'><MenuItem eventKey={(numberOfCategories + 2).toString() + '.2'}>presentations</MenuItem></IndexLinkContainer>
+                <IndexLinkContainer to='/users'><MenuItem eventKey={(numberOfCategories + 2).toString() + '.3'}>users</MenuItem></IndexLinkContainer>
+                <MenuItem divider />
+                <IndexLinkContainer to="/logout" data-method="delete"><MenuItem eventKey={(numberOfCategories + 2).toString() + '.4'}>log out</MenuItem></IndexLinkContainer>
+              </DropdownButton>
+              
+              : null}
             
         </div>
                   
