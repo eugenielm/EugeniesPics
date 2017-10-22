@@ -1,3 +1,108 @@
-// Place all the styles related to the Welcome controller here.
+// Place all the styles related to the Welcome controller here: ie. home page and 'about me' page
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+/* Home / index page */
+
+#home-page {
+    text-align: center;
+    width: 98%;
+    margin: 7vh auto 0 auto;
+    height: 100%;
+    /* needed for proper footer layout */
+    padding-bottom: 40px;
+}
+
+div.carousel.slide {
+    width: 1000px;
+    height: 1000px;
+    max-width: 95%;
+    max-height: 65vh;
+    margin: 3vh auto;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 5px 5px 12px darkgrey;
+}
+
+div.carousel.slide div.carousel-inner {
+    height: 100%;
+    width: 100%;
+}
+
+div.carousel.slide div.carousel-inner div.item {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+div.carousel.slide div.carousel-inner div.item img {
+    max-width: 94%;
+    max-height: 94%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translateY(-50%) translateX(-50%);
+    box-shadow: 5px 5px 12px darkgrey;
+}
+
+div.carousel.slide div.carousel-inner div.item div.carousel-caption p {
+    font-family: ubuntu;
+    font-size: 1.3em;
+    text-shadow: 1px 1px 4px #000;
+}
+
+a.carousel-control {
+    background: none !important;
+    color: white;
+    opacity: .9;
+}
+
+a.carousel-control:hover {
+    background-color: none;
+}
+
+a.carousel-control:hover span.glyphicon {
+    text-shadow: 3px 3px 10px black;
+}
+
+ol.carousel-indicators li {
+    border-color: #797979;
+}
+
+ol.carousel-indicators li.active { background-color: #797979 }
+
+/*********************************************************************/
+/* about/contact page */
+
+#about_contact {
+    width: 96%;
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    height: 100%;
+    background-color: #fff;
+}
+
+#language_buttons {
+    display: inline-block;
+    float: right;
+}
+
+button.lang_btns {
+    margin-left: 5px;
+    background-image: none;
+    background-color: #f3f3f3;
+    outline: 'none';
+}
+
+button.lang_btns:hover {
+    background-color: white;
+    border-color: #dbdbdb;
+    box-shadow: 1px 1px 4px #AAAAAA;
+}
+
+button.lang_btns.active, button.lang_btns.active:hover {
+    cursor: default;
+    background-color: white !important;
+    box-shadow: 1px 1px 4px;
+}

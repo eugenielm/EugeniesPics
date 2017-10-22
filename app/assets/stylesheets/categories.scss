@@ -1,3 +1,63 @@
-// Place all the styles related to the Categories controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+#categories-page {
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    /* needed for proper footer layout */
+    padding-bottom: 40px;
+}
+
+*[id^="category_"].col-lg-3.col-md-4.col-sm-6 {
+    height: 310px;
+    padding: 5px;
+}
+
+*[id^="category_"] img {
+    max-height: 95%;
+    max-width: 95%;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+*[id^="category_"] #catname {
+    position: absolute;
+    display: block;
+    bottom: 20px; left: 0; right: 0;
+    z-index: 10;
+    background-color: #f3f3f3;
+    opacity: 0.8;
+    width: 60%;
+    margin: auto;
+    font-family: ubuntu;
+    font-size: 1em;
+}
+
+.cat_pic {
+    height: 100%;
+    width: 100%;
+    max-width: 310px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+    background-color: white;
+    border-radius: 3px;
+    position: relative;
+    box-shadow: 5px 5px 12px darkgrey;
+}
+
+.cat_pic:hover #catname {
+    opacity: 1;
+    color: black;
+}
+
+.cat_pic:hover img { opacity: 0.8 }
+
+#edit-delete-cat {
+    position: absolute;
+    top: 5px; right: 5px;
+}
+
+.edit-category { margin-right: 5px }
+

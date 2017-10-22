@@ -49,7 +49,9 @@ class Languages extends React.Component {
               Available languages <Button className="new-language-button" 
                                           bsStyle="success" 
                                           bsSize="xsmall" 
-                                          href="/languages/new">New language</Button>
+                                          href="/languages/new">
+                                      <span className="glyphicon glyphicon-plus"></span>
+                                  </Button>
             </div>
             <Table striped bordered condensed hover id="language-table">
               <thead>

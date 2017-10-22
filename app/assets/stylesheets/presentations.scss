@@ -1,0 +1,23 @@
+#presentations {
+    width: 96%;
+    margin: auto;
+    max-width: 800px;
+    text-align: center;
+    height: 100%;
+    /* needed for proper footer layout */
+    padding-bottom: 40px;
+}
+
+.single-presentation {
+    background-color: #eee;
+    max-width: 1000px;
+    text-align: justify;
+    padding: 20px;
+    margin: 20px auto;
+}
+
+.single-presentation h3 {
+    border-bottom: solid thin;
+    padding-bottom: 20px;
+    margin: 0 0 20px 0;
+}

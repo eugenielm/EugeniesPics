@@ -1,3 +1,152 @@
-// Place all the styles related to the Pictures controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+#pictures-page {
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    /* needed for proper footer layout */
+    padding-bottom: 40px;
+}
+
+#pictures-page .panel {
+    width: 96%;
+    max-width: 600px;
+    margin: -5px auto 20px auto;
+    border: none;
+}
+
+#cat_desc_btn {
+    margin-top: -8px;
+    margin-left: 10px;
+    outline: none;
+    padding-bottom: 0px;
+}
+
+#category_description {
+    margin: 0 auto 30px auto;
+    padding: 10px;
+    width: 100%;
+    max-width: 800px;
+    background-color: #fff;
+    border-radius: 3px;
+}
+
+.picture-element.col-lg-3.col-md-4.col-sm-6 {
+    height: 310px;
+    padding: 5px;
+}
+
+.picture-element img {
+    max-height: 95%;
+    max-width: 95%;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.picture_pic {
+    height: 100%;
+    width: 100%;
+    max-width: 310px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+    background-color: white;
+    border-radius: 3px;
+    position: relative;
+    box-shadow: 5px 5px 12px darkgrey;
+}
+
+.picture_pic:hover img { opacity: 0.8 }
+
+#edit-delete-pic {
+    position: absolute;
+    top: 5px; right: 5px;
+}
+
+.edit-picture { margin-right: 5px }
+
+/* modal */
+
+.custom-modal.modal-dialog {
+    max-width: 1136px;
+    width: 98%;
+    max-height: 900px;
+    height: 90%;
+    margin: 10% auto !important;
+}
+
+.modal-content {
+    height: 100%;
+    width: 100%;
+    font-size: 12px;
+}
+
+.modal-body {
+    height: calc(100% - 82px);
+    padding: 0px !important;
+    /* needed to center picture description */
+    text-align: center;
+}
+
+.modal-body img {
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-height: 96%;
+    max-width: 88%;
+}
+
+.modal-header, .modal-footer {
+    background-color: black;
+    color: white;
+    padding: 10px !important;
+}
+
+.modal-header { text-align: center }
+
+.modal-header button.close { color: white }
+
+.modal-footer { text-align: left !important }
+
+button.close {
+    color: white;
+}
+
+.prev-pic, .next-pic {
+    position: absolute;
+    width: 6%;
+    height: 100%;
+    text-align: center;
+    z-index: 10;
+}
+
+.prev-pic { left: 0 }
+.next-pic { right: 0 }
+
+.prev-pic:hover, .next-pic:hover { cursor: pointer }
+
+#chevron-left, #chevron-right { 
+    top: 50%;
+    font-size: 30px;
+    color: #fff;
+    margin-top: -10px;
+    text-shadow: 3px 3px 10px black;;
+}
+
+.prev-pic:hover #chevron-left, .next-pic:hover #chevron-right {
+    text-shadow: 5px 5px 12px black; 
+}
+
+span.pic-description {
+    position: absolute;
+    bottom: 10px; left: 0; right: 0;
+    margin: 0 auto;
+    background-color: black;
+    color: white;
+    opacity: 0.6;
+    max-width: 80%;
+    padding: 5px 10px;
+}
