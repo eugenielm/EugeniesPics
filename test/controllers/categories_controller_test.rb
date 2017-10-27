@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'json'
 
 class CategoriesControllerTest < ActionDispatch::IntegrationTest
 
@@ -11,23 +12,46 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   # index
   test "any user should get the categories index" do
     get categories_url
-    assert_response :success # Status code was in the 200-299 range
+    assert_response :success # Status code is in the 200-299 range
+
+    @categories = Array.new
+    Category.all.each do |c|
+      @categories.push({id: c.id,
+                        name: c.name,
+                        catpic_url: c.catpic.url,})
+    end
+    get categories_url + ".json"
+    assert_equal @response.body, @categories.to_json
   end
 
   # show
-  test "any user should get redirected to category_pictures_url(category)index when get category_url(category)" do
+  test "any user should get redirected to pictures index when get category#show" do
     get category_url(@category)
     assert_redirected_to category_pictures_url(@category)
+
+    @cat_with_descriptions = []
+    @category.cat_descriptions.each do |d|
+      @cat_with_descriptions.push({:description_id => d.id,
+                                   :language_name => d.language.name,
+                                   :language_abbr => d.language.abbreviation,
+                                   :language_id => d.language.id,
+                                   :content => d.content})
+    end
+    @cat_with_descriptions.push({ category_name: @category.name,
+                                  catpic_url: @category.catpic.url(:small),
+                                  catpic_name: @category.catpic_file_name })
+    get "/categories/" + @category.id.to_s + ".json"
+    assert_equal @response.body, @cat_with_descriptions.to_json
   end
 
   # new category
-  test "unauthenticated user should be redirected to login url when new category" do
+  test "unauthenticated user should be redirected to login_url when getting new category" do
     get new_category_url
     assert_redirected_to login_url
     follow_redirect!
   end
 
-  test "authenticated non-admin user should be redirected to root_url when new category" do
+  test "authenticated non-admin user should be redirected to root_url when getting new category" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
     get new_category_url
     assert_redirected_to root_url
@@ -41,32 +65,25 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   # create
-  test "authenticated admin user should create category" do
+  test "authenticated admin user should be able to create a category" do
     post login_url, params: { session: { email: @user_admin.email, password: "adminpassword" }}
     assert_difference('Category.count') do
       post categories_url, params: { category: { name: 'new category' } }
     end
-    assert_redirected_to category_url(Category.last)
+    assert_redirected_to edit_category_url(Category.last)
     follow_redirect!
-    assert_equal '"new category" category was successfully created.', flash[:info]
-  end
-
-  # show
-  test "should show category" do
-    get category_url(@category)
-    assert_redirected_to category_pictures_url(@category)
-    follow_redirect!
+    assert_equal '"new category" category was successfully created.', flash[:success]
   end
 
   # edit
-  test "unauthenticated user should be redirected to login when get edit category" do
+  test "unauthenticated user should be redirected to login when getting edit category" do
     get edit_category_url(@category)
     assert_redirected_to login_url
     follow_redirect!
-    assert_equal "You need to be logged in for this action.", flash[:info]
+    assert_equal "You need to be logged in for this action.", flash[:danger]
   end
 
-  test "authenticated non-admin user should be redirected to root when get edit category" do
+  test "authenticated non-admin user should be redirected to root when getting edit category" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
     get edit_category_url(@category)
     assert_redirected_to root_url
@@ -81,14 +98,14 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   # update
-  test "unauthenticated user should be redirected to login when update category" do
+  test "unauthenticated user should be redirected to login when updating category" do
     patch category_url(@category), params: { category: { name: 'new name' } }
     assert_redirected_to login_url
     follow_redirect!
-    assert_equal "You need to be logged in for this action.", flash[:info]
+    assert_equal "You need to be logged in for this action.", flash[:danger]
   end
 
-  test "authenticated non-admin user should be redirected to root when update category" do
+  test "authenticated non-admin user should be redirected to root when updating category" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
     patch category_url(@category), params: { category: { name: 'new name' } }
     assert_redirected_to root_url
@@ -96,28 +113,27 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Unauthorized action.", flash[:danger]
   end
 
-  test "authenticated admin user should update category" do
+  test "authenticated admin user should be able to update a category" do
     post login_url, params: { session: { email: @user_admin.email, password: "adminpassword" }}
     patch category_url(@category), params: { category: { name: 'new_name' } }
-    assert_redirected_to categories_url
+    assert_redirected_to category_url(@category)
     follow_redirect!
-    # category name not updated!
-    # assert_equal '"' + @category.name + '" category was successfully updated.', flash[:info]
+    assert_equal '"new_name" category was successfully updated.', flash[:success]
   end
 
   # destroy
-  test "unauthenticated user should be redirected to login when destroy category" do
-    assert_difference('Category.count', 0) do
+  test "unauthenticated user should be redirected to login when destroying a category" do
+    assert_no_difference('Category.count') do
       delete category_url(@category)
     end
     assert_redirected_to login_url
     follow_redirect!
-    assert_equal "You need to be logged in for this action.", flash[:info]
+    assert_equal "You need to be logged in for this action.", flash[:danger]
   end
 
-  test "authenticated non-admin user should be redirected to login when destroy category" do
+  test "authenticated non-admin user should be redirected to login when destroying a category" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
-    assert_difference('Category.count', 0) do
+    assert_no_difference('Category.count') do
       delete category_url(@category)
     end
     assert_redirected_to root_url
@@ -125,13 +141,13 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Unauthorized action.", flash[:danger]
   end
 
-  test "authenticated admin user should destroy category" do
+  test "authenticated admin user should be able to destroy category" do
     post login_url, params: { session: { email: @user_admin.email, password: "adminpassword" }}
     assert_difference('Category.count', -1) do
       delete category_url(@category)
     end
     assert_redirected_to categories_url
     follow_redirect!
-    assert_equal '"' + @category.name + '" category was successfully destroyed.', flash[:info]
+    assert_equal '"' + @category.name + '" category was destroyed.', flash[:danger]
   end
 end

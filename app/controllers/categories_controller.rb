@@ -1,7 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :get_category, except: [:index, :new, :create]
   before_action :admin_power, :except => [:index, :show]
-  before_action :get_back_link, only: [:new, :edit, :destroy]
 
   def index
     if Category.all.nil?
@@ -55,13 +54,7 @@ class CategoriesController < ApplicationController
     respond_to do |format|
       if @category.save
         flash[:success] = '"' + @category.name + '" category was successfully created.'
-        if session[:redirect_to_pic_edit].nil?
-          format.html { redirect_to edit_category_url(@category) }
-        else
-          redirect_link = session[:redirect_to_pic_edit]
-          session.delete(:redirect_to_pic_edit)
-          format.html { redirect_to redirect_link}
-        end
+        format.html { redirect_to edit_category_url(@category) }
         format.json { render :show, status: :created, location: @category }
       else
         format.html { render :new }
@@ -73,13 +66,7 @@ class CategoriesController < ApplicationController
     respond_to do |format|
       if @category.update(category_params)
         flash[:success] = '"' + @category.name + '" category was successfully updated.'
-        if session[:redirect_to_pic_edit].nil?
-          format.html { redirect_to @category }
-        else
-          redirect_link = session[:redirect_to_pic_edit]
-          session.delete(:redirect_to_pic_edit)
-          format.html { redirect_to redirect_link}
-        end
+        format.html { redirect_to category_url(@category) }
         format.json { render :show, status: :ok, location: @category }
       else
         format.html { render :edit }
@@ -91,13 +78,7 @@ class CategoriesController < ApplicationController
     @category.destroy
     flash[:danger] = '"' + @category.name + '" category was destroyed.'
     respond_to do |format|
-      if session[:redirect_to_pic_edit].nil?
-        format.html { redirect_to categories_url }
-      else
-        redirect_link = session[:redirect_to_pic_edit]
-        session.delete(:redirect_to_pic_edit)
-        format.html { redirect_to redirect_link }
-      end
+      format.html { redirect_to categories_url }
       format.json { head :no_content }
     end
   end
@@ -136,9 +117,4 @@ class CategoriesController < ApplicationController
       end
     end
 
-    def get_back_link
-      if params[:redirect_to_pic_edit]
-          session[:redirect_to_pic_edit] = params[:redirect_to_pic_edit]
-      end
-    end
 end

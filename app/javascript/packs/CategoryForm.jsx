@@ -17,15 +17,14 @@ const CategoryContent = props => {
                     bsSize="xsmall"
                     href={"/categories/" + props.category_id 
                         + "/cat_descriptions/" + props.cat_description.description_id 
-                        + "/edit?redirect_to_cat_edit=" + props.current_url}>
+                        + "/edit"}>
                 <span className="glyphicon glyphicon-edit"></span>
             </Button>
             <Button bsStyle="danger" 
                     bsSize="xsmall"
                     style={{marginLeft: 5 + 'px'}}
                     href={"/categories/" + props.category_id 
-                        + "/cat_descriptions/" + props.cat_description.description_id
-                        + + "?redirect_to_cat_edit=" + props.current_url}
+                        + "/cat_descriptions/" + props.cat_description.description_id}
                     data-method="delete">
                 <span className="glyphicon glyphicon-trash"></span>
             </Button>
@@ -104,8 +103,7 @@ class CategoryForm extends React.Component {
                                                          overlay={<CategoryContent {...this.props} 
                                                                                    cat_description={d} 
                                                                                    category_name={this.state.category_name}
-                                                                                   category_id={this.state.category_id}
-                                                                                   current_url={encodeURIComponent(this.props.match.url)} />}>
+                                                                                   category_id={this.state.category_id} />}>
                                             <Button bsSize="xsmall" style={{marginLeft: 5 + 'px'}}>{d.language_abbr}</Button>
                                         </OverlayTrigger>));
 
@@ -125,7 +123,7 @@ class CategoryForm extends React.Component {
                                             <td><Button bsStyle="success" 
                                                         bsSize="xsmall"
                                                         href={"/categories/" + this.props.match.params.category_id 
-                                                             + "/cat_descriptions/new?redirect_to_cat_edit=" + encodeURIComponent(this.props.match.url)}>
+                                                             + "/cat_descriptions/new"}>
                                                     <span style={{paddingLeft: 2 + 'px'}} className="glyphicon glyphicon-plus"></span>
                                                 </Button>
                                                 {descriptions_popovers}
@@ -162,10 +160,15 @@ class CategoryForm extends React.Component {
         return (
             <div className="form-layout" style={{display: this.state.display}}>
                 
-                <h3>{ this.state.category_id ? ("Edit '" + this.state.category_name + "' category") : "New category"} 
-                    <Button bsStyle="primary" bsSize="xsmall" className="back-link" href="/categories" style={{marginLeft: 5 + 'px'}}>
-                        Back to categories
-                    </Button>
+                <h3>{ this.state.category_id ? ("Edit '" + this.state.category_name + "' category") : "New category"}
+                    {this.state.category_name && this.state.category_id?
+                        <Button bsStyle="primary" bsSize="xsmall" className="back-link" href={"/categories/" + this.state.category_id} style={{marginLeft: 5 + 'px'}}>
+                            Back to {this.state.category_name}
+                        </Button>
+                        : <Button bsStyle="primary" bsSize="xsmall" className="back-link" href="/categories" style={{marginLeft: 5 + 'px'}}>
+                            Back to categories
+                          </Button>
+                    }
                 </h3>
                 
                 { this.state.errors ? (<ErrorsComponent errors={this.state.errors} model={"category"} />) : null }
