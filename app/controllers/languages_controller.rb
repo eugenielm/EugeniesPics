@@ -1,7 +1,7 @@
 class LanguagesController < ApplicationController
     before_action :admin_power
     before_action :get_language, except: [:index, :new, :create]
-    before_action :get_back_link, only: [:new, :edit, :destroy]
+    before_action :get_redirect_link, only: [:create, :update]
     
     def index
         @languages = Language.all
@@ -12,7 +12,10 @@ class LanguagesController < ApplicationController
     end
 
     def show
-        render :json => @language
+        respond_to do |format|
+            format.html { redirect_to edit_language_url(@language) }
+            format.json { render :json => @language }
+        end
     end
 
     def new
@@ -31,16 +34,24 @@ class LanguagesController < ApplicationController
         respond_to do |format|
             if @language.save
                 flash[:success] = @language.name + ' language was successfully created.'
-                if session[:back_to_link].nil?
-                    format.html { redirect_to languages_url }
-                else
-                    redirect_link = session[:back_to_link]
-                    session.delete(:back_to_link)
-                    format.html { redirect_to redirect_link }
-                end
+                format.html { redirect_to @redirect_link }
                 format.json { render :show, status: :created, location: @language }
             else
-                format.html { render :new }
+                if params[:redirect_to_cat_desc_edit]
+                    format.html { redirect_to "/languages/new?redirect_to_cat_desc_edit=" \
+                                              + ERB::Util.url_encode(params[:redirect_to_cat_desc_edit])
+                    }
+                elsif params[:redirect_to_pic_desc_edit]
+                    format.html { redirect_to "/languages/new?redirect_to_pic_desc_edit=" \
+                                              + ERB::Util.url_encode(params[:redirect_to_pic_desc_edit])
+                    }
+                elsif params[:redirect_to_presentation_edit]
+                    format.html { redirect_to "/languages/new?redirect_to_presentation_edit=" \
+                                              + ERB::Util.url_encode(params[:redirect_to_presentation_edit])
+                    }
+                else
+                    format.html { render :new }
+                end
             end
         end
     end
@@ -49,16 +60,27 @@ class LanguagesController < ApplicationController
         respond_to do |format|
             if @language.update(language_params)
                 flash[:success] = @language.name + ' language was successfully updated.'
-                if session[:back_to_link].nil?
-                    format.html { redirect_to languages_url }
-                else
-                    redirect_link = session[:back_to_link]
-                    session.delete(:back_to_link)
-                    format.html { redirect_to redirect_link }
-                end
+                format.html { redirect_to @redirect_link }
                 format.json { render :show, status: :ok, location: @language }
             else
-                format.html { render :edit }
+                if params[:redirect_to_cat_desc_edit]
+                    format.html { redirect_to "/languages/" + @language.id.to_s \
+                                             + "/edit?redirect_to_cat_desc_edit=" \
+                                             + ERB::Util.url_encode(params[:redirect_to_cat_desc_edit])
+                    }
+                elsif params[:redirect_to_pic_desc_edit]
+                    format.html { redirect_to "/languages/" + @language.id.to_s \
+                                              + "/edit?redirect_to_pic_desc_edit=" \
+                                              + ERB::Util.url_encode(params[:redirect_to_pic_desc_edit])
+                    }  
+                elsif params[:redirect_to_presentation_edit]
+                    format.html { redirect_to "/languages/" + @language.id.to_s \
+                                              + "/edit?redirect_to_presentation_edit=" \
+                                              + ERB::Util.url_encode(params[:redirect_to_presentation_edit])
+                    }
+                else
+                    format.html { render :edit }
+                end
             end
         end
     end
@@ -67,13 +89,7 @@ class LanguagesController < ApplicationController
         @language.destroy
         flash[:danger] = @language.name + ' language was destroyed.'
         respond_to do |format|
-            if session[:back_to_link].nil?
-                format.html { redirect_to languages_url }
-            else
-                redirect_link = session[:back_to_link]
-                session.delete(:back_to_link)
-                format.html { redirect_to redirect_link }
-            end
+            format.html { redirect_to languages_url }
             format.json { head :no_content }
         end
     end
@@ -83,8 +99,10 @@ class LanguagesController < ApplicationController
         def language_params
             params.require(:language).permit(:name, :abbreviation,
                                              presentations_attributes: [:id, :content],
-                                             cat_descriptions_attributes: [:id, :content, categories_attributes: [:id, :name, :catpic]],
-                                             pic_descriptions_attributes: [:id, :content, pictures_attributes: [:id, :title, :author, :picfile]])
+                                             cat_descriptions_attributes: 
+                                                [:id, :content, categories_attributes: [:id, :name, :catpic]],
+                                             pic_descriptions_attributes: 
+                                                [:id, :content, pictures_attributes: [:id, :title, :author, :picfile]])
         end
 
         def admin_power
@@ -96,7 +114,7 @@ class LanguagesController < ApplicationController
                 session[:prev_url] = request.fullpath
                 flash[:danger] = "You need to be logged in for this action."
                 redirect_to login_path
-            elsif !is_superadmin?
+            elsif logged_in? && !is_superadmin?
                 if request.format == :json
                     head :unauthorized
                     return
@@ -114,15 +132,16 @@ class LanguagesController < ApplicationController
             end
         end
 
-        def get_back_link
+        def get_redirect_link
             if params[:redirect_to_cat_desc_edit]
-                session[:back_to_link] = params[:redirect_to_cat_desc_edit]
+                @redirect_link = params[:redirect_to_cat_desc_edit]
             elsif params[:redirect_to_pic_desc_edit]
-                session[:back_to_link] = params[:redirect_to_pic_desc_edit]
+                @redirect_link = params[:redirect_to_pic_desc_edit]
             elsif params[:redirect_to_presentation_edit]
-                session[:back_to_link] = params[:redirect_to_presentation_edit]
+                @redirect_link = params[:redirect_to_presentation_edit]            
             else
-                session[:back_to_link] = nil
+                @redirect_link = languages_url
             end
         end
+
 end

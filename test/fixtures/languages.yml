@@ -1,0 +1,14 @@
+one:
+  id: 1
+  name: MyLang1
+  abbreviation: EN
+
+two:
+  id: 2
+  name: MyLang2
+  abbreviation: FR
+
+three:
+  id: 3
+  name: MyLang3
+  abbreviation: ES
