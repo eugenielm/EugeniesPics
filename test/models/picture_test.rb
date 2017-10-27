@@ -31,16 +31,6 @@ class PictureTest < ActiveSupport::TestCase
     assert_not pictures(:Pict1).valid?
   end
 
-  test "picture description should be at least 4 characters" do
-    pictures(:Pict1).description = 'aaa'
-    assert_not pictures(:Pict1).valid?
-  end
-
-  test "picture description shouldn't be more than 500 characters" do
-    pictures(:Pict1).description = 'a' * 501
-    assert_not pictures(:Pict1).valid?
-  end
-
   test "picture category shouldn't be blank" do
     pictures(:Pict1).category_id = nil
     assert_not pictures(:Pict1).valid?
@@ -56,8 +46,8 @@ class PictureTest < ActiveSupport::TestCase
     assert_not pictures(:Pict1).valid?
   end
 
-  test "picfile_file_size should be less than 1Mb (= 1048576 bytes) inclusive" do
-    pictures(:Pict1).picfile_file_size = 1048577
+  test "picfile_file_size should be less than 1.5Mb (= 1572864 bytes) inclusive" do
+    pictures(:Pict1).picfile_file_size = 1572865
     assert_not pictures(:Pict1).valid?
   end
 
