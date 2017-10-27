@@ -10,10 +10,9 @@ class Picture < ApplicationRecord
   
   validates :title, presence: true, length: { minimum: 1, maximum: 30 },
             uniqueness: { case_sensitive: false }
+  
   validates :author, presence: true, length: { minimum: 2, maximum: 30 }
   
-  validates :description, length: { maximum: 500 } # to be deleted from the db
-
   # http://www.rubydoc.info/gems/paperclip/Paperclip/ClassMethods
   has_attached_file :picfile, styles: { medium: "1000x1000>", small: "300x300>" },
                     default_style: 'small'
