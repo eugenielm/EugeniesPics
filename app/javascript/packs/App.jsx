@@ -63,47 +63,49 @@ class App extends React.Component {
             
             <Route exact path="/categories/:category_id/cat_descriptions" 
                   render={(props2) => this.props.cat_description_errors ? (<CatDescriptionForm {...this.props} {...props2} />) 
-                                                                        : (<HomePage langPref={this.state.langPref} updateLangPref={this.updateLangPref}/>)} />
+                                                                        : null } />
             <Route exact path="/categories/:category_id/cat_descriptions/new" 
                   render={(props2) => <CatDescriptionForm {...this.props} {...props2} />} />
             <Route exact path="/categories/:category_id/cat_descriptions/:cat_description_id/edit" 
                   render={(props2) => <CatDescriptionForm {...this.props} {...props2} />} />
             <Route exact path="/categories/:category_id/cat_descriptions/:cat_description_id" 
                   render={(props2) => this.props.cat_description_errors ? (<CatDescriptionForm {...this.props} {...props2} />) 
-                                                                    : (<HomePage langPref={this.state.langPref} updateLangPref={this.updateLangPref} />)} />
+                                                                        : null } />
 
             <Route exact path="/categories/:category_id/pictures" 
                   render={(props2) => this.props.picture_errors ? (<PictureForm {...this.props} {...props2} />) 
-                                                                : (<PicturesIndex langPref={this.state.langPref} updateLangPref={this.updateLangPref} {...this.props} {...props2} />)} />
+                                                                : (<PicturesIndex langPref={this.state.langPref} updateLangPref={this.updateLangPref} 
+                                                                                  {...this.props} {...props2} />)} />
             <Route exact path="/categories/:category_id/pictures/new" 
                   render={(props2) => <PictureForm {...this.props} {...props2} />} />
             <Route exact path="/categories/:category_id/pictures/:picture_id/edit" 
                   render={(props2) => <PictureForm {...this.props} {...props2} />} />
             <Route exact path="/categories/:category_id/pictures/:picture_id" 
                   render={(props2) => props.picture_errors ? (<PictureForm {...this.props} {...props2} />) 
-                                                            : (<HomePage langPref={this.state.langPref} updateLangPref={this.updateLangPref} />)} />
+                                                           : null } />
             
             <Route exact path="/categories/:category_id/pictures/:picture_id/pic_descriptions" 
                   render={(props2) => this.props.pic_description_errors ? (<PicDescriptionForm {...this.props} {...props2} />) 
-                                                                        : (<HomePage langPref={this.state.langPref} updateLangPref={this.updateLangPref} />)} />
+                                                                        : (<PictureForm langPref={this.state.langPref} updateLangPref={this.updateLangPref}
+                                                                                        {...this.props} {...props2} />)} />
             <Route exact path="/categories/:category_id/pictures/:picture_id/pic_descriptions/new" 
                   render={(props2) => <PicDescriptionForm {...this.props} {...props2} />} />
             <Route exact path="/categories/:category_id/pictures/:picture_id/pic_descriptions/:pic_description_id/edit" 
                   render={(props2) => <PicDescriptionForm {...this.props} {...props2} />} />
-            <Route exact path="/categories/:category_id/pictures/:picture_id/pic_descriptions/:pic_descriptions_id"
+            <Route exact path="/categories/:category_id/pictures/:picture_id/pic_descriptions/:pic_description_id"
                   render={(props2) => this.props.pic_description_errors ? (<PicDescriptionForm {...this.props} {...props2} />) 
-                                                                        : (<HomePage langPref={this.state.langPref} updateLangPref={this.updateLangPref} />)} />
+                                                                        : null} />
 
             <Route path="/login" render={(props2) => <LoginForm {...this.props} {...props2} />} />
 
             <Route exact path="/languages" 
                   render={(props2) => this.props.language_errors ? (<LanguageForm {...this.props} {...props2} />) 
-                                                            : (<Languages {...this.props} {...props2} />)} />
+                                                                 : (<Languages {...this.props} {...props2} />)} />
             <Route exact path="/languages/new" 
                   render={(props2) => <LanguageForm {...this.props} {...props2} />} />
             <Route exact path="/languages/:language_id" 
                   render={(props2) => this.props.language_errors ? (<LanguageForm {...this.props} {...props2} />) 
-                                                            : (<Languages {...this.props} {...props2} />)} />
+                                                                 : null} />
             <Route exact path="/languages/:language_id/edit" 
                   render={(props2) => <LanguageForm {...this.props} {...props2} />} />
             
@@ -122,10 +124,11 @@ class App extends React.Component {
                   render={(props2) => this.props.user_errors ? (<UserForm {...this.props} {...props2} />) 
                                                              : (<UsersIndex {...this.props} {...props2} />)} />
             <Route exact path="/users/new" render={(props2) => <UserForm {...this.props} {...props2} /> } />
+            <Route exact path="/signup" render={(props2) => <UserForm {...this.props} {...props2} /> } />
             <Route exact path="/users/:user_id/edit" render={(props2) => <UserForm {...this.props} {...props2} /> } />
             <Route exact path="/users/:user_id" 
-                  render={(props2) => this.props.user_errors ? (<UserForm {...this.props} {...props2} />) 
-                                                        : (<UserDetails {...this.props} {...props2} />)} />
+                   render={(props2) => this.props.user_errors ? (<UserForm {...this.props} {...props2} />) 
+                                                              : (<UserDetails {...this.props} {...props2} />)} />
           </Switch>
           
           <Route path="/" component={Footer} />
