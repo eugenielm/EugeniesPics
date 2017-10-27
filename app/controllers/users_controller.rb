@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :check_authentication, :except => [:index, :new, :create]
   before_action :get_user, :only => [:show, :edit, :update, :destroy]
-  # if bcrypt and has_secure_password are used
+  # because bcrypt and has_secure_password are used
   protect_from_forgery
 
   def index
@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     else
       if !logged_in?
         session[:prev_url] = request.fullpath
-        flash[:info] = 'You need to be logged in for this action.'
+        flash[:danger] = 'You need to be logged in for this action.'
         redirect_to login_path
       elsif !is_superadmin?
         flash[:danger] = "Unauthorized action."
@@ -33,6 +33,12 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    # @first_user is used to set superadmin to 'true' only if it's the first user to register
+    @first_user = User.all.length == 0
+    respond_to do |format|
+      format.html
+      format.json { render json: @first_user }
+    end
   end
 
   def edit
@@ -44,7 +50,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         flash[:success] = "You're now registered and logged in!"
-        log_in @user # log_in method implemented in SessionsHelper which is included in ApplicationController
+        log_in @user # log_in method implemented in SessionsHelper which is imported in ApplicationController
         format.html { redirect_to @user }
         format.json { render :show, status: :created, location: @user }
       else
@@ -70,7 +76,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      flash[:info] = "User was successfully destroyed."
+      flash[:danger] = "User was destroyed."
       if is_superadmin?
         format.html { redirect_to users_path }
       else

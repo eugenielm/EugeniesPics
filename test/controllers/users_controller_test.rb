@@ -11,7 +11,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     get users_url
     assert_redirected_to login_url
     follow_redirect!
-    assert_equal 'You need to be logged in for this action.', flash[:info]
+    assert_equal 'You need to be logged in for this action.', flash[:danger]
   end
 
   test "authenticated non-admin user should get redirected to root_url when get index" do
@@ -26,12 +26,37 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     post login_url, params: { session: { email: @user_admin.email, password: "adminpassword" }}
     get users_url
     assert_response :success
+
+    get users_url + ".json"
+    assert_equal @response.body, [
+        {id: 1, 
+        email: @user_non_admin.email, 
+        password_digest: @user_non_admin.password_digest, 
+        created_at: @user_non_admin.created_at, 
+        updated_at: @user_non_admin.updated_at, 
+        username: @user_non_admin.username,
+        superadmin: false},
+        {id: 2, 
+        email: @user_admin.email, 
+        password_digest: @user_admin.password_digest, 
+        created_at: @user_admin.created_at, 
+        updated_at: @user_admin.updated_at, 
+        username: @user_admin.username,
+        superadmin: true}
+      ].to_json
   end
 
   # new
   test "any user should get new" do
     get new_user_url
     assert_response :success
+
+    get new_user_url + ".json" # there're already 2 users
+    assert_equal @response.body, false.to_json
+    
+    User.delete_all
+    get new_user_url + ".json"
+    assert_equal @response.body, true.to_json
   end
 
   # create
@@ -42,6 +67,24 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
                                         password: 'passpass',
                                         password_confirmation: 'passpass' } }
     end
+    assert_equal User.last.superadmin, false
+    assert_redirected_to user_url(User.last)
+    follow_redirect!
+    assert_equal "You're now registered and logged in!", flash[:success]
+  end
+
+  test "the first user created should be a superadmin" do
+    User.delete_all
+    get new_user_url + ".json"
+    assert_difference('User.count') do
+      post users_url, params: { user: { username: 'new user',
+                                        email: 'new_user@example.com',
+                                        # @response.body == true if User.all.length == 0
+                                        superadmin: @response.body,
+                                        password: 'passpass',
+                                        password_confirmation: 'passpass' } }
+    end
+    assert_equal User.last.superadmin, true
     assert_redirected_to user_url(User.last)
     follow_redirect!
     assert_equal "You're now registered and logged in!", flash[:success]
@@ -52,7 +95,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     get user_url(@user_admin)
     assert_redirected_to login_url
     follow_redirect!
-    assert_equal 'You need to be logged in for this action.', flash[:info]
+    assert_equal 'You need to be logged in for this action.', flash[:danger]
   end
 
   test "authenticated non-admin user should be redirected to root_url when #show another user" do
@@ -80,7 +123,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     get edit_user_url(@user_admin)
     assert_redirected_to login_url
     follow_redirect!
-    assert_equal 'You need to be logged in for this action.', flash[:info]
+    assert_equal 'You need to be logged in for this action.', flash[:danger]
   end
 
   test "authenticated non-admin user should be redirected to root_url when #edit another user" do
@@ -111,7 +154,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
                                                        password_confirmation: 'passpass' } }
     assert_redirected_to login_url
     follow_redirect!
-    assert_equal 'You need to be logged in for this action.', flash[:info]
+    assert_equal 'You need to be logged in for this action.', flash[:danger]
   end
 
   test "authenticated non-admin user should be redirected to root_url when update another user" do
@@ -149,17 +192,17 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   # destroy
   test "unauthenticated user should be redirected when destroy any user" do
-    assert_difference('User.count', 0) do
+    assert_no_difference('User.count') do
       delete user_url(@user_non_admin)
     end
     assert_redirected_to login_url
     follow_redirect!
-    assert_equal "You need to be logged in for this action.", flash[:info]
+    assert_equal "You need to be logged in for this action.", flash[:danger]
   end
 
   test "authenticated non-admin user should be redirected when destroy another user" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
-    assert_difference('User.count', 0) do
+    assert_no_difference('User.count') do
       delete user_url(@user_admin)
     end
     assert_redirected_to root_url
@@ -174,7 +217,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to root_url
     follow_redirect!
-    assert_equal "User was successfully destroyed.", flash[:info]
+    assert_equal "User was destroyed.", flash[:danger]
   end
 
   test "authenticated admin user should destroy any user" do
@@ -184,6 +227,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to users_url
     follow_redirect!
-    assert_equal "User was successfully destroyed.", flash[:info]
+    assert_equal "User was destroyed.", flash[:danger]
   end
 end
