@@ -19,7 +19,7 @@ const EditDeletePresentation = props => {
 const PresentationComponent = props => {
   // props.presentation = ['LANG1', [content1, language1, id1]]
   // remove the first line because it's the page title
-  const sentences = props.presentation[1][0].split('\r\n').slice(1);
+  const sentences = props.presentation[1][0].split('\r\n');
   return (
     <div className="single-presentation">
       <h3>

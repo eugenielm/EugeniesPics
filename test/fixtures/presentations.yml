@@ -1,0 +1,9 @@
+one:
+  id: 1
+  language_id: 1
+  content: aaaaaaaaaa
+
+two:
+  id: 2
+  language_id: 2
+  content: bbbbbbbbb

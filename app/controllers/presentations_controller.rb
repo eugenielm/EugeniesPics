@@ -1,5 +1,5 @@
 class PresentationsController < ApplicationController
-    before_action :admin_power, except: [:index]
+    before_action :admin_power, except: [:index, :show]
     before_action :get_presentation, except: [:index, :new, :create]
     
     def index
@@ -10,14 +10,17 @@ class PresentationsController < ApplicationController
         end
 
         respond_to do |format|
-            format.html
+            if is_superadmin?
+                format.html
+            else
+                format.html { redirect_to "/about" }
+            end
             format.json {render :json => @presentations}
         end
     end
 
     def show
-        @pres = {content: @presentation.content, lang_id: @presentation.language_id, lang_name: @presentation.language.name}
-        render :json => @pres
+        redirect_to "/about"
     end
 
     def new

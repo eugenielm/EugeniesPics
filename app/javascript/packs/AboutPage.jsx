@@ -22,7 +22,7 @@ class AboutPage extends React.Component {
           const availableLanguages = Object.keys(presentations);
           // default presentation will be in English if it exists, else it'll be any random one
           const language = this.state.language ? this.state.language : 
-                                                 (presentations ? (presentations['EN'] ? 'EN' : Object.entries(presentations)[0][0]) : '');
+                                                 (Object.entries(presentations).length > 0 ? (presentations['EN'] ? 'EN' : Object.entries(presentations)[0][0]) : '');
           const presentation = Object.entries(presentations).length > 0 ? (language ? presentations[language][0] 
                                                                                     : (presentations['EN'] ? presentations['EN'][0] 
                                                                                                            : Object.entries(presentations)[0][1][0])
@@ -54,7 +54,10 @@ class AboutPage extends React.Component {
         return (
             <div id="about_contact">
                 <div className="page-title" style={{marginTop: 0 + 'px'}}>{this.state.pageTitle}</div>
-                <div id="language_buttons">{languageButtons}</div>
+                { languageButtons ?
+                    <div id="language_buttons">{languageButtons}</div>
+                    : null
+                }
                 {this.state.presentationContent.map((s, index) => <p key={index}>{s}</p>)}
             </div>
             )
