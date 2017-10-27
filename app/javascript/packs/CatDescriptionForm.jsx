@@ -79,11 +79,11 @@ class CatDescriptionForm extends React.Component {
                             : ("/categories/" + this.props.match.params.category_id + "/cat_descriptions");
         const input_edit = this.state.cat_description_id ? React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'}) : null;
         const newLangLink = (this.state.user && this.state.user.superadmin) ?
-                            (<Button id="new_lang_link" bsSize="xsmall" bsStyle="success" style={{marginLeft: 5 + 'px', paddingRight: 3 + 'px'}}
-                                     href={"/languages/new?redirect_to_cat_desc_edit=" + encodeURIComponent(this.props.match.url)}>
-                                     <span className="glyphicon glyphicon-plus"></span>
-                            </Button>)
-                            : null;
+                                (<Button id="new_lang_link" bsSize="xsmall" bsStyle="success" style={{marginLeft: 5 + 'px', paddingRight: 3 + 'px'}}
+                                         href={"/languages/new?redirect_to_cat_desc_edit=" + encodeURIComponent(this.props.match.url)}>
+                                    <span className="glyphicon glyphicon-plus"></span>
+                                </Button>)
+                                : null;
         const page_title = this.state.cat_description_id ?
                                 ("Edit '" + this.state.category_name + "' description")
                                 : ("Create description for " + this.state.category_name);

@@ -2,7 +2,6 @@ class CatDescriptionsController < ApplicationController
     before_action :admin_power
     before_action :get_category
     before_action :get_cat_description, except: [:index, :new, :create]
-    before_action :get_back_link, only: [:new, :edit, :destroy]
     
     def index
         @cat_descriptions = []
@@ -14,13 +13,17 @@ class CatDescriptionsController < ApplicationController
         end
         @cat_descriptions.push(@category.name)
         respond_to do |format|
-            format.html
+            format.html { redirect_to @category }
             format.json {render :json => @cat_descriptions}
         end
     end
 
     def new
         @cat_description = CatDescription.new
+    end
+
+    def show
+        redirect_to @category
     end
 
     def edit
@@ -34,14 +37,9 @@ class CatDescriptionsController < ApplicationController
         @cat_description = CatDescription.new(cat_description_params)
         respond_to do |format|
             if @cat_description.save
-                flash[:success] = @cat_description.language.name + ' description of ' + @category.name + ' was successfully added.'
-                if session[:redirect_to_cat_edit].nil?
-                    format.html { redirect_to controller: "categories", action: "show", id: @category.id }
-                else
-                    redirect_link = session[:redirect_to_cat_edit]
-                    session.delete(:redirect_to_cat_edit)
-                    format.html { redirect_to redirect_link}
-                end
+                flash[:success] = @cat_description.language.name \
+                                  + ' description of ' + @category.name + ' was successfully added.'
+                format.html { redirect_to edit_category_url(@category) }
                 format.json { render :show, status: :ok, location: @cat_description }
             else
                 format.html { render :new }
@@ -52,14 +50,9 @@ class CatDescriptionsController < ApplicationController
     def update
         respond_to do |format|
             if @cat_description.update(cat_description_params)
-                flash[:success] = @cat_description.language.name + ' description of ' + @category.name + ' was successfully updated.'
-                if session[:redirect_to_cat_edit].nil?
-                    format.html { redirect_to controller: "categories", action: "show", id: @category.id }
-                else
-                    redirect_link = session[:redirect_to_cat_edit]
-                    session.delete(:redirect_to_cat_edit)
-                    format.html { redirect_to redirect_link}
-                end
+                flash[:success] = @cat_description.language.name \
+                                  + ' description of ' + @category.name + ' was successfully updated.'
+                format.html { redirect_to edit_category_url(@category)}
                 format.json { render :show, status: :ok, location: @cat_description }
             else
                 format.html { render :edit }
@@ -71,13 +64,7 @@ class CatDescriptionsController < ApplicationController
         @cat_description.destroy
         flash[:danger] = @cat_description.language.name + ' description of ' + @category.name + ' category was destroyed.'
         respond_to do |format|
-            if session[:redirect_to_cat_edit].nil?
-                format.html { redirect_to controller: "categories", action: "edit", id: @category.id }
-            else
-                redirect_link = session[:redirect_to_cat_edit]
-                session.delete(:redirect_to_cat_edit)
-                format.html { redirect_to redirect_link }
-            end
+            format.html { redirect_to edit_category_url(@category)}
             format.json { head :no_content }
         end
     end
@@ -119,9 +106,4 @@ class CatDescriptionsController < ApplicationController
             end
         end
 
-        def get_back_link
-            if params[:redirect_to_cat_edit]
-                session[:redirect_to_cat_edit] = params[:redirect_to_cat_edit]
-            end
-        end
 end
