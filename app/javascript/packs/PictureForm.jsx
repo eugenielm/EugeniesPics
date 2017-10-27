@@ -22,7 +22,7 @@ const PictureContent = props => {
                     href={"/categories/" + props.category_id 
                         + "/pictures/" + props.picture_id
                         + "/pic_descriptions/" + props.pic_description.description_id 
-                        + "/edit?redirect_to_pic_edit=" + props.current_url}>
+                        + "/edit"}>
                 <span className="glyphicon glyphicon-edit"></span>
             </Button>
             <Button bsStyle="danger" 
@@ -30,8 +30,7 @@ const PictureContent = props => {
                     style={{marginLeft: 5 + 'px'}}
                     href={"/categories/" + props.category_id 
                         + "/pictures/" + props.picture_id
-                        + "/pic_descriptions/" + props.pic_description.description_id
-                        + "?redirect_to_pic_edit=" + props.current_url}
+                        + "/pic_descriptions/" + props.pic_description.description_id}
                     data-method="delete">
                 <span className="glyphicon glyphicon-trash"></span>
             </Button>
@@ -145,19 +144,11 @@ class PictureForm extends React.Component {
                                                       pic_description={d} 
                                                       picture_title={this.state.picture_title}
                                                       category_id={this.state.category_id}
-                                                      picture_id={this.state.picture_id}
-                                                      current_url={encodeURIComponent(this.props.match.url)} />}>
+                                                      picture_id={this.state.picture_id} />}>
                 <Button bsSize="xsmall" style={{marginLeft: 5 + 'px'}}>{d.language_abbr}</Button>
             </OverlayTrigger>));
         
         const input_edit = React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'});
-        const newCatLink = (this.state.user && this.state.user.superadmin) ?
-                           (<Button id="new_cat_link" bsSize="xsmall" bsStyle="success" 
-                                    style={{marginLeft: 5 + 'px', paddingRight: 3 + 'px'}} 
-                                    href={"/categories/new?redirect_to_pic_edit=" + encodeURIComponent(this.props.match.url)}>
-                                    <span className="glyphicon glyphicon-plus"></span>
-                           </Button>) 
-                           : null;
         const pic_info = this.state.picture_id ?
             (this.state.pic_url == this.state.prev_pic_url ? (<div><p>Current picture:</p><img src={this.state.pic_url} /></div>) : (<p>Picture about to be uploaded: {this.state.picfile_name}</p>))
             : (this.state.pic_url ? (<p>Picture about to be uploaded: {this.state.picture_title}</p>) : null)
@@ -170,7 +161,7 @@ class PictureForm extends React.Component {
                 <Table striped bordered responsive>
                     <tbody>
                         <tr>
-                            <td><label htmlFor="choose-cat">Category</label>{newCatLink}</td>
+                            <td><label htmlFor="choose-cat">Category</label></td>
                             <td>
                                 <FormGroup controlId="formControlsSelect">
                                     <FormControl componentClass="select" value={this.state.category_id} name="picture[category_id]" onChange={this.handleCategoryId}>
@@ -192,8 +183,8 @@ class PictureForm extends React.Component {
                             <td><Button bsStyle="success" 
                                         bsSize="xsmall"
                                         href={"/categories/" + this.props.match.params.category_id
-                                            + "/pictures/" + this.props.match.params.picture_id
-                                            + "/pic_descriptions/new?redirect_to_pic_edit=" + encodeURIComponent(this.props.match.url)}>
+                                             + "/pictures/" + this.props.match.params.picture_id
+                                             + "/pic_descriptions/new"}>
                                     <span style={{paddingLeft: 2 + 'px'}} className="glyphicon glyphicon-plus"></span>
                                 </Button>
                                 {descriptions_popovers}
@@ -217,7 +208,7 @@ class PictureForm extends React.Component {
                     <Table responsive bordered>
                         <tbody>
                             <tr>
-                                <td><label htmlFor="choose-cat">Category</label>{newCatLink}</td>
+                                <td><label htmlFor="choose-cat">Category</label></td>
                                 <td>
                                     <FormGroup controlId="formControlsSelect">
                                         <FormControl componentClass="select" value={this.state.category_id} name="picture[category_id]" onChange={this.handleCategoryId}>

@@ -5,10 +5,12 @@ class PicturesController < ApplicationController
 
   def index
     @pictures = Array.new
-    @category.pictures.all.each do |pic|
+    @category.pictures.each do |pic|
       all_descriptions = {}
       pic.pic_descriptions.each do |d|
-        all_descriptions[d.language.abbreviation] = d.content
+        if d.language # condition needeed for the pictures_controller_test to pass
+          all_descriptions[d.language.abbreviation] = d.content
+        end
       end  
       @pictures.push({
         id: pic.id,
@@ -30,15 +32,14 @@ class PicturesController < ApplicationController
     
     respond_to do |format|
       format.html
+      format.json {render :json => @pictures}
       # @pictures = [{id, title, author, descriptions, category_name, pic_url_small, pic_url_medium}, 
       #              {PictN2},
       #              {PictN3},
       #              {category_lang_abbr1: category_content1, category_lang_abbrN: category_contentN},
       #              category_name,
       #              [all_categories]]
-      format.json {render :json => @pictures}
     end
-    
   end
 
   def show
@@ -73,7 +74,7 @@ class PicturesController < ApplicationController
     respond_to do |format|
       if @picture.save
         flash[:success] = 'Picture was successfully created.'
-        format.html { redirect_to edit_category_picture_url(@category, @picture) }
+        format.html { redirect_to edit_category_picture_url(@picture.category, @picture) }
         format.json { render :index, status: :created }
       else
         format.html { render :new }
@@ -85,8 +86,7 @@ class PicturesController < ApplicationController
     respond_to do |format|
       if @picture.update(picture_params)
         flash[:success] = 'Picture was successfully updated.'
-        format.html { redirect_to :controller => 'pictures', :action => 'index',
-                                  :category_id => @picture.category.id }
+        format.html { redirect_to category_pictures_url(@picture.category) }
         format.json { render :index, status: :ok }
       else
         format.html { render :edit }
@@ -98,8 +98,7 @@ class PicturesController < ApplicationController
     @picture.destroy
     respond_to do |format|
       flash[:danger] = 'Picture was destroyed.'
-      format.html { redirect_to :controller => 'pictures', :action => 'index',
-                                :category_id => @category.id }
+      format.html { redirect_to category_pictures_url(@category) }
       format.json { head :no_content }
     end
   end

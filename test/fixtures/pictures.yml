@@ -5,7 +5,6 @@ Pict1:
   title: Picture1
   author: EG
   category_id: 1
-  description: MyText
   picfile_file_name: test_file.jpg
   picfile_content_type: image/jpeg
   picfile_file_size: 223312
@@ -16,7 +15,6 @@ Pict2:
   title: Picture2
   author: EG
   category_id: 1
-  description: MyText
   picfile_file_name: test_file2.jpg
   picfile_content_type: image/jpeg
   picfile_file_size: 223312
