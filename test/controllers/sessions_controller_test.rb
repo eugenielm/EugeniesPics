@@ -13,7 +13,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   test "should create session" do
     post login_url, params: { session: { email: @non_admin_user.email, password: 'nonadminpassword' }}
     assert_redirected_to root_url
-    assert_equal flash[:info], "You've been logged in."
+    assert_equal flash[:success], "You've been logged in."
   end
 
   test "shouldn't create session with wrong password" do
@@ -28,7 +28,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     # redirect_back doesn't work in tests??? so the fallback_location is used
     assert_redirected_to root_url
     follow_redirect!
-    assert_equal flash[:info], "You've been logged out."
+    assert_equal flash[:success], "You've been logged out."
   end
 
 end
