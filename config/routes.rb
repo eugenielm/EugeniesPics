@@ -16,9 +16,9 @@ Rails.application.routes.draw do
   resources :presentations
 
   resources :categories do
-    resources :cat_descriptions
+    resources :cat_descriptions, as: 'catdescriptions'
     resources :pictures do
-      resources :pic_descriptions
+      resources :pic_descriptions, as: 'picdescriptions'
     end
   end
 
