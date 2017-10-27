@@ -63,8 +63,8 @@ class PicDescriptionForm extends React.Component {
 
     handleSubmit(event) {
         let alerts = '';
-        if (this.state.content.length < 5) {
-            alerts += "A picture description must be at least 5 characters long and at most 500 characters. "
+        if (this.state.content.length < 2) {
+            alerts += "A picture description must be at least 2 characters long and at most 500 characters. "
         }
         if (!this.state.language_id || this.state.language_id == "-- select --") {
             alerts += "Please select a language."
@@ -83,11 +83,11 @@ class PicDescriptionForm extends React.Component {
                             + this.props.match.params.picture_id + '/pic_descriptions');
         const input_edit = this.state.pic_description_id ? React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'}) : null;
         const newLangLink = (this.state.user && this.state.user.superadmin) ?
-                            (<Button id="new_lang_link" bsSize="xsmall" bsStyle="success" style={{marginLeft: 5 + 'px', paddingRight: 3 + 'px'}}
-                                     href={"/languages/new?redirect_to_pic_desc_edit=" + encodeURIComponent(this.props.match.url)}>
-                                     <span className="glyphicon glyphicon-plus"></span>
-                            </Button>)
-                            : null;
+                                (<Button id="new_lang_link" bsSize="xsmall" bsStyle="success" style={{marginLeft: 5 + 'px', paddingRight: 3 + 'px'}}
+                                        href={"/languages/new?redirect_to_pic_desc_edit=" + encodeURIComponent(this.props.match.url)}>
+                                        <span className="glyphicon glyphicon-plus"></span>
+                                </Button>)
+                                : null;
         const page_title = this.state.pic_description_id ?
                                 ("Edit '" + this.state.picture_title + "' description")
                                 : ("Create description for '" + this.state.picture_title + "'");
