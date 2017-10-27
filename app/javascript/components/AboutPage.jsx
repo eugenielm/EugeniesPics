@@ -59,6 +59,9 @@ class AboutPage extends React.Component {
                     : null
                 }
                 {this.state.presentationContent.map((s, index) => <p key={index}>{s}</p>)}
+                <form className="contact_form">
+
+                </form>
             </div>
             )
     }
