@@ -63,8 +63,6 @@ class Navibar extends React.Component {
         </Link>
                     
         <div className="d-flex justify-content-around" id="menuitems">
-
-            <IndexLinkContainer to='/about' id="about_button"><Button><span className="glyphicon glyphicon-eye-open"></span></Button></IndexLinkContainer>
             
             { this.state.path == '/categories' ?
                 <Button href="/categories" active={true}>~Galleries~</Button>
@@ -79,6 +77,8 @@ class Navibar extends React.Component {
             <DropdownButton pullRight noCaret id="allcats" title={<span className="glyphicon glyphicon-list"></span>} open={this.state.open} onToggle={this.handleCollapse} className="visible-xs visible-sm">
               { this.state.categories.map(c => <CategoriesLinks key={c.id} cat_id={c.id} cat_name={c.name} path={this.state.path} dropdown={true} index={this.state.categories.indexOf(c)} />) }
             </DropdownButton>
+
+            <IndexLinkContainer to='/about' id="about_button"><Button>Info & <span className="glyphicon glyphicon-envelope"></span></Button></IndexLinkContainer>
 
             {this.props.user && this.props.user.superadmin ? 
               <DropdownButton id="admin_dropdown" title="Admin" open={this.state.openAdmin} onToggle={this.handleCollapseAdmin}>
