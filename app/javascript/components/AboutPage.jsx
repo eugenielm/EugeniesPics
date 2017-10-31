@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button, Table, FormGroup, FormControl, Panel } from 'react-bootstrap';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 class AboutPage extends React.Component {
     componentWillMount() {
@@ -14,11 +15,13 @@ class AboutPage extends React.Component {
                        emailAddress: '',
                        messageBody: '',
                        token: this.props.token,
-                       panelOpen: false});
+                       panelOpen: false,
+                       recaptchaResponse: null});
         this.handleContent = this.handleContent.bind(this);
         this.handleUserName = this.handleUserName.bind(this);
         this.handleEmailAddress = this.handleEmailAddress.bind(this);
         this.handleMessageBody = this.handleMessageBody.bind(this);
+        this.handleRecaptcha = this.handleRecaptcha.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -68,8 +71,20 @@ class AboutPage extends React.Component {
         } 
     }
 
+    handleRecaptcha(e) {
+        if (e) {
+            this.setState({recaptchaResponse: "ok"});
+        } else {
+            this.setState({recaptchaResponse: null});
+        }
+        
+    }
+
     handleSubmit(e) {
         var alerts = "";
+        if (!this.state.recaptchaResponse) {
+            alerts += "Please show you're not a robot! ";
+        }
         if (!this.state.userName || this.state.userName.length < 2) {
             alerts += "Please enter a valid name (ie. between 2 and 30 characters). ";
         }
@@ -138,7 +153,7 @@ class AboutPage extends React.Component {
                                             <FormGroup controlId="formControlsTextarea" style={{marginBottom: 0}}>
                                                 <FormControl componentClass="textarea" 
                                                              placeholder="Message*"
-                                                             style={{height: 300 + 'px'}}
+                                                             style={{height: 220 + 'px'}}
                                                              name="message[body]" 
                                                              value={this.state.messageBody || ''} 
                                                              onChange={this.handleMessageBody} />
@@ -151,6 +166,9 @@ class AboutPage extends React.Component {
                             <div className="actions" style={{marginTop: 0}}>
                                 <input type="submit" name="commit" value="Send" />
                             </div>
+
+                            <ReCAPTCHA sitekey="6LctkTYUAAAAABfLXQzX4brqTbRniz3cuR5AgDYp"
+                                       onChange={(e) => this.handleRecaptcha(e)} />
                         </form>
                     </Panel>
                 </div>
