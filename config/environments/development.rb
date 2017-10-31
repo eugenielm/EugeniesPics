@@ -27,7 +27,7 @@ Rails.application.configure do
   end
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   config.action_mailer.perform_caching = false
 
@@ -56,4 +56,6 @@ Rails.application.configure do
   # where to find ImageMagick: :command_path
   config.paperclip_defaults = { :command_path => "/usr/local/bin/convert",
                                 :default_url => '/system/:class/:attachment/:id_partition/:style/:filename' }
+
+  config.action_mailer.delivery_method = :sendmail # default is :smtp
 end
