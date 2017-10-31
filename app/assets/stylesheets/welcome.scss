@@ -74,14 +74,21 @@ ol.carousel-indicators li.active { background-color: #797979 }
 /*********************************************************************/
 /* about/contact page */
 
-#about_contact {
+#contact_page {
     width: 96%;
     max-width: 600px;
     margin: auto;
     padding: 20px;
     height: 100%;
-    background-color: #fff;
 }
+
+#about_presentation {
+    background-color: #fff;
+    padding: 20px 20px 15px 20px;
+    margin-bottom: 20px;
+}
+
+
 
 #language_buttons {
     display: inline-block;
@@ -105,4 +112,25 @@ button.lang_btns.active, button.lang_btns.active:hover {
     cursor: default;
     background-color: white !important;
     box-shadow: 1px 1px 4px;
+}
+
+#contact_btn {
+    margin-bottom: 7px;
+}
+
+#contact_me .panel, #contact_me td { border: none }
+
+#contact_btn {
+    font-family: verdana, arial, helvetica, sans-serif;
+}
+
+#contact_me .panel td:nth-child(1) input,
+#contact_me .panel td:nth-child(2) input {
+    max-width: 100%;
+    width: 250px;
+}
+
+#contact_me .actions {
+    margin-top: 0px;
+    margin-left: 10px;
 }

@@ -49,7 +49,7 @@ class App extends React.Component {
 
             <Route exact path="/" component={HomePage}/>
             <Route exact path="/index" component={HomePage}/>} />
-            <Route exact path="/about" render={() => <AboutPage langPref={this.state.langPref} updateLangPref={this.updateLangPref}/>} />
+            <Route exact path="/about" render={(props2) => <AboutPage {...this.props} {...props2} langPref={this.state.langPref} updateLangPref={this.updateLangPref}/>} />
 
             <Route exact path="/categories" 
                   render={(props2) => this.props.category_errors ? (<CategoryForm {...this.props} {...props2} />) 
