@@ -2,7 +2,8 @@ Rails.application.routes.draw do
 
   root to: 'welcome#index'
   get '/index', to: 'welcome#index'
-  get '/about', to: 'welcome#about'
+  get '/about', to: 'messages#new', as: 'new_message'
+  post '/about', to: 'messages#create', as: 'create_message'
 
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
