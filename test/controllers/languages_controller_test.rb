@@ -186,7 +186,9 @@ class LanguagesControllerTest < ActionDispatch::IntegrationTest
   # update
   test "superadmin user should be allowed to update a language" do
     post login_url, params: { session: { email: @user_admin.email, password: "adminpassword" }}
-    patch language_url(@language), params: { language: { name: 'NewLang' } }
+    assert_no_difference('Language.count') do
+      patch language_url(@language), params: { language: { name: 'NewLang' } }
+    end
     assert_response :found
     assert_redirected_to languages_url
     assert_equal 'NewLang language was successfully updated.', flash[:success]
