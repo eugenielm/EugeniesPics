@@ -9,8 +9,7 @@ class AboutPage extends React.Component {
                        pageTitle: '',
                        language: this.props.langPref || '',
                        presentations: {}, // Presentation model content attribute
-                       availableLanguages: [], 
-                       display: 'none',
+                       availableLanguages: [],
                        userName: '',
                        emailAddress: '',
                        messageBody: '',
@@ -42,7 +41,7 @@ class AboutPage extends React.Component {
                                                                           : '';
           const presentationContent = presentation.split('\r\n');
           const pageTitle = presentationContent.shift();
-          this.setState({ presentations, availableLanguages, presentationContent, pageTitle, language, display: "block" })
+          this.setState({ presentations, availableLanguages, presentationContent, pageTitle, language })
           // presentations = {'LANG1': [content1, language1, id1], 'LANG2': [content2, language2, id2]}
         }.bind(this))
     }
@@ -168,6 +167,8 @@ class AboutPage extends React.Component {
                             </div>
 
                             <ReCAPTCHA sitekey="6LctkTYUAAAAABfLXQzX4brqTbRniz3cuR5AgDYp"
+                                       size='compact'
+                                       style={{float: 'right', marginTop: '-33px'}}
                                        onChange={(e) => this.handleRecaptcha(e)} />
                         </form>
                     </Panel>
