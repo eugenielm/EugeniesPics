@@ -89,6 +89,7 @@ a.active.btn.btn-default, a.btn.btn-default:hover {
 #menuitems a, #menuitems li > a {
     font-family: ubuntu;
     text-decoration: overline;
+    padding: 3px 15px;
 }
 
 #allcats { 
@@ -100,6 +101,12 @@ button#allcats {
     border-color: #fff2f2;
     box-shadow: none;
     padding: 3px 6px 0px 6px;
+    margin-left: 12px;
+}
+
+ul.dropdown-menu > li {
+    padding-top: 7px;
+    padding-bottom: 7px;
 }
 
 ul.dropdown-menu > li.active > a {
@@ -117,7 +124,7 @@ ul.dropdown-menu > li.active > a {
 }
 
 #about_button {
-    border: solid thin;
+    border: none;
     background: #e8dede;
     border-color: #fff2f2;
     padding: 1px 5px 0px 5px;
@@ -126,7 +133,7 @@ ul.dropdown-menu > li.active > a {
 /* Admin menu items */
 
 button#admin_dropdown {
-    margin-left: 10px;
+    margin-left: 18px;
     background: #e8dede;
     border-color: #fff2f2;
     box-shadow: none;
