@@ -53,7 +53,7 @@ class PictureComponent extends React.Component {
     }
 
     shareOnFacebook() {
-        const pictureToDisplay = this.props.pictures[this.state.picIndex].pic_url_small;
+        const pictureToDisplay = this.props.pictures[this.state.picIndex].pic_url_medium;
         const picDescription = this.props.categoryName + " / '"
                              + this.props.pictures[this.state.picIndex].title + "'"
         const currentUrl = window.location.href;
@@ -69,17 +69,7 @@ class PictureComponent extends React.Component {
             FB.AppEvents.logPageView();
             FB.ui(
                 {
-                 method: 'share_open_graph',
-                 display: 'popup',
-                 action_type: 'og.shares',
-                 action_properties: JSON.stringify({
-                    object : {
-                       'og:url': currentUrl, // url to share
-                       'og:title': "Eugenie's pics",
-                       'og:description': picDescription,
-                       'og:image': pictureToDisplay
-                    }
-                 })
+                 method: 'share',
                 //  href: defaults to the current page URL
                 // callback below:
                }, function(response) {
@@ -195,11 +185,10 @@ class PictureComponent extends React.Component {
                     <Modal.Footer>
                         (c) {this.props.pictures[this.state.picIndex].author} - all rights reserved 
                         <span style={{float: 'right'}}>
-                            <FacebookShareButton quote="Eugenie's pics"
-                                                 onClick={this.shareOnFacebook}
+                            <FacebookShareButton quote={"'" + currentPicture.title + "'"}
                                                  id="shareBtn"
                                                  url={window.location.href}
-                                                 >
+                                                 onClick={this.shareOnFacebook}>
                                 <FacebookIcon round={true} size={22}/>
                             </FacebookShareButton>
                         </span>
