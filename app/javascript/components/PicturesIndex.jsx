@@ -2,7 +2,23 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import { Button, Grid, Row, Col, Image, Modal, OverlayTrigger, Tooltip, Panel } from 'react-bootstrap';
+import { ShareButtons, ShareCounts, generateShareIcon } from 'react-share';
 
+const {
+    FacebookShareButton,
+    GooglePlusShareButton,
+    LinkedinShareButton,
+    TwitterShareButton,
+    TelegramShareButton,
+    WhatsappShareButton,
+    PinterestShareButton,
+    VKShareButton,
+    OKShareButton,
+    RedditShareButton,
+    EmailShareButton,
+    } = ShareButtons;
+
+const FacebookIcon = generateShareIcon('facebook');
 
 const tooltip = (
     <Tooltip id="tooltip">~ C ~ L ~ I ~ C ~ K ~</Tooltip>
@@ -33,6 +49,58 @@ class PictureComponent extends React.Component {
         this.hideModal = this.hideModal.bind(this);
         this.handleDisplayedPic = this.handleDisplayedPic.bind(this);
         this.handleDescription = this.handleDescription.bind(this);
+        this.shareOnFacebook = this.shareOnFacebook.bind(this);
+    }
+
+    shareOnFacebook() {
+        const pictureToDisplay = this.props.pictures[this.state.picIndex].pic_url_small;
+        const picDescription = this.props.categoryName + " / '"
+                             + this.props.pictures[this.state.picIndex].title + "'"
+        const currentUrl = window.location.href;
+        
+        // initialize the FB JavaScript SDK
+        window.fbAsyncInit = function(pictureToDisplay, picDescription, currentUrl) {
+            FB.init({
+              appId            : '1836842776645754',
+              autoLogAppEvents : true,
+              xfbml            : true,
+              version          : 'v2.10'
+            });
+            FB.AppEvents.logPageView();
+            FB.ui(
+                {
+                 method: 'share_open_graph',
+                 display: 'popup',
+                 action_type: 'og.shares',
+                 action_properties: JSON.stringify({
+                    object : {
+                       'og:url': currentUrl, // url to share
+                       'og:title': "Eugenie's pics",
+                       'og:description': picDescription,
+                       'og:image': pictureToDisplay
+                    }
+                 })
+                //  href: defaults to the current page URL
+                // callback below:
+               }, function(response) {
+                if (response && !response.error_message) {
+                    alert('Posting completed!');
+                  } else {
+                    alert('Error while posting :\\');
+                  }
+               }.bind(this));
+            // JS SDK initialized, support XFBML tags
+            FB.XFBML.parse();
+        };
+
+        // Load the SDK asynchronously
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+          }(document, 'script', 'facebook-jssdk'));
     }
 
     componentWillReceiveProps(nextProps) {
@@ -125,7 +193,16 @@ class PictureComponent extends React.Component {
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
-                        (c) {this.props.pictures[this.state.picIndex].author} - all rights reserved
+                        (c) {this.props.pictures[this.state.picIndex].author} - all rights reserved 
+                        <span style={{float: 'right'}}>
+                            <FacebookShareButton quote="Eugenie's pics"
+                                                 onClick={this.shareOnFacebook}
+                                                 id="shareBtn"
+                                                 url={window.location.href}
+                                                 >
+                                <FacebookIcon round={true} size={22}/>
+                            </FacebookShareButton>
+                        </span>
                     </Modal.Footer>
                 </Modal>
                 {this.props.user && this.props.user.superadmin ?
@@ -251,7 +328,7 @@ class PicturesIndex extends React.Component {
                     <div className="inline">
                         <Button id="cat_desc_btn" bsSize="xsmall"
                                 onClick={() => this.setState({ panelOpen: !this.state.panelOpen })}>
-                            <span className="glyphicon glyphicon-triangle-bottom"></span>
+                            <span className="glyphicon glyphicon-circle-arrow-down"></span>
                                 
                         </Button>
                         <div className="inline">{edit_cat_link} {delete_cat_link} {new_picture_link}</div>
