@@ -107,17 +107,18 @@
 
 .modal-header { text-align: center }
 
-.modal-header button.close { color: white }
+.modal-header button.close { 
+    color: white;
+    opacity: 1;
+}
+
+.modal-header button.close:hover { opacity: 0.6 }
 
 .modal-footer { text-align: left !important }
 
-button.close {
-    color: white;
-}
-
 .prev-pic, .next-pic {
     position: absolute;
-    width: 10%;
+    width: 12%;
     height: 100%;
     text-align: center;
     z-index: 10;
