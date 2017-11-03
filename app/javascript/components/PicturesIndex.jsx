@@ -44,7 +44,11 @@ const EditDeletePicture = props => {
 class PictureComponent extends React.Component {
 
     componentWillMount() {
-        this.setState({ show: false, showDescription: false, picIndex: 0, language: this.props.language });
+        this.setState({ show: (window.location.hash && window.location.hash.toString().slice(1) 
+                               == this.props.pictures[0].id.toString()) ? true : false, 
+                        showDescription: false, 
+                        picIndex: 0, 
+                        language: this.props.language });
         this.showModal = this.showModal.bind(this);
         this.hideModal = this.hideModal.bind(this);
         this.handleDisplayedPic = this.handleDisplayedPic.bind(this);
@@ -69,8 +73,16 @@ class PictureComponent extends React.Component {
             FB.AppEvents.logPageView();
             FB.ui(
                 {
-                 method: 'share',
-                //  href: defaults to the current page URL
+                 method: 'share_open_graph',
+                 action_type: 'og.shares',
+                 action_properties: JSON.stringify({
+                    object : {
+                       'og:url': currentUrl, // url to share
+                       'og:title': "Eugenie's pics",
+                       'og:description': picDescription,
+                       'og:image': pictureToDisplay
+                    }
+                })
                 // callback below:
                }, function(response) {
                 if (response && !response.error_message) {
@@ -93,15 +105,12 @@ class PictureComponent extends React.Component {
           }(document, 'script', 'facebook-jssdk'));
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.setState({ picIndex: 0, language: nextProps.language });
-    }
-
     showModal() {
         this.setState({show: true});
     }
     
     hideModal() {
+        // window.location = window.location.toString().split('#')[0];
         this.setState({show: false, showDescription: false});
     }
 
@@ -115,14 +124,18 @@ class PictureComponent extends React.Component {
         if (n == 1) {
             if (this.state.picIndex < this.props.pictures.length - 1) {
                 this.setState({ picIndex: this.state.picIndex + 1 });
+                window.location.hash = this.props.pictures[this.state.picIndex + 1].id.toString();
             } else {
                 this.setState({ picIndex: 0 });
+                window.location.hash = this.props.pictures[0].id.toString();
             }
         } else {
             if (this.state.picIndex == 0) {
                 this.setState({ picIndex: this.props.pictures.length - 1 });
+                window.location.hash = this.props.pictures[this.props.pictures.length - 1].id.toString();
             } else {
                 this.setState({ picIndex: this.state.picIndex - 1 });
+                window.location.hash = this.props.pictures[this.state.picIndex - 1].id.toString();
             }
         }
     }
@@ -133,7 +146,7 @@ class PictureComponent extends React.Component {
         return (
             <Col lg={3} md={4} sm={6} className="picture-element">
             <div className="picture_pic">
-                <Link onClick={this.showModal} to="#">
+                <Link onClick={this.showModal} to={"#" + this.props.pictures[0].id.toString()}>
                     <Image src={this.props.pictures[0].pic_url_small} alt={this.props.pictures[0].title} responsive />
                 </Link>
                 <Modal show={this.state.show}
@@ -246,24 +259,26 @@ class PicturesIndex extends React.Component {
 
     // this method is needed to triger re-rendering when switching from one categories index page to another
     componentWillReceiveProps(nextProps) {
-        const url = '/categories/' + nextProps.location.pathname.split('/').slice(1)[1] + '/pictures.json';
-        fetch(url)
-        .then(function(resp) {
-            return resp.json();
-        })
-        .then(function(pics) {
-            pics.pop(); // popping out all_categories list
-            const categoryName = pics.pop();
-            const categoryDescriptions = pics.pop();
-            const pictures = pics;
-            const availableLanguages = Object.keys(categoryDescriptions);
-            const language = this.props.langPref ? (availableLanguages.includes(this.props.langPref) ? this.props.langPref
-                                                                                                     : (availableLanguages.includes('EN') ? 'EN' : availableLanguages[0]))
-                                                 : (availableLanguages.includes('EN') ? 'EN' : availableLanguages[0]);
-            const categoryDescription = categoryDescriptions[language];
-            const descriptionContent = categoryDescription ? categoryDescription.split('\r\n') : null;
-            this.setState({categoryName, pictures, availableLanguages, language, categoryDescriptions, descriptionContent});
-        }.bind(this));
+        if (nextProps.location.pathname != this.props.location.pathname) {
+            const url = '/categories/' + nextProps.location.pathname.split('/').slice(1)[1] + '/pictures.json';
+            fetch(url)
+            .then(function(resp) {
+                return resp.json();
+            })
+            .then(function(pics) {
+                pics.pop(); // popping out all_categories list
+                const categoryName = pics.pop();
+                const categoryDescriptions = pics.pop();
+                const pictures = pics;
+                const availableLanguages = Object.keys(categoryDescriptions);
+                const language = this.props.langPref ? (availableLanguages.includes(this.props.langPref) ? this.props.langPref
+                                                                                                        : (availableLanguages.includes('EN') ? 'EN' : availableLanguages[0]))
+                                                    : (availableLanguages.includes('EN') ? 'EN' : availableLanguages[0]);
+                const categoryDescription = categoryDescriptions[language];
+                const descriptionContent = categoryDescription ? categoryDescription.split('\r\n') : null;
+                this.setState({categoryName, pictures, availableLanguages, language, categoryDescriptions, descriptionContent});
+            }.bind(this));
+        }
     }
 
     handleContent(lang) {
@@ -271,6 +286,16 @@ class PicturesIndex extends React.Component {
         const descriptionContent = categoryDescription.split('\r\n');
         this.props.updateLangPref(lang); // update language preference in App (parent) component
         this.setState({categoryDescription, descriptionContent, language: lang});
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log("shouldComponentUpdate, this.props.location.pathname: ", this.props.location.pathname, ", nextProps.location.pathname: ", nextProps.location.pathname);
+        console.log("shouldComponentUpdate, this.state: ", this.state, ", nextState: ", nextState);
+        if (this.props.location.pathname == nextProps.location.pathname && this.state.categoryName) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     render() {
@@ -333,7 +358,8 @@ class PicturesIndex extends React.Component {
                     <Row id='all_pictures' className="show-grid">
                         {this.state.pictures.map(pic => <PictureComponent
                                                             key={pic.id}
-                                                            pictures={this.state.pictures.slice(this.state.pictures.indexOf(pic)).concat(this.state.pictures.slice(0, this.state.pictures.indexOf(pic)))}
+                                                            pictures={this.state.pictures.slice(this.state.pictures.indexOf(pic))
+                                                            .concat(this.state.pictures.slice(0, this.state.pictures.indexOf(pic)))}
                                                             categoryName={this.state.categoryName}
                                                             category_id={this.props.match.params.category_id}
                                                             language={this.state.language}
