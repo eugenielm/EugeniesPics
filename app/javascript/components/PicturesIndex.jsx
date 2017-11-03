@@ -259,24 +259,25 @@ class PicturesIndex extends React.Component {
 
     // this method is needed to triger re-rendering when switching from one categories index page to another
     componentWillReceiveProps(nextProps) {
-        const url = '/categories/' + nextProps.location.pathname.split('/').slice(1)[1] + '/pictures.json';
-        fetch(url)
-        .then(function(resp) {
-            return resp.json();
-        })
-        .then(function(pics) {
-            pics.pop(); // popping out all_categories list
-            const categoryName = pics.pop();
-            const categoryDescriptions = pics.pop();
-            const pictures = pics;
-            const availableLanguages = Object.keys(categoryDescriptions);
-            const language = this.props.langPref ? (availableLanguages.includes(this.props.langPref) ? this.props.langPref
-                                                                                                    : (availableLanguages.includes('EN') ? 'EN' : availableLanguages[0]))
-                                                : (availableLanguages.includes('EN') ? 'EN' : availableLanguages[0]);
-            const categoryDescription = categoryDescriptions[language];
-            const descriptionContent = categoryDescription ? categoryDescription.split('\r\n') : null;
-            this.setState({categoryName, pictures, availableLanguages, language, categoryDescriptions, descriptionContent});
-        }.bind(this));
+        if (nextProps.location.pathname != this.props.location.pathname) {
+            fetch(nextProps.location.pathname + '.json')
+            .then(function(resp) {
+                return resp.json();
+            })
+            .then(function(pics) {
+                pics.pop(); // popping out all_categories list
+                const categoryName = pics.pop();
+                const categoryDescriptions = pics.pop();
+                const pictures = pics;
+                const availableLanguages = Object.keys(categoryDescriptions);
+                const language = this.props.langPref ? (availableLanguages.includes(this.props.langPref) ? this.props.langPref
+                                                                                                        : (availableLanguages.includes('EN') ? 'EN' : availableLanguages[0]))
+                                                    : (availableLanguages.includes('EN') ? 'EN' : availableLanguages[0]);
+                const categoryDescription = categoryDescriptions[language];
+                const descriptionContent = categoryDescription ? categoryDescription.split('\r\n') : null;
+                this.setState({categoryName, pictures, availableLanguages, language, categoryDescriptions, descriptionContent});
+            }.bind(this));
+        }
     }
 
     handleContent(lang) {
@@ -284,14 +285,6 @@ class PicturesIndex extends React.Component {
         const descriptionContent = categoryDescription.split('\r\n');
         this.props.updateLangPref(lang); // update language preference in App (parent) component
         this.setState({categoryDescription, descriptionContent, language: lang});
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        if (this.props.location.pathname == nextProps.location.pathname && this.state.categoryName) {
-            return false;
-        } else {
-            return true;
-        }
     }
 
     render() {
