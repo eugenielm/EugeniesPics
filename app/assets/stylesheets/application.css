@@ -85,7 +85,7 @@ a.btn.btn-default, a.active.btn.btn-default, a.btn.btn-default:active {
 }
 
 a.btn.btn-default:hover {
-    color: #b1b1b1;
+    color: #868585;
 }
 
 /* active link in menu items */
@@ -107,18 +107,15 @@ a.active.btn.btn-default { text-decoration: overline }
 
 div#menuitems {
     position: absolute;
-    left: 0; right: 0; bottom: 0;
-    /* use of rgba to set the opacity for the background only */
-    background: rgba(255,255,255,0.5);
+    left: 0; right: 0; bottom: 1vw;
 }
 
-#menuitems a, button#admin_dropdown, #about_button {
+#gallery_btn, #admin_dropdown, #about_button, #allcats a.btn, div.dropdown.btn-group button#allcats {
     font-family: ubuntu;
     padding: 0px 5px;
     margin-left: 1.2vh;
     margin-right: 1.2vh;
-    text-shadow: #fff 1px 1px 2px;
-    background: none;
+    background: rgba(255,255,255,0.6);
     font-size: 14px;
 }
 
@@ -126,7 +123,12 @@ div#menuitems {
     line-height: 30px;
 }
 
-#menuitems li:hover { background-color: #e6e6e6 }
+#menuitems li:hover { background-color: #868585 }
+
+#menuitems .dropdown ul.dropdown-menu li.active a {
+    background-color: #fff !important;
+    background-image: none;
+}
 
 #menuitems li.active > a {
     color: black;
@@ -149,11 +151,12 @@ button#allcats {
 /* Admin menu items */
 
 button#admin_dropdown {
-    background-color: #fff;
-    border: thin #fff;
-    margin-left: 30px;
+    background-color: rgba(255,255,255,0.6);
+    border: none;
+    margin-left: 1.2vh;
 }
 
+#admin_dropdown:hover { color: #868585 }
 
 /*********************************************************************/
 /* Page footer */

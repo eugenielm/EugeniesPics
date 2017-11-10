@@ -65,9 +65,9 @@ class Navibar extends React.Component {
         <div className="d-flex justify-content-around" id="menuitems">
             
             { this.state.path == '/categories' ?
-                <Button href="/categories" active={true}>~ Galleries ~</Button>
+                <Button href="/categories" active={true} id="gallery_btn">~ Galleries ~</Button>
                   :
-                <IndexLinkContainer to='/categories'><Button>~ Galleries ~</Button></IndexLinkContainer>
+                <IndexLinkContainer to='/categories' id="gallery_btn"><Button>~ Galleries ~</Button></IndexLinkContainer>
             }
 
             <div id="allcats" className="hidden-xs hidden-sm">
