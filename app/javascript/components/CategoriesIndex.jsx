@@ -18,7 +18,7 @@ const EditDeleteCategory = props => {
 
 const CategoryComponent = props => {
   return (
-    <Col lg={3} md={4} sm={6} id={"category_" + props.category.id}>
+    <Col md={4} sm={6} xs={6} id={"category_" + props.category.id}>
       <div className="cat_pic">
         <Link to={"/categories/" + props.category.id + "/pictures"}>
           <p id="catname">{props.category.name}</p>
