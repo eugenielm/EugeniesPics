@@ -58,12 +58,12 @@ class PictureComponent extends React.Component {
 
     shareOnFacebook() {
         const pictureToDisplay = this.props.pictures[this.state.picIndex].pic_url_medium;
-        const picDescription = this.props.categoryName + " / '"
-                             + this.props.pictures[this.state.picIndex].title + "'"
+        const picTitle = this.props.pictures[this.state.picIndex].title;
+        const picAuthor = "A photograph by " + this.props.pictures[this.state.picIndex].author;
         const currentUrl = window.location.href;
         
         // initialize the FB JavaScript SDK
-        window.fbAsyncInit = function(pictureToDisplay, picDescription, currentUrl) {
+        window.fbAsyncInit = function(pictureToDisplay, picTitle, picAuthor, currentUrl) {
             FB.init({
               appId            : '1836842776645754',
               autoLogAppEvents : true,
@@ -73,14 +73,13 @@ class PictureComponent extends React.Component {
             FB.AppEvents.logPageView();
             FB.ui(
                 {
-                 method: 'share_open_graph',
-                 action_type: 'og.shares',
+                 method: 'share',
                  action_properties: JSON.stringify({
                     object : {
                        'og:url': currentUrl, // url to share
-                       'og:title': "Eugenie's pics",
-                       'og:description': picDescription,
-                       'og:image': pictureToDisplay
+                       'og:title': picTitle,
+                       'og:description': picAuthor,
+                       'og:image': pictureToDisplay,
                     }
                 })
                 // callback below:
@@ -110,8 +109,8 @@ class PictureComponent extends React.Component {
     }
     
     hideModal() {
-        // window.location = window.location.toString().split('#')[0];
-        this.setState({show: false, showDescription: false});
+        window.location.hash = '';
+        this.setState({show: false, showDescription: false, picIndex: 0});
     }
 
     handleDescription() {
@@ -144,7 +143,7 @@ class PictureComponent extends React.Component {
         const currentPicture = this.props.pictures[this.state.picIndex];
         const descriptionsLength = Object.entries(currentPicture.descriptions).length;
         return (
-            <Col lg={3} md={4} sm={6} className="picture-element">
+            <Col lg={3} md={4} sm={6} xs={6} className="picture-element">
             <div className="picture_pic">
                 <Link onClick={this.showModal} to={"#" + this.props.pictures[0].id.toString()}>
                     <Image src={this.props.pictures[0].pic_url_small} alt={this.props.pictures[0].title} responsive />
@@ -343,7 +342,7 @@ class PicturesIndex extends React.Component {
                     : <div className="inline">{edit_cat_link} {delete_cat_link} {new_picture_link}</div>
                 }
                 
-                <Grid>
+                <Grid fluid style={{maxWidth: '94%'}}>
                     <Row id='all_pictures' className="show-grid">
                         {this.state.pictures.map(pic => <PictureComponent
                                                             key={pic.id}
