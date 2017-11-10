@@ -17,7 +17,6 @@
 /*********************************************************************/
 
 html {
-    background-color: #f3f3f3;
     height: 100%;
 }
 
@@ -31,14 +30,16 @@ body {
 
 #app-container {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #f3f3f3;
+    background-color: var(--site-background);
     /* needed for footer absolute position */
     position: relative;
 }
 
 :root {
     --site-tone: #e8dede;
-  }
+    --site-background: #f0f2f3;
+    --site-footer: #4e606e;
+}
 
 .container { width: 94% }
 
@@ -61,35 +62,75 @@ a.btn { color: white }
 
 
 /*********************************************************************/
-/* Page header */
+/* Page header - Navibar */
 
 #page-header {
     text-align: center;
-    background: #e8dede;
-    padding: 15px 15px 5px 15px;
+    /* the background image ratio needs to be 1:5 */
+    background-image: url('TopBackgroundImg.jpg');
+    background-size: 100% auto;
+    height: calc(20vw - 3px);
+    padding: 0px 15px;
+    position: relative;
+    box-shadow: 0px 2px 20px;
 }
 
-a#home-link {
-    text-decoration: none;
-    color: black;
-}
+a#home-link { text-decoration: none }
 
-a.btn.btn-default { color: black; }
+a.btn.btn-default { color: black }
 
 a.btn.btn-default, a.active.btn.btn-default, a.btn.btn-default:active {
-    background: var(--site-tone);
     border: none;
     box-shadow: none;
 }
 
-a.active.btn.btn-default, a.btn.btn-default:hover {
-    color: #a9a9a9;
+a.btn.btn-default:hover {
+    color: #b1b1b1;
 }
 
-#menuitems a, #menuitems li > a {
+/* active link in menu items */
+a.active.btn.btn-default { text-decoration: overline }
+
+#site-name {
+    color: black;
+    font-family: italiana;
+    font-size: 2.5em;
+    line-height: 10vw;
+}
+
+#site-name-2 {
+    color: black;
+    font-family: italiana;
+    font-size: 0.9em;
+    margin-top: -4.5vw;
+}
+
+div#menuitems {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    /* use of rgba to set the opacity for the background only */
+    background: rgba(255,255,255,0.5);
+}
+
+#menuitems a, button#admin_dropdown, #about_button {
     font-family: ubuntu;
+    padding: 0px 5px;
+    margin-left: 1.2vh;
+    margin-right: 1.2vh;
+    text-shadow: #fff 1px 1px 2px;
+    background: none;
+    font-size: 14px;
+}
+
+#menuitems div.dropdown.open.btn-group ul.dropdown-menu li > a {
+    line-height: 30px;
+}
+
+#menuitems li:hover { background-color: #e6e6e6 }
+
+#menuitems li.active > a {
+    color: black;
     text-decoration: overline;
-    padding: 3px 15px;
 }
 
 #allcats { 
@@ -97,48 +138,20 @@ a.active.btn.btn-default, a.btn.btn-default:hover {
  }
 
 button#allcats {
-    background: #e8dede;
-    border-color: #fff2f2;
+    border: solid thin white;
+    background: none;
     box-shadow: none;
-    padding: 3px 6px 0px 6px;
+    padding: 1px 4px 0px 4px;
     margin-left: 12px;
-}
-
-ul.dropdown-menu > li {
-    padding-top: 7px;
-    padding-bottom: 7px;
-}
-
-ul.dropdown-menu > li.active > a {
-    background: #d6b9b9;
-}
-
-#site-name {
-    font-family: italiana;
-    font-size: 2em;
-}
-
-#site-name-2 {
-    font-family: italiana;
-    font-size: 1.2em;
-}
-
-#about_button {
-    border: none;
-    background: #e8dede;
-    border-color: #fff2f2;
-    padding: 1px 5px 0px 5px;
+    font-size: 14px;
 }
 
 /* Admin menu items */
 
 button#admin_dropdown {
-    margin-left: 18px;
-    background: #e8dede;
-    border-color: #fff2f2;
-    box-shadow: none;
-    padding: 0px 6px 2px 6px;
-    font-family: ubuntu;
+    background-color: #fff;
+    border: thin #fff;
+    margin-left: 30px;
 }
 
 
@@ -146,7 +159,7 @@ button#admin_dropdown {
 /* Page footer */
 
 #footer {
-    background: #e8dede;
+    background: var(--site-footer);
     text-align: center;
     height: 30px;
     width: 100%;
@@ -156,6 +169,7 @@ button#admin_dropdown {
 }
 
 #footer p {
+    color: white;
     font-size: 12px;
     font-family: italiana;
     display: table-cell;
@@ -186,7 +200,7 @@ button#admin_dropdown {
 div.actions input {
     border-radius: 3px;
     color: white;
-    /* BS 'success' style color */
+    /* BS 'success' style color - used for all submit buttons except in the contact form */
     background-image: linear-gradient(to bottom,#5cb85c 0,#419641 100%);
 }
 
@@ -197,8 +211,6 @@ button.back-link a {
 }
 
 div.actions { margin-top: 20px }
-
-/* .form-layout table { max-length: 100vh } */
 
 div.form-layout div.form-group { margin: 0 auto }
 

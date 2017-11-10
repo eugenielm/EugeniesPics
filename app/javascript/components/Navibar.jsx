@@ -13,7 +13,7 @@ const CategoriesLinks = (props) => {
   } else {
     return (<IndexLinkContainer to={'/categories/' + props.cat_id + '/pictures'}>
               <Button active={(props.path == '/categories/' + props.cat_id + '/pictures') ? true : false}>
-                > {props.cat_name}
+                {props.cat_name}
               </Button>
             </IndexLinkContainer>);
   }
@@ -55,19 +55,19 @@ class Navibar extends React.Component {
   render () {
     const numberOfCategories = this.state.categories.length;
     return (
-      
+      // for height to be 20vw, the image ratio must be 1/5 (height=1 and width=5)
       <div id="page-header">
         <Link to='/' id="home-link">
           <p id="site-name">EUGENIE'S PICS</p>
-          <p id="site-name-2">Photographs by Eugénie Le Moulec</p>
+          <p id="site-name-2">- Photographs by Eugénie Le Moulec -</p>
         </Link>
                     
         <div className="d-flex justify-content-around" id="menuitems">
             
             { this.state.path == '/categories' ?
-                <Button href="/categories" active={true}>~Galleries~</Button>
+                <Button href="/categories" active={true}>~ Galleries ~</Button>
                   :
-                <IndexLinkContainer to='/categories'><Button>~Galleries~</Button></IndexLinkContainer>
+                <IndexLinkContainer to='/categories'><Button>~ Galleries ~</Button></IndexLinkContainer>
             }
 
             <div id="allcats" className="hidden-xs hidden-sm">
@@ -83,7 +83,7 @@ class Navibar extends React.Component {
             </IndexLinkContainer>
 
             <DropdownButton pullRight noCaret id="allcats" 
-                                              title={<span className="glyphicon glyphicon-list"></span>} 
+                                              title={<span className="glyphicon glyphicon-th-list"></span>} 
                                               open={this.state.open} onToggle={this.handleCollapse} 
                                               className="visible-xs visible-sm">
               { this.state.categories.map(c => <CategoriesLinks key={c.id} 
