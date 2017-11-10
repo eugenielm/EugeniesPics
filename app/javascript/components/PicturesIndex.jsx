@@ -57,7 +57,8 @@ class PictureComponent extends React.Component {
     }
 
     shareOnFacebook() {
-        const pictureToDisplay = this.props.pictures[this.state.picIndex].pic_url_medium;
+        const picToDisplay = this.props.pictures[this.state.picIndex].pic_url_medium;
+        const pictureToDisplay = '<%= asset_path picToDisplay %>';
         const picTitle = this.props.pictures[this.state.picIndex].title;
         const picAuthor = "A photograph by " + this.props.pictures[this.state.picIndex].author;
         const currentUrl = window.location.href;
