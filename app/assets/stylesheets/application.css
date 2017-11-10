@@ -67,7 +67,7 @@ a.btn { color: white }
 #page-header {
     text-align: center;
     /* the background image ratio needs to be 1:5 */
-    background-image: url('TopBackgroundImg.jpg');
+    background-image: url('/TopBackgroundImg.jpg');
     background-size: 100% auto;
     height: calc(20vw - 3px);
     padding: 0px 15px;
