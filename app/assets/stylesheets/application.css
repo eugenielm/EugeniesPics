@@ -94,20 +94,20 @@ a.active.btn.btn-default { text-decoration: overline }
 #site-name {
     color: black;
     font-family: italiana;
-    font-size: 2.5em;
-    line-height: 10vw;
+    font-size: 3.5em;
+    line-height: 9vw;
 }
 
 #site-name-2 {
     color: black;
     font-family: italiana;
-    font-size: 0.9em;
-    margin-top: -4.5vw;
+    font-size: 1.2em;
+    margin-top: -3vw;
 }
 
 div#menuitems {
     position: absolute;
-    left: 0; right: 0; bottom: 1vw;
+    left: 0; right: 0; bottom: 1.5vw;
 }
 
 #gallery_btn, #admin_dropdown, #about_button, #allcats a.btn, div.dropdown.btn-group button#allcats {
@@ -115,7 +115,7 @@ div#menuitems {
     padding: 0px 5px;
     margin-left: 1.2vh;
     margin-right: 1.2vh;
-    background: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.7);
     font-size: 14px;
 }
 
@@ -139,15 +139,6 @@ div#menuitems {
     display: inline;
  }
 
-button#allcats {
-    border: solid thin white;
-    background: none;
-    box-shadow: none;
-    padding: 1px 4px 0px 4px;
-    margin-left: 12px;
-    font-size: 14px;
-}
-
 /* Admin menu items */
 
 button#admin_dropdown {
@@ -157,6 +148,30 @@ button#admin_dropdown {
 }
 
 #admin_dropdown:hover { color: #868585 }
+
+
+@media screen and (max-width: 767px) and (min-width: 426px) {
+    #site-name { font-size: 2.5em; }
+    #site-name-2 { font-size: 1em; margin-top: -3.8vw;}
+    div#menuitems { bottom: 1vw; }
+    #gallery_btn, 
+    #admin_dropdown, 
+    #about_button, 
+    #allcats a.btn, 
+    div.dropdown.btn-group button#allcats { font-size: 12px; }
+}
+
+
+@media screen and (max-width: 425px) {
+    #site-name { font-size: 1.7em; }
+    #site-name-2 { font-size: 0.7em; margin-top: -4.5vw;}
+    div#menuitems { bottom: 3px; }
+    #gallery_btn, 
+    #admin_dropdown, 
+    #about_button, 
+    #allcats a.btn, 
+    div.dropdown.btn-group button#allcats { font-size: 10px; }
+}
 
 /*********************************************************************/
 /* Page footer */
