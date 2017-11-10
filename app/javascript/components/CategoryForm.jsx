@@ -71,16 +71,16 @@ class CategoryForm extends React.Component {
     }
 
     handleNameChange(event) {
-        if (event.target.value.match(/^[0-9a-zA-Z -]*$/) !== null) {
+        if (event.target.value.match(/^[\w\ \u00E0-\u00FC\-¨()[\]_&=+*ˆ@#%\^]{0,30}$/)) {
             this.setState({category_name: event.target.value});
         }  
     }
 
     handleCatpic(event) {
-        if (event.target.files[0].size < 1500000) {
+        if (event.target.files[0].size < 4000000) {
             this.setState({ catpic_url: event.target.files[0], catpic_name: event.target.files[0].name });
         } else {
-            alert("The picture you uploaded exceeded the max size of 1.5Mb (" + (event.target.files[0].size / 1000) + "ko)");
+            alert("The picture you uploaded exceeded the max size of 4Mb (" + (event.target.files[0].size / 1000) + "ko)");
         }
     }
 
@@ -108,7 +108,8 @@ class CategoryForm extends React.Component {
                                         </OverlayTrigger>));
 
         const category_form = this.state.category_id ?
-                            (<form encType="multipart/form-data" action={"/categories/" + this.state.category_id} method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
+                            (<form encType="multipart/form-data" action={"/categories/" + this.state.category_id} 
+                                   method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
                                 <input name="utf8" type="hidden" value="✓" />
                                 <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />
                                 {input_edit}
@@ -116,7 +117,8 @@ class CategoryForm extends React.Component {
                                     <tbody>
                                         <tr>
                                             <td><label htmlFor="category_name">Name</label></td>
-                                            <td><input id="category_name" type="text" name="category[name]" value={this.state.category_name} onChange={this.handleNameChange} /></td>
+                                            <td><input id="category_name" type="text" name="category[name]" 
+                                                       value={this.state.category_name} onChange={this.handleNameChange} /></td>
                                         </tr>
                                         <tr>
                                             <td><label htmlFor="category_descriptions">Category descriptions</label></td>
@@ -131,7 +133,8 @@ class CategoryForm extends React.Component {
                                         </tr>
                                         <tr>
                                             <td><label htmlFor="category_file">Category picture</label></td>
-                                            <td><input id="category_catpic" accept=".png, .jpg, .jpeg" type="file" name="category[catpic]" onChange={this.handleCatpic} /></td>
+                                            <td><input id="category_catpic" accept=".png, .jpg, .jpeg" type="file" 
+                                                       name="category[catpic]" onChange={this.handleCatpic} /></td>
                                         </tr>
                                     </tbody>
                                 </Table>
@@ -141,14 +144,16 @@ class CategoryForm extends React.Component {
                                 </div>
                             </form>)
 
-                            :   (<form encType="multipart/form-data" action="/categories" method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
+                            :   (<form encType="multipart/form-data" action="/categories" 
+                                       method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
                                     <input name="utf8" type="hidden" value="✓" />
                                     <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />                            
                                     <Table responsive bordered>
                                         <tbody>
                                             <tr>
                                                 <td><label htmlFor="category_name">Category name</label></td>
-                                                <td><input id="category_name" type="text" name="category[name]" value={this.state.category_name} onChange={this.handleNameChange} /></td>
+                                                <td><input id="category_name" type="text" name="category[name]" 
+                                                           value={this.state.category_name} onChange={this.handleNameChange} /></td>
                                             </tr>
                                         </tbody>
                                     </Table>
@@ -162,7 +167,8 @@ class CategoryForm extends React.Component {
                 
                 <h3>{ this.state.category_id ? ("Edit '" + this.state.category_name + "' category") : "New category"}
                     {this.state.category_name && this.state.category_id?
-                        <Button bsStyle="primary" bsSize="xsmall" className="back-link" href={"/categories/" + this.state.category_id} style={{marginLeft: 5 + 'px'}}>
+                        <Button bsStyle="primary" bsSize="xsmall" className="back-link" 
+                                href={"/categories/" + this.state.category_id} style={{marginLeft: 5 + 'px'}}>
                             Back to {this.state.category_name}
                         </Button>
                         : <Button bsStyle="primary" bsSize="xsmall" className="back-link" href="/categories" style={{marginLeft: 5 + 'px'}}>
