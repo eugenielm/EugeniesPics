@@ -7,7 +7,7 @@
 #home-page {
     text-align: center;
     width: 98%;
-    margin: 7vh auto 0 auto;
+    margin: 6vh auto 0 auto;
     height: 100%;
     /* needed for proper footer layout */
     padding-bottom: 40px;
@@ -47,8 +47,11 @@ div.carousel.slide div.carousel-inner div.item img {
 
 div.carousel.slide div.carousel-inner div.item div.carousel-caption p {
     font-family: ubuntu;
-    font-size: 1.3em;
-    text-shadow: 1px 1px 4px #000;
+    font-size: 1.2em;
+    background: rgba(0, 0, 0, 0.3);
+    display: inline-block;
+    margin: auto;
+    padding: 3px 8px;
 }
 
 a.carousel-control {
@@ -88,8 +91,6 @@ ol.carousel-indicators li.active { background-color: #797979 }
     margin-bottom: 20px;
 }
 
-
-
 #language_buttons {
     display: inline-block;
     float: right;
@@ -99,26 +100,30 @@ button.lang_btns {
     margin-left: 5px;
     background-image: none;
     background-color: #f3f3f3;
+    box-shadow: 1px 1px 4px #AAAAAA;
     outline: 'none';
 }
 
 button.lang_btns:hover {
     background-color: white;
     border-color: #dbdbdb;
-    box-shadow: 1px 1px 4px #AAAAAA;
+    box-shadow: 1px 1px 4px;
 }
 
 button.lang_btns.active, button.lang_btns.active:hover {
     cursor: default;
-    background-color: white !important;
-    box-shadow: 1px 1px 4px;
+    border: solid thin grey;
+    box-shadow: none;
 }
 
 #contact_btn {
     margin-bottom: 7px;
+    background: white;
 }
 
 #contact_me .panel, #contact_me td { border: none }
+
+#contact_me div.panel-body { padding: 10px }
 
 #contact_btn {
     font-family: verdana, arial, helvetica, sans-serif;
@@ -131,9 +136,18 @@ button.lang_btns.active, button.lang_btns.active:hover {
     width: 250px;
 }
 
-#contact_me .actions {
-    margin-top: 0px;
+#contact_me textarea { border-radius: 0 }
+
+#contact_me div.actions {
+    margin-top: -10px;
     margin-left: 10px;
+}
+
+form#contact_form div.actions input {
+    background: var(--site-footer);
+    border: var(--site-footer);
+    border-radius: 0;
+    padding: 3px 8px;
 }
 
 .g-recaptcha {

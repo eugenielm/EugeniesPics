@@ -162,7 +162,7 @@ class AboutPage extends React.Component {
                                 </tbody>
                             </Table>
 
-                            <div className="actions" style={{marginTop: 0}}>
+                            <div className="actions">
                                 <input type="submit" name="commit" value="Send" />
                             </div>
 
