@@ -58,13 +58,12 @@ class PictureComponent extends React.Component {
 
     shareOnFacebook() {
         const picToDisplay = this.props.pictures[this.state.picIndex].pic_url_medium;
-        const pictureToDisplay = '<%= asset_path picToDisplay %>';
-        const picTitle = this.props.pictures[this.state.picIndex].title;
+        const picTitle = this.props.pictures[this.state.picIndex].title.toString();
         const picAuthor = "A photograph by " + this.props.pictures[this.state.picIndex].author;
         const currentUrl = window.location.href;
         
         // initialize the FB JavaScript SDK
-        window.fbAsyncInit = function(pictureToDisplay, picTitle, picAuthor, currentUrl) {
+        window.fbAsyncInit = function(picToDisplay, picTitle, picAuthor, currentUrl) {
             FB.init({
               appId            : '1836842776645754',
               autoLogAppEvents : true,
@@ -81,7 +80,7 @@ class PictureComponent extends React.Component {
                        'og:url': currentUrl, // url to share
                        'og:title': picTitle,
                        'og:description': picAuthor,
-                       'og:image': pictureToDisplay,
+                       'og:image': picToDisplay,
                     }
                 })
                 // callback below:
