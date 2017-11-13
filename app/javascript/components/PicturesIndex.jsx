@@ -58,7 +58,7 @@ class PictureComponent extends React.Component {
 
     shareOnFacebook() {
         const picToDisplay = this.props.pictures[this.state.picIndex].pic_url_medium;
-        const picTitle = this.props.pictures[this.state.picIndex].title.toString();
+        const picTitle = this.props.pictures[this.state.picIndex].title;
         const picAuthor = "A photograph by " + this.props.pictures[this.state.picIndex].author;
         const currentUrl = window.location.href;
         
@@ -70,11 +70,9 @@ class PictureComponent extends React.Component {
               xfbml            : true,
               version          : 'v2.10'
             });
-            FB.AppEvents.logPageView();
             FB.ui(
                 {
-                 method: 'share_open_graph',
-                 action_type: 'og.shares',
+                 method: 'share',
                  action_properties: JSON.stringify({
                     object : {
                        "og:url": currentUrl,
