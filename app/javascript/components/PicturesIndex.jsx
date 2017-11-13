@@ -77,18 +77,18 @@ class PictureComponent extends React.Component {
                  action_type: 'og.shares',
                  action_properties: JSON.stringify({
                     object : {
-                       'og:url': currentUrl, // url to share
-                       'og:title': picTitle,
-                       'og:description': picAuthor,
-                       'og:image': picToDisplay,
+                       "og:url": currentUrl,
+                       "og:title": picTitle,
+                       "og:description": picAuthor,
+                       "og:image": picToDisplay,
                     }
                 })
                 // callback below:
                }, function(response) {
                 if (response && !response.error_message) {
-                    alert('Posting completed!');
+                    alert("Posting completed!");
                   } else {
-                    alert('Error while posting :\\');
+                    alert("Error while posting :\\");
                   }
                }.bind(this));
             // JS SDK initialized, support XFBML tags
