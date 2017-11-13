@@ -77,20 +77,6 @@ a.btn { color: white }
 
 a#home-link { text-decoration: none }
 
-a.btn.btn-default { color: black }
-
-a.btn.btn-default, a.active.btn.btn-default, a.btn.btn-default:active {
-    border: none;
-    box-shadow: none;
-}
-
-a.btn.btn-default:hover {
-    color: #868585;
-}
-
-/* active link in menu items */
-a.active.btn.btn-default { text-decoration: overline }
-
 #site-name {
     color: black;
     font-family: italiana;
@@ -110,67 +96,196 @@ div#menuitems {
     left: 0; right: 0; bottom: 1.5vw;
 }
 
-#gallery_btn, #admin_dropdown, #about_button, #allcats a.btn, div.dropdown.btn-group button#allcats {
+a.btn.btn-default { color: black }
+
+#page-header a.btn.btn-default, 
+#page-header a.btn.btn-default:active,
+#page-header a.active.btn.btn-default,
+#page-header #menuitems li {
+    border: none;
+    box-shadow: none;
     font-family: ubuntu;
-    padding: 0px 5px;
+    padding: 0.2vw 0.6vw;
     margin-left: 1.2vh;
     margin-right: 1.2vh;
     background: rgba(255,255,255,0.7);
-    font-size: 14px;
+    font-size: 16px;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
 }
 
-#menuitems div.dropdown.open.btn-group ul.dropdown-menu li > a {
-    line-height: 30px;
+/* Category name menu items font color should be black */
+#page-header #menuitems li a { color: black }
+
+/* when hovering over All galeries and Info menu items when the whole menu is visible */
+#menuitems a.btn.btn-default:hover, #menuitems li a:hover {
+    color: #abc1cc !important;
 }
 
-#menuitems li:hover { background-color: #868585 }
-
-#menuitems .dropdown ul.dropdown-menu li.active a {
-    background-color: #fff !important;
-    background-image: none;
+/* when hovering over categories names when the whole menu is visible */
+#menuitems li a:hover, #menuitems li a:focus {
+    background: none;
+    text-decoration: none;
+    outline: 0;
 }
 
-#menuitems li.active > a {
-    color: black;
+/* active link (categories items) in menu items */
+#menuitems li.active a {
     text-decoration: overline;
 }
 
-#allcats { 
-    display: inline;
- }
+/* active link buttons (All categories & Info) in menu items */
+#page-header a.active.btn.btn-default { 
+    text-decoration: overline;
+}
+
+/* Admin menu button position on wide screens in on the top right corner */
+#page-header div.dropdown.btn-group:nth-of-type(3) {
+    position: absolute;
+    top: 20px; right: 20px;
+    margin: 0;
+    font-family: ubuntu;
+    font-size: 16px;
+}
+
+/* Admin menu list items line-height */
+#page-header div.dropdown.btn-group:nth-of-type(3) li a {
+    line-height: 24px;
+}
+
+/* Open admin dropdown */
+#page-header div.dropdown.open.btn-group li.active a {
+    background-image: none; /* needed to set a background color */
+    background-color: #b1bdca;
+}
 
 /* Admin menu items */
 
 button#admin_dropdown {
-    background-color: rgba(255,255,255,0.6);
+    background-color: rgba(204,215,230,0.3);
     border: none;
     margin-left: 1.2vh;
+    font-size: 16px;
+    background-image: none;
 }
 
 #admin_dropdown:hover { color: #868585 }
 
 
 @media screen and (max-width: 767px) and (min-width: 426px) {
-    #site-name { font-size: 2.5em; }
-    #site-name-2 { font-size: 1em; margin-top: -3.8vw;}
-    div#menuitems { bottom: 1vw; }
-    #gallery_btn, 
-    #admin_dropdown, 
-    #about_button, 
-    #allcats a.btn, 
-    div.dropdown.btn-group button#allcats { font-size: 12px; }
+    button#menuitems.visible-xs {
+        font-size: 6vw;
+        background: none;
+        box-shadow: 1px 1px 10px darkgrey;
+        padding: 10px 15px 0 15px;
+    }
+
+    #page-header { position: relative; }
+
+    #site-name { line-height: 14vw; font-size: 3.2em; }
+    #site-name-2 { margin-top: -1.7vw; font-size: 1em; }
+
+    /* dropdown menu with categories */
+    #page-header div.dropdown.btn-group:nth-of-type(2) {
+        position: absolute;
+        top: 2vw; right: 2vw;
+    }
+
+    #page-header div.dropdown.btn-group:nth-of-type(2) a {
+        line-height: 30px;
+        font-family: ubuntu;
+        font-size: 14px;
+    }
+
+    #page-header div.dropdown.btn-group:nth-of-type(2) a.active {
+        text-decoration: none;
+        color: darkgray;
+    }
+
+    /* admin dropdown menu */
+    #page-header div.dropdown.btn-group:nth-of-type(3) {
+        top: 13.5vw; right: 2vw;
+    }
+
+    #page-header div.dropdown.btn-group:nth-of-type(3) #admin_dropdown {
+        margin: 0;
+        width: calc(6vw + 30px);
+        text-align: center;
+        background-color: rgba(255,255,255,0.8);
+        font-size: 12px;
+        padding: 3px 6px;
+
+    }
+
+    #page-header div.dropdown.btn-group:nth-of-type(3) li a {
+        font-family: ubuntu;
+        font-size: 12px;
+        line-height: 24px;
+    }
+
+    #page-header div.dropdown.btn-group:nth-of-type(3) li a:focus,
+    #page-header div.dropdown.btn-group:nth-of-type(2) a:focus {
+        outline: 0;
+    }
 }
 
 
 @media screen and (max-width: 425px) {
-    #site-name { font-size: 1.7em; }
-    #site-name-2 { font-size: 0.7em; margin-top: -4.5vw;}
-    div#menuitems { bottom: 3px; }
-    #gallery_btn, 
-    #admin_dropdown, 
-    #about_button, 
-    #allcats a.btn, 
-    div.dropdown.btn-group button#allcats { font-size: 10px; }
+    button#menuitems.visible-xs {
+        font-size: 5vw;
+        background: none;
+        box-shadow: 1px 1px 10px darkgrey;
+        padding: 5px 10px 0 10px;
+    }
+
+    #page-header { position: relative; }
+
+    #site-name { line-height: 14vw; font-size: 2.2em; }
+    #site-name-2 { margin-top: -2.5vw; font-size: 0.8em; }
+
+    /* dropdown menu with categories */
+    #page-header div.dropdown.btn-group:nth-of-type(2) {
+        position: absolute;
+        top: 2vw; right: 2vw;
+    }
+
+    #page-header div.dropdown.btn-group:nth-of-type(2) a {
+        line-height: 30px;
+        font-family: ubuntu;
+        font-size: 14px;
+    }
+
+    #page-header div.dropdown.btn-group:nth-of-type(2) a.active {
+        text-decoration: none;
+        color: darkgray;
+    }
+
+    /* admin dropdown menu */
+    #page-header div.dropdown.btn-group:nth-of-type(3) {
+        top: 12vw; right: 2vw;
+    }
+
+    #page-header div.dropdown.btn-group:nth-of-type(3) #admin_dropdown {
+        margin: 0;
+        width: calc(6vw + 30px);
+        text-align: center;
+        background-color: rgba(255,255,255,0.8);
+        font-size: 12px;
+        padding: 3px 6px;
+
+    }
+
+    #page-header div.dropdown.btn-group:nth-of-type(3) li a {
+        font-family: ubuntu;
+        font-size: 12px;
+        line-height: 24px;
+    }
+
+    #page-header div.dropdown.btn-group:nth-of-type(3) li a:focus,
+    #page-header div.dropdown.btn-group:nth-of-type(2) a:focus {
+        outline: 0;
+    }
 }
 
 /*********************************************************************/
