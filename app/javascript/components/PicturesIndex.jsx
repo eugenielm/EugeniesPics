@@ -344,7 +344,7 @@ class PicturesIndex extends React.Component {
                     : <div className="inline">{edit_cat_link} {delete_cat_link} {new_picture_link}</div>
                 }
                 
-                <Grid fluid style={{maxWidth: '94%'}}>
+                <Grid fluid>
                     <Row id='all_pictures' className="show-grid">
                         {this.state.pictures.map(pic => <PictureComponent
                                                             key={pic.id}
