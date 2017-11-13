@@ -143,7 +143,7 @@ h4.modal-title { font-size: 15px }
 
 .modal-header button.close:hover { opacity: 0.6 }
 
-.modal-footer { text-align: left !important }
+
 
 .prev-pic, .next-pic {
     position: absolute;
@@ -180,3 +180,21 @@ span.pic-description {
     max-width: 90%;
     padding: 5px 10px;
 }
+
+/* picture modal footer */
+div.modal-footer { text-align: left !important }
+
+div.picture_modal div.modal-footer { line-height: 21px }
+
+div.picture_modal div.modal-footer button.btn {
+    border: none;
+    box-shadow: none;
+    background: white;
+    color: #3B5998;
+    float: right;
+    text-shadow: none;
+    padding: 3px 4px 0 5px;
+    outline: 0;
+}
+
+div.picture_modal div.modal-footer i.fa.fa-facebook-official { font-size: 18px }

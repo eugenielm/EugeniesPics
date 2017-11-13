@@ -2,23 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import { Button, Grid, Row, Col, Image, Modal, OverlayTrigger, Tooltip, Panel } from 'react-bootstrap';
-import { ShareButtons, ShareCounts, generateShareIcon } from 'react-share';
-
-const {
-    FacebookShareButton,
-    GooglePlusShareButton,
-    LinkedinShareButton,
-    TwitterShareButton,
-    TelegramShareButton,
-    WhatsappShareButton,
-    PinterestShareButton,
-    VKShareButton,
-    OKShareButton,
-    RedditShareButton,
-    EmailShareButton,
-    } = ShareButtons;
-
-const FacebookIcon = generateShareIcon('facebook');
 
 const tooltip = (
     <Tooltip id="tooltip">~ C ~ L ~ I ~ C ~ K ~</Tooltip>
@@ -57,9 +40,10 @@ class PictureComponent extends React.Component {
     }
 
     shareOnFacebook() {
-        const picToDisplay = this.props.pictures[this.state.picIndex].pic_url_medium;
-        const picTitle = this.props.pictures[this.state.picIndex].title;
-        const picAuthor = "A photograph by " + this.props.pictures[this.state.picIndex].author;
+        const currentPicture = this.props.pictures[this.state.picIndex];
+        const picToDisplay = currentPicture.pic_url_medium;
+        const picTitle = currentPicture.title;
+        const picAuthor = "A photograph by " + currentPicture.author;
         const currentUrl = window.location.href;
         
         // initialize the FB JavaScript SDK
@@ -141,13 +125,15 @@ class PictureComponent extends React.Component {
     render() {
         const currentPicture = this.props.pictures[this.state.picIndex];
         const descriptionsLength = Object.entries(currentPicture.descriptions).length;
+        
         return (
             <Col lg={3} md={4} sm={6} xs={6} className="picture-element">
             <div className="picture_pic">
                 <Link onClick={this.showModal} to={"#" + this.props.pictures[0].id.toString()}>
                     <Image src={this.props.pictures[0].pic_url_small} alt={this.props.pictures[0].title} responsive />
                 </Link>
-                <Modal show={this.state.show}
+                <Modal className="picture_modal"
+                       show={this.state.show}
                        onHide={this.hideModal}
                        dialogClassName="custom-modal"
                 >
@@ -194,19 +180,14 @@ class PictureComponent extends React.Component {
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
-                        (c) {this.props.pictures[this.state.picIndex].author} - all rights reserved 
-                        <span style={{float: 'right'}}>
-                            <FacebookShareButton quote={"'" + currentPicture.title + "'"}
-                                                 id="shareBtn"
-                                                 url={window.location.href}
-                                                 onClick={this.shareOnFacebook}>
-                                <FacebookIcon round={true} size={22}/>
-                            </FacebookShareButton>
-                        </span>
+                        (c) {currentPicture.author} - all rights reserved 
+                        <Button onClick={() => this.shareOnFacebook()}>
+                            <i className="fa fa-facebook-official"></i>
+                        </Button>
                     </Modal.Footer>
                 </Modal>
                 {this.props.user && this.props.user.superadmin ?
-                    (<EditDeletePicture cat_id={this.props.category_id} pic_id={this.props.pictures[this.state.picIndex].id} />) : null}
+                    (<EditDeletePicture cat_id={this.props.category_id} pic_id={currentPicture.id} />) : null}
             </div>
         </Col>
         )
