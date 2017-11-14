@@ -57,7 +57,7 @@ class PictureComponent extends React.Component {
             FB.ui(
                 {
                  method: 'share_open_graph',
-                 action_type: 'og.website',
+                 action_type: 'og.shares',
                  action_properties: JSON.stringify({
                     object : {
                        "og:url": currentUrl,
