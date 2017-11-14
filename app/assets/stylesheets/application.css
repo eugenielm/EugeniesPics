@@ -80,14 +80,14 @@ a#home-link { text-decoration: none }
 #site-name {
     color: black;
     font-family: italiana;
-    font-size: 3.5em;
+    font-size: 4em;
     line-height: 9vw;
 }
 
 #site-name-2 {
     color: black;
     font-family: italiana;
-    font-size: 1.2em;
+    font-size: 1.5em;
     margin-top: -3vw;
 }
 
@@ -172,6 +172,15 @@ button#admin_dropdown {
 
 #admin_dropdown:hover { color: #868585 }
 
+@media screen and (max-width: 1199px) and (min-width: 768px) {
+    #page-header a.btn.btn-default, 
+    #page-header a.btn.btn-default:active,
+    #page-header a.active.btn.btn-default,
+    #page-header #menuitems li {
+        font-size: 14px;
+    }
+}
+
 
 @media screen and (max-width: 767px) and (min-width: 426px) {
     button#menuitems.visible-xs {
@@ -183,7 +192,7 @@ button#admin_dropdown {
 
     #page-header { position: relative; }
 
-    #site-name { line-height: 14vw; font-size: 3.2em; }
+    #site-name { line-height: 14vw; font-size: 3em; }
     #site-name-2 { margin-top: -1.7vw; font-size: 1em; }
 
     /* dropdown menu with categories */
