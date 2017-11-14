@@ -45,6 +45,8 @@ class PictureComponent extends React.Component {
         const picTitle = currentPicture.title;
         const picAuthor = "A photograph by " + currentPicture.author;
         const currentUrl = window.location.href;
+        console.log("picToDisplay: ", picToDisplay);
+        console.log("picTitle: ", picTitle, ", type of picTitle: ", typeof(picTitle));
         
         // initialize the FB JavaScript SDK
         window.fbAsyncInit = function(picToDisplay, picTitle, picAuthor, currentUrl) {
@@ -57,7 +59,7 @@ class PictureComponent extends React.Component {
             FB.ui(
                 {
                  method: 'share_open_graph',
-                 action_type: 'og.shares',
+                 action_type: 'og.likes',
                  action_properties: JSON.stringify({
                     object : {
                        "og:url": currentUrl,
