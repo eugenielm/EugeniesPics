@@ -79,7 +79,7 @@ class PictureComponent extends React.Component {
         window.fbAsyncInit = function() {
             const currentUrl = window.location.href;
             const currentPicture = this.props.pictures[this.state.picIndex];
-            const pictureToDisplay = currentPicture.pic_url_medium;
+            const pictureToDisplay = "https://" + currentPicture.pic_url_medium;
             const picTitle = currentPicture.title;
             const picAuthor = "A photograph by " + currentPicture.author;
 
