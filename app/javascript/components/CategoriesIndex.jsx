@@ -53,17 +53,17 @@ class CategoriesIndex extends React.Component {
                                   bsStyle="success" 
                                   bsSize="xsmall" 
                                   href="/categories/new">
-                                  New category
+                                  <span className="glyphicon glyphicon-plus" style={{paddingLeft: '1px'}}></span>
                           </Button>
                           : null;
     return (
       <div id="categories-page">
-          <div className="page-title">Galleries{new_cat_link}</div>
-          <Grid>
-            <Row id="all_categories" className="show-grid">
-              { this.state.categories.map(c => <CategoryComponent user={this.props.user} key={c.id} category={c}/>) }
-            </Row>
-          </Grid>
+        <div className="page-title">Galleries{new_cat_link}</div>
+        <Grid>
+          <Row id="all_categories" className="show-grid">
+            { this.state.categories.map(c => <CategoryComponent user={this.props.user} key={c.id} category={c}/>) }
+          </Row>
+        </Grid>
       </div>
     );
   }
