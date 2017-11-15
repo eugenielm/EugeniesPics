@@ -80,12 +80,12 @@ class PictureComponent extends React.Component {
         const picTitle = currentPicture.title;
         const picAuthor = "A photograph by " + currentPicture.author;
         const currentUrl = window.location.href;
+        document.getElementById('shareTitleMeta').content = picTitle;
+        document.getElementById('shareAuthorMeta').content = picAuthor;
+        document.getElementById('shareImageMeta').content = pictureToDisplay;
         
         // initialize the FB JavaScript SDK
-        window.fbAsyncInit = function(pictureToDisplay, picTitle, picAuthor, currentUrl) {
-            document.getElementById('shareTitleMeta').content = picTitle;
-            document.getElementById('shareAuthorMeta').content = picAuthor;
-            document.getElementById('shareImageMeta').content = pictureToDisplay;
+        window.fbAsyncInit = function() {
             FB.init({
               appId            : '1836842776645754',
               autoLogAppEvents : true,
