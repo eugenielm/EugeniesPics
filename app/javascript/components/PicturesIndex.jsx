@@ -39,57 +39,6 @@ class PictureComponent extends React.Component {
         this.shareOnFacebook = this.shareOnFacebook.bind(this);
     }
 
-    shareOnFacebook() {
-        const currentPicture = this.props.pictures[this.state.picIndex];
-        const picToDisplay = currentPicture.pic_url_medium;
-        const picTitle = currentPicture.title;
-        const picAuthor = "A photograph by " + currentPicture.author;
-        const currentUrl = window.location.href;
-        console.log("picToDisplay: ", picToDisplay);
-        console.log("picTitle: ", picTitle, ", type of picTitle: ", typeof(picTitle));
-        
-        // initialize the FB JavaScript SDK
-        window.fbAsyncInit = function(picToDisplay, picTitle, picAuthor, currentUrl) {
-            FB.init({
-              appId            : '1836842776645754',
-              autoLogAppEvents : true,
-              xfbml            : true,
-              version          : 'v2.10'
-            });
-            FB.ui(
-                {
-                 method: 'share_open_graph',
-                 action_type: 'og.likes',
-                 action_properties: JSON.stringify({
-                    object : {
-                       "og:url": currentUrl,
-                       "og:title": picTitle,
-                       "og:description": picAuthor,
-                       "og:image": picToDisplay,
-                    }
-                })
-                // callback below:
-               }, function(response) {
-                if (response && !response.error_message) {
-                    alert("Posting completed!");
-                  } else {
-                    alert("Error while posting :\\");
-                  }
-               }.bind(this));
-            // JS SDK initialized, support XFBML tags
-            FB.XFBML.parse();
-        };
-
-        // Load the SDK asynchronously
-        (function(d, s, id){
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {return;}
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-          }(document, 'script', 'facebook-jssdk'));
-    }
-
     showModal() {
         this.setState({show: true});
     }
@@ -123,6 +72,48 @@ class PictureComponent extends React.Component {
                 window.location.hash = this.props.pictures[this.state.picIndex - 1].id.toString();
             }
         }
+    }
+
+    shareOnFacebook() {
+        const currentPicture = this.props.pictures[this.state.picIndex];
+        const pictureToDisplay = currentPicture.pic_url_medium;
+        const picTitle = currentPicture.title;
+        const picAuthor = "A photograph by " + currentPicture.author;
+        const currentUrl = window.location.href;
+        
+        // initialize the FB JavaScript SDK
+        window.fbAsyncInit = function(pictureToDisplay, picTitle, picAuthor, currentUrl) {
+            document.getElementById('shareTitleMeta').content = picTitle;
+            document.getElementById('shareAuthorMeta').content = picAuthor;
+            document.getElementById('shareImageMeta').content = pictureToDisplay;
+            FB.init({
+              appId            : '1836842776645754',
+              autoLogAppEvents : true,
+              xfbml            : true,
+              version          : 'v2.10'
+            });
+            FB.AppEvents.logPageView();
+            FB.ui({
+                method: 'share',
+            }, function(response) {
+                if (response && !response.error_message) {
+                    alert('Posting completed!');
+                } else {
+                    alert('Error while posting :\\');
+                }
+            });
+            // JS SDK initialized, support XFBML tags
+            FB.XFBML.parse();
+        };
+
+        // Load the SDK asynchronously
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+          }(document, 'script', 'facebook-jssdk'));
     }
 
     render() {

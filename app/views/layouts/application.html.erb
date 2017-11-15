@@ -8,17 +8,21 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= favicon_link_tag %>
 
+
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
     
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css">
 
+
     <!-- Font Awesome CDN to load icons -->
     <script src="https://use.fontawesome.com/d17d18b31b.js"></script>
     
+
     <%= javascript_pack_tag 'application' %>
     
+
     <script>
       <% if current_user %>
         window.user = {
@@ -28,17 +32,25 @@
       <% end %>
     </script>
     
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="eugenie.le.moulec@gmail.com">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="eugenie.le.moulec@gmail.com" />
+
+    <!-- Open graph meta tags for Facebook sharing -->
+    <meta property="og:type"        content="website" />
+    <meta property="og:title"       id="shareTitleMeta" />
+    <meta property="og:description" id="shareAuthorMeta" />
+    <meta property="og:image"       id="shareImageMeta" />
+
 
     <% if false %> for reCAPTCHA support in the contact form <% end %>
     <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+
 
   </head>
 
 
   <body>
-
 
     <%= content_tag :div,
     id: "csrf_token",
