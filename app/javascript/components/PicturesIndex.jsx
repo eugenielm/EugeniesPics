@@ -74,37 +74,47 @@ class PictureComponent extends React.Component {
         }
     }
 
-    shareOnFacebook() {
-        const currentPicture = this.props.pictures[this.state.picIndex];
-        const pictureToDisplay = currentPicture.pic_url_medium;
-        const picTitle = currentPicture.title;
-        const picAuthor = "A photograph by " + currentPicture.author;
-        const currentUrl = window.location.href;
-        document.getElementById('shareTitleMeta').content = picTitle;
-        document.getElementById('shareAuthorMeta').content = picAuthor;
-        document.getElementById('shareImageMeta').content = pictureToDisplay;
-        
+    shareOnFacebook() {  
         // initialize the FB JavaScript SDK
         window.fbAsyncInit = function() {
+            const currentUrl = window.location.href;
+            const currentPicture = this.props.pictures[this.state.picIndex];
+            const pictureToDisplay = currentPicture.pic_url_medium;
+            const picTitle = currentPicture.title;
+            const picAuthor = "A photograph by " + currentPicture.author;
+
             FB.init({
               appId            : '1836842776645754',
               autoLogAppEvents : true,
               xfbml            : true,
               version          : 'v2.10'
             });
+
             FB.AppEvents.logPageView();
+
             FB.ui({
-                method: 'share',
-            }, function(response) {
-                if (response && !response.error_message) {
-                    alert('Posting completed!');
-                } else {
-                    alert('Error while posting :\\');
-                }
-            });
-            // JS SDK initialized, support XFBML tags
+                method: 'share_open_graph',
+                action_type: 'og.shares',
+                action_properties: JSON.stringify({
+                    object : {
+                       'og:url': currentUrl,
+                       'og:title': picTitle,
+                       'og:description': picAuthor,
+                       'og:image': pictureToDisplay,
+                    }
+                })}, function(response) {
+                        if (response && !response.error_message) {
+                            alert('Posting completed!');
+                        } else {
+                            alert('Error while posting :\\');
+                        }
+                     }
+                );
+            
+                // JS SDK initialized, support XFBML tags
             FB.XFBML.parse();
-        };
+        
+        }.bind(this);
 
         // Load the SDK asynchronously
         (function(d, s, id){
