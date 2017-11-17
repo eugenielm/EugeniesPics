@@ -30,6 +30,16 @@ class PictureComponent extends React.Component {
         if (window.location.hash && window.location.hash.toString().slice(1) 
                                     == this.props.pictures[0].id.toString()) {
             this.updateMetaTags(this.props.pictures[0]);
+            // initialize the FB JavaScript SDK
+            window.fbAsyncInit = function() {
+                FB.init({
+                appId            : '1836842776645754',
+                autoLogAppEvents : true,
+                xfbml            : true,
+                version          : 'v2.10'
+                });
+                FB.AppEvents.logPageView();
+            };
         }
         this.setState({ show: (window.location.hash && window.location.hash.toString().slice(1) 
                                == this.props.pictures[0].id.toString()) ? true : false, 
@@ -40,12 +50,25 @@ class PictureComponent extends React.Component {
         this.hideModal = this.hideModal.bind(this);
         this.handleDisplayedPic = this.handleDisplayedPic.bind(this);
         this.handleDescription = this.handleDescription.bind(this);
+        this.triggerShareDialog = this.triggerShareDialog.bind(this);
     }
 
     componentWillUpdate(nextProps, nextState) {
         if (this.props.language != nextProps.language) {
             this.setState({language: nextProps.language});
         }
+    }
+
+    triggerShareDialog() {
+        FB.ui({
+            method: 'share',
+        }, function(response) {
+            if (response && !response.error_message) {
+                alert('Posting completed!');
+            } else {
+                alert('Error while posting :\\');
+            }
+        });
     }
 
     updateMetaTags(currentPicture) {
@@ -175,12 +198,9 @@ class PictureComponent extends React.Component {
 
                     <Modal.Footer>
                         (c) {currentPicture.author} - all rights reserved
-                        <div className="fb-share-button" data-href={window.location.href} data-layout="button" data-size="small" data-mobile-iframe="true">
-                            <a className="fb-xfbml-parse-ignore" target="_blank" 
-                               href={"https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(window.location.href) + "&amp;src=sdkpreparse"}>
-                                Share
-                            </a>
-                        </div>
+                        <Button onClick={this.triggerShareDialog}>
+                            <i className="fa fa-facebook-official"></i>
+                        </Button>
                     </Modal.Footer>
                 
                 </Modal>
