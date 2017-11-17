@@ -29,7 +29,7 @@ class PictureComponent extends React.Component {
     componentWillMount() {
         if (window.location.hash && window.location.hash.toString().slice(1) 
                                     == this.props.pictures[0].id.toString()) {
-            this.updateMetaTags(this.props.pictures[0], this.props.currentPath);
+            this.updateMetaTags(this.props.pictures[0]);
         }
         this.setState({ show: (window.location.hash && window.location.hash.toString().slice(1) 
                                == this.props.pictures[0].id.toString()) ? true : false, 
@@ -48,14 +48,15 @@ class PictureComponent extends React.Component {
         }
     }
 
-    updateMetaTags(currentPicture, currentPath) {
+    updateMetaTags(currentPicture) {
+        const currentPath = window.location.href;
         if (currentPicture) {
             // Update the open graph properties in the HTML head meta tags for FB sharing
             $.get(currentPath, function(data, status) {
                 $(document).ready(function() {
                     $("#urlMetaTag").attr("content", currentPath + "#" + currentPicture.id);
                     $("#titleMetaTag").attr("content", currentPicture.title);
-                    $("#imageMetaTag").attr("content", currentPicture.pic_url_medium);
+                    $("#imageMetaTag").attr("content", "https:" + currentPicture.pic_url_medium);
                     $("#descriptionMetaTag").attr("content", "A photograph by " + currentPicture.author);
                 })
             });
@@ -73,12 +74,12 @@ class PictureComponent extends React.Component {
     }
 
     showModal() {
-        this.updateMetaTags(this.props.pictures[this.state.picIndex], this.props.currentPath);
+        this.updateMetaTags(this.props.pictures[this.state.picIndex]);
         this.setState({show: true});
     }
     
     hideModal() {
-        this.updateMetaTags(undefined, this.props.currentPath);
+        this.updateMetaTags(undefined);
         window.location.hash = '';
         this.setState({show: false, showDescription: false, picIndex: 0});
     }
@@ -92,21 +93,21 @@ class PictureComponent extends React.Component {
     handleDisplayedPic(n) {
         if (n == 1) {
             if (this.state.picIndex < this.props.pictures.length - 1) {
-                this.updateMetaTags(this.props.pictures[this.state.picIndex + 1], this.props.currentPath);
+                this.updateMetaTags(this.props.pictures[this.state.picIndex + 1]);
                 this.setState({ picIndex: this.state.picIndex + 1 });
                 window.location.hash = this.props.pictures[this.state.picIndex + 1].id.toString();
             } else {
-                this.updateMetaTags(this.props.pictures[0], this.props.currentPath);
+                this.updateMetaTags(this.props.pictures[0]);
                 this.setState({ picIndex: 0 });
                 window.location.hash = this.props.pictures[0].id.toString();
             }
         } else {
             if (this.state.picIndex == 0) {
-                this.updateMetaTags(this.props.pictures[this.state.picIndex.length - 1], this.props.currentPath);
+                this.updateMetaTags(this.props.pictures[this.state.picIndex.length - 1]);
                 this.setState({ picIndex: this.props.pictures.length - 1 });
                 window.location.hash = this.props.pictures[this.props.pictures.length - 1].id.toString();
             } else {
-                this.updateMetaTags(this.props.pictures[this.state.picIndex - 1], this.props.currentPath);
+                this.updateMetaTags(this.props.pictures[this.state.picIndex - 1]);
                 this.setState({ picIndex: this.state.picIndex - 1 });
                 window.location.hash = this.props.pictures[this.state.picIndex - 1].id.toString();
             }
@@ -329,8 +330,7 @@ class PicturesIndex extends React.Component {
                                                             categoryName={this.state.categoryName}
                                                             category_id={this.props.match.params.category_id}
                                                             language={this.state.language}
-                                                            user={this.props.user}
-                                                            currentPath={window.location.pathname} />)}
+                                                            user={this.props.user} />)}
                     </Row>
                 </Grid>
             </div>
