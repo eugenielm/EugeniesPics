@@ -27,6 +27,10 @@ const EditDeletePicture = props => {
 class PictureComponent extends React.Component {
 
     componentWillMount() {
+        if (window.location.hash && window.location.hash.toString().slice(1) 
+                                    == this.props.pictures[0].id.toString()) {
+            this.updateMetaTags(this.props.pictures[0], this.props.currentPath);
+        }
         this.setState({ show: (window.location.hash && window.location.hash.toString().slice(1) 
                                == this.props.pictures[0].id.toString()) ? true : false, 
                         showDescription: false, 
@@ -36,14 +40,45 @@ class PictureComponent extends React.Component {
         this.hideModal = this.hideModal.bind(this);
         this.handleDisplayedPic = this.handleDisplayedPic.bind(this);
         this.handleDescription = this.handleDescription.bind(this);
-        this.shareOnFacebook = this.shareOnFacebook.bind(this);
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        if (this.props.language != nextProps.language) {
+            this.setState({language: nextProps.language});
+        }
+    }
+
+    updateMetaTags(currentPicture, currentPath) {
+        if (currentPicture) {
+            // Update the open graph properties in the HTML head meta tags for FB sharing
+            $.get(currentPath, function(data, status) {
+                $(document).ready(function() {
+                    $("#urlMetaTag").attr("content", currentPath + "#" + currentPicture.id);
+                    $("#titleMetaTag").attr("content", currentPicture.title);
+                    $("#imageMetaTag").attr("content", currentPicture.pic_url_medium);
+                    $("#descriptionMetaTag").attr("content", "A photograph by " + currentPicture.author);
+                })
+            });
+        } else {
+            // Update the open graph meta tags content to null
+            $.get(currentPath, function(data, status) {
+                $(document).ready(function() {
+                    $("#urlMetaTag").attr("content", null);
+                    $("#titleMetaTag").attr("content", null);
+                    $("#imageMetaTag").attr("content", null);
+                    $("#descriptionMetaTag").attr("content", null);
+                })
+            });
+        }
     }
 
     showModal() {
+        this.updateMetaTags(this.props.pictures[this.state.picIndex], this.props.currentPath);
         this.setState({show: true});
     }
     
     hideModal() {
+        this.updateMetaTags(undefined, this.props.currentPath);
         window.location.hash = '';
         this.setState({show: false, showDescription: false, picIndex: 0});
     }
@@ -57,73 +92,25 @@ class PictureComponent extends React.Component {
     handleDisplayedPic(n) {
         if (n == 1) {
             if (this.state.picIndex < this.props.pictures.length - 1) {
+                this.updateMetaTags(this.props.pictures[this.state.picIndex + 1], this.props.currentPath);
                 this.setState({ picIndex: this.state.picIndex + 1 });
                 window.location.hash = this.props.pictures[this.state.picIndex + 1].id.toString();
             } else {
+                this.updateMetaTags(this.props.pictures[0], this.props.currentPath);
                 this.setState({ picIndex: 0 });
                 window.location.hash = this.props.pictures[0].id.toString();
             }
         } else {
             if (this.state.picIndex == 0) {
+                this.updateMetaTags(this.props.pictures[this.state.picIndex.length - 1], this.props.currentPath);
                 this.setState({ picIndex: this.props.pictures.length - 1 });
                 window.location.hash = this.props.pictures[this.props.pictures.length - 1].id.toString();
             } else {
+                this.updateMetaTags(this.props.pictures[this.state.picIndex - 1], this.props.currentPath);
                 this.setState({ picIndex: this.state.picIndex - 1 });
                 window.location.hash = this.props.pictures[this.state.picIndex - 1].id.toString();
             }
         }
-    }
-
-    shareOnFacebook() {  
-        // initialize the FB JavaScript SDK
-        window.fbAsyncInit = function() {
-            const currentUrl = window.location.href;
-            const currentPicture = this.props.pictures[this.state.picIndex];
-            const pictureToDisplay = "https:" + currentPicture.pic_url_medium;
-            const picTitle = currentPicture.title;
-            const picAuthor = "A photograph by " + currentPicture.author;
-
-            FB.init({
-              appId            : '1836842776645754',
-              autoLogAppEvents : true,
-              xfbml            : true,
-              version          : 'v2.10'
-            });
-
-            FB.AppEvents.logPageView();
-
-            FB.ui({
-                method: 'share_open_graph',
-                action_type: 'og.shares',
-                action_properties: JSON.stringify({
-                    object : {
-                       'og:url': currentUrl,
-                       'og:title': picTitle,
-                       'og:description': picAuthor,
-                       'og:image': pictureToDisplay,
-                    }
-                })}, function(response) {
-                        if (response && !response.error_message) {
-                            alert('Posting completed!');
-                        } else {
-                            alert('Error while posting :\\');
-                        }
-                     }
-                );
-            
-                // JS SDK initialized, support XFBML tags
-            FB.XFBML.parse();
-        
-        }.bind(this);
-
-        // Load the SDK asynchronously
-        (function(d, s, id){
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {return;}
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-          }(document, 'script', 'facebook-jssdk'));
     }
 
     render() {
@@ -146,6 +133,7 @@ class PictureComponent extends React.Component {
                             <span>{this.props.categoryName} / "{currentPicture.title}"</span>
                         </Modal.Title>
                     </Modal.Header>
+                    
                     <Modal.Body>
                         <div className="prev-pic" onClick={() => this.handleDisplayedPic(-1)}>
                             <span id="chevron-left" className="glyphicon glyphicon-chevron-left"></span>
@@ -183,13 +171,19 @@ class PictureComponent extends React.Component {
                             <span id="chevron-right" className="glyphicon glyphicon-chevron-right"></span>
                         </div>
                     </Modal.Body>
+
                     <Modal.Footer>
-                        (c) {currentPicture.author} - all rights reserved 
-                        <Button onClick={() => this.shareOnFacebook()}>
-                            <i className="fa fa-facebook-official"></i>
-                        </Button>
+                        (c) {currentPicture.author} - all rights reserved
+                        <div className="fb-share-button" data-href={window.location.href} data-layout="button" data-size="small" data-mobile-iframe="true">
+                            <a className="fb-xfbml-parse-ignore" target="_blank" 
+                               href={"https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(window.location.href) + "&amp;src=sdkpreparse"}>
+                                Share
+                            </a>
+                        </div>
                     </Modal.Footer>
+                
                 </Modal>
+
                 {this.props.user && this.props.user.superadmin ?
                     (<EditDeletePicture cat_id={this.props.category_id} pic_id={currentPicture.id} />) : null}
             </div>
@@ -258,7 +252,7 @@ class PicturesIndex extends React.Component {
                                                     : (availableLanguages.includes('EN') ? 'EN' : availableLanguages[0]);
                 const categoryDescription = categoryDescriptions[language];
                 const descriptionContent = categoryDescription ? categoryDescription.split('\r\n') : null;
-                this.setState({categoryName, pictures, availableLanguages, language, categoryDescriptions, descriptionContent});
+                this.setState({categoryName, pictures, availableLanguages, language, categoryDescriptions, descriptionContent, panelOpen: false});
             }.bind(this));
         }
     }
@@ -335,7 +329,8 @@ class PicturesIndex extends React.Component {
                                                             categoryName={this.state.categoryName}
                                                             category_id={this.props.match.params.category_id}
                                                             language={this.state.language}
-                                                            user={this.props.user} />)}
+                                                            user={this.props.user}
+                                                            currentPath={window.location.pathname} />)}
                     </Row>
                 </Grid>
             </div>

@@ -9,12 +9,14 @@
     <%= favicon_link_tag %>
 
 
-    <!-- Latest compiled and minified CSS -->
+    <!-- Bootstrap: Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
     
-    <!-- Optional theme -->
+    <!-- Bootstrap: Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css">
 
+    <!-- Load JQuery library from Google CDN to be able to send AJAX requests -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <!-- Font Awesome CDN to load icons -->
     <script src="https://use.fontawesome.com/d17d18b31b.js"></script>
@@ -37,7 +39,11 @@
     <meta name="author" content="eugenie.le.moulec@gmail.com" />
 
     <!-- Open graph meta tags for Facebook sharing -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type"        content="website" />
+    <meta property="og:url"         id="urlMetaTag" />
+    <meta property="og:title"       id="titleMetaTag" />
+    <meta property="og:description" id="descriptionMetaTag" />
+    <meta property="og:image"       id="imageMetaTag" />
 
 
     <% if false %> for reCAPTCHA support in the contact form <% end %>
@@ -48,6 +54,18 @@
 
 
   <body>
+
+    <!-- JavaScript SDK for sharing pictures on Facebook -->
+    <div id="fb-root"></div>
+    <script>
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.11&appId=1836842776645754';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
 
     <%= content_tag :div,
     id: "csrf_token",
