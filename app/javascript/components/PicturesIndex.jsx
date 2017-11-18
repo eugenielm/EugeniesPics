@@ -30,6 +30,7 @@ class PictureComponent extends React.Component {
         this.setState(this.initialState(this.props));
         this.initialState = this.initialState.bind(this);
         this.handleDescription = this.handleDescription.bind(this);
+        this.triggerShareDialog = this.triggerShareDialog.bind(this);
     }
 
     initialState(props) {
@@ -55,6 +56,19 @@ class PictureComponent extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState(this.initialState(nextProps));
+    }
+
+    triggerShareDialog() {
+        FB.ui({
+            method: 'share',
+            href: window.location.href,
+        }, function(response) {
+            if (response && !response.error_message) {
+                alert('Posting completed!');
+            } else {
+                alert('Error while posting :\\');
+            }
+        });
     }
 
     render() {
@@ -121,7 +135,7 @@ class PictureComponent extends React.Component {
 
                     <Modal.Footer>
                         (c) {this.props.currentPicture.author} - all rights reserved
-                        <Button onClick={this.props.triggerShareDialog}>
+                        <Button onClick={this.triggerShareDialog}>
                             <i className="fa fa-facebook-official"></i>
                         </Button>
                     </Modal.Footer>
@@ -298,8 +312,7 @@ class PicturesIndex extends React.Component {
                                                             category_id={this.props.match.params.category_id}
                                                             picture_id={this.props.match.params.picture_id}
                                                             language={this.state.language}
-                                                            user={this.props.user}
-                                                            triggerShareDialog={this.triggerShareDialog} />)}
+                                                            user={this.props.user} />)}
                     </Row>
                 </Grid>
             </div>
