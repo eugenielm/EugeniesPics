@@ -4,9 +4,9 @@ class PicturesController < ApplicationController
   before_action :admin_power, :except => [:index, :show]
 
   def index
-    @fb_url = category_url(@category)
+    @fb_url = category_url(@category) + '/pictures'
     @fb_title = @category.name
-    @fb_description = "A galery of photographs by Eugénie Le Moulec"
+    @fb_description = "A gallery of photographs by Eugénie Le Moulec"
     @fb_image = @category.catpic.url(:small)
 
     @pictures = Array.new
