@@ -48,7 +48,7 @@ body {
 a.btn { color: white }
 
 .page-title {
-    font-size: 1.5em;
+    font-size: 22px;
     margin: 1.2vh auto;
     font-family: ubuntu;
     text-decoration: overline;
@@ -56,8 +56,16 @@ a.btn { color: white }
 }
 
 .admin-page-title {
-    font-size: 1.5em;
+    font-size: 22px;
     margin: 1.2vh auto;
+}
+
+@media screen and (max-width: 767px) and (min-width: 426px) {
+    .page-title, .admin-page-title {font-size: 18px}
+}
+
+@media screen and (max-width: 426px) {
+    .page-title, .admin-page-title {font-size: 14px}
 }
 
 
@@ -193,7 +201,7 @@ button#admin_dropdown {
     #page-header { position: relative; }
 
     #site-name { line-height: 14vw; font-size: 3em; }
-    #site-name-2 { margin-top: -1.7vw; font-size: 1em; }
+    #site-name-2 { margin-top: -1.7vw; font-size: 1.2em; }
 
     /* dropdown menu with categories */
     #page-header div.dropdown.btn-group:nth-of-type(2) {
@@ -251,7 +259,7 @@ button#admin_dropdown {
     #page-header { position: relative; }
 
     #site-name { line-height: 14vw; font-size: 2.2em; }
-    #site-name-2 { margin-top: -2.5vw; font-size: 0.8em; }
+    #site-name-2 { margin-top: -3vw; font-size: 0.9em; }
 
     /* dropdown menu with categories */
     #page-header div.dropdown.btn-group:nth-of-type(2) {

@@ -30,7 +30,6 @@ class PictureComponent extends React.Component {
         this.setState(this.initialState(this.props));
         this.initialState = this.initialState.bind(this);
         this.handleDescription = this.handleDescription.bind(this);
-        this.triggerShareDialog = this.triggerShareDialog.bind(this);
     }
 
     initialState(props) {
@@ -46,19 +45,6 @@ class PictureComponent extends React.Component {
         if (this.props.language != nextProps.language) {
             this.setState({language: nextProps.language});
         }
-    }
-
-    triggerShareDialog() {
-        FB.ui({
-            method: 'share',
-            href: window.location.href,
-        }, function(response) {
-            if (response && !response.error_message) {
-                alert('Posting completed!');
-            } else {
-                alert('Error while posting :\\');
-            }
-        });
     }
 
     handleDescription() {
@@ -80,6 +66,7 @@ class PictureComponent extends React.Component {
                 <Link onClick={() => {this.setState({show: true})}} to={'/categories/' + this.props.category_id + '/pictures/' + this.props.currentPicture.id.toString()}>
                     <Image src={this.props.currentPicture.pic_url_small} alt={this.props.currentPicture.title} responsive />
                 </Link>
+                
                 <Modal className="picture_modal"
                        show={this.state.show}
                        dialogClassName="custom-modal"
@@ -134,7 +121,7 @@ class PictureComponent extends React.Component {
 
                     <Modal.Footer>
                         (c) {this.props.currentPicture.author} - all rights reserved
-                        <Button onClick={this.triggerShareDialog}>
+                        <Button onClick={this.props.triggerShareDialog}>
                             <i className="fa fa-facebook-official"></i>
                         </Button>
                     </Modal.Footer>
@@ -161,6 +148,7 @@ class PicturesIndex extends React.Component {
                         language: '',
                         panelOpen: false});
         this.handleContent = this.handleContent.bind(this);
+        this.triggerShareDialog = this.triggerShareDialog.bind(this);
     }
 
     componentDidMount() {
@@ -221,6 +209,19 @@ class PicturesIndex extends React.Component {
         this.setState({categoryDescription, descriptionContent, language: lang});
     }
 
+    triggerShareDialog() {
+        FB.ui({
+            method: 'share',
+            href: window.location.href,
+        }, function(response) {
+            if (response && !response.error_message) {
+                alert('Posting completed!');
+            } else {
+                alert('Error while posting :\\');
+            }
+        });
+    }
+
     render() {
         const languageButtons = this.state.availableLanguages.map(
             (lang, i) => <Button bsSize="xsmall" 
@@ -265,18 +266,23 @@ class PicturesIndex extends React.Component {
                     <div className="inline">
                         <Button id="cat_desc_btn" bsSize="xsmall"
                                 onClick={() => this.setState({ panelOpen: !this.state.panelOpen })}>
-                            <span className="glyphicon glyphicon-circle-arrow-down"></span>
+                            <span className={this.state.panelOpen ? "glyphicon glyphicon-circle-arrow-up"
+                                                                  : "glyphicon glyphicon-circle-arrow-down"}></span>
                                 
                         </Button>
-                        <div className="inline">{edit_cat_link} {delete_cat_link} {new_picture_link}</div>
+                        
+                        <i className="fa fa-facebook-square fa-2x" id="category_fb_share_btn" onClick={this.triggerShareDialog}></i>
+                        
                         <Panel collapsible expanded={this.state.panelOpen}>
                             <div id="language_buttons">{languageButtons}</div>
                             {this.state.descriptionContent.map((s, index) => <p key={index} style={{textAlign: 'justify'}}>{s}</p>)}
                         </Panel>
                     </div>
-                    : <div className="inline">{edit_cat_link} {delete_cat_link} {new_picture_link}</div>
+                    : null
                 }
                 
+                <div style={{float: 'left', marginTop: '-25px'}}>{edit_cat_link} {delete_cat_link} {new_picture_link}</div>
+
                 <Grid fluid>
                     <Row id='all_pictures' className="show-grid">
                         {this.state.pictures.map(pic => <PictureComponent
@@ -292,7 +298,8 @@ class PicturesIndex extends React.Component {
                                                             category_id={this.props.match.params.category_id}
                                                             picture_id={this.props.match.params.picture_id}
                                                             language={this.state.language}
-                                                            user={this.props.user} />)}
+                                                            user={this.props.user}
+                                                            triggerShareDialog={this.triggerShareDialog} />)}
                     </Row>
                 </Grid>
             </div>

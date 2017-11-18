@@ -4,6 +4,11 @@ class PicturesController < ApplicationController
   before_action :admin_power, :except => [:index, :show]
 
   def index
+    @fb_url = category_url(@category)
+    @fb_title = @category.name
+    @fb_description = "A galery of photographs by Eugénie Le Moulec"
+    @fb_image = @category.catpic.url(:small)
+
     @pictures = Array.new
     @category.pictures.each do |pic|
       all_descriptions = {}
@@ -46,7 +51,7 @@ class PicturesController < ApplicationController
     @fb_url = category_picture_url(@category, @picture)
     @fb_title = @picture.title
     @fb_description = "A photograph by " + @picture.author
-    @fb_image = @picture.picfile.url(:medium)
+    @fb_image = @picture.picfile.url(:small)
     
     @pic_with_descriptions = []
     @picture.pic_descriptions.each do |d|

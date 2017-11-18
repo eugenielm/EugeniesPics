@@ -11,7 +11,7 @@ class CategoriesController < ApplicationController
     Category.all.each do |c|
       @categories.push({id: c.id,
                         name: c.name,
-                        catpic_url: c.catpic.url,})
+                        catpic_url: c.catpic.url(:small),})
     end
     respond_to do |format|
       format.html

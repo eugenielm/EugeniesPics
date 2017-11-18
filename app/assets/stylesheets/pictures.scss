@@ -14,10 +14,10 @@
 }
 
 #cat_desc_btn {
-    margin-top: -8px;
-    margin-left: 10px;
+    margin-left: 6px;
     outline: none;
-    padding-bottom: 0px;
+    padding: 3px 6px 2px 7px;
+    border-radius: 5px;
 }
 
 #category_description {
@@ -29,35 +29,29 @@
     border-radius: 3px;
 }
 
-@media screen and (min-width: 1720px) {
-    .picture-element.col-lg-3.col-md-4.col-sm-6.col-xs-6 {
-        height: 400px;
-        padding: 15px;
-        margin-bottom: 10px;
-    }
+#fb_share_btn {
+    background-color: #3B5998;
+    padding: 2px 3px;
+    font-size: 14px;
+    color: white;
 }
 
-@media screen and (min-width: 768px) and (max-width: 1719px) {
-    .picture-element.col-lg-3.col-md-4.col-sm-6.col-xs-6 {
-        height: 330px;
-        padding: 10px;
-        margin-bottom: 7px;
-    }
+#category_fb_share_btn {
+    margin-left: 7px;
+    vertical-align: middle !important;
 }
 
-@media screen and (min-width: 560px) and (max-width: 767px) {
-    .picture-element.col-lg-3.col-md-4.col-sm-6.col-xs-6 {
-        height: 250px;
-        padding: 7px;
-        margin-bottom: 4px;
-    }
+#category_fb_share_btn:hover {
+    opacity: 0.7;
+    cursor: pointer;
 }
 
-@media screen and (max-width: 559px) {
-    .picture-element.col-lg-3.col-md-4.col-sm-6.col-xs-6 {
-        height: 170px;
-        padding: 5px;
-    }
+@media screen and (max-width: 767px) and (min-width: 426px) {
+    #fb_share_btn {font-size: 12px}
+}
+
+@media screen and (max-width: 426px) {
+    #fb_share_btn {font-size: 10px}
 }
 
 .picture-element img {
@@ -96,11 +90,11 @@
 /* modal */
 
 .custom-modal.modal-dialog {
-    max-width: 1136px;
+    max-width: 1250px;
     width: 98%;
-    max-height: 900px;
+    max-height: 1000px;
     height: 80%;
-    margin: 10% auto !important;
+    margin: 12vh auto !important;
 }
 
 h4.modal-title { font-size: 15px }
@@ -205,3 +199,43 @@ div.picture_modal div.modal-footer button.btn {
 }
 
 div.picture_modal div.modal-footer i.fa.fa-facebook-official { font-size: 18px }
+
+@media screen and (min-width: 1720px) {
+    .picture-element.col-lg-3.col-md-4.col-sm-6.col-xs-6 {
+        height: 400px;
+        padding: 15px;
+        margin-bottom: 10px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1719px) {
+    .picture-element.col-lg-3.col-md-4.col-sm-6.col-xs-6 {
+        height: 330px;
+        padding: 10px;
+        margin-bottom: 7px;
+    }
+}
+
+@media screen and (min-width: 560px) and (max-width: 767px) {
+    .picture-element.col-lg-3.col-md-4.col-sm-6.col-xs-6 {
+        height: 250px;
+        padding: 7px;
+        margin-bottom: 4px;
+    }
+    .custom-modal.modal-dialog {
+        width: 96vw;
+        height: 96vw;
+    }
+}
+
+@media screen and (max-width: 559px) {
+    .picture-element.col-lg-3.col-md-4.col-sm-6.col-xs-6 {
+        height: 170px;
+        padding: 5px;
+    }
+
+    .custom-modal.modal-dialog {
+        width: 96vw;
+        height: 96vw;
+    }
+}
