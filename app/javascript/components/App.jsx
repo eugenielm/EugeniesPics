@@ -82,7 +82,8 @@ class App extends React.Component {
                   render={(props2) => <PictureForm {...this.props} {...props2} />} />
             <Route exact path="/categories/:category_id/pictures/:picture_id" 
                   render={(props2) => this.props.picture_errors ? (<PictureForm {...this.props} {...props2} />) 
-                                                                : null } />
+                                                                : (<PicturesIndex langPref={this.state.langPref} updateLangPref={this.updateLangPref} 
+                                                                                  {...this.props} {...props2} />)} />
             
             <Route exact path="/categories/:category_id/pictures/:picture_id/pic_descriptions" 
                   render={(props2) => this.props.pic_description_errors ? (<PicDescriptionForm {...this.props} {...props2} />) 

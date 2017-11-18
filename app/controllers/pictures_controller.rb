@@ -43,6 +43,11 @@ class PicturesController < ApplicationController
   end
 
   def show
+    @fb_url = category_picture_url(@category, @picture)
+    @fb_title = @picture.title
+    @fb_description = "A photograph by " + @picture.author
+    @fb_image = @picture.picfile.url(:medium)
+    
     @pic_with_descriptions = []
     @picture.pic_descriptions.each do |d|
       @pic_with_descriptions.push({:description_id => d.id,
@@ -56,7 +61,7 @@ class PicturesController < ApplicationController
                                   picfile_name: @picture.picfile_file_name })
 
     respond_to do |format|
-      format.html { redirect_to category_pictures_url(@category) }
+      format.html
       format.json { render :json => @pic_with_descriptions }
     end
   end

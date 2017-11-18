@@ -40,10 +40,18 @@
 
     <!-- Open graph meta tags for Facebook sharing -->
     <meta property="og:type"        content="website" />
-    <meta property="og:url"         id="urlMetaTag" />
-    <meta property="og:title"       id="titleMetaTag" />
-    <meta property="og:description" id="descriptionMetaTag" />
-    <meta property="og:image"       id="imageMetaTag" />
+    <% if @fb_url %>
+      <meta property="og:url"         content="<%= @fb_url %>" />
+    <% end %>
+    <% if @fb_title %>
+      <meta property="og:title"       content="<%= @fb_title %>" />
+    <% end %>
+    <% if @fb_description %>
+      <meta property="og:description" content="<%= @fb_description %>" />
+    <% end %>
+    <% if @fb_image %>
+      <meta property="og:image"       content="<%= @fb_image %>" />
+    <% end %>
 
 
     <% if false %> for reCAPTCHA support in the contact form <% end %>

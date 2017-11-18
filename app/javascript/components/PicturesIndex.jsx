@@ -27,30 +27,19 @@ const EditDeletePicture = props => {
 class PictureComponent extends React.Component {
 
     componentWillMount() {
-        if (window.location.hash && window.location.hash.toString().slice(1) 
-                                    == this.props.pictures[0].id.toString()) {
-            this.updateMetaTags(this.props.pictures[0]);
-            // initialize the FB JavaScript SDK
-            window.fbAsyncInit = function() {
-                FB.init({
-                appId            : '1836842776645754',
-                autoLogAppEvents : true,
-                xfbml            : true,
-                version          : 'v2.10'
-                });
-                FB.AppEvents.logPageView();
-            };
-        }
-        this.setState({ show: (window.location.hash && window.location.hash.toString().slice(1) 
-                               == this.props.pictures[0].id.toString()) ? true : false, 
-                        showDescription: false, 
-                        picIndex: 0, 
-                        language: this.props.language });
-        this.showModal = this.showModal.bind(this);
-        this.hideModal = this.hideModal.bind(this);
-        this.handleDisplayedPic = this.handleDisplayedPic.bind(this);
+        this.setState(this.initialState(this.props));
+        this.initialState = this.initialState.bind(this);
         this.handleDescription = this.handleDescription.bind(this);
         this.triggerShareDialog = this.triggerShareDialog.bind(this);
+    }
+
+    initialState(props) {
+        return {
+            show: props.picture_id && props.picture_id == props.currentPicture.id ? true : false, 
+            showDescription: false, 
+            picIndex: 0,
+            language: props.language
+        };
     }
 
     componentWillUpdate(nextProps, nextState) {
@@ -62,6 +51,7 @@ class PictureComponent extends React.Component {
     triggerShareDialog() {
         FB.ui({
             method: 'share',
+            href: window.location.href,
         }, function(response) {
             if (response && !response.error_message) {
                 alert('Posting completed!');
@@ -71,133 +61,79 @@ class PictureComponent extends React.Component {
         });
     }
 
-    updateMetaTags(currentPicture) {
-        const currentPath = window.location.href;
-        if (currentPicture) {
-            // Update the open graph properties in the HTML head meta tags for FB sharing
-            $.get(currentPath, function(data, status) {
-                $(document).ready(function() {
-                    $("#urlMetaTag").attr("content", currentPath + "#" + currentPicture.id);
-                    $("#titleMetaTag").attr("content", currentPicture.title);
-                    $("#imageMetaTag").attr("content", "https:" + currentPicture.pic_url_medium);
-                    $("#descriptionMetaTag").attr("content", "A photograph by " + currentPicture.author);
-                })
-            });
-        } else {
-            // Update the open graph meta tags content to null
-            $.get(currentPath, function(data, status) {
-                $(document).ready(function() {
-                    $("#urlMetaTag").attr("content", null);
-                    $("#titleMetaTag").attr("content", null);
-                    $("#imageMetaTag").attr("content", null);
-                    $("#descriptionMetaTag").attr("content", null);
-                })
-            });
-        }
-    }
-
-    showModal() {
-        this.updateMetaTags(this.props.pictures[this.state.picIndex]);
-        this.setState({show: true});
-    }
-    
-    hideModal() {
-        this.updateMetaTags(undefined);
-        window.location.hash = '';
-        this.setState({show: false, showDescription: false, picIndex: 0});
-    }
-
     handleDescription() {
         if (this.state.show) {
             this.setState({showDescription: !this.state.showDescription});
         }
     }
-    
-    handleDisplayedPic(n) {
-        if (n == 1) {
-            if (this.state.picIndex < this.props.pictures.length - 1) {
-                this.updateMetaTags(this.props.pictures[this.state.picIndex + 1]);
-                this.setState({ picIndex: this.state.picIndex + 1 });
-                window.location.hash = this.props.pictures[this.state.picIndex + 1].id.toString();
-            } else {
-                this.updateMetaTags(this.props.pictures[0]);
-                this.setState({ picIndex: 0 });
-                window.location.hash = this.props.pictures[0].id.toString();
-            }
-        } else {
-            if (this.state.picIndex == 0) {
-                this.updateMetaTags(this.props.pictures[this.state.picIndex.length - 1]);
-                this.setState({ picIndex: this.props.pictures.length - 1 });
-                window.location.hash = this.props.pictures[this.props.pictures.length - 1].id.toString();
-            } else {
-                this.updateMetaTags(this.props.pictures[this.state.picIndex - 1]);
-                this.setState({ picIndex: this.state.picIndex - 1 });
-                window.location.hash = this.props.pictures[this.state.picIndex - 1].id.toString();
-            }
-        }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState(this.initialState(nextProps));
     }
 
     render() {
-        const currentPicture = this.props.pictures[this.state.picIndex];
-        const descriptionsLength = Object.entries(currentPicture.descriptions).length;
+        const descriptionsLength = Object.entries(this.props.currentPicture.descriptions).length;
         
         return (
             <Col lg={3} md={4} sm={6} xs={6} className="picture-element">
             <div className="picture_pic">
-                <Link onClick={this.showModal} to={"#" + this.props.pictures[0].id.toString()}>
-                    <Image src={this.props.pictures[0].pic_url_small} alt={this.props.pictures[0].title} responsive />
+                <Link onClick={() => {this.setState({show: true})}} to={'/categories/' + this.props.category_id + '/pictures/' + this.props.currentPicture.id.toString()}>
+                    <Image src={this.props.currentPicture.pic_url_small} alt={this.props.currentPicture.title} responsive />
                 </Link>
                 <Modal className="picture_modal"
                        show={this.state.show}
-                       onHide={this.hideModal}
                        dialogClassName="custom-modal"
+                       animation={false}
                 >
-                    <Modal.Header closeButton>
+                    <Modal.Header>
+                        <Link to={'/categories/' + this.props.category_id + '/pictures'} id="close_button">X</Link>
                         <Modal.Title id="contained-modal-title-lg">
-                            <span>{this.props.categoryName} / "{currentPicture.title}"</span>
+                            <span>{this.props.categoryName} / "{this.props.currentPicture.title}"</span>
                         </Modal.Title>
                     </Modal.Header>
                     
                     <Modal.Body>
-                        <div className="prev-pic" onClick={() => this.handleDisplayedPic(-1)}>
+                        <Link className="prev-pic" 
+                              to={'/categories/' + this.props.category_id + '/pictures/' + this.props.prevPicture.id}>
                             <span id="chevron-left" className="glyphicon glyphicon-chevron-left"></span>
-                        </div>
+                        </Link>
                         
-                        {(this.state.show && !this.state.showDescription && Object.entries(currentPicture.descriptions).length > 0) ?
-                            
-                            <OverlayTrigger placement="bottom" overlay={tooltip}>
-                                <Image src={currentPicture.pic_url_medium}
-                                       alt={currentPicture.title}
-                                       onClick={() => this.handleDescription()}
-                                       responsive />
-                            </OverlayTrigger>
+                            {(this.state.show && !this.state.showDescription && descriptionsLength > 0) ?
+                                
+                                <OverlayTrigger placement="bottom" overlay={tooltip}>
+                                    <Image src={this.props.currentPicture.pic_url_medium}
+                                        alt={this.props.currentPicture.title}
+                                        onClick={() => this.handleDescription()}
+                                        responsive />
+                                </OverlayTrigger>
 
-                            : <Image src={currentPicture.pic_url_medium}
-                                     alt={currentPicture.title}
-                                     onClick={() => this.handleDescription()}
-                                     responsive />
-                        }
+                                : <Image src={this.props.currentPicture.pic_url_medium}
+                                        alt={this.props.currentPicture.title}
+                                        onClick={() => this.handleDescription()}
+                                        responsive />
+                            }
 
                         {this.state.showDescription && descriptionsLength > 0 ? 
                             (this.state.language ?
-                                (currentPicture.descriptions[this.state.language] ?
-                                    (<span className="pic-description">{currentPicture.descriptions[this.state.language]}</span>)
-                                    : (currentPicture.descriptions['EN'] ?
-                                        (<span className="pic-description">{currentPicture.descriptions['EN']}</span>) 
-                                        : (<span className="pic-description">{Object.entries(currentPicture.descriptions)[0][1]}</span>)))
-                                : (currentPicture.descriptions['EN'] ?
-                                    <span className="pic-description">{currentPicture.descriptions['EN']}</span> 
-                                    : <span className="pic-description">{Object.entries(currentPicture.descriptions)[0][1]}</span>)
+                                (this.props.currentPicture.descriptions[this.state.language] ?
+                                    (<span className="pic-description">{this.props.currentPicture.descriptions[this.state.language]}</span>)
+                                    : (this.props.currentPicture.descriptions['EN'] ?
+                                        (<span className="pic-description">{this.props.currentPicture.descriptions['EN']}</span>) 
+                                        : (<span className="pic-description">{Object.entries(this.props.currentPicture.descriptions)[0][1]}</span>)))
+                                : (this.props.currentPicture.descriptions['EN'] ?
+                                    <span className="pic-description">{this.props.currentPicture.descriptions['EN']}</span> 
+                                    : <span className="pic-description">{Object.entries(this.props.currentPicture.descriptions)[0][1]}</span>)
                             )
                         : null}
                         
-                        <div className="next-pic" onClick={() => this.handleDisplayedPic(1)}>
+                        <Link className="next-pic" 
+                              to={'/categories/' + this.props.category_id + '/pictures/' + this.props.nextPicture.id}>
                             <span id="chevron-right" className="glyphicon glyphicon-chevron-right"></span>
-                        </div>
+                        </Link>
                     </Modal.Body>
 
                     <Modal.Footer>
-                        (c) {currentPicture.author} - all rights reserved
+                        (c) {this.props.currentPicture.author} - all rights reserved
                         <Button onClick={this.triggerShareDialog}>
                             <i className="fa fa-facebook-official"></i>
                         </Button>
@@ -206,7 +142,7 @@ class PictureComponent extends React.Component {
                 </Modal>
 
                 {this.props.user && this.props.user.superadmin ?
-                    (<EditDeletePicture cat_id={this.props.category_id} pic_id={currentPicture.id} />) : null}
+                    (<EditDeletePicture cat_id={this.props.category_id} pic_id={this.props.currentPicture.id} />) : null}
             </div>
         </Col>
         )
@@ -228,8 +164,7 @@ class PicturesIndex extends React.Component {
     }
 
     componentDidMount() {
-        const pathParams = this.props.location.pathname.split('/').slice(1);
-        const url = '/categories/' + pathParams[1] + '/pictures.json';
+        const url = '/categories/' + this.props.match.params.category_id + '/pictures.json';
         fetch(url)
         .then(function(resp) {
             return resp.json();
@@ -257,8 +192,9 @@ class PicturesIndex extends React.Component {
 
     // this method is needed to triger re-rendering when switching from one categories index page to another
     componentWillReceiveProps(nextProps) {
-        if (nextProps.location.pathname != this.props.location.pathname) {
-            fetch(nextProps.location.pathname + '.json')
+        if (nextProps.match.params.category_id != this.props.match.params.category_id ||
+            nextProps.match.params.picture_id != this.props.match.params.picture_id) {
+            fetch('/categories/' + nextProps.match.params.category_id + '/pictures.json')
             .then(function(resp) {
                 return resp.json();
             })
@@ -269,7 +205,7 @@ class PicturesIndex extends React.Component {
                 const pictures = pics;
                 const availableLanguages = Object.keys(categoryDescriptions);
                 const language = this.props.langPref ? (availableLanguages.includes(this.props.langPref) ? this.props.langPref
-                                                                                                        : (availableLanguages.includes('EN') ? 'EN' : availableLanguages[0]))
+                                                                                                         : (availableLanguages.includes('EN') ? 'EN' : availableLanguages[0]))
                                                     : (availableLanguages.includes('EN') ? 'EN' : availableLanguages[0]);
                 const categoryDescription = categoryDescriptions[language];
                 const descriptionContent = categoryDescription ? categoryDescription.split('\r\n') : null;
@@ -345,10 +281,16 @@ class PicturesIndex extends React.Component {
                     <Row id='all_pictures' className="show-grid">
                         {this.state.pictures.map(pic => <PictureComponent
                                                             key={pic.id}
-                                                            pictures={this.state.pictures.slice(this.state.pictures.indexOf(pic))
-                                                            .concat(this.state.pictures.slice(0, this.state.pictures.indexOf(pic)))}
+                                                            currentPicture={pic}
+                                                            prevPicture={(this.state.pictures.indexOf(pic) == 0)
+                                                                        ? this.state.pictures[this.state.pictures.length - 1]
+                                                                        : this.state.pictures[this.state.pictures.indexOf(pic) - 1]}
+                                                            nextPicture={(this.state.pictures.indexOf(pic) == this.state.pictures.length -1)
+                                                                        ? this.state.pictures[0]
+                                                                        : this.state.pictures[this.state.pictures.indexOf(pic) + 1]}
                                                             categoryName={this.state.categoryName}
                                                             category_id={this.props.match.params.category_id}
+                                                            picture_id={this.props.match.params.picture_id}
                                                             language={this.state.language}
                                                             user={this.props.user} />)}
                     </Row>
