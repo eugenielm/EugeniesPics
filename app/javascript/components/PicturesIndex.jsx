@@ -135,7 +135,7 @@ class PicturesIndex extends React.Component {
                         <i className="fb-share-button" 
                            data-layout="button"
                            data-size="small"
-                           data-href={"/categories/" + this.props.match.params.category_id + "/pictures"}
+                           data-href={window.location.origin + "/categories/" + this.props.match.params.category_id + "/pictures"}
                            style={{position: 'absolute', top: '20.2vw', right: '5px'}}></i>
                         
                         <Panel collapsible expanded={this.state.panelOpen}>

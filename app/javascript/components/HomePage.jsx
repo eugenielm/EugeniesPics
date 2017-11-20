@@ -26,7 +26,7 @@ class HomePage extends React.Component {
             <i className="fb-share-button" 
                data-layout="button"
                data-size="small"
-               data-href={"/"}
+               data-href={window.location.origin + "/"}
                style={{position: 'absolute', top: '20.2vw', right: '5px'}}></i>
 
                 {this.state.picsSelection.length > 0 ?

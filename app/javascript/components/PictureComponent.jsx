@@ -121,7 +121,7 @@ class PictureComponent extends React.Component {
                         <i className="fb-share-button" 
                            data-layout="button"
                            data-size="small"
-                           data-href={"/categories/" + this.props.category_id + "/pictures/" + this.props.picture_id}
+                           data-href={window.location.origin + "/categories/" + this.props.category_id + "/pictures/" + this.props.picture_id}
                            style={{float: 'right'}}></i>
                     </Modal.Footer>
                 

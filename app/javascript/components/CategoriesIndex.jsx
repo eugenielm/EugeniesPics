@@ -62,7 +62,7 @@ class CategoriesIndex extends React.Component {
         <i className="fb-share-button" 
            data-layout="button"
            data-size="small"
-           data-href={"/categories"}
+           data-href={window.location.origin + "/categories"}
            style={{position: 'absolute', top: '20.2vw', right: '5px'}}></i>
         <Grid>
           <Row id="all_categories" className="show-grid">
