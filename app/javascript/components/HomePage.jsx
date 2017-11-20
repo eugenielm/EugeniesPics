@@ -19,9 +19,28 @@ class HomePage extends React.Component {
         }.bind(this))
     }
 
+    triggerShareDialog() {
+        FB.ui({
+            method: 'share',
+            href: window.location.href,
+        }, function(response) {
+            if (response && !response.error_message) {
+                alert('Posting completed!');
+            } else {
+                alert('Error while posting :\\');
+            }
+        });
+    }
+
     render() {
         return (
-            <div id="home-page" style={{display: this.state.display}}>                
+            <div id="home-page" style={{display: this.state.display}}>
+
+            <i className="fa fa-facebook-square fa-2x" 
+               id="category_fb_share_btn" 
+               onClick={this.triggerShareDialog}
+               style={{position: 'absolute', top: '20.2vw', right: '5px', background: 'transparent'}}></i>
+
                 {this.state.picsSelection.length > 0 ?
                     (<Carousel>
                         {this.state.picsSelection.map(p => (<Carousel.Item key={p.selectionPicCatId ? p.selectionPicCatId : 0}>
