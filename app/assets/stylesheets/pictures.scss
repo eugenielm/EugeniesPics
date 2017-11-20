@@ -13,10 +13,31 @@
     border: none;
 }
 
+#pictures-page .panel p {
+    font-size: 14px;
+    margin: 0;
+    line-height: 20px;
+}
+
+@media screen and (max-width: 767px) and (min-width: 426px) {
+    #pictures-page .panel p {
+        font-size: 13px;
+        line-height: 19px;
+    }
+}
+
+@media screen and (max-width: 426px) {
+    #pictures-page .panel p {
+        font-size: 12px;
+        line-height: 17px;
+    }
+}
+
 #cat_desc_btn {
+    background: white;
     margin-left: 6px;
     outline: none;
-    padding: 3px 6px 2px 7px;
+    padding: 4px 7px 2px 7px;
     border-radius: 5px;
 }
 
@@ -39,6 +60,8 @@
 #category_fb_share_btn {
     margin-left: 7px;
     vertical-align: middle !important;
+    color: #3B5998;
+    background: transparent;
 }
 
 #category_fb_share_btn:hover {
@@ -190,8 +213,8 @@ div.picture_modal div.modal-footer { line-height: 21px }
 div.picture_modal div.modal-footer button.btn {
     border: none;
     box-shadow: none;
-    background: white;
-    color: #3B5998;
+    background: #3B5998;
+    color: white;
     float: right;
     text-shadow: none;
     padding: 3px 4px 0 5px;
