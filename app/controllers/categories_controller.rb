@@ -7,6 +7,12 @@ class CategoriesController < ApplicationController
       @categories = nil
       redirect_to root_url
     end
+
+    @fb_url = root_url
+    @fb_title = "Eugenie's pics"
+    @fb_description = "Photographs by Eugénie Le Moulec"
+    @fb_image = "<%= image_tag EUGENIESPICS.JPG %>"
+
     @categories = Array.new
     Category.all.each do |c|
       @categories.push({id: c.id,
