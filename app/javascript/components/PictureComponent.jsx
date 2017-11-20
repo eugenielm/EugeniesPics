@@ -29,7 +29,6 @@ class PictureComponent extends React.Component {
     componentWillMount() {
         this.setState(this.initialState(this.props));
         this.initialState = this.initialState.bind(this);
-        this.triggerShareDialog = this.triggerShareDialog.bind(this);
     }
 
     initialState(props) {
@@ -52,19 +51,6 @@ class PictureComponent extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState(this.initialState(nextProps));
-    }
-
-    triggerShareDialog() {
-        FB.ui({
-            method: 'share',
-            href: window.location.href,
-        }, function(response) {
-            if (response && !response.error_message) {
-                alert('Posting completed!');
-            } else {
-                alert('Error while posting :\\');
-            }
-        });
     }
 
     render() {
@@ -132,9 +118,11 @@ class PictureComponent extends React.Component {
 
                     <Modal.Footer>
                         (c) {this.props.currentPicture.author} - all rights reserved
-                        <Button onClick={this.triggerShareDialog}>
-                            <i className="fa fa-facebook-official"></i>
-                        </Button>
+                        <i className="fb-share-button" 
+                           data-layout="button"
+                           data-size="small"
+                           data-href={"/categories/" + this.props.category_id + "/pictures/" + this.props.picture_id}
+                           style={{float: 'right'}}></i>
                     </Modal.Footer>
                 
                 </Modal>

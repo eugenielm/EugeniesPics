@@ -409,7 +409,4 @@ div.notice.alert button.close {
 
 /*********************************************************************/
 /* Facebook share button */
-.fb-share-button:hover {
-    opacity: 0.8;
-    cursor: pointer;
-}
+.fb-share-button:hover { opacity: 0.9 }
