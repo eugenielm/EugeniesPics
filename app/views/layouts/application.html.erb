@@ -56,7 +56,7 @@
     <% if @fb_image %>
       <meta property="og:image"       content="<%= @fb_image %>" />
     <% else %>
-      <meta property="og:image"       content="<%= image_tag EUGENIESPICS.JPG %>" />
+      <meta property="og:image"       content='<%= image_path("EUGENIESPICS.JPG") %>' />
     <% end %>
 
 
