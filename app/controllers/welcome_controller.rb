@@ -1,9 +1,6 @@
 class WelcomeController < ApplicationController
   def index
     @fb_url = root_url
-    @fb_title = "Eugenie's pics"
-    @fb_description = "Photographs by Eugénie Le Moulec"
-    @fb_image = "<%= image_tag EUGENIESPICS.JPG %>"
 
     @picsSelection = []
     Category.all.each do |cat|
