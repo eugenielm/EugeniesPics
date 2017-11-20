@@ -7,6 +7,7 @@ class HomePage extends React.Component {
 
     componentWillMount() {
         this.setState({ picsSelection: [], display: "none" });
+        this.triggerShareDialog = this.triggerShareDialog.bind(this);
     }
 
     componentDidMount() {
