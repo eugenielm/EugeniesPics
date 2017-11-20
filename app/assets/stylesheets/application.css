@@ -405,3 +405,11 @@ div.notice.alert button.close {
     font-weight: normal;
     font-style: normal;
 }
+
+
+/*********************************************************************/
+/* Facebook share button */
+.fb-share-button:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
