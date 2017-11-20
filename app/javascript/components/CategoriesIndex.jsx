@@ -46,6 +46,19 @@ class CategoriesIndex extends React.Component {
       this.setState({ categories })
     }.bind(this))
   }
+
+  triggerShareDialog() {
+    FB.ui({
+        method: 'share',
+        href: window.location.href,
+    }, function(response) {
+        if (response && !response.error_message) {
+            alert('Posting completed!');
+        } else {
+            alert('Error while posting :\\');
+        }
+    });
+  }
   
   render() {
     const new_cat_link = this.props.user && this.props.user.superadmin ?
@@ -59,6 +72,10 @@ class CategoriesIndex extends React.Component {
     return (
       <div id="categories-page">
         <div className="page-title">Galleries{new_cat_link}</div>
+        <i className="fa fa-facebook-square fa-2x" 
+               id="category_fb_share_btn" 
+               onClick={this.triggerShareDialog}
+               style={{position: 'absolute', top: '20.2vw', right: '5px', background: 'transparent'}}></i>
         <Grid>
           <Row id="all_categories" className="show-grid">
             { this.state.categories.map(c => <CategoryComponent user={this.props.user} key={c.id} category={c}/>) }
