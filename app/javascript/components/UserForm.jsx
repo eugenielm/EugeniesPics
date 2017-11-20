@@ -79,7 +79,7 @@ class UserForm extends React.Component {
         const back_to_users = this.state.user && this.state.user.superadmin ? <Button bsStyle="primary" bsSize="xsmall" className="back-link"><Link to="/users">See users list</Link></Button> : null;
         return (
             <div className="form-layout">
-                <h2>{page_title} {back_to_users}</h2>
+                <div className="admin-page-title">{page_title} {back_to_users}</div>
                 <ErrorsComponent errors={this.state.errors} model={"user"} />
                 <form encType="multipart/form-data" action={form_action} method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
                     <input name="utf8" type="hidden" value="✓" />

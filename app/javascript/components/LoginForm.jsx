@@ -36,7 +36,7 @@ class LoginForm extends React.Component {
     render() {
         return (
             <div className="form-layout">
-                <h3 id="login_title">Login</h3>
+                <div className="admin-page-title" id="login_title">Login</div>
                 <form action='/login' method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit}>
                     <input name="utf8" type="hidden" value="✓" />
                     <input type="hidden" name="authenticity_token" value={this.props.token} readOnly={true} />

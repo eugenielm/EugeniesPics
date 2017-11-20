@@ -240,12 +240,12 @@ class PictureForm extends React.Component {
 
         return (
             <div className="form-layout" style={{display: this.state.display}}>
-                <h3>{ this.state.picture_id ? ("Edit '" + this.state.picture_title + "'") : "New picture"} 
+                <div className="admin-page-title">{ this.state.picture_id ? ("Edit '" + this.state.picture_title + "'") : "New picture"} 
                     <Button bsStyle="primary" bsSize="xsmall" className="back-link" 
                             href={"/categories/" + this.props.match.params.category_id + "/pictures"} style={{marginLeft: 5 + 'px'}}>
                         Back to pictures
                     </Button>
-                </h3>
+                </div>
                 {this.state.errors ? (<ErrorsComponent errors={this.state.errors} />) : null}
                 {category_form}
             </div>

@@ -75,7 +75,13 @@ class PresentationForm extends React.Component {
 
         return (
             <div className="form-layout" style={{display: this.state.display}}>
-                <h2>{page_title} <Button bsStyle="primary" bsSize="xsmall" className="back-link" href="/presentations">Back to presentations</Button></h2>
+                <div className="admin-page-title">{page_title} <Button bsStyle="primary" 
+                                                                       bsSize="xsmall" 
+                                                                       className="back-link" 
+                                                                       href="/presentations">
+                                                                    Back to presentations
+                                                                </Button>
+                </div>
                 { this.state.errors ? (<ErrorsComponent errors={this.state.errors} model={"presentation"} />) : null }
                 <form encType="multipart/form-data" action={form_action} method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
                     <input name="utf8" type="hidden" value="✓" />
@@ -88,7 +94,10 @@ class PresentationForm extends React.Component {
                                 <td><label htmlFor="choose-language">Language</label>{newLangLink}</td>
                                 <td>
                                     <FormGroup controlId="formControlsSelect">
-                                        <FormControl componentClass="select" value={this.state.presentation_language_id || "-- select --"} name="presentation[language_id]" onChange={this.handleLanguageId}>
+                                        <FormControl componentClass="select" 
+                                                     value={this.state.presentation_language_id || "-- select --"} 
+                                                     name="presentation[language_id]" 
+                                                     onChange={this.handleLanguageId}>
                                             <option value="-- select --">-- select --</option>
                                             { this.state.languages.map(pres => <LanguageChoice key={pres.id} data={pres} />) }>
                                         </FormControl>

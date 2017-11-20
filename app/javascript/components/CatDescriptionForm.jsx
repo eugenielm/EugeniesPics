@@ -90,7 +90,7 @@ class CatDescriptionForm extends React.Component {
 
         return (
             <div className="form-layout" style={{display: this.state.display}}>
-                <h3>{page_title}
+                <div className="admin-page-title">{page_title}
                     <Button bsStyle="primary"
                             bsSize="xsmall" 
                             style={{marginLeft: 10 + 'px'}}
@@ -98,7 +98,7 @@ class CatDescriptionForm extends React.Component {
                             href={"/categories/" + this.props.match.params.category_id + "/edit"}>
                         <span className="glyphicon glyphicon-arrow-left"></span>
                     </Button>
-                </h3>
+                </div>
 
                 { this.state.errors ? (<ErrorsComponent errors={this.state.errors} model={"cat_description"} />) : null }
 

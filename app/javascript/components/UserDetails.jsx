@@ -25,14 +25,14 @@ class UserDetails extends React.Component {
                 const admin = this.state.user.superadmin ? 'yes' : 'no';
                 return (
                     <div className="user-info" style={{display: this.state.display}}>
-                        <h2>
+                        <div className="admin-page-title">
                             Profile details of '{this.state.user.username}' 
                             { this.props.user.superadmin ?
                                 (<Button bsSize="xsmall" bsStyle="primary" className="back-link" style={{marginLeft: 10 + 'px'}}>
                                     <Link to="/users">Back to all users</Link>
                                 </Button>)
                             : null }
-                        </h2>
+                        </div>
                         <br/>
                         <p><strong>Username:</strong> {this.state.user.username}</p>
                         <p><strong>Email:</strong> {this.state.user.email}</p>

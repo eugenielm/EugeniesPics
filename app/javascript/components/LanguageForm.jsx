@@ -83,7 +83,13 @@ class LanguageForm extends React.Component {
 
         return (
             <div className="form-layout" style={{display: this.state.display}}>
-                <h2>{ this.state.language_id ? "Edit language" : "New language"} <Button bsStyle="primary" bsSize="xsmall" className="back-link" href="/languages">Back to languages</Button></h2>
+                <div className="admin-page-title">{ this.state.language_id ? "Edit language" : "New language"} <Button bsStyle="primary" 
+                                                                                                                       bsSize="xsmall" 
+                                                                                                                       className="back-link" 
+                                                                                                                       href="/languages">
+                                                                                                                    Back to languages
+                                                                                                                </Button>
+                </div>
                 { this.state.errors ? (<ErrorsComponent errors={this.state.errors} model={"language"} />) : null }
                 <form encType="multipart/form-data" action={form_action} method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
                     <input name="utf8" type="hidden" value="✓" />
@@ -94,11 +100,15 @@ class LanguageForm extends React.Component {
                         <tbody>
                             <tr>
                                 <td><label htmlFor="lang_name">Language</label></td>
-                                <td><input id="language_name" type="text" name="language[name]" value={this.state.language_name || ''} onChange={this.handleLanguageName} /></td>
+                                <td><input id="language_name" type="text" name="language[name]" 
+                                           value={this.state.language_name || ''} 
+                                           onChange={this.handleLanguageName} /></td>
                             </tr>
                             <tr>
                                 <td><label htmlFor="lang_abbr">Abbreviation</label></td>
-                                <td><input id="language_abbr" type="text" name="language[abbreviation]" value={this.state.language_abbr || ''} onChange={this.handleLanguageAbbr} /></td>
+                                <td><input id="language_abbr" type="text" name="language[abbreviation]" 
+                                           value={this.state.language_abbr || ''} 
+                                           onChange={this.handleLanguageAbbr} /></td>
                             </tr>
                             <tr><td></td><td></td></tr>
                         </tbody>

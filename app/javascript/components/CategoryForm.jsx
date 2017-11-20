@@ -165,7 +165,7 @@ class CategoryForm extends React.Component {
         return (
             <div className="form-layout" style={{display: this.state.display}}>
                 
-                <h3>{ this.state.category_id ? ("Edit '" + this.state.category_name + "' category") : "New category"}
+                <div className="admin-page-title">{ this.state.category_id ? ("Edit '" + this.state.category_name + "' category") : "New category"}
                     {this.state.category_name && this.state.category_id?
                         <Button bsStyle="primary" bsSize="xsmall" className="back-link" 
                                 href={"/categories/" + this.state.category_id} style={{marginLeft: 5 + 'px'}}>
@@ -175,7 +175,7 @@ class CategoryForm extends React.Component {
                             Back to categories
                           </Button>
                     }
-                </h3>
+                </div>
                 
                 { this.state.errors ? (<ErrorsComponent errors={this.state.errors} model={"category"} />) : null }
                 
