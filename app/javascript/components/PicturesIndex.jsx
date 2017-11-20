@@ -146,7 +146,9 @@ class PicturesIndex extends React.Component {
                                 
                         </Button>
                         
-                        <i className="fa fa-facebook-square fa-2x" id="category_fb_share_btn" onClick={this.triggerShareDialog}></i>
+                        <i className="fa fa-facebook-square fa-2x" id="category_fb_share_btn" 
+                           onClick={this.triggerShareDialog}
+                           style={{position: 'absolute', top: '20.2vw', right: '5px', background: 'transparent'}}></i>
                         
                         <Panel collapsible expanded={this.state.panelOpen}>
                             <div id="language_buttons">{languageButtons}</div>
