@@ -19,6 +19,7 @@ class PicturesIndex extends React.Component {
                         showPicDesc: false});
         this.handleCategoryDescription = this.handleCategoryDescription.bind(this);
         this.showPicDescription = this.showPicDescription.bind(this);
+        this.triggerShareDialog = this.triggerShareDialog.bind(this);
     }
 
     componentDidMount() {
@@ -83,6 +84,19 @@ class PicturesIndex extends React.Component {
         this.setState({showPicDesc: !this.state.showPicDesc});
     }
 
+    triggerShareDialog() {
+        FB.ui({
+            method: 'share',
+            href: window.location.origin + "/categories/" + this.props.category_id + '/pictures',
+        }, function(response) {
+            if (response && !response.error_message) {
+                alert('Posting completed!');
+            } else {
+                alert('Error while posting :\\');
+            }
+        });
+    }
+
     render() {
         const languageButtons = this.state.availableLanguages.map(
             (lang, i) => <Button bsSize="xsmall" 
@@ -132,11 +146,10 @@ class PicturesIndex extends React.Component {
                                 
                         </Button>
                         
-                        <i className="fb-share-button" 
-                           data-layout="button"
-                           data-size="small"
-                           data-href={window.location.origin + "/categories/" + this.props.match.params.category_id + "/pictures"}
-                           style={{position: 'absolute', top: '20.2vw', right: '5px'}}></i>
+                        <button id="fb_share_btn" onClick={this.triggerShareDialog}>
+                            <i className="fa fa-facebook-official"></i>
+                            <span>Share</span>
+                        </button>
                         
                         <Panel collapsible expanded={this.state.panelOpen}>
                             <div id="language_buttons">{languageButtons}</div>

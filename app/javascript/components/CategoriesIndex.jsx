@@ -31,10 +31,12 @@ const CategoryComponent = props => {
   );
 };
 
+
 class CategoriesIndex extends React.Component {
 
   componentWillMount() {
     this.setState({ categories: [] });
+    this.triggerShareDialog = this.triggerShareDialog.bind(this);
   }
 
   componentDidMount() {
@@ -45,6 +47,19 @@ class CategoriesIndex extends React.Component {
     .then(function(categories) {
       this.setState({ categories })
     }.bind(this))
+  }
+
+  triggerShareDialog() {
+    FB.ui({
+        method: 'share',
+        href: window.location.origin + "/categories",
+    }, function(response) {
+        if (response && !response.error_message) {
+            alert('Posting completed!');
+        } else {
+            alert('Error while posting :\\');
+        }
+    });
   }
   
   render() {
@@ -59,11 +74,10 @@ class CategoriesIndex extends React.Component {
     return (
       <div id="categories-page">
         <div className="page-title">Galleries{new_cat_link}</div>
-        <i className="fb-share-button" 
-           data-layout="button"
-           data-size="small"
-           data-href={window.location.origin + "/categories"}
-           style={{position: 'absolute', top: '20.2vw', right: '5px'}}></i>
+        <button id="fb_share_btn" onClick={this.triggerShareDialog}>
+            <i className="fa fa-facebook-official"></i>
+            <span>Share</span>
+        </button>
         <Grid>
           <Row id="all_categories" className="show-grid">
             { this.state.categories.map(c => <CategoryComponent user={this.props.user} key={c.id} category={c}/>) }

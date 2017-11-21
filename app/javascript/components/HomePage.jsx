@@ -7,6 +7,7 @@ class HomePage extends React.Component {
 
     componentWillMount() {
         this.setState({ picsSelection: [], display: "none" });
+        this.triggerShareDialog = this.triggerShareDialog.bind(this);
     }
 
     componentDidMount() {
@@ -19,15 +20,27 @@ class HomePage extends React.Component {
         }.bind(this))
     }
 
+    triggerShareDialog() {
+        FB.ui({
+            method: 'share',
+            href: window.location.origin + "/",
+        }, function(response) {
+            if (response && !response.error_message) {
+                alert('Posting completed!');
+            } else {
+                alert('Error while posting :\\');
+            }
+        });
+    }
+
     render() {
         return (
             <div id="home-page" style={{display: this.state.display}}>
 
-            <i className="fb-share-button" 
-               data-layout="button"
-               data-size="small"
-               data-href={window.location.origin + "/"}
-               style={{position: 'absolute', top: '20.2vw', right: '5px'}}></i>
+            <button id="fb_share_btn" onClick={this.triggerShareDialog}>
+                <i className="fa fa-facebook-official"></i>
+                <span>Share</span>
+            </button>
 
                 {this.state.picsSelection.length > 0 ?
                     (<Carousel>

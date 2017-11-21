@@ -93,7 +93,15 @@
     margin: 12vh auto !important;
 }
 
-h4.modal-title { font-size: 15px }
+h4.modal-title { font-size: 16px }
+
+@media screen and (min-width: 426px) and (max-width: 767px) {
+    h4.modal-title { font-size: 13px }
+}
+
+@media screen and (max-width: 425px) {
+    h4.modal-title { font-size: 11px }
+}
 
 .modal-content {
     height: 100%;
@@ -176,12 +184,33 @@ span.pic-description {
     color: white;
     max-width: 90%;
     padding: 5px 10px;
+    font-size: 14px;
+}
+
+@media screen and (min-width: 426px) and (max-width: 767px) {
+    span.pic-description { font-size: 12px }
+}
+
+@media screen and (max-width: 425px) {
+    span.pic-description { font-size: 11px }
 }
 
 /* picture modal footer */
 div.modal-footer { text-align: left !important }
 
-div.picture_modal div.modal-footer { line-height: 21px }
+div.picture_modal div.modal-footer {
+    line-height: 20px;
+}
+
+#pic_copyright { font-size: 14px }
+
+@media screen and (min-width: 426px) and (max-width: 767px) {
+    #pic_copyright { font-size: 12px }
+}
+
+@media screen and (max-width: 425px) {
+    #pic_copyright { font-size: 11px }
+}
 
 div.picture_modal div.modal-footer button.btn {
     border: none;
@@ -193,8 +222,6 @@ div.picture_modal div.modal-footer button.btn {
     padding: 3px 4px 0 5px;
     outline: 0;
 }
-
-div.picture_modal div.modal-footer i.fa.fa-facebook-official { font-size: 18px }
 
 @media screen and (min-width: 1720px) {
     .picture-element.col-lg-3.col-md-4.col-sm-6.col-xs-6 {
@@ -235,3 +262,23 @@ div.picture_modal div.modal-footer i.fa.fa-facebook-official { font-size: 18px }
         height: 96vw;
     }
 }
+
+#fb_share_btn_pic {
+    border: none;
+    height: 19px;
+    float: right;
+    padding: 0px 5px;
+    border-radius: 3px;
+    background-color: #3B5998;
+    color: white;
+    outline: 0;
+}
+
+#fb_share_btn_pic > span {
+    font-size: 11px;
+    font-family: Helvetica, Arial, sans-serif;
+    margin-left: 5px;
+    letter-spacing: 0.5px;
+}
+
+#fb_share_btn_pic:hover { opacity: 0.9 }
