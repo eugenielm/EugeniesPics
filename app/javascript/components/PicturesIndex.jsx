@@ -5,7 +5,6 @@ import { Button, Grid, Row, Panel } from 'react-bootstrap';
 import PictureComponent from './PictureComponent';
 
 
-
 class PicturesIndex extends React.Component {
 
     componentWillMount() {
@@ -64,7 +63,8 @@ class PicturesIndex extends React.Component {
                 const pictures = pics;
                 const availableLanguages = Object.keys(categoryDescriptions);
                 const language = this.props.langPref ? (availableLanguages.includes(this.props.langPref) ? this.props.langPref
-                                                                                                         : (availableLanguages.includes('EN') ? 'EN' : availableLanguages[0]))
+                                                                                                         : (availableLanguages.includes('EN') ? 'EN'
+                                                                                                                                              : availableLanguages[0]))
                                                     : (availableLanguages.includes('EN') ? 'EN' : availableLanguages[0]);
                 const categoryDescription = categoryDescriptions[language];
                 const descriptionContent = categoryDescription ? categoryDescription.split('\r\n') : null;
@@ -136,7 +136,13 @@ class PicturesIndex extends React.Component {
         
         return (
             <div id="pictures-page">
+                
+                <div style={{position: 'absolute', top: '2vw', left: '-10px'}}>
+                    {edit_cat_link} {delete_cat_link} {new_picture_link}
+                </div>
+                
                 <div className="page-title">{this.state.categoryName}</div>
+                
                 {this.state.descriptionContent ? 
                     <div className="inline">
                         <Button id="cat_desc_btn" bsSize="xsmall"
@@ -158,8 +164,6 @@ class PicturesIndex extends React.Component {
                     </div>
                     : null
                 }
-                
-                <div style={{float: 'left', marginTop: '-25px'}}>{edit_cat_link} {delete_cat_link} {new_picture_link}</div>
 
                 <Grid fluid>
                     <Row id='all_pictures' className="show-grid">
