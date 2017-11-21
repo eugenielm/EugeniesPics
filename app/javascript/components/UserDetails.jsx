@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 
 class UserDetails extends React.Component {
     componentWillMount() {
-        this.setState({ user: undefined, display: "none" });
+        this.setState({ user: undefined, displayDeleteModal: false });
     }
 
     componentDidMount() {
@@ -15,7 +15,7 @@ class UserDetails extends React.Component {
             return resp.json();
         })
         .then(function(user) {
-            this.setState({ user, display: "block" })
+            this.setState({ user })
         }.bind(this))
     }
 
@@ -43,9 +43,28 @@ class UserDetails extends React.Component {
                             <Button bsSize="xsmall" bsStyle="success" href={ "/users/" + this.state.user.id + "/edit" } style={{marginRight: 10 + 'px'}} >
                                 <span className="glyphicon glyphicon-edit"></span>
                             </Button>
-                            <Button bsSize="xsmall" bsStyle="danger" data-method="delete" href={ "/users/" + this.state.user.id } >
+                            <Button bsSize="xsmall" bsStyle="danger" onClick={() => this.setState({displayDeleteModal: true})}>
                                 <span className="glyphicon glyphicon-trash"></span>
                             </Button>
+                            
+                            <Modal show={this.state.displayDeleteModal} style={{padding: '15px'}}>
+                                <Modal.Body>
+                                    <div style={{margin: '20px'}}>
+                                        Are you sure you want to destroy {this.state.user.username}'s profile?
+                                        <br/><br/>
+                                        <Button bsStyle="danger" 
+                                                bsSize="xsmall"
+                                                onClick={() => this.setState({displayDeleteModal: false})}
+                                                href={ "/users/" + this.state.user.id }
+                                                data-method="delete"
+                                                style={{marginLeft: '5px'}}
+                                                >Yes
+                                        </Button>
+                                        <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '5px'}} 
+                                                onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
+                                    </div>
+                                </Modal.Body>
+                            </Modal>
                         </p>
                     </div>
                 );

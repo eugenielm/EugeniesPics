@@ -1,19 +1,47 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
-import { Button, Grid, Row, Col, Image } from 'react-bootstrap';
+import { Button, Grid, Row, Col, Image, Modal } from 'react-bootstrap';
 
-const EditDeleteCategory = props => {
+class EditDeleteCategory extends React.Component {
+
+  componentWillMount() {
+    this.setState({ displayDeleteModal: false });
+  }
+
+  render() {
     return (
       <div id="edit-delete-cat">
-        <Button className="edit-category" bsSize="xsmall" bsStyle="info" href={ "/categories/" + props.cat_id + "/edit" }>
+        <Button className="edit-category" bsSize="xsmall" bsStyle="info" href={ "/categories/" + this.props.cat_id + "/edit" }>
           <span className="glyphicon glyphicon-edit"></span>
         </Button>
-        <Button bsSize="xsmall" bsStyle="danger" href={ "/categories/" + props.cat_id } data-method="delete">
+
+        <Button bsSize="xsmall" bsStyle="danger"
+                onClick={() => this.setState({displayDeleteModal: true})}>
           <span className="glyphicon glyphicon-trash"></span>
         </Button>
+
+        <Modal show={this.state.displayDeleteModal}
+               style={{padding: '15px'}}>
+            <Modal.Body>
+                <div style={{margin: '20px'}}>
+                    Are you sure you want to destroy the '{this.props.cat_name}' category?
+                    <br/><br/>
+                    <Button bsStyle="danger" 
+                            bsSize="xsmall"
+                            onClick={() => this.setState({displayDeleteModal: false})}
+                            href={ "/categories/" + this.props.cat_id}
+                            data-method="delete"
+                            style={{marginLeft: '5px'}}
+                            >Yes
+                    </Button>
+                    <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '5px'}} 
+                            onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
+                </div>
+            </Modal.Body>
+        </Modal>
       </div>
-    );
+  )};
 };
 
 const CategoryComponent = props => {
@@ -25,7 +53,7 @@ const CategoryComponent = props => {
           <Image src={props.category.catpic_url} alt={props.category.name + "'s category'"} responsive />
         </Link>
         { (props.user && props.user.superadmin) ?
-          (<EditDeleteCategory cat_id={props.category.id} />) : null }
+          (<EditDeleteCategory cat_id={props.category.id} cat_name={props.category.name} />) : null }
       </div>
     </Col>
   );
@@ -74,7 +102,7 @@ class CategoriesIndex extends React.Component {
     return (
       <div id="categories-page">
         <div className="page-title">Galleries{new_cat_link}</div>
-        <button id="fb_share_btn" onClick={this.triggerShareDialog}>
+        <button id="fb_share_btn" onClick={this.triggerShareDialog} style={{top: '1.2vh', right: '1.2vh'}}>
             <i className="fa fa-facebook-official"></i>
             <span>Share</span>
         </button>

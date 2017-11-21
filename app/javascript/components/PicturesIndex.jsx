@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
-import { Button, Grid, Row, Panel } from 'react-bootstrap';
+import { Button, Grid, Row, Panel, Modal } from 'react-bootstrap';
 import PictureComponent from './PictureComponent';
 
 
@@ -15,7 +15,8 @@ class PicturesIndex extends React.Component {
                         availableLanguages: [],
                         language: '',
                         panelOpen: false,
-                        showPicDesc: false});
+                        showPicDesc: false,
+                        displayDeleteModal: false});
         this.handleCategoryDescription = this.handleCategoryDescription.bind(this);
         this.showPicDescription = this.showPicDescription.bind(this);
         this.triggerShareDialog = this.triggerShareDialog.bind(this);
@@ -118,9 +119,8 @@ class PicturesIndex extends React.Component {
         const delete_cat_link = this.props.user && this.props.user.superadmin ?
                                     <Button bsStyle="danger" 
                                             bsSize="xsmall" 
-                                            style={{marginTop: -7 + 'px'}}
-                                            href={"/categories/" + this.props.match.params.category_id}
-                                            data-method="delete" >
+                                            style={{marginTop: -7 + 'px', outline: 0}}
+                                            onClick={() => this.setState({displayDeleteModal: true})}>
                                         <span className="glyphicon glyphicon-trash"></span>
                                     </Button>
                                     : null;
@@ -137,9 +137,28 @@ class PicturesIndex extends React.Component {
         return (
             <div id="pictures-page">
                 
-                <div style={{position: 'absolute', top: '2vw', left: '-10px'}}>
+                <div style={{position: 'absolute', top: '35px', left: '-10px'}}>
                     {edit_cat_link} {delete_cat_link} {new_picture_link}
                 </div>
+                <Modal show={this.state.displayDeleteModal}
+                       style={{padding: '15px'}}>
+                    <Modal.Body>
+                        <div style={{margin: '20px'}}>
+                            Are you sure you want to destroy '{this.state.categoryName}' category?
+                            <br/><br/>
+                            <Button bsStyle="danger" 
+                                    bsSize="xsmall"
+                                    onClick={() => this.setState({displayDeleteModal: false})}
+                                    href={"/categories/" + this.props.match.params.category_id}
+                                    data-method="delete"
+                                    style={{marginLeft: '5px'}}
+                                    >Yes
+                            </Button>
+                            <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '5px'}} 
+                                    onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
+                        </div>
+                    </Modal.Body>
+                </Modal>
                 
                 <div className="page-title">{this.state.categoryName}</div>
                 
@@ -152,7 +171,7 @@ class PicturesIndex extends React.Component {
                                 
                         </Button>
                         
-                        <button id="fb_share_btn" onClick={this.triggerShareDialog}>
+                        <button id="fb_share_btn" onClick={this.triggerShareDialog} style={{top: '1.5vw', right: '-0.5%'}}>
                             <i className="fa fa-facebook-official"></i>
                             <span>Share</span>
                         </button>

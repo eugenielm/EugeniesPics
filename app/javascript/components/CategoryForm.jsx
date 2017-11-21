@@ -1,35 +1,59 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Table, Popover, OverlayTrigger } from 'react-bootstrap';
+import { Button, Table, Popover, OverlayTrigger, Modal } from 'react-bootstrap';
 import ErrorsComponent from './ErrorsComponent';
 
 
-const CategoryContent = props => {
-    const sentences = props.cat_description.content.split('\r\n');
-    return (
-        <Popover id="popover-positioned-bottom" 
-                 positionLeft={props.positionLeft} 
-                 positionTop={props.positionTop} 
-                 placement="bottom" 
-                 title={props.cat_description.language_name + " description"}>
-            {sentences.map((s, index) => <p key={index}>{s}</p>)}
-            <Button bsStyle="primary" 
-                    bsSize="xsmall"
-                    href={"/categories/" + props.category_id 
-                        + "/cat_descriptions/" + props.cat_description.description_id 
-                        + "/edit"}>
-                <span className="glyphicon glyphicon-edit"></span>
-            </Button>
-            <Button bsStyle="danger" 
-                    bsSize="xsmall"
-                    style={{marginLeft: 5 + 'px'}}
-                    href={"/categories/" + props.category_id 
-                        + "/cat_descriptions/" + props.cat_description.description_id}
-                    data-method="delete">
-                <span className="glyphicon glyphicon-trash"></span>
-            </Button>
-        </Popover>
-    )
+class CategoryContent extends React.Component {
+    componentWillMount() {
+        this.setState({displayDeleteModal: false});
+    }
+
+    render() {
+        const sentences = this.props.cat_description.content.split('\r\n');
+        return (
+            <Popover id="popover-positioned-bottom" 
+                     positionLeft={this.props.positionLeft} 
+                     positionTop={this.props.positionTop} 
+                     placement="bottom" 
+                     title={this.props.cat_description.language_name + " description"}>
+                {sentences.map((s, index) => <p key={index}>{s}</p>)}
+                <Button bsStyle="primary" 
+                        bsSize="xsmall"
+                        href={"/categories/" + this.props.category_id 
+                            + "/cat_descriptions/" + this.props.cat_description.description_id 
+                            + "/edit"}>
+                    <span className="glyphicon glyphicon-edit"></span>
+                </Button>
+                <Button bsStyle="danger" 
+                        bsSize="xsmall"
+                        onClick={() => this.setState({displayDeleteModal: true})}
+                        style={{marginLeft: 5 + 'px'}}>
+                    <span className="glyphicon glyphicon-trash"></span>
+                </Button>
+                <Modal show={this.state.displayDeleteModal} style={{padding: '15px'}}>
+                    <Modal.Body>
+                        <div style={{margin: '20px'}}>
+                            Are you sure you want to destroy the {this.props.cat_description.language_name} description 
+                            of {this.props.category_name}?
+                            <br/><br/>
+                            <Button bsStyle="danger" 
+                                    bsSize="xsmall"
+                                    onClick={() => this.setState({displayDeleteModal: false})}
+                                    href={"/categories/" + this.props.category_id 
+                                        + "/cat_descriptions/" + this.props.cat_description.description_id}
+                                    data-method="delete"
+                                    style={{marginLeft: '5px'}}
+                                    >Yes
+                            </Button>
+                            <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '5px'}} 
+                                    onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
+                        </div>
+                    </Modal.Body>
+                </Modal>
+            </Popover>
+        );
+    }
 };
 
 

@@ -1,22 +1,61 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
-import { Button, Table } from 'react-bootstrap';
+import { Button, Table, Modal } from 'react-bootstrap';
 
-const UserComponent = props => {
-    const user = props.data;
-    const admin = user.superadmin ? 'yes' : 'no';
-    return (
-        <tr>
-            <td>{user.username}</td>
-            <td>{user.email}</td>
-            <td>{user.id}</td>
-            <td>{admin}</td>
-            <td style={{textAlign: "center"}}><Link to={ "/users/" + user.id } ><span className="glyphicon glyphicon-eye-open"></span></Link></td>
-            <td style={{textAlign: "center"}}><a href={ "/users/" + user.id + "/edit" } ><span className="glyphicon glyphicon-edit"></span></a></td>
-            <td style={{textAlign: "center"}}><a data-method="delete" href={ "/users/" + user.id } ><span className="glyphicon glyphicon-trash"></span></a></td>
-        </tr>
-    );
+class UserComponent extends React.Component {
+    componentWillMount() {
+        this.setState({displayDeleteModal: false});
+    }
+
+    render() {
+        const user = this.props.data;
+        const admin = user.superadmin ? 'yes' : 'no';
+        return (
+            <tr>
+                <td>{user.username}</td>
+                <td>{user.email}</td>
+                <td>{user.id}</td>
+                <td>{admin}</td>
+                <td style={{textAlign: "center"}}>
+                    <Link to={ "/users/" + user.id } style={{color: 'black'}} >
+                        <span className="glyphicon glyphicon-eye-open"></span>
+                    </Link>
+                </td>
+                <td style={{textAlign: "center"}}>
+                    <a href={ "/users/" + user.id + "/edit" } style={{color: '#439ce8'}} >
+                        <span className="glyphicon glyphicon-edit"></span>
+                    </a>
+                </td>                
+                <td style={{textAlign: "center"}}>
+                    <a style={{cursor: 'pointer', color: '#bb0707'}} 
+                       onClick={() => this.setState({displayDeleteModal: true})} >
+                        <span className="glyphicon glyphicon-trash"></span>
+                    </a>
+                </td>
+
+                <Modal show={this.state.displayDeleteModal} style={{padding: '15px'}}>
+                    <Modal.Body>
+                        <div style={{margin: '20px'}}>
+                            Are you sure you want to destroy {user.username}'s profile?
+                            <br/><br/>
+                            <Button bsStyle="danger" 
+                                    bsSize="xsmall"
+                                    onClick={() => this.setState({displayDeleteModal: false})}
+                                    href={ "/users/" + user.id }
+                                    data-method="delete"
+                                    style={{marginLeft: '5px'}}
+                                    >Yes
+                            </Button>
+                            <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '5px'}} 
+                                    onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
+                        </div>
+                    </Modal.Body>
+                </Modal>
+
+            </tr>
+        );
+    }
 };
 
 class UsersIndex extends React.Component {

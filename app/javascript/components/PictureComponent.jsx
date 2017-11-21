@@ -8,19 +8,46 @@ const tooltip = (
 );
 
 
-const EditDeletePicture = props => {
-    return (
-        <div id="edit-delete-pic">
-            <Button className="edit-picture" bsSize="xsmall" bsStyle="info" style={{opacity: 0.8}}
-                    href={ "/categories/" + props.cat_id + "/pictures/" + props.pic_id + "/edit" }>
-                    <span className="glyphicon glyphicon-edit"></span>
-            </Button>
-            <Button bsSize="xsmall" bsStyle="danger" style={{opacity: 0.8}}
-                    href={ "/categories/" + props.cat_id + "/pictures/" + props.pic_id } data-method="delete" >
+class EditDeletePicture extends React.Component {
+    componentWillMount() {
+        this.setState({displayDeleteModal: false});
+    }
+
+    render() {
+        return (
+            <div id="edit-delete-pic">
+                <Button className="edit-picture" bsSize="xsmall" bsStyle="info" style={{opacity: 0.8}}
+                        href={ "/categories/" + this.props.cat_id + "/pictures/" + this.props.pic_id + "/edit" }>
+                        <span className="glyphicon glyphicon-edit"></span>
+                </Button>
+
+                <Button bsSize="xsmall" bsStyle="danger" style={{opacity: 0.8}}
+                        onClick={() => this.setState({displayDeleteModal: true})}>
                     <span className="glyphicon glyphicon-trash"></span>
-            </Button>
-        </div>
-    )
+                </Button>
+
+                <Modal show={this.state.displayDeleteModal}
+                    style={{padding: '15px'}}>
+                    <Modal.Body>
+                        <div style={{margin: '20px'}}>
+                            Are you sure you want to destroy '{this.props.pic_title}'?
+                            <br/><br/>
+                            <Button bsStyle="danger" 
+                                    bsSize="xsmall"
+                                    onClick={() => this.setState({displayDeleteModal: false})}
+                                    href={ "/categories/" + this.props.cat_id + "/pictures/" + this.props.pic_id }
+                                    data-method="delete"
+                                    style={{marginLeft: '5px'}}
+                                    >Yes
+                            </Button>
+                            <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '5px'}} 
+                                    onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
+                        </div>
+                    </Modal.Body>
+                </Modal>
+            </div>
+        );
+    }
 };
 
 
@@ -141,7 +168,9 @@ class PictureComponent extends React.Component {
                 </Modal>
 
                 {this.props.user && this.props.user.superadmin ?
-                    (<EditDeletePicture cat_id={this.props.category_id} pic_id={this.props.currentPicture.id} />) : null}
+                    (<EditDeletePicture cat_id={this.props.category_id} 
+                                        pic_id={this.props.currentPicture.id} 
+                                        pic_title={this.props.currentPicture.title} />) : null}
             </div>
         </Col>
         )
