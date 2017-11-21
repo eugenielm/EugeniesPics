@@ -6,7 +6,7 @@ import { Carousel } from 'react-bootstrap';
 class HomePage extends React.Component {
 
     componentWillMount() {
-        this.setState({ picsSelection: [], display: "none" });
+        this.setState({ picsSelection: [] });
         this.triggerShareDialog = this.triggerShareDialog.bind(this);
     }
 
@@ -16,7 +16,7 @@ class HomePage extends React.Component {
             return resp.json();
         })
         .then(function(picsSelection) {
-        this.setState({ picsSelection, display: "block" })
+        this.setState({ picsSelection })
         }.bind(this))
     }
 
@@ -35,9 +35,9 @@ class HomePage extends React.Component {
 
     render() {
         return (
-            <div id="home-page" style={{display: this.state.display}}>
+            <div id="home-page">
 
-            <button id="fb_share_btn" onClick={this.triggerShareDialog}>
+            <button id="fb_share_btn" onClick={this.triggerShareDialog} style={{top: '-5vh', right: 0}}>
                 <i className="fa fa-facebook-official"></i>
                 <span>Share</span>
             </button>

@@ -408,15 +408,14 @@ div.notice.alert button.close {
 
 
 /*********************************************************************/
-/* Facebook share button */
+/* Facebook share button in home, all galleries and pictures index pages */
 
 #fb_share_btn {
     border: none;
     height: 20px;
     display: flex;
     position: absolute;
-    top: 1.5vw;
-    right: -0.5%;
+    /* right and top distances are specified in corresponding React components */
     padding: 3px 5px;
     border-radius: 3px;
     background-color: #3B5998;
@@ -431,6 +430,9 @@ div.notice.alert button.close {
     font-family: Helvetica, Arial, sans-serif;
     margin-left: 5px;
     letter-spacing: 0.5px;
+    
 }
 
-#fb_share_btn:hover { opacity: 0.9 }
+#fb_share_btn:hover {
+    opacity: 0.9;
+}

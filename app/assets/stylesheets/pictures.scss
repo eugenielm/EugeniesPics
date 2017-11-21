@@ -40,6 +40,7 @@
     outline: none;
     padding: 4px 7px 2px 7px;
     border-radius: 5px;
+    z-index: 10; /* make sure it's above the FB sharing button */
 }
 
 #category_description {
@@ -264,6 +265,7 @@ div.picture_modal div.modal-footer button.btn {
     }
 }
 
+/* FB sharing button in picture modal */
 #fb_share_btn_pic {
     border: none;
     height: 19px;
@@ -283,3 +285,10 @@ div.picture_modal div.modal-footer button.btn {
 }
 
 #fb_share_btn_pic:hover { opacity: 0.9 }
+
+@media screen and (max-width: 425px) {
+    #pictures-page #fb_share_btn {
+        top: -7vw !important;
+        left: 0;
+    }
+}
