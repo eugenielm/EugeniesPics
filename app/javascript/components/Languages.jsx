@@ -10,14 +10,18 @@ class EditDeleteLanguage extends React.Component {
   render() {
     return (
       <div id="edit-delete-lang" style={{ display: "inline" }}>
-        <Button bsSize="xsmall" bsStyle="info" style={{ marginRight: 5 + "px" }} 
+        
+        <Button bsSize="xsmall" bsStyle="info" style={{ marginRight: "20px" }} 
                 href={ "/languages/" + this.props.lang_id + "/edit" }>
           <span className="glyphicon glyphicon-edit"></span>
         </Button>
-        <Button bsSize="xsmall" bsStyle="danger" onClick={() => this.setState({displayDeleteModal: true})}>
+        
+        <Button bsSize="xsmall" bsStyle="danger" style={{ outline: 0 }}
+                onClick={() => this.setState({displayDeleteModal: true})}>
           <span className="glyphicon glyphicon-trash"></span>
         </Button>
-        <Modal show={this.state.displayDeleteModal} style={{padding: '15px'}}>
+        
+        <Modal show={this.state.displayDeleteModal} style={{padding: '15px', marginTop: '30vh'}}>
           <Modal.Body>
               <div style={{margin: '20px'}}>
                   Are you sure you want to destroy the {this.props.lang_name} language?
@@ -27,14 +31,14 @@ class EditDeleteLanguage extends React.Component {
                           onClick={() => this.setState({displayDeleteModal: false})}
                           href={ "/languages/" + this.props.lang_id }
                           data-method="delete"
-                          style={{marginLeft: '5px'}}
                           >Yes
                   </Button>
-                  <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '5px'}} 
+                  <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
                           onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
               </div>
           </Modal.Body>
-      </Modal>
+        </Modal>
+
       </div>
     );
   }

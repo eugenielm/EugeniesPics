@@ -11,18 +11,18 @@ class EditDeletePresentation extends React.Component {
   render() {
     return (
       <span>
-        <Button bsSize="xsmall" bsStyle="info" style={{ margin: 0 + "px " + 5 + "px"}} 
+        <Button bsSize="xsmall" bsStyle="info" style={{ marginLeft: '17px' }} 
                 href={ "/presentations/" + this.props.pres_id + "/edit" }>
           <span className="glyphicon glyphicon-edit"></span>
         </Button>
 
-        <Button bsSize="xsmall" bsStyle="danger" style={{opacity: 0.8}}
+        <Button bsSize="xsmall" bsStyle="danger" style={{ marginLeft: '20px', outline: 0 }}
                 onClick={() => this.setState({displayDeleteModal: true})}>
             <span className="glyphicon glyphicon-trash"></span>
         </Button>
 
         <Modal show={this.state.displayDeleteModal}
-            style={{padding: '15px'}}>
+            style={{padding: '15px', marginTop: '30vh'}}>
             <Modal.Body>
                 <div style={{margin: '20px'}}>
                     Are you sure you want to destroy {this.props.pres_lang} presentation?
@@ -32,10 +32,9 @@ class EditDeletePresentation extends React.Component {
                             onClick={() => this.setState({displayDeleteModal: false})}
                             href={ "/presentations/" + this.props.pres_id }
                             data-method="delete"
-                            style={{marginLeft: '5px'}}
                             >Yes
                     </Button>
-                    <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '5px'}} 
+                    <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
                             onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
                 </div>
             </Modal.Body>
@@ -51,11 +50,11 @@ const PresentationComponent = props => {
   const sentences = props.presentation[1][0].split('\r\n');
   return (
     <div className="single-presentation">
-      <h3>
+      <h4>
         {props.presentation[1][1][0].toUpperCase() + props.presentation[1][1].slice(1)} presentation
         <EditDeletePresentation pres_id={props.presentation[1][2]} 
                                 pres_lang={props.presentation[1][1]} />
-      </h3>
+      </h4>
       <div className="presentation-content">
         {sentences.map((s, index) => <p key={index}>{s}</p>)}
       </div>
@@ -84,7 +83,12 @@ class Presentations extends React.Component {
       render() {
         return (
           <div id="presentations" style={{display: this.state.display}}>
-            <div className="admin-page-title">'About me' presentations <Button bsStyle="success" bsSize="xsmall" href="/presentations/new"><span className="glyphicon glyphicon-plus"></span></Button></div>
+            <div className="admin-page-title">'About me' presentations <Button bsStyle="success" 
+                                                                               bsSize="xsmall" 
+                                                                               href="/presentations/new">
+                                                                          <span className="glyphicon glyphicon-plus"></span>
+                                                                      </Button>
+            </div>
             { Object.entries(this.state.presentations).map((pres, i) => <PresentationComponent key={i} presentation={pres}/>) }
             {/* presentations = {'LANG1': [content1, language1, id1], 'LANG2': [content2, language2, id2]}, 
                 so Object.entries(presentations) returns: [['LANG1', [content1, language1, id1]], ['LANG2', [content2, language2, id2]]] */}

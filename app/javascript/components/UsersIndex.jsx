@@ -34,7 +34,7 @@ class UserComponent extends React.Component {
                     </a>
                 </td>
 
-                <Modal show={this.state.displayDeleteModal} style={{padding: '15px'}}>
+                <Modal show={this.state.displayDeleteModal} style={{padding: '15px', marginTop: '30vh'}}>
                     <Modal.Body>
                         <div style={{margin: '20px'}}>
                             Are you sure you want to destroy {user.username}'s profile?
@@ -44,10 +44,9 @@ class UserComponent extends React.Component {
                                     onClick={() => this.setState({displayDeleteModal: false})}
                                     href={ "/users/" + user.id }
                                     data-method="delete"
-                                    style={{marginLeft: '5px'}}
                                     >Yes
                             </Button>
-                            <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '5px'}} 
+                            <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
                                     onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
                         </div>
                     </Modal.Body>
