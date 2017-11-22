@@ -46,7 +46,7 @@ class CategoryContent extends React.Component {
                                     style={{marginLeft: '5px'}}
                                     >Yes
                             </Button>
-                            <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '5px'}} 
+                            <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
                                     onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
                         </div>
                     </Modal.Body>
@@ -193,10 +193,10 @@ class CategoryForm extends React.Component {
                     {this.state.category_name && this.state.category_id?
                         <Button bsStyle="primary" bsSize="xsmall" className="back-link" 
                                 href={"/categories/" + this.state.category_id} style={{marginLeft: 5 + 'px'}}>
-                            Back to {this.state.category_name}
+                            <span className="glyphicon glyphicon-arrow-left"></span>
                         </Button>
                         : <Button bsStyle="primary" bsSize="xsmall" className="back-link" href="/categories" style={{marginLeft: 5 + 'px'}}>
-                            Back to categories
+                            <span className="glyphicon glyphicon-arrow-left"></span>
                           </Button>
                     }
                 </div>

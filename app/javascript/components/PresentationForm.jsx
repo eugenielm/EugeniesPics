@@ -79,7 +79,7 @@ class PresentationForm extends React.Component {
                                                                        bsSize="xsmall" 
                                                                        className="back-link" 
                                                                        href="/presentations">
-                                                                    Back to presentations
+                                                                    <span className="glyphicon glyphicon-arrow-left"></span>
                                                                 </Button>
                 </div>
                 { this.state.errors ? (<ErrorsComponent errors={this.state.errors} model={"presentation"} />) : null }
@@ -110,7 +110,7 @@ class PresentationForm extends React.Component {
                                     <FormGroup controlId="formControlsTextarea">
                                         <FormControl componentClass="textarea" 
                                                      placeholder={"Mention the title of this page on the first line!\r\nTell your story"} 
-                                                     style={{height: 500 + 'px'}}
+                                                     style={{height: '400px'}}
                                                      name="presentation[content]" 
                                                      value={this.state.presentation_content || ''} 
                                                      onChange={this.handleContent} />

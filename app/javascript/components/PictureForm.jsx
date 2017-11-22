@@ -52,7 +52,7 @@ class PictureContent extends React.Component {
                                     style={{marginLeft: '5px'}}
                                     >Yes
                             </Button>
-                            <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '5px'}} 
+                            <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
                                     onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
                         </div>
                     </Modal.Body>
@@ -267,7 +267,7 @@ class PictureForm extends React.Component {
                 <div className="admin-page-title">{ this.state.picture_id ? ("Edit '" + this.state.picture_title + "'") : "New picture"} 
                     <Button bsStyle="primary" bsSize="xsmall" className="back-link" 
                             href={"/categories/" + this.props.match.params.category_id + "/pictures"} style={{marginLeft: 5 + 'px'}}>
-                        Back to pictures
+                        <span className="glyphicon glyphicon-arrow-left"></span>
                     </Button>
                 </div>
                 {this.state.errors ? (<ErrorsComponent errors={this.state.errors} />) : null}
