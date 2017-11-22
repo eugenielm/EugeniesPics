@@ -75,7 +75,7 @@ class Navibar extends React.Component {
         </div>
 
 
-        <DropdownButton pullRight noCaret id="menuitems" 
+        <DropdownButton noCaret id="menuitems" 
                                           title={<span className="glyphicon glyphicon-menu-hamburger"></span>} 
                                           open={this.state.open} onToggle={this.handleCollapse} 
                                           className="visible-xs">

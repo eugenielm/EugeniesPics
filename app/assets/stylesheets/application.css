@@ -250,10 +250,11 @@ button#admin_dropdown {
 
 @media screen and (max-width: 425px) {
     button#menuitems.visible-xs {
-        font-size: 5vw;
+        font-size: 8vw;
         background: none;
         box-shadow: 1px 1px 10px darkgrey;
-        padding: 5px 10px 0 10px;
+        padding: 8px 12px 0 12px;
+        border: solid thin #d2d2d2;
     }
 
     #page-header {
@@ -268,7 +269,7 @@ button#admin_dropdown {
     /* dropdown menu with categories */
     #page-header div.dropdown.btn-group:nth-of-type(2) {
         position: absolute;
-        top: 2vw; right: 2vw;
+        top: 3vw; left: 3vw;
     }
 
     #page-header div.dropdown.btn-group:nth-of-type(2) a {
@@ -284,7 +285,7 @@ button#admin_dropdown {
 
     /* admin dropdown menu */
     #page-header div.dropdown.btn-group:nth-of-type(3) {
-        top: 12vw; right: 2vw;
+        top: 3vw; right: 2vw;
     }
 
     #page-header div.dropdown.btn-group:nth-of-type(3) #admin_dropdown {
@@ -294,7 +295,7 @@ button#admin_dropdown {
         background-color: rgba(255,255,255,0.8);
         font-size: 12px;
         padding: 1px 3px;
-
+        box-shadow: none;
     }
 
     #page-header div.dropdown.btn-group:nth-of-type(3) li a {
