@@ -206,7 +206,7 @@ button#admin_dropdown {
     /* dropdown menu with categories */
     #page-header div.dropdown.btn-group:nth-of-type(2) {
         position: absolute;
-        top: 2vw; right: 2vw;
+        top: 2vw; left: 2vw;
     }
 
     #page-header div.dropdown.btn-group:nth-of-type(2) a {
@@ -222,16 +222,15 @@ button#admin_dropdown {
 
     /* admin dropdown menu */
     #page-header div.dropdown.btn-group:nth-of-type(3) {
-        top: 13.5vw; right: 2vw;
+        top: 2vw; right: 2vw;
     }
 
     #page-header div.dropdown.btn-group:nth-of-type(3) #admin_dropdown {
         margin: 0;
         width: calc(6vw + 30px);
         text-align: center;
-        background-color: rgba(255,255,255,0.8);
-        font-size: 12px;
-        padding: 3px 6px;
+        font-size: 14px;
+        padding: 2px 4px;
 
     }
 
