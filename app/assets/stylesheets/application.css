@@ -250,10 +250,10 @@ button#admin_dropdown {
 
 @media screen and (max-width: 425px) {
     button#menuitems.visible-xs {
-        font-size: 8vw;
+        font-size: 6vw;
         background: none;
         box-shadow: 1px 1px 10px darkgrey;
-        padding: 8px 12px 0 12px;
+        padding: 1.3vw 2.3vw 0 2.3vw;
         border: solid thin #d2d2d2;
     }
 
@@ -263,13 +263,13 @@ button#admin_dropdown {
         background-color: var(--site-tone);
     }
 
-    #site-name { line-height: 14vw; font-size: 2.2em; }
-    #site-name-2 { margin-top: -5vw; font-size: 0.8em; }
+    #site-name { line-height: 14vw; font-size: 9vw; }
+    #site-name-2 { margin-top: -5.2vw; font-size: 3.5vw; }
 
     /* dropdown menu with categories */
     #page-header div.dropdown.btn-group:nth-of-type(2) {
         position: absolute;
-        top: 3vw; left: 3vw;
+        top: 4vw; left: 2vw;
     }
 
     #page-header div.dropdown.btn-group:nth-of-type(2) a {
