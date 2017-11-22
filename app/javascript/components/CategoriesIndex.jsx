@@ -137,7 +137,7 @@ class CategoriesIndex extends React.Component {
     return (
       <div id="categories-page">
         <div className="page-title">Galleries{new_cat_link}</div>
-        <button id="fb_share_btn" onClick={this.triggerShareDialog} style={{top: '1.2vh', right: '1.2vh'}}>
+        <button id="fb_share_btn" onClick={this.triggerShareDialog} style={{top: '1vh', right: '0.8vh'}}>
             <i className="fa fa-facebook-official"></i>
             <span>Share</span>
         </button>

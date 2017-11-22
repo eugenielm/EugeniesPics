@@ -256,10 +256,14 @@ button#admin_dropdown {
         padding: 5px 10px 0 10px;
     }
 
-    #page-header { position: relative; }
+    #page-header {
+        position: relative;
+        background-image: none;
+        background-color: var(--site-tone);
+    }
 
     #site-name { line-height: 14vw; font-size: 2.2em; }
-    #site-name-2 { margin-top: -3vw; font-size: 0.9em; }
+    #site-name-2 { margin-top: -5vw; font-size: 0.8em; }
 
     /* dropdown menu with categories */
     #page-header div.dropdown.btn-group:nth-of-type(2) {
@@ -289,7 +293,7 @@ button#admin_dropdown {
         text-align: center;
         background-color: rgba(255,255,255,0.8);
         font-size: 12px;
-        padding: 3px 6px;
+        padding: 1px 3px;
 
     }
 
@@ -326,6 +330,10 @@ button#admin_dropdown {
     vertical-align: middle;
 }
 
+@media screen and (max-width: 425px) {
+    #footer { background-color: var(--site-tone) }
+    #footer p { color: black }
+}
 
 /*********************************************************************/
 /* Forms */
@@ -413,6 +421,7 @@ div.notice.alert button.close {
 #fb_share_btn {
     border: none;
     height: 20px;
+    width: 58px;
     display: flex;
     position: absolute;
     /* right and top distances are specified in corresponding React components */

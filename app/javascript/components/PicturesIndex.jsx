@@ -192,7 +192,7 @@ class PicturesIndex extends React.Component {
                                 
                         </Button>
                         
-                        <button id="fb_share_btn" onClick={this.triggerShareDialog} style={{top: '1.5vw', right: '-0.5%'}}>
+                        <button id="fb_share_btn" onClick={this.triggerShareDialog} style={{top: '1.1vw', right: '-1%'}}>
                             <i className="fa fa-facebook-official"></i>
                             <span>Share</span>
                         </button>

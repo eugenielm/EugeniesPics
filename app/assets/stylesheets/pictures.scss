@@ -298,11 +298,3 @@ div.picture_modal div.modal-footer button.btn {
 }
 
 #fb_share_btn_pic:hover { opacity: 0.9 }
-
-@media screen and (max-width: 425px) {
-    #pictures-page #fb_share_btn {
-        top: -7vw !important;
-        left: 0;
-        width: 58px;
-    }
-}
