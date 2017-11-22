@@ -81,10 +81,12 @@ class PicDescriptionForm extends React.Component {
                             + this.props.match.params.picture_id + '/pic_descriptions/' + this.state.pic_description_id)
                             : ("/categories/" + this.props.match.params.category_id + "/pictures/" 
                             + this.props.match.params.picture_id + '/pic_descriptions');
-        const input_edit = this.state.pic_description_id ? React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'}) : null;
+        const input_edit = this.state.pic_description_id ? 
+                                React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'}) : null;
         const newLangLink = (this.state.user && this.state.user.superadmin) ?
-                                (<Button id="new_lang_link" bsSize="xsmall" bsStyle="success" style={{marginLeft: 5 + 'px', paddingRight: 3 + 'px'}}
-                                        href={"/languages/new?redirect_to_pic_desc_edit=" + encodeURIComponent(this.props.match.url)}>
+                                (<Button id="new_lang_link" bsSize="xsmall" bsStyle="success" 
+                                         style={{marginLeft: '7px', paddingRight: '3px', opacity: '0.75'}}
+                                         href={"/languages/new?redirect_to_pic_desc_edit=" + encodeURIComponent(this.props.match.url)}>
                                         <span className="glyphicon glyphicon-plus"></span>
                                 </Button>)
                                 : null;
@@ -107,7 +109,8 @@ class PicDescriptionForm extends React.Component {
 
                 { this.state.errors ? (<ErrorsComponent errors={this.state.errors} model={"pic_description"} />) : null }
 
-                <form encType="multipart/form-data" action={form_action} method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
+                <form encType="multipart/form-data" action={form_action} method="post" 
+                      acceptCharset="UTF-8" onSubmit={this.handleSubmit} style={{marginTop: '20px'}} >
                     <input name="utf8" type="hidden" value="✓" />
                     <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />
                     {input_edit}

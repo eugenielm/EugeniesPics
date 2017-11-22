@@ -83,15 +83,22 @@ class LanguageForm extends React.Component {
 
         return (
             <div className="form-layout" style={{display: this.state.display}}>
-                <div className="admin-page-title">{ this.state.language_id ? "Edit language" : "New language"} <Button bsStyle="primary" 
-                                                                                                                       bsSize="xsmall" 
-                                                                                                                       className="back-link" 
-                                                                                                                       href="/languages">
-                                                                                                                    Back to languages
-                                                                                                                </Button>
+                <div className="admin-page-title">{ this.state.language_id ? "Edit language" : "New language"}
+
+            {window.location.search ? null
+                                    : <Button bsStyle="primary" 
+                                              bsSize="xsmall" 
+                                              className="back-link" 
+                                              href="/languages"
+                                              style={{marginLeft: '10px'}} >
+                                        <span className="glyphicon glyphicon-arrow-left"></span>
+                                    </Button>
+            }
+
                 </div>
                 { this.state.errors ? (<ErrorsComponent errors={this.state.errors} model={"language"} />) : null }
-                <form encType="multipart/form-data" action={form_action} method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
+                <form encType="multipart/form-data" action={form_action} method="post" 
+                      acceptCharset="UTF-8" onSubmit={this.handleSubmit} style={{marginTop: '20px'}} >
                     <input name="utf8" type="hidden" value="✓" />
                     <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />
                     {input_edit}
@@ -110,7 +117,6 @@ class LanguageForm extends React.Component {
                                            value={this.state.language_abbr || ''} 
                                            onChange={this.handleLanguageAbbr} /></td>
                             </tr>
-                            <tr><td></td><td></td></tr>
                         </tbody>
                     </Table>
 

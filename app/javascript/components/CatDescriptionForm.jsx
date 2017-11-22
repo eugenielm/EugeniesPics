@@ -79,7 +79,8 @@ class CatDescriptionForm extends React.Component {
                             : ("/categories/" + this.props.match.params.category_id + "/cat_descriptions");
         const input_edit = this.state.cat_description_id ? React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'}) : null;
         const newLangLink = (this.state.user && this.state.user.superadmin) ?
-                                (<Button id="new_lang_link" bsSize="xsmall" bsStyle="success" style={{marginLeft: 5 + 'px', paddingRight: 3 + 'px'}}
+                                (<Button id="new_lang_link" bsSize="xsmall" bsStyle="success" 
+                                         style={{marginLeft: '7px', paddingRight: '3px', opacity: '0.75'}}
                                          href={"/languages/new?redirect_to_cat_desc_edit=" + encodeURIComponent(this.props.match.url)}>
                                     <span className="glyphicon glyphicon-plus"></span>
                                 </Button>)
@@ -93,7 +94,7 @@ class CatDescriptionForm extends React.Component {
                 <div className="admin-page-title">{page_title}
                     <Button bsStyle="primary"
                             bsSize="xsmall" 
-                            style={{marginLeft: 10 + 'px'}}
+                            style={{marginLeft: '10px'}}
                             className="back-link" 
                             href={"/categories/" + this.props.match.params.category_id + "/edit"}>
                         <span className="glyphicon glyphicon-arrow-left"></span>
@@ -102,7 +103,8 @@ class CatDescriptionForm extends React.Component {
 
                 { this.state.errors ? (<ErrorsComponent errors={this.state.errors} model={"cat_description"} />) : null }
 
-                <form encType="multipart/form-data" action={form_action} method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
+                <form encType="multipart/form-data" action={form_action} method="post" 
+                      acceptCharset="UTF-8" onSubmit={this.handleSubmit} style={{marginTop: '20px'}} >
                     <input name="utf8" type="hidden" value="✓" />
                     <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />
                     {input_edit}
@@ -130,7 +132,7 @@ class CatDescriptionForm extends React.Component {
                                     <FormGroup controlId="formControlsTextarea">
                                         <FormControl componentClass="textarea" 
                                                      placeholder={"Describe " + this.state.category_name}
-                                                     style={{height: 200 + 'px'}}
+                                                     style={{height: '250px'}}
                                                      name="cat_description[content]" 
                                                      value={this.state.content || ''} 
                                                      onChange={this.handleContent} />

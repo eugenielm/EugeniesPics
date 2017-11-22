@@ -128,12 +128,13 @@ class CategoryForm extends React.Component {
                                                                                    cat_description={d} 
                                                                                    category_name={this.state.category_name}
                                                                                    category_id={this.state.category_id} />}>
-                                            <Button bsSize="xsmall" style={{marginLeft: 5 + 'px'}}>{d.language_abbr}</Button>
+                                            <Button bsSize="xsmall" style={{marginLeft: '10px'}}>{d.language_abbr}</Button>
                                         </OverlayTrigger>));
 
         const category_form = this.state.category_id ?
                             (<form encType="multipart/form-data" action={"/categories/" + this.state.category_id} 
-                                   method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
+                                   method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit}
+                                   style={{marginTop: '20px'}} >
                                 <input name="utf8" type="hidden" value="✓" />
                                 <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />
                                 {input_edit}
@@ -148,6 +149,7 @@ class CategoryForm extends React.Component {
                                             <td><label htmlFor="category_descriptions">Category descriptions</label></td>
                                             <td><Button bsStyle="success" 
                                                         bsSize="xsmall"
+                                                        style={{opacity: '0.75'}}
                                                         href={"/categories/" + this.props.match.params.category_id 
                                                              + "/cat_descriptions/new"}>
                                                     <span style={{paddingLeft: 2 + 'px'}} className="glyphicon glyphicon-plus"></span>
@@ -168,7 +170,7 @@ class CategoryForm extends React.Component {
                                 </div>
                             </form>)
 
-                            :   (<form encType="multipart/form-data" action="/categories" 
+                            :   (<form encType="multipart/form-data" action="/categories" style={{marginTop: '20px'}}
                                        method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
                                     <input name="utf8" type="hidden" value="✓" />
                                     <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />                            

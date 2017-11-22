@@ -169,7 +169,7 @@ class PictureForm extends React.Component {
                                                       picture_title={this.state.picture_title}
                                                       category_id={this.state.category_id}
                                                       picture_id={this.state.picture_id} />}>
-                <Button bsSize="xsmall" style={{marginLeft: 5 + 'px'}}>{d.language_abbr}</Button>
+                <Button bsSize="xsmall" style={{marginLeft: '10px'}}>{d.language_abbr}</Button>
             </OverlayTrigger>));
         
         const input_edit = React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'});
@@ -178,7 +178,8 @@ class PictureForm extends React.Component {
             : (this.state.pic_url ? (<p>Picture about to be uploaded: {this.state.picture_title}</p>) : null)
 
         const category_form = this.state.picture_id ?
-            (<form encType="multipart/form-data" action={form_action} method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
+            (<form encType="multipart/form-data" action={form_action} method="post" 
+                   acceptCharset="UTF-8" onSubmit={this.handleSubmit} style={{marginTop: '20px'}} >
                 <input name="utf8" type="hidden" value="✓" />
                 <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />
                 {input_edit}
@@ -206,6 +207,7 @@ class PictureForm extends React.Component {
                             <td><label htmlFor="picture_descriptions">Picture descriptions</label></td>
                             <td><Button bsStyle="success" 
                                         bsSize="xsmall"
+                                        style={{opacity: '0.75'}}
                                         href={"/categories/" + this.props.match.params.category_id
                                              + "/pictures/" + this.props.match.params.picture_id
                                              + "/pic_descriptions/new"}>
@@ -226,7 +228,8 @@ class PictureForm extends React.Component {
                 </div>
             </form>)
 
-            :   (<form encType="multipart/form-data" action={form_action} method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
+            :   (<form encType="multipart/form-data" action={form_action} method="post" 
+                       acceptCharset="UTF-8" onSubmit={this.handleSubmit} style={{marginTop: '20px'}} >
                     <input name="utf8" type="hidden" value="✓" />
                     <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />                            
                     <Table responsive bordered>
