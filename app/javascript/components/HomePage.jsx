@@ -25,6 +25,7 @@ class HomePage extends React.Component {
             method: 'share',
             href: window.location.origin + "/",
         }, function(response) {
+            console.log("response object in FB.ui: ", response);
             if (typeof(response) === 'undefined') {
                 alert('Posting was cancelled!');
             }
