@@ -1,28 +1,64 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
-import { Button, Grid, Row, Col, Image, Modal } from 'react-bootstrap';
+import { Button, Grid, Row, Col, Image, Modal, Popover, OverlayTrigger } from 'react-bootstrap';
+
+
+const CatAdminActionsElement = (props) => {
+  const edit_cat_link = <Button bsStyle="primary" 
+                                bsSize="xsmall" 
+                                style={{marginRight: '30px'}}
+                                href={"/categories/" + props.category_id + "/edit"}>
+                          <span className="glyphicon glyphicon-edit"></span>
+                        </Button>;
+
+  const delete_cat_link = <Button bsStyle="danger" 
+                                  bsSize="xsmall" 
+                                  style={{outline: 0}}
+                                  onClick={() => props.handleCatDeleteModal(true)}>
+                              <span className="glyphicon glyphicon-trash"></span>
+                          </Button>;
+
+  return (
+      <Popover id="cat_popover_admin_actions"
+               title="Actions on this category"
+               style={{zIndex: 0, textAlign: 'center'}}
+               positionLeft={props.positionLeft} 
+               positionTop={props.positionTop}
+               placement="right">
+          {edit_cat_link}{delete_cat_link}
+      </Popover>
+  );
+};
+
 
 class EditDeleteCategory extends React.Component {
 
   componentWillMount() {
     this.setState({ displayDeleteModal: false });
+    this.handleCatDeleteModal = this.handleCatDeleteModal.bind(this);
+  }
+
+  handleCatDeleteModal(bool) {
+    this.setState({ displayDeleteModal: bool });
   }
 
   render() {
     return (
       <div id="edit-delete-cat">
-        <Button className="edit-category" bsSize="xsmall" bsStyle="info" href={ "/categories/" + this.props.cat_id + "/edit" }>
-          <span className="glyphicon glyphicon-edit"></span>
-        </Button>
 
-        <Button bsSize="xsmall" bsStyle="danger"
-                onClick={() => this.setState({displayDeleteModal: true})}>
-          <span className="glyphicon glyphicon-trash"></span>
-        </Button>
+          <OverlayTrigger trigger="click" 
+                          placement="right" 
+                          overlay={<CatAdminActionsElement {...this.props} 
+                                                           category_id={this.props.cat_id}
+                                                           handleCatDeleteModal={this.handleCatDeleteModal} />} >
+            <Button id="cat_admin_overlay_btn">
+                <span className="glyphicon glyphicon-cog"></span>
+            </Button>
+          </OverlayTrigger>
 
         <Modal show={this.state.displayDeleteModal}
-               style={{padding: '15px'}}>
+               style={{padding: '15px', marginTop: '30vh'}}>
             <Modal.Body>
                 <div style={{margin: '20px'}}>
                     Are you sure you want to destroy the '{this.props.cat_name}' category?
@@ -32,10 +68,9 @@ class EditDeleteCategory extends React.Component {
                             onClick={() => this.setState({displayDeleteModal: false})}
                             href={ "/categories/" + this.props.cat_id}
                             data-method="delete"
-                            style={{marginLeft: '5px'}}
                             >Yes
                     </Button>
-                    <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '5px'}} 
+                    <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
                             onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
                 </div>
             </Modal.Body>
@@ -52,8 +87,8 @@ const CategoryComponent = props => {
           <p id="catname">{props.category.name}</p>
           <Image src={props.category.catpic_url} alt={props.category.name + "'s category'"} responsive />
         </Link>
-        { (props.user && props.user.superadmin) ?
-          (<EditDeleteCategory cat_id={props.category.id} cat_name={props.category.name} />) : null }
+        { props.user && props.user.superadmin ?
+          <EditDeleteCategory cat_id={props.category.id} cat_name={props.category.name} /> : null }
       </div>
     </Col>
   );
@@ -92,7 +127,7 @@ class CategoriesIndex extends React.Component {
   
   render() {
     const new_cat_link = this.props.user && this.props.user.superadmin ?
-                          <Button style={{marginLeft: 10 + 'px', fontFamily: 'Arial, Helvetica, sans-serif'}} 
+                          <Button style={{marginLeft: '10px', marginTop: '-2px', fontFamily: 'Arial, Helvetica, sans-serif', opacity: '0.75'}} 
                                   bsStyle="success" 
                                   bsSize="xsmall" 
                                   href="/categories/new">

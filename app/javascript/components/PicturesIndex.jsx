@@ -1,8 +1,41 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
-import { Button, Grid, Row, Panel, Modal } from 'react-bootstrap';
+import { Button, Grid, Row, Panel, Modal, OverlayTrigger, Popover } from 'react-bootstrap';
 import PictureComponent from './PictureComponent';
+
+
+const CatAdminActionsElement = (props) => {
+    const edit_cat_link = <Button bsStyle="primary" 
+                                  bsSize="xsmall" 
+                                  style={{marginRight: '30px'}}
+                                  href={"/categories/" + props.category_id + "/edit"}>
+                            <span className="glyphicon glyphicon-edit"></span>
+                          </Button>;
+
+    const delete_cat_link = <Button bsStyle="danger" 
+                                    bsSize="xsmall" 
+                                    style={{marginRight: '30px', outline: 0}}
+                                    onClick={() => props.handleDeleteModal(true)}>
+                                <span className="glyphicon glyphicon-trash"></span>
+                            </Button>;
+
+    const new_picture_link = <Button bsStyle="success" bsSize="xsmall" 
+                                     href={"/categories/" + props.category_id + "/pictures/new"}>
+                                <span className="glyphicon glyphicon-picture"></span>
+                            </Button>;
+
+    return (
+        <Popover id="cat_popover_admin_actions"
+                 title="Actions on this category"
+                 style={{zIndex: 0, textAlign: 'center'}}
+                 positionLeft={props.positionLeft} 
+                 positionTop={props.positionTop}
+                 placement="right">
+            {edit_cat_link}{delete_cat_link}{new_picture_link}
+        </Popover>
+    );
+};
 
 
 class PicturesIndex extends React.Component {
@@ -20,6 +53,7 @@ class PicturesIndex extends React.Component {
         this.handleCategoryDescription = this.handleCategoryDescription.bind(this);
         this.showPicDescription = this.showPicDescription.bind(this);
         this.triggerShareDialog = this.triggerShareDialog.bind(this);
+        this.handleDeleteModal = this.handleDeleteModal.bind(this);
     }
 
     componentDidMount() {
@@ -88,7 +122,7 @@ class PicturesIndex extends React.Component {
     triggerShareDialog() {
         FB.ui({
             method: 'share',
-            href: window.location.origin + "/categories/" + this.props.category_id + '/pictures',
+            href: window.location.origin + "/categories/" + this.props.match.params.category_id + '/pictures',
         }, function(response) {
             if (response && !response.error_message) {
                 alert('Posting completed!');
@@ -96,6 +130,10 @@ class PicturesIndex extends React.Component {
                 alert('Error while posting :\\');
             }
         });
+    }
+
+    handleDeleteModal(bool) {
+        this.setState({displayDeleteModal: bool});
     }
 
     render() {
@@ -107,41 +145,24 @@ class PicturesIndex extends React.Component {
                                  className='lang_btns'
                                  onClick={() => this.handleCategoryDescription(lang)}>{lang}</Button>);
         
-        const edit_cat_link = this.props.user && this.props.user.superadmin ?
-                                <Button bsStyle="primary" 
-                                        bsSize="xsmall" 
-                                        style={{marginLeft: 10 + 'px', marginTop: -7 + 'px'}}
-                                        href={"/categories/" + this.props.match.params.category_id + "/edit"}>
-                                    <span className="glyphicon glyphicon-edit"></span>
-                                </Button>
-                                : null;
-        
-        const delete_cat_link = this.props.user && this.props.user.superadmin ?
-                                    <Button bsStyle="danger" 
-                                            bsSize="xsmall" 
-                                            style={{marginTop: -7 + 'px', outline: 0}}
-                                            onClick={() => this.setState({displayDeleteModal: true})}>
-                                        <span className="glyphicon glyphicon-trash"></span>
-                                    </Button>
-                                    : null;
-
-        const new_picture_link = this.props.user && this.props.user.superadmin ?
-                                    <Button style={{marginTop: -7 + 'px'}} 
-                                            bsStyle="success" 
-                                            bsSize="xsmall" 
-                                            href={"/categories/" + this.props.match.params.category_id + "/pictures/new"}>
-                                            <span className="glyphicon glyphicon-picture"></span>
-                                    </Button>
-                                    : null;
-        
         return (
             <div id="pictures-page">
-                
-                <div style={{position: 'absolute', top: '35px', left: '-10px'}}>
-                    {edit_cat_link} {delete_cat_link} {new_picture_link}
-                </div>
+
+                { this.props.user && this.props.user.superadmin ?
+                    <OverlayTrigger trigger="click" 
+                                    placement="right" 
+                                    overlay={<CatAdminActionsElement {...this.props} 
+                                                                     category_id={this.props.match.params.category_id}
+                                                                     handleDeleteModal={this.handleDeleteModal} />} >
+                        <Button id="cat_admin_overlay_btn">
+                            <span className="glyphicon glyphicon-cog"></span>
+                        </Button>
+                    </OverlayTrigger>
+                    : null
+                }
+
                 <Modal show={this.state.displayDeleteModal}
-                       style={{padding: '15px'}}>
+                       style={{padding: '15px', top: '30vh'}}>
                     <Modal.Body>
                         <div style={{margin: '20px'}}>
                             Are you sure you want to destroy '{this.state.categoryName}' category?
@@ -154,7 +175,7 @@ class PicturesIndex extends React.Component {
                                     style={{marginLeft: '5px'}}
                                     >Yes
                             </Button>
-                            <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '5px'}} 
+                            <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
                                     onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
                         </div>
                     </Modal.Body>

@@ -1,47 +1,81 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
-import { Button, Col, Image, Modal, OverlayTrigger, Tooltip, Panel } from 'react-bootstrap';
+import { Button, Col, Image, Modal, OverlayTrigger, Tooltip, Panel, Popover } from 'react-bootstrap';
 
 const tooltip = (
     <Tooltip id="tooltip">~ C ~ L ~ I ~ C ~ K ~</Tooltip>
 );
 
 
+const PicAdminActionsElement = (props) => {
+    const edit_cat_link = <Button bsStyle="primary" 
+                                  bsSize="xsmall" 
+                                  style={{marginRight: '30px'}}
+                                  href={"/categories/" + props.category_id + "/pictures/" + props.picture_id + "/edit"}>
+                            <span className="glyphicon glyphicon-edit"></span>
+                          </Button>;
+
+    const delete_cat_link = <Button bsStyle="danger" 
+                                    bsSize="xsmall" 
+                                    style={{outline: 0}}
+                                    onClick={() => props.handleDeleteModal(true)}>
+                                <span className="glyphicon glyphicon-trash"></span>
+                            </Button>;
+
+    return (
+        <Popover id="pic_popover_admin_actions"
+                 title="Actions on this picture"
+                 style={{zIndex: 0, textAlign: 'center'}}
+                 positionLeft={props.positionLeft} 
+                 positionTop={props.positionTop}
+                 placement="right">
+            {edit_cat_link}{delete_cat_link}
+        </Popover>
+    );
+};
+
+
 class EditDeletePicture extends React.Component {
     componentWillMount() {
-        this.setState({displayDeleteModal: false});
+        this.setState({displayDeletePicModal: false});
+        this.handleDeleteModal = this.handleDeleteModal.bind(this);
+    }
+
+    handleDeleteModal(bool) {
+        this.setState({displayDelePicteModal: bool});
     }
 
     render() {
         return (
             <div id="edit-delete-pic">
-                <Button className="edit-picture" bsSize="xsmall" bsStyle="info" style={{opacity: 0.8}}
-                        href={ "/categories/" + this.props.cat_id + "/pictures/" + this.props.pic_id + "/edit" }>
-                        <span className="glyphicon glyphicon-edit"></span>
-                </Button>
+                <OverlayTrigger trigger="click" 
+                                placement="right" 
+                                overlay={<PicAdminActionsElement {...this.props} 
+                                                                 category_id={this.props.cat_id}
+                                                                 picture_id={this.props.pic_id}
+                                                                 handleDeleteModal={this.handleDeleteModal} />} >
+                    <Button id="pic_admin_overlay_btn">
+                        <span className="glyphicon glyphicon-cog"></span>
+                    </Button>
+                </OverlayTrigger>
 
-                <Button bsSize="xsmall" bsStyle="danger" style={{opacity: 0.8}}
-                        onClick={() => this.setState({displayDeleteModal: true})}>
-                    <span className="glyphicon glyphicon-trash"></span>
-                </Button>
-
-                <Modal show={this.state.displayDeleteModal}
-                    style={{padding: '15px'}}>
+                <Modal show={this.state.displayDelePicteModal}
+                    style={{padding: '15px', top: '30vh'}}>
                     <Modal.Body>
                         <div style={{margin: '20px'}}>
                             Are you sure you want to destroy '{this.props.pic_title}'?
                             <br/><br/>
                             <Button bsStyle="danger" 
                                     bsSize="xsmall"
-                                    onClick={() => this.setState({displayDeleteModal: false})}
+                                    onClick={() => this.setState({displayDelePicteModal: false})}
                                     href={ "/categories/" + this.props.cat_id + "/pictures/" + this.props.pic_id }
                                     data-method="delete"
                                     style={{marginLeft: '5px'}}
                                     >Yes
                             </Button>
-                            <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '5px'}} 
-                                    onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
+                            <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
+                                    onClick={() => this.setState({displayDelePicteModal: false})}>No</Button>
                         </div>
                     </Modal.Body>
                 </Modal>
