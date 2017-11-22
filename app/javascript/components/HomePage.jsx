@@ -25,13 +25,11 @@ class HomePage extends React.Component {
             method: 'share',
             href: window.location.origin + "/",
         }, function(response) {
-            console.log("response: ", response);
-            if (response && !response.error_message) {
-                if (typeof(response) === 'undefined') {
-                    alert('Posting was cancelled!');
-                } else {
-                    alert('Posting completed!');
-                }
+            if (typeof(response) === 'undefined') {
+                alert('Posting was cancelled!');
+            }
+            else if (response && !response.error_message) {
+                alert('Posting completed!');
             } else {
                 alert('Sorry, an error has occurred :\\');
             }
