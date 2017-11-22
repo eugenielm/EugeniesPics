@@ -25,10 +25,12 @@ class HomePage extends React.Component {
             method: 'share',
             href: window.location.origin + "/",
         }, function(response) {
-            if (response && !response.error_message) {
+            if (response && !response.error_code) {
                 alert('Posting completed!');
+            } else if (response && response.error_code === 4201) {
+                alert('Posting was canceled!');
             } else {
-                alert('Error while posting :\\');
+                alert('Sorry, an error has occurred :\\');
             }
         });
     }
