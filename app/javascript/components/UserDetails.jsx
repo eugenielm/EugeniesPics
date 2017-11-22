@@ -60,7 +60,7 @@ class UserDetails extends React.Component {
                                                 style={{marginLeft: '5px'}}
                                                 >Yes
                                         </Button>
-                                        <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '5px'}} 
+                                        <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
                                                 onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
                                     </div>
                                 </Modal.Body>
