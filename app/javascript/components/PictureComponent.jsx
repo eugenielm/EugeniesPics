@@ -120,10 +120,13 @@ class PictureComponent extends React.Component {
             method: 'share',
             href: window.location.origin + "/categories/" + this.props.category_id + '/pictures/' + this.props.picture_id,
         }, function(response) {
-            if (response && !response.error_message) {
+            if (typeof(response) === 'undefined') {
+                alert('Posting was cancelled!');
+            }
+            else if (response && !response.error_message) {
                 alert('Posting completed!');
             } else {
-                alert('Error while posting :\\');
+                alert('Sorry, an error has occurred :\\');
             }
         });
     }

@@ -117,11 +117,14 @@ class CategoriesIndex extends React.Component {
         method: 'share',
         href: window.location.origin + "/categories",
     }, function(response) {
-        if (response && !response.error_message) {
-            alert('Posting completed!');
-        } else {
-            alert('Error while posting :\\');
-        }
+      if (typeof(response) === 'undefined') {
+        alert('Posting was cancelled!');
+      }
+      else if (response && !response.error_message) {
+          alert('Posting completed!');
+      } else {
+          alert('Sorry, an error has occurred :\\');
+      }
     });
   }
   

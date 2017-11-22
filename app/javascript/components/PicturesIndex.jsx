@@ -124,10 +124,13 @@ class PicturesIndex extends React.Component {
             method: 'share',
             href: window.location.origin + "/categories/" + this.props.match.params.category_id + '/pictures',
         }, function(response) {
-            if (response && !response.error_message) {
+            if (typeof(response) === 'undefined') {
+                alert('Posting was cancelled!');
+            }
+            else if (response && !response.error_message) {
                 alert('Posting completed!');
             } else {
-                alert('Error while posting :\\');
+                alert('Sorry, an error has occurred :\\');
             }
         });
     }
