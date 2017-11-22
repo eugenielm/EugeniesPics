@@ -11,12 +11,12 @@ class EditDeleteLanguage extends React.Component {
     return (
       <div id="edit-delete-lang" style={{ display: "inline" }}>
         
-        <Button bsSize="xsmall" bsStyle="info" style={{ marginRight: "20px" }} 
+        <Button bsSize="xsmall" bsStyle="info" style={{ marginRight: "20px", opacity: '0.75' }} 
                 href={ "/languages/" + this.props.lang_id + "/edit" }>
           <span className="glyphicon glyphicon-edit"></span>
         </Button>
         
-        <Button bsSize="xsmall" bsStyle="danger" style={{ outline: 0 }}
+        <Button bsSize="xsmall" bsStyle="danger" style={{ outline: 0, opacity: '0.75' }}
                 onClick={() => this.setState({displayDeleteModal: true})}>
           <span className="glyphicon glyphicon-trash"></span>
         </Button>
@@ -77,6 +77,7 @@ class Languages extends React.Component {
               Available languages <Button className="new-language-button" 
                                           bsStyle="success" 
                                           bsSize="xsmall" 
+                                          style={{opacity: '0.75'}}
                                           href="/languages/new">
                                       <span className="glyphicon glyphicon-plus"></span>
                                   </Button>

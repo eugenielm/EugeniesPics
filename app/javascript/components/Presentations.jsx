@@ -11,12 +11,12 @@ class EditDeletePresentation extends React.Component {
   render() {
     return (
       <span>
-        <Button bsSize="xsmall" bsStyle="info" style={{ marginLeft: '17px' }} 
+        <Button bsSize="xsmall" bsStyle="info" style={{ marginLeft: '17px', opacity: '0.75' }} 
                 href={ "/presentations/" + this.props.pres_id + "/edit" }>
           <span className="glyphicon glyphicon-edit"></span>
         </Button>
 
-        <Button bsSize="xsmall" bsStyle="danger" style={{ marginLeft: '20px', outline: 0 }}
+        <Button bsSize="xsmall" bsStyle="danger" style={{ marginLeft: '20px', outline: 0, opacity: '0.75' }}
                 onClick={() => this.setState({displayDeleteModal: true})}>
             <span className="glyphicon glyphicon-trash"></span>
         </Button>
@@ -85,6 +85,7 @@ class Presentations extends React.Component {
           <div id="presentations" style={{display: this.state.display}}>
             <div className="admin-page-title">'About me' presentations <Button bsStyle="success" 
                                                                                bsSize="xsmall" 
+                                                                               style={{opacity: '0.75'}}
                                                                                href="/presentations/new">
                                                                           <span className="glyphicon glyphicon-plus"></span>
                                                                       </Button>
