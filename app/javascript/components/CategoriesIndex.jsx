@@ -99,7 +99,6 @@ class CategoriesIndex extends React.Component {
 
   componentWillMount() {
     this.setState({ categories: [] });
-    this.triggerShareDialog = this.triggerShareDialog.bind(this);
   }
 
   componentDidMount() {
@@ -110,22 +109,6 @@ class CategoriesIndex extends React.Component {
     .then(function(categories) {
       this.setState({ categories })
     }.bind(this))
-  }
-
-  triggerShareDialog() {
-    FB.ui({
-        method: 'share',
-        href: window.location.origin + "/categories",
-    }, function(response) {
-      if (typeof(response) === 'undefined') {
-        alert('Posting was cancelled!');
-      }
-      else if (response && !response.error_message) {
-          alert('Posting completed!');
-      } else {
-          alert('Sorry, an error has occurred :\\');
-      }
-    });
   }
   
   render() {
@@ -140,10 +123,6 @@ class CategoriesIndex extends React.Component {
     return (
       <div id="categories-page">
         <div className="page-title">Galleries{new_cat_link}</div>
-        <button id="fb_share_btn" onClick={this.triggerShareDialog} style={{top: '1vh', right: '0.8vh'}}>
-            <i className="fa fa-facebook-official"></i>
-            <span>Share</span>
-        </button>
         <Grid>
           <Row id="all_categories" className="show-grid">
             { this.state.categories.map(c => <CategoryComponent user={this.props.user} key={c.id} category={c}/>) }

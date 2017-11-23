@@ -52,7 +52,6 @@ class PicturesIndex extends React.Component {
                         displayDeleteModal: false});
         this.handleCategoryDescription = this.handleCategoryDescription.bind(this);
         this.showPicDescription = this.showPicDescription.bind(this);
-        this.triggerShareDialog = this.triggerShareDialog.bind(this);
         this.handleDeleteModal = this.handleDeleteModal.bind(this);
     }
 
@@ -119,22 +118,6 @@ class PicturesIndex extends React.Component {
         this.setState({showPicDesc: !this.state.showPicDesc});
     }
 
-    triggerShareDialog() {
-        FB.ui({
-            method: 'share',
-            href: window.location.origin + "/categories/" + this.props.match.params.category_id + '/pictures',
-        }, function(response) {
-            if (typeof(response) === 'undefined') {
-                alert('Posting was cancelled!');
-            }
-            else if (response && !response.error_message) {
-                alert('Posting completed!');
-            } else {
-                alert('Sorry, an error has occurred :\\');
-            }
-        });
-    }
-
     handleDeleteModal(bool) {
         this.setState({displayDeleteModal: bool});
     }
@@ -194,11 +177,6 @@ class PicturesIndex extends React.Component {
                                                                   : "glyphicon glyphicon-circle-arrow-down"}></span>
                                 
                         </Button>
-                        
-                        <button id="fb_share_btn" onClick={this.triggerShareDialog} style={{top: '1.1vw', right: '-1%'}}>
-                            <i className="fa fa-facebook-official"></i>
-                            <span>Share</span>
-                        </button>
                         
                         <Panel collapsible expanded={this.state.panelOpen}>
                             <div id="language_buttons">{languageButtons}</div>

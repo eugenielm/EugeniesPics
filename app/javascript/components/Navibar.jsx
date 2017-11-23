@@ -20,6 +20,7 @@ class Navibar extends React.Component {
     this.state = {categories: [], path: this.props.location.pathname, open: false, openAdmin: false};
     this.handleCollapse = this.handleCollapse.bind(this);
     this.handleCollapseAdmin = this.handleCollapseAdmin.bind(this);
+    this.triggerShareDialog = this.triggerShareDialog.bind(this);
   }
 
   componentDidMount() {
@@ -42,6 +43,25 @@ class Navibar extends React.Component {
 
   handleCollapseAdmin() {
     this.setState({ openAdmin: !this.state.openAdmin })
+  }
+
+  triggerShareDialog() {
+    const urlToShare = this.props.match.params.category_id ?
+      (window.location.origin + "/categories/" + this.props.match.params.category_id + '/pictures')
+      : (window.location.origin);
+    FB.ui({
+        method: 'share',
+        href: urlToShare,
+    }, function(response) {
+        if (typeof(response) === 'undefined') {
+            alert('Posting was cancelled!');
+        }
+        else if (response && !response.error_message) {
+            alert('Posting completed!');
+        } else {
+            alert('Sorry, an error has occurred :\\');
+        }
+    });
   }
 
 
@@ -120,6 +140,11 @@ class Navibar extends React.Component {
             </DropdownButton>
             
             : null}
+
+        <button id="fb_share_btn" onClick={this.triggerShareDialog}>
+            <i className="fa fa-facebook-official"></i>
+            <span>Share</span>
+        </button>
                   
         { this.props.user && !this.props.user.superadmin ?
           <Button id="logout-button" 
