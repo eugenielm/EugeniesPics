@@ -101,10 +101,10 @@
 /* modal */
 
 .custom-modal.modal-dialog {
-    max-width: 1250px;
-    width: 98%;
-    max-height: 1000px;
-    height: 80%;
+    max-width: 120vh;
+    width: 90vw;
+    max-height: 90vw;
+    height: 80vh;
     margin: 12vh auto !important;
 }
 
@@ -260,21 +260,12 @@ div.picture_modal div.modal-footer button.btn {
         padding: 7px;
         margin-bottom: 4px;
     }
-    .custom-modal.modal-dialog {
-        width: 96vw;
-        height: 96vw;
-    }
 }
 
 @media screen and (max-width: 559px) {
     .picture-element.col-lg-3.col-md-4.col-sm-6.col-xs-6 {
         height: 170px;
         padding: 5px;
-    }
-
-    .custom-modal.modal-dialog {
-        width: 96vw;
-        height: 96vw;
     }
 }
 

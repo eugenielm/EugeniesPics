@@ -8,18 +8,19 @@
     position: relative;
     text-align: center;
     width: 98%;
-    margin: 6vh auto 0 auto;
+    margin: 0 auto 0 auto;
     height: 100%;
     /* needed for proper footer layout */
     padding-bottom: 40px;
 }
 
 div.carousel.slide {
-    width: 1000px;
-    height: 1000px;
-    max-width: 95%;
-    max-height: 65vh;
-    margin: 3vh auto;
+    width: 100vh;
+    height: 50vh;
+    max-width: 94%;
+    max-height: 100vw;
+    /* Navigation bar has a height of 20vw */
+    margin: calc((45vh - 20vw)/2) auto 0 auto;
     background-color: white;
     border-radius: 5px;
     box-shadow: 5px 5px 12px darkgrey;
