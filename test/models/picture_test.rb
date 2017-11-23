@@ -46,8 +46,8 @@ class PictureTest < ActiveSupport::TestCase
     assert_not pictures(:Pict1).valid?
   end
 
-  test "picfile_file_size should be less than 1.5Mb (= 1572864 bytes) inclusive" do
-    pictures(:Pict1).picfile_file_size = 1572865
+  test "picfile_file_size should be less than 4Mb (= 4096000 bytes) inclusive" do
+    pictures(:Pict1).picfile_file_size = 4096001
     assert_not pictures(:Pict1).valid?
   end
 

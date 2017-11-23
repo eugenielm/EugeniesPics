@@ -31,8 +31,8 @@ class CategoryTest < ActiveSupport::TestCase
     assert_not categories(:one).valid?
   end
   
-  test "catpic_file_size should be less than 1.5Mb (= 1572864 bytes) inclusive" do
-    categories(:one).catpic_file_size = 1572865
+  test "catpic_file_size should be less than 4Mb (= 4096000 bytes) inclusive" do
+    categories(:one).catpic_file_size = 4096001
     assert_not categories(:one).valid?
   end
 

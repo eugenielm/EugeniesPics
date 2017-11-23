@@ -47,7 +47,7 @@ class PicturesControllerTest < ActionDispatch::IntegrationTest
 
   test "should get picture detail page" do
     get category_picture_url(@category, @picture)
-    assert_redirected_to category_pictures_url(@category)
+    assert_response :success
   end
 
   # new picture
