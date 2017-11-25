@@ -157,7 +157,7 @@ class PictureComponent extends React.Component {
                     <Modal.Body>
                         <Link className="prev-pic" 
                               to={'/categories/' + this.props.category_id + '/pictures/' + this.props.prevPicture.id}>
-                            <span id="chevron-left" className="glyphicon glyphicon-chevron-left"></span>
+                            <span id="chevron-left" className="glyphicon glyphicon-menu-left"></span>
                         </Link>
                         
                             {(this.state.showModal && !this.state.showDescription && descriptionsLength > 0) ?
@@ -190,7 +190,7 @@ class PictureComponent extends React.Component {
                         
                         <Link className="next-pic" 
                               to={'/categories/' + this.props.category_id + '/pictures/' + this.props.nextPicture.id}>
-                            <span id="chevron-right" className="glyphicon glyphicon-chevron-right"></span>
+                            <span id="chevron-right" className="glyphicon glyphicon-menu-right"></span>
                         </Link>
                     </Modal.Body>
 

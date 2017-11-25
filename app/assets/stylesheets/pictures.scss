@@ -1,6 +1,6 @@
 #pictures-page {
-    width: 96%;
-    margin: auto;
+    // width: 96%;
+    // margin: auto;
     text-align: center;
     /* needed for proper footer layout */
     padding-bottom: 40px;
@@ -100,12 +100,12 @@
 
 /* modal */
 
+div.picture_modal.in.modal { background-color: rgba(0,0,0,0.5); }
+
 .custom-modal.modal-dialog {
-    max-width: 120vh;
-    width: 90vw;
-    max-height: 90vw;
-    height: 80vh;
-    margin: 12vh auto !important;
+    height: 90vh;
+    width: 100%;
+    margin: 5vh 0;
 }
 
 h4.modal-title { font-size: 16px }
@@ -120,51 +120,65 @@ h4.modal-title { font-size: 16px }
 
 .modal-content {
     height: 100%;
-    width: 100%;
+    width: 96%;
+    margin: auto;
     font-size: 12px;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
 .modal-body {
-    height: calc(100% - 81px);
+    // 90vh is the height of its parent .custom-modal.modal-dialog
+    // header + footer heights = 70px (see below)
+    height: calc(90vh - 70px);
     padding: 0px !important;
     /* needed to center picture description */
     text-align: center;
 }
 
-.modal-body img {
-    margin: auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    max-height: 96%;
-    max-width: 88%;
-}
-
 .modal-header, .modal-footer {
-    background-color: black;
+    background-color: transparent;
     color: white;
-    padding: 10px !important;
+    padding: 0 10px !important;
 }
 
-.modal-header { text-align: center }
+.modal-header { padding-bottom: 10px !important }
+.modal-footer { padding-top: 10px !important }
+
+.modal-header {
+    text-align: center;
+    border-bottom: none !important;
+}
+
+.modal-header h4 { line-height: 30px }
 
 .modal-header #close_button { 
     color: white;
     opacity: 1;
     display: inline;
     float: right;
-    font-size: 14px;
+    font-size: 20px;
 }
 
 .modal-header #close_button:hover {
-    opacity: 0.7;
+    opacity: 0.3;
     text-decoration: none;
+    background-color: transparent;
+}
+
+.modal-body img {
+    margin: auto;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    max-height: 100%;
+    max-width: 100%;
 }
 
 .prev-pic, .next-pic {
     position: absolute;
-    width: 12%;
+    width: 8%;
     height: 100%;
     text-align: center;
     z-index: 10;
@@ -195,11 +209,12 @@ span.pic-description {
     bottom: 0;
     transform: translate(-50%, -50%);
     margin: 0 auto;
-    background-color: rgba(50,50,50,0.6);
-    color: white;
+    background-color: rgba(255,255,255,0.6);
+    color: black;
     max-width: 90%;
     padding: 5px 10px;
     font-size: 14px;
+    border-radius: 25px;
 }
 
 @media screen and (min-width: 426px) and (max-width: 767px) {
@@ -211,7 +226,10 @@ span.pic-description {
 }
 
 /* picture modal footer */
-div.modal-footer { text-align: left !important }
+div.modal-footer {
+    text-align: center !important;
+    border-top: none;
+}
 
 div.picture_modal div.modal-footer {
     line-height: 20px;
@@ -273,7 +291,7 @@ div.picture_modal div.modal-footer button.btn {
 #fb_share_btn_pic {
     border: none;
     height: 19px;
-    float: right;
+    margin-left: 10px;
     padding: 0px 5px;
     border-radius: 3px;
     background-color: #3B5998;
