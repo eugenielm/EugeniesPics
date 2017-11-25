@@ -37,7 +37,7 @@ body {
 
 :root {
     --site-tone: #e8dede;
-    --site-background: #f0f2f3;
+    --site-background: rgb(243, 243, 243);
     --site-footer: #4e606e;
 }
 
