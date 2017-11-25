@@ -52,16 +52,6 @@
     border-radius: 3px;
 }
 
-.picture-element img {
-    max-height: 95%;
-    max-width: 95%;
-    margin: auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
 .picture_pic {
     height: 100%;
     width: 100%;
@@ -72,7 +62,43 @@
     background-color: white;
     border-radius: 3px;
     position: relative;
-    box-shadow: 5px 5px 12px darkgrey;
+    // box-shadow: 5px 5px 12px darkgrey;
+}
+
+// see https://paulund.co.uk/learn-css-box-shadow
+.picture_pic:before, .picture_pic:after
+{
+  z-index: -1;
+  position: absolute;
+  content: "";
+  bottom: 25px;
+  left: 10px;
+  width: 50%;
+  top: 80%;
+  max-width:300px;
+  background: #777;
+  box-shadow: 0 23px 15px #777;
+  transform: rotate(-5deg);
+}
+
+.picture_pic:after
+{
+  transform: rotate(5deg);
+  right: 10px;
+  left: auto;
+}
+
+// needed for the picture shadow above
+.picture-element { z-index: 1 }
+
+.picture-element img {
+    max-height: 95%;
+    max-width: 95%;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .picture_pic:hover img { opacity: 0.8 }
@@ -213,6 +239,7 @@ span.pic-description {
     color: black;
     max-width: 90%;
     padding: 5px 10px;
+    font-family: ubuntu;
     font-size: 14px;
     border-radius: 25px;
 }
