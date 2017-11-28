@@ -131,7 +131,7 @@
 
 /* modal */
 
-div.picture_modal.in.modal { background-color: rgba(0,0,0,0.5); }
+div.picture_modal.in.modal { background-color: rgba(0, 0, 0, 0.6) }
 
 .custom-modal.modal-dialog {
     height: 90vh;
@@ -146,15 +146,48 @@ div.picture_modal.in.modal { background-color: rgba(0,0,0,0.5); }
     }
 }
 
-h4.modal-title { font-size: 16px }
+.modal-header h4.modal-title {
+    font-size: 28px;
+    line-height: 30px;
+    font-weight: lighter;
+}
 
-@media screen and (min-width: 426px) and (max-width: 767px) {
-    h4.modal-title { font-size: 13px }
+@media screen and (min-width: 426px) and (max-width: 768px) {
+    .modal-header h4.modal-title { font-size: 22px }
 }
 
 @media screen and (max-width: 425px) {
-    h4.modal-title { font-size: 11px }
+    .modal-header h4.modal-title { font-size: 16px }
 }
+
+.modal-header {
+    text-align: center;
+    border-bottom: none !important;
+}
+
+.modal-header #close_button { 
+    color: white;
+    font-weight: lighter;
+    opacity: 1;
+    display: inline;
+    float: right;
+    font-size: 20px;
+}
+
+.modal-header #close_button:hover {
+    opacity: 0.3;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.modal-header, .modal-footer {
+    background-color: transparent;
+    color: white;
+    padding: 0 10px !important;
+}
+
+.modal-header { padding-bottom: 10px !important }
+.modal-footer { padding-top: 10px !important }
 
 .modal-content {
     height: 100%;
@@ -180,36 +213,6 @@ h4.modal-title { font-size: 16px }
         // 76vh is the height of its parent .custom-modal.modal-dialog
         // header + footer heights = 70px (see below)
         height: calc(76vh - 70px)}
-}
-
-.modal-header, .modal-footer {
-    background-color: transparent;
-    color: white;
-    padding: 0 10px !important;
-}
-
-.modal-header { padding-bottom: 10px !important }
-.modal-footer { padding-top: 10px !important }
-
-.modal-header {
-    text-align: center;
-    border-bottom: none !important;
-}
-
-.modal-header h4 { line-height: 30px }
-
-.modal-header #close_button { 
-    color: white;
-    opacity: 1;
-    display: inline;
-    float: right;
-    font-size: 20px;
-}
-
-.modal-header #close_button:hover {
-    opacity: 0.3;
-    text-decoration: none;
-    background-color: transparent;
 }
 
 .modal-body img {
@@ -275,20 +278,20 @@ span.pic-description {
 div.modal-footer {
     text-align: center !important;
     border-top: none;
-}
-
-div.picture_modal div.modal-footer {
     line-height: 20px;
 }
 
-#pic_copyright { font-size: 14px }
+#pic_copyright {
+    font-size: 20px;
+    font-weight: lighter;
+}
 
 @media screen and (min-width: 426px) and (max-width: 767px) {
-    #pic_copyright { font-size: 12px }
+    #pic_copyright { font-size: 16px }
 }
 
 @media screen and (max-width: 425px) {
-    #pic_copyright { font-size: 11px }
+    #pic_copyright { font-size: 12px }
 }
 
 div.picture_modal div.modal-footer button.btn {
