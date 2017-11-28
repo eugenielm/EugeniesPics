@@ -16,29 +16,22 @@
 
 /*********************************************************************/
 
-html {
-    height: 100%;
-}
+html { height: 100% }
 
 body {
     margin: 0px;
     height: 100%;
     min-height: 100vh;
- }
+}
 
 #app-component, #app-container { min-height: 100vh }
 
 #app-container {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: var(--site-background);
+    background-image: url('/eugeniespics_bkgd.jpg');
+    background-size: cover;
     /* needed for footer absolute position */
     position: relative;
-}
-
-:root {
-    --site-tone: #e8dede;
-    --site-background: rgb(243, 243, 243);
-    --site-footer: #4e606e;
 }
 
 .container { width: 94% }
@@ -48,7 +41,9 @@ body {
 a.btn { color: white }
 
 .page-title {
-    font-size: 22px;
+    color: white;
+    text-shadow: 1px 1px 3px black;
+    font-size: 28px;
     margin: 1.2vh auto;
     font-family: ubuntu;
     text-decoration: overline;
@@ -56,16 +51,18 @@ a.btn { color: white }
 }
 
 .admin-page-title {
-    font-size: 22px;
+    font-size: 28px;
+    color: white;
+    text-shadow: 1px 1px 20px black;
     margin: 1.2vh auto;
 }
 
 @media screen and (max-width: 767px) and (min-width: 426px) {
-    .page-title, .admin-page-title {font-size: 19px}
+    .page-title, .admin-page-title {font-size: 22px}
 }
 
 @media screen and (max-width: 426px) {
-    .page-title, .admin-page-title {font-size: 16px}
+    .page-title, .admin-page-title {font-size: 18px}
 }
 
 
@@ -74,79 +71,90 @@ a.btn { color: white }
 
 #page-header {
     text-align: center;
-    /* the background image ratio needs to be 1:5 */
-    background-image: url('/TopBackgroundImg.jpg');
-    background-size: 100% auto;
-    height: calc(20vw - 3px);
+    height: 160px;
     padding: 0px 15px;
-    position: relative;
-    box-shadow: 0px 2px 20px;
+    position: sticky;
+    z-index: 2; /* needed for the dropdown menus to be above the page content when opened */
+    box-shadow: 1px 1px 30px;
 }
 
 a#home-link { text-decoration: none }
 
-#site-name {
-    color: black;
+#site-name, #site-name-2 {
     font-family: italiana;
-    font-size: 4em;
-    line-height: 9vw;
-    text-shadow: 1px 1px 2px rgb(197, 191, 191);
+    color: white;
+    text-shadow: 1px 1px 30px rgb(0, 0, 0);
+}
+
+#site-name {
+    font-size: 48px;
+    line-height: 80px;
 }
 
 #site-name-2 {
-    color: black;
-    font-family: italiana;
-    font-size: 1.5em;
-    margin-top: -3vw;
-    text-shadow: 1px 1px 1px white;
+    font-size: 16px;
+    margin-top: -25px;
 }
 
 div#menuitems {
     position: absolute;
-    left: 0; right: 0; bottom: 1.5vw;
+    left: 0; right: 0; bottom: 0;
 }
 
 a.btn.btn-default { color: black }
 
-#page-header a.btn.btn-default, 
-#page-header a.btn.btn-default:active,
-#page-header a.active.btn.btn-default,
+#page-header #menuitems #gallery_btn,
+#page-header #menuitems #about_button,
 #page-header #menuitems li {
     border: none;
+    border-radius: 0;
     box-shadow: none;
+    background: none;
     font-family: ubuntu;
     padding: 0.2vw 0.6vw;
     margin-left: 1.2vh;
     margin-right: 1.2vh;
-    background: rgba(255,255,255,0.7);
     font-size: 16px;
-    text-decoration: none;
     display: inline-block;
-    border-radius: 4px;
+    text-shadow: 1px 1px 20px black;
+    color: white; /* font-color */
 }
 
-/* Category name menu items font color should be black */
-#page-header #menuitems li a { color: black }
-
-/* when hovering over All galeries and Info menu items when the whole menu is visible */
-#menuitems a.btn.btn-default:hover, #menuitems li a:hover {
-    color: #abc1cc !important;
-}
-
-/* when hovering over categories names when the whole menu is visible */
-#menuitems li a:hover, #menuitems li a:focus {
+/* categories menu items */
+#page-header #menuitems li a {
+    color: white;
     background: none;
+    font-size: 16px;
     text-decoration: none;
     outline: 0;
 }
 
-/* active link (categories items) in menu items */
-#menuitems li.active a {
+/* All categories and About buttons hover */
+#page-header #menuitems #gallery_btn:hover,
+#page-header #menuitems #about_button:hover,
+#page-header #menuitems li:hover {
+    background-color: rgba(255,255,255,0.4);
+}
+
+#page-header #menuitems li a:hover {
+    background: none; /* prevent default black background on a:hover */
+}
+
+#page-header #gallery_btn.active,
+#page-header #about_button.active {
+    font-style: italic;
+    background-color: transparent !important;
+    cursor: default;
     text-decoration: overline;
 }
 
-/* active link buttons (All categories & Info) in menu items */
-#page-header a.active.btn.btn-default { 
+#page-header #menuitems li.active {
+    background-color: transparent;
+}
+
+#page-header #menuitems li.active a {
+    cursor: default;
+    font-style: italic;
     text-decoration: overline;
 }
 
@@ -173,51 +181,45 @@ a.btn.btn-default { color: black }
 /* Admin menu items */
 
 button#admin_dropdown {
-    background-color: rgba(204,215,230,0.3);
-    border: solid thin #cec5c5;
-    margin-left: 1.2vh;
+    color: white;
+    text-shadow: none;
+    background-color: rgba(0,0,0,0.2);
+    border: solid thin #929292;
     font-size: 16px;
     background-image: none;
 }
 
-#admin_dropdown:hover { color: #868585 }
-
-@media screen and (min-width: 768px) {
-    #page-header a.btn.btn-default, 
-    #page-header a.btn.btn-default:active,
-    #page-header a.active.btn.btn-default,
-    #page-header #menuitems li {
-        box-shadow: 1px 1px 5px grey;
-    }
-}
-
-@media screen and (max-width: 1199px) and (min-width: 768px) {
-    #page-header a.btn.btn-default, 
-    #page-header a.btn.btn-default:active,
-    #page-header a.active.btn.btn-default,
-    #page-header #menuitems li {
-        font-size: 14px;
-    }
-}
+#admin_dropdown:hover { background-color: rgba(255,255,255,0.3) }
 
 
-@media screen and (max-width: 767px) and (min-width: 426px) {
-    button#menuitems.visible-xs {
-        font-size: 6vw;
-        background: none;
-        box-shadow: 1px 1px 10px darkgrey;
-        padding: 10px 15px 0 15px;
-    }
-
-    #page-header { position: relative; }
-
-    #site-name { line-height: 14vw; font-size: 3em; }
-    #site-name-2 {margin-top: -1.7vw; font-size: 1.2em; }
+@media screen and (max-width: 768px) and (min-width: 426px) {
+    #page-header { height: 100px }
+    
+    #site-name { line-height: 80px; font-size: 36px; }
+    #site-name-2 {margin-top: -30px; font-size: 14px; }
 
     /* dropdown menu with categories */
     #page-header div.dropdown.btn-group:nth-of-type(2) {
         position: absolute;
-        top: 2vw; left: 2vw;
+        top: 20px; left: 15px;
+    }
+
+    button#menuitems.visible-xs,
+    button#menuitems.visible-xs:active,
+    button#menuitems.visible-xs:active {
+        font-size: 40px;
+        border: none;
+        background-color: rgba(255,255,255,0.25);
+        background-image: none;
+        box-shadow: 1px 1px 15px white;
+        text-shadow: none;
+        padding: 10px 14px 0 14px;
+    }
+
+    button#menuitems.visible-xs:hover,
+    button#menuitems.visible-xs:focus {
+        background-color: rgba(255,255,255,0.6);
+        border: solid thin white;
     }
 
     #page-header div.dropdown.btn-group:nth-of-type(2) a {
@@ -233,7 +235,7 @@ button#admin_dropdown {
 
     /* admin dropdown menu */
     #page-header div.dropdown.btn-group:nth-of-type(3) {
-        top: 2vw; right: 2vw;
+        top: 10px; right: 10px;
     }
 
     #page-header div.dropdown.btn-group:nth-of-type(3) #admin_dropdown {
@@ -259,27 +261,32 @@ button#admin_dropdown {
 
 
 @media screen and (max-width: 425px) {
-    button#menuitems.visible-xs {
-        font-size: 6vw;
-        background: none;
-        box-shadow: 1px 1px 10px darkgrey;
-        padding: 1.3vw 2.3vw 0 2.3vw;
-        border: solid thin #d2d2d2;
-    }
 
-    #page-header {
-        position: relative;
-        background-image: none;
-        background-color: var(--site-tone);
-    }
-
-    #site-name { line-height: 14vw; font-size: 9vw; }
-    #site-name-2 { margin-top: -5.2vw; font-size: 3.5vw; }
+    #page-header { height: 60px }
+    
+    #site-name { line-height: 45px; font-size: 26px; }
+    #site-name-2 {margin-top: -20px; font-size: 11px; }
 
     /* dropdown menu with categories */
     #page-header div.dropdown.btn-group:nth-of-type(2) {
         position: absolute;
-        top: 4vw; left: 2vw;
+        top: 10px; left: 10px;
+    }
+
+    button#menuitems.visible-xs {
+        font-size: 24px;
+        border: none;
+        background-color: rgba(255,255,255,0.25);
+        background-image: none;
+        box-shadow: 1px 1px 15px white;
+        text-shadow: none;
+        padding: 8px 12px 0 12px;
+    }
+
+    button#menuitems.visible-xs:hover,
+    button#menuitems.visible-xs:focus {
+        background-color: rgba(255,255,255,0.6);
+        border: solid thin white;
     }
 
     #page-header div.dropdown.btn-group:nth-of-type(2) a {
@@ -295,15 +302,15 @@ button#admin_dropdown {
 
     /* admin dropdown menu */
     #page-header div.dropdown.btn-group:nth-of-type(3) {
-        top: 3vw; right: 2vw;
+        top: 10px; right: 10px;
     }
 
     #page-header div.dropdown.btn-group:nth-of-type(3) #admin_dropdown {
         margin: 0;
         width: calc(6vw + 30px);
         text-align: center;
-        background-color: rgba(255,255,255,0.8);
-        font-size: 12px;
+        /* background-color: rgba(255,255,255,0.8); */
+        font-size: 11px;
         padding: 1px 3px;
         box-shadow: none;
     }
@@ -341,9 +348,12 @@ button#admin_dropdown {
     vertical-align: middle;
 }
 
+@media screen and (max-width: 768px) and (min-width: 426px) {
+    #footer p { font-size: 11px; }
+}
+
 @media screen and (max-width: 425px) {
-    #footer { background-color: var(--site-tone) }
-    #footer p { color: black }
+    #footer p { font-size: 10px }
 }
 
 /*********************************************************************/
@@ -435,11 +445,11 @@ div.notice.alert button.close {
     width: 58px;
     display: flex;
     position: absolute;
-    bottom: 10px;
-    right: 10px;
+    bottom: -20px;
+    right: 20px;
     padding: 3px 5px;
     border-radius: 3px;
-    box-shadow: 2px 2px 7px #fffdfd;
+    box-shadow: 1px 1px 20px #ededed;
     background-color: #3B5998;
     color: white;
     outline: 0;
@@ -457,4 +467,8 @@ div.notice.alert button.close {
 
 #fb_share_btn:hover {
     opacity: 0.9;
+}
+
+@media screen and (max-width: 768px) {
+    #fb_share_btn { right: 10px }
 }

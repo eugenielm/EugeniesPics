@@ -84,8 +84,8 @@ const CategoryComponent = props => {
     <Col md={4} sm={6} xs={6} id={"category_" + props.category.id}>
       <div className="cat_pic">
         <Link to={"/categories/" + props.category.id + "/pictures"}>
-          <p id="catname">{props.category.name}</p>
           <Image src={props.category.catpic_url} alt={props.category.name + "'s category'"} responsive />
+          <p className="catname">{props.category.name.toUpperCase()}</p>
         </Link>
         { props.user && props.user.superadmin ?
           <EditDeleteCategory cat_id={props.category.id} cat_name={props.category.name} /> : null }
@@ -113,7 +113,7 @@ class CategoriesIndex extends React.Component {
   
   render() {
     const new_cat_link = this.props.user && this.props.user.superadmin ?
-                          <Button style={{marginLeft: '10px', marginTop: '-2px', fontFamily: 'Arial, Helvetica, sans-serif', opacity: '0.75'}} 
+                          <Button style={{marginLeft: '10px', marginTop: '-7px', fontFamily: 'Arial, Helvetica, sans-serif', opacity: '0.75'}} 
                                   bsStyle="success" 
                                   bsSize="xsmall" 
                                   href="/categories/new">
@@ -122,7 +122,7 @@ class CategoriesIndex extends React.Component {
                           : null;
     return (
       <div id="categories-page">
-        <div className="page-title">Galleries{new_cat_link}</div>
+        <div className="page-title">ALL GALLERIES{new_cat_link}</div>
         <Grid>
           <Row id="all_categories" className="show-grid">
             { this.state.categories.map(c => <CategoryComponent user={this.props.user} key={c.id} category={c}/>) }

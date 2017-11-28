@@ -39,20 +39,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-}
-
-*[id^="category_"] #catname {
-    position: absolute;
-    display: block;
-    bottom: 20px; left: 0; right: 0;
-    z-index: 10;
-    background-color: rgba(245,245,245,0.6);
-    border-radius: 2px;
-    color: #444444;
-    width: 80%;
-    margin: auto;
-    font-family: ubuntu;
-    font-size: 1em;
+    opacity: 1;
+    -webkit-transition: opacity 0.2s linear 0s; /* For Safari 3.1 to 6.0 */
+    transition: opacity 0.2s linear 0s;
 }
 
 .cat_pic {
@@ -66,33 +55,39 @@
     position: relative;
 }
 
-.cat_pic:hover #catname {
-    opacity: 1;
+.cat_pic:hover a { text-decoration: none }
+
+.cat_pic:hover img {
+    opacity: 0.3;
+    -webkit-transition: opacity 0.3s linear 0s; /* For Safari 3.1 to 6.0 */
+    transition: opacity 0.3s linear 0s;
+}
+
+*[id^="category_"] .catname {
     color: black;
+    font-size: 22px;
+    font-family: ubuntu;
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    margin-bottom: 15px;
+    opacity: 0;
+    -webkit-transition: opacity 0.2s linear 0s; /* For Safari 3.1 to 6.0 */
+    transition: opacity 0.2s linear 0s;
 }
 
-// needed for the categories pictures shadow below
-*[id^="category_"] { z-index: 1 }
-
-.cat_pic:before, .cat_pic:after {
-	content:"";
-    position:absolute; 
-    z-index:-1;
-    box-shadow:0 0 15px rgba(0,0,0,0.7);
-    top:0;
-    bottom:0;
-    left:10px;
-    right:10px;
-    border-radius:100px / 10px;
+.cat_pic:hover .catname {
+    opacity: 1;
+    -webkit-transition: opacity 0.8s linear 0.1s; /* For Safari 3.1 to 6.0 */
+    transition: opacity 0.8s linear 0.1s;
 }
 
-.cat_pic:after {
-    right:10px; 
-    left:auto; 
-    transform:skew(8deg) rotate(3deg);
+@media screen and (max-width: 768px) {
+    .cat_pic:hover .catname {font-size: 18px}
 }
 
-.cat_pic:hover img { opacity: 0.8 }
+@media screen and (max-width: 425px) {
+    .cat_pic:hover .catname {font-size: 14px}
+}
 
 /* admin buttons to edit categories on the category index */
 #edit-delete-cat #cat_admin_overlay_btn {

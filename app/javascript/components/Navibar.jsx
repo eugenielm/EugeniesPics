@@ -94,11 +94,10 @@ class Navibar extends React.Component {
             
         </div>
 
-
         <DropdownButton noCaret id="menuitems" 
-                                          title={<span className="glyphicon glyphicon-menu-hamburger"></span>} 
-                                          open={this.state.open} onToggle={this.handleCollapse} 
-                                          className="visible-xs">
+                        title={<span className="glyphicon glyphicon-menu-hamburger"></span>} 
+                        open={this.state.open} onToggle={this.handleCollapse} 
+                        className="visible-xs">
       
           { this.state.path == '/categories' ?
             <MenuItem eventKey={1} href="/categories" active={true} id="gallery_btn">~ All galleries ~</MenuItem>
@@ -115,35 +114,34 @@ class Navibar extends React.Component {
                                                             cat_name={c.name} 
                                                             path={this.state.path} 
                                                             index={this.state.categories.indexOf(c)} />) }
-          
-          </DropdownButton>
+        </DropdownButton>
 
-          {this.props.user && this.props.user.superadmin ? 
-            <DropdownButton id="admin_dropdown" 
-                            title="Admin" 
-                            open={this.state.openAdmin} 
-                            onToggle={this.handleCollapseAdmin}
-                            pullRight>
-              <IndexLinkContainer to='/languages'>
-                <MenuItem eventKey={(numberOfCategories + 2).toString() + '.1'}>languages</MenuItem>
-              </IndexLinkContainer>
-              <IndexLinkContainer to='/presentations'>
-                <MenuItem eventKey={(numberOfCategories + 2).toString() + '.2'}>presentations</MenuItem>
-              </IndexLinkContainer>
-              <IndexLinkContainer to='/users'>
-                <MenuItem eventKey={(numberOfCategories + 2).toString() + '.3'}>users</MenuItem>
-              </IndexLinkContainer>
-              <MenuItem divider style={{padding: '1px'}} />
-              <IndexLinkContainer to="/logout" data-method="delete">
-                <MenuItem eventKey={(numberOfCategories + 2).toString() + '.4'}>log out</MenuItem>
-              </IndexLinkContainer>
-            </DropdownButton>
-            
-            : null}
+        {this.props.user && this.props.user.superadmin ? 
+          <DropdownButton id="admin_dropdown" 
+                          title="Admin" 
+                          open={this.state.openAdmin} 
+                          onToggle={this.handleCollapseAdmin}
+                          pullRight>
+            <IndexLinkContainer to='/languages'>
+              <MenuItem eventKey={(numberOfCategories + 2).toString() + '.1'}>languages</MenuItem>
+            </IndexLinkContainer>
+            <IndexLinkContainer to='/presentations'>
+              <MenuItem eventKey={(numberOfCategories + 2).toString() + '.2'}>presentations</MenuItem>
+            </IndexLinkContainer>
+            <IndexLinkContainer to='/users'>
+              <MenuItem eventKey={(numberOfCategories + 2).toString() + '.3'}>users</MenuItem>
+            </IndexLinkContainer>
+            <MenuItem divider style={{padding: '1px'}} />
+            <IndexLinkContainer to="/logout" data-method="delete">
+              <MenuItem eventKey={(numberOfCategories + 2).toString() + '.4'}>log out</MenuItem>
+            </IndexLinkContainer>
+          </DropdownButton>
+          
+        : null}
 
         <button id="fb_share_btn" onClick={this.triggerShareDialog}>
-            <i className="fa fa-facebook-official"></i>
-            <span>Share</span>
+          <i className="fa fa-facebook-official"></i>
+          <span>Share</span>
         </button>
                   
         { this.props.user && !this.props.user.superadmin ?
@@ -152,7 +150,8 @@ class Navibar extends React.Component {
                   bsSize="xsmall" 
                   data-method="delete" 
                   href="/logout">Log out</Button>
-          : null }
+        : null }
+      
       </div>
     )
   }

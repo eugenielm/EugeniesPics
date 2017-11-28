@@ -2,79 +2,69 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-/* Home / index page */
 
-#home-page {
-    position: relative;
-    text-align: center;
-    width: 98%;
-    margin: 0 auto 0 auto;
-    height: 100%;
-    /* needed for proper footer layout */
-    padding-bottom: 40px;
+/* Home page carousel */
+
+#home-page div.carousel.slide {
+    width: 96vw;
+    /* Home page header height is 130px, home page footer height is 30px, plus some margin */
+    height: calc(100vh - 300px);
+    margin: 50px auto;
 }
 
-div.carousel.slide {
-    width: 100vh;
-    height: 50vh;
-    max-width: 94%;
-    max-height: 100vw;
-    /* Navigation bar has a height of 20vw */
-    margin: calc((45vh - 20vw)/2) auto 0 auto;
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 5px 5px 12px darkgrey;
+@media screen and (max-width: 425px) {
+    #home-page div.carousel.slide {
+        height: 155vw;
+        margin: calc((100vh - 155vw - 160px)/2) auto;
+    }
 }
 
-div.carousel.slide div.carousel-inner {
+#home-page div.carousel.slide div.carousel-inner {
     height: 100%;
     width: 100%;
 }
 
-div.carousel.slide div.carousel-inner div.item {
+#home-page div.carousel.slide div.carousel-inner div.item {
     height: 100%;
     width: 100%;
     position: relative;
 }
 
-div.carousel.slide div.carousel-inner div.item img {
-    max-width: 94%;
-    max-height: 94%;
+#home-page div.carousel.slide div.carousel-inner div.item img {
+    max-width: 100%;
+    max-height: 100%;
     position: absolute;
     left: 50%;
     top: 50%;
     -webkit-transform: translateY(-50%) translateX(-50%);
-    box-shadow: 5px 5px 12px darkgrey;
 }
 
-div.carousel.slide div.carousel-inner div.item div.carousel-caption p {
+#home-page div.carousel.slide div.carousel-inner div.item div.carousel-caption p {
     font-family: ubuntu;
     font-size: 1.2em;
-    background: rgba(0, 0, 0, 0.3);
-    display: inline-block;
+    display: inline;
     margin: auto;
-    padding: 3px 8px;
+    padding: 3px 8px 5px 8px;
+    border-radius: 25px;
+    text-shadow: 1px 1px 15px black;
 }
 
-a.carousel-control {
+#home-page a.carousel-control {
     background: none !important;
     color: white;
     opacity: .9;
 }
 
-a.carousel-control:hover {
-    background-color: none;
-}
+#home-page a.carousel-control:hover { background-color: none }
 
-a.carousel-control:hover span.glyphicon {
+#home-page a.carousel-control:hover span.glyphicon {
     text-shadow: 3px 3px 10px black;
 }
 
-ol.carousel-indicators li {
-    border-color: #797979;
-}
+#home-page ol.carousel-indicators { bottom: 0 }
+#home-page ol.carousel-indicators li { background-color: white; border-color: rgb(93, 93, 93); }
+#home-page ol.carousel-indicators li.active { background-color: black; border-color: white; }
 
-ol.carousel-indicators li.active { background-color: #797979 }
 
 /*********************************************************************/
 /* about/contact page */

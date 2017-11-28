@@ -82,7 +82,7 @@ class Languages extends React.Component {
                                       <span className="glyphicon glyphicon-plus"></span>
                                   </Button>
             </div>
-            <Table striped bordered condensed hover id="language-table">
+            <Table bordered condensed hover id="language-table">
               <thead>
                 <tr>
                     <th style={{ textAlign: "center" }}>ID</th>

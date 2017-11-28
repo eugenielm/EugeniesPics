@@ -25,15 +25,16 @@ class HomePage extends React.Component {
 
                 {this.state.picsSelection.length > 0 ?
                     (<Carousel>
-                        {this.state.picsSelection.map(p => (<Carousel.Item key={p.selectionPicCatId ? p.selectionPicCatId : 0}>
-                                                                <Link to={"/categories/" + p.selectionPicCatId + "/pictures"}>
-                                                                    <img src={p.selectionPicUrl}
-                                                                         alt={p.selectionPicCatName ? p.selectionPicCatName : 'no gallery available'} />
-                                                                </Link>
-                                                                <Carousel.Caption>
-                                                                    <p>{p.selectionPicCatName ? p.selectionPicCatName + " gallery" : 'no gallery yet'}</p>
-                                                                </Carousel.Caption>
-                                                            </Carousel.Item>)
+                        {this.state.picsSelection.map(p => 
+                            (<Carousel.Item key={p.selectionPicCatId ? p.selectionPicCatId : 0}>
+                                <Link to={"/categories/" + p.selectionPicCatId + "/pictures"}>
+                                    <img src={p.selectionPicUrl}
+                                            alt={p.selectionPicCatName ? p.selectionPicCatName : 'no gallery available'} />
+                                </Link>
+                                <Carousel.Caption>
+                                    <p>{p.selectionPicCatName ? p.selectionPicCatName + " gallery" : 'no gallery yet'}</p>
+                                </Carousel.Caption>
+                            </Carousel.Item>)
                         )}
                     </Carousel>)
                     : null

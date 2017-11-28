@@ -82,7 +82,7 @@ class UsersIndex extends React.Component {
                 </div>
                 <br/>
 
-                <Table striped bordered condensed hover responsive>
+                <Table bordered condensed hover responsive id="users_table">
                     <thead>
                         <tr>
                             <th>Username</th>
