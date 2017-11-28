@@ -36,9 +36,9 @@ class PictureContent extends React.Component {
                         style={{marginLeft: 5 + 'px'}}>
                     <span className="glyphicon glyphicon-trash"></span>
                 </Button>
-                <Modal show={this.state.displayDeleteModal} style={{padding: '15px'}}>
+                <Modal show={this.state.displayDeleteModal}>
                     <Modal.Body>
-                        <div style={{margin: '20px'}}>
+                        <div className="confirm_delete_modal">
                             Are you sure you want to destroy the {this.props.pic_description.language_name} description 
                             of {this.props.picture_title}?
                             <br/><br/>
@@ -183,7 +183,7 @@ class PictureForm extends React.Component {
                 <input name="utf8" type="hidden" value="✓" />
                 <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />
                 {input_edit}
-                <Table striped bordered responsive>
+                <Table bordered condensed hover responsive id="picture_form_table">
                     <tbody>
                         <tr>
                             <td><label htmlFor="choose-cat">Category</label></td>
@@ -232,7 +232,7 @@ class PictureForm extends React.Component {
                        acceptCharset="UTF-8" onSubmit={this.handleSubmit} style={{marginTop: '20px'}} >
                     <input name="utf8" type="hidden" value="✓" />
                     <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />                            
-                    <Table responsive bordered>
+                    <Table responsive bordered id="picture_form_table">
                         <tbody>
                             <tr>
                                 <td><label htmlFor="choose-cat">Category</label></td>

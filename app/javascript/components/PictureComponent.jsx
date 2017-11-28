@@ -26,7 +26,7 @@ const PicAdminActionsElement = (props) => {
     return (
         <Popover id="pic_popover_admin_actions"
                  title="Actions on this picture"
-                 style={{zIndex: 0, textAlign: 'center'}}
+                 style={{zIndex: 1, textAlign: 'center'}}
                  positionLeft={props.positionLeft} 
                  positionTop={props.positionTop}
                  placement="right">
@@ -60,10 +60,9 @@ class EditDeletePicture extends React.Component {
                     </Button>
                 </OverlayTrigger>
 
-                <Modal show={this.state.displayDelePicteModal}
-                    style={{padding: '15px', top: '30vh'}}>
+                <Modal show={this.state.displayDelePicteModal}>
                     <Modal.Body>
-                        <div style={{margin: '20px'}}>
+                        <div className="confirm_delete_modal">
                             Are you sure you want to destroy '{this.props.pic_title}'?
                             <br/><br/>
                             <Button bsStyle="danger" 
@@ -150,7 +149,7 @@ class PictureComponent extends React.Component {
                     <Modal.Header>
                         <Link to={'/categories/' + this.props.category_id + '/pictures'} id="close_button">X</Link>
                         <Modal.Title id="contained-modal-title-lg">
-                            <span>{this.props.categoryName} / "{this.props.currentPicture.title}"</span>
+                            <span>{this.props.currentPicture.title}</span>
                         </Modal.Title>
                     </Modal.Header>
                     

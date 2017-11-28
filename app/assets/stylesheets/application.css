@@ -399,6 +399,12 @@ div.form-layout table td label { margin: 0 }
 
 div.form-layout table td input { width: 100% }
 
+#picture_form_table tbody,
+#category_form_table tbody {
+    background-color: white;
+    border: solid thick white;
+    opacity: 0.9;
+}
 
 /*********************************************************************/
 /* notices (Rails flash layout) */
@@ -416,6 +422,18 @@ div.notice.alert {
 div.notice.alert button.close {
     top: -8px;
     right: -5px;
+}
+
+
+/*********************************************************************/
+/* Deletion confirmation modal */
+
+.confirm_delete_modal {
+    padding: 20px;
+    z-index: 2;
+    background-color: white;
+    opacity: 0.9;
+    margin-top: 10vh;
 }
 
 

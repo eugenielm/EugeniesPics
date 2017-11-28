@@ -21,10 +21,9 @@ class EditDeletePresentation extends React.Component {
             <span className="glyphicon glyphicon-trash"></span>
         </Button>
 
-        <Modal show={this.state.displayDeleteModal}
-            style={{padding: '15px', marginTop: '30vh'}}>
+        <Modal show={this.state.displayDeleteModal}>
             <Modal.Body>
-                <div style={{margin: '20px'}}>
+                <div className="confirm_delete_modal">
                     Are you sure you want to destroy {this.props.pres_lang} presentation?
                     <br/><br/>
                     <Button bsStyle="danger" 

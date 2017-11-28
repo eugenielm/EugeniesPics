@@ -28,7 +28,7 @@ const CatAdminActionsElement = (props) => {
     return (
         <Popover id="cat_popover_admin_actions"
                  title="Actions on this category"
-                 style={{zIndex: 0, textAlign: 'center'}}
+                 style={{zIndex: 2, textAlign: 'center'}}
                  positionLeft={props.positionLeft} 
                  positionTop={props.positionTop}
                  placement="right">
@@ -147,10 +147,9 @@ class PicturesIndex extends React.Component {
                     : null
                 }
 
-                <Modal show={this.state.displayDeleteModal}
-                       style={{padding: '15px', top: '30vh'}}>
+                <Modal show={this.state.displayDeleteModal}>
                     <Modal.Body>
-                        <div style={{margin: '20px'}}>
+                        <div className="confirm_delete_modal">
                             Are you sure you want to destroy '{this.state.categoryName}' category?
                             <br/><br/>
                             <Button bsStyle="danger" 
@@ -197,7 +196,6 @@ class PicturesIndex extends React.Component {
                                                             nextPicture={(this.state.pictures.indexOf(pic) == this.state.pictures.length -1)
                                                                         ? this.state.pictures[0]
                                                                         : this.state.pictures[this.state.pictures.indexOf(pic) + 1]}
-                                                            categoryName={this.state.categoryName}
                                                             category_id={this.props.match.params.category_id}
                                                             picture_id={this.props.match.params.picture_id}
                                                             language={this.state.language}

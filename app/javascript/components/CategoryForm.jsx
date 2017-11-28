@@ -31,9 +31,9 @@ class CategoryContent extends React.Component {
                         style={{marginLeft: 5 + 'px'}}>
                     <span className="glyphicon glyphicon-trash"></span>
                 </Button>
-                <Modal show={this.state.displayDeleteModal} style={{padding: '15px'}}>
+                <Modal show={this.state.displayDeleteModal}>
                     <Modal.Body>
-                        <div style={{margin: '20px'}}>
+                        <div className="confirm_delete_modal">
                             Are you sure you want to destroy the {this.props.cat_description.language_name} description 
                             of {this.props.category_name}?
                             <br/><br/>
@@ -138,7 +138,7 @@ class CategoryForm extends React.Component {
                                 <input name="utf8" type="hidden" value="✓" />
                                 <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />
                                 {input_edit}
-                                <Table striped bordered responsive>
+                                <Table bordered condensed hover responsive id="category_form_table">
                                     <tbody>
                                         <tr>
                                             <td><label htmlFor="category_name">Name</label></td>
@@ -174,7 +174,7 @@ class CategoryForm extends React.Component {
                                        method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
                                     <input name="utf8" type="hidden" value="✓" />
                                     <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />                            
-                                    <Table responsive bordered>
+                                    <Table responsive bordered id="category_form_table">
                                         <tbody>
                                             <tr>
                                                 <td><label htmlFor="category_name">Category name</label></td>
