@@ -16,6 +16,7 @@ class CategoryContent extends React.Component {
                      positionLeft={this.props.positionLeft} 
                      positionTop={this.props.positionTop} 
                      placement="bottom" 
+                     style={{textAlign: 'center'}}
                      title={this.props.cat_description.language_name + " description"}>
                 {sentences.map((s, index) => <p key={index}>{s}</p>)}
                 <Button bsStyle="primary" 
@@ -28,7 +29,7 @@ class CategoryContent extends React.Component {
                 <Button bsStyle="danger" 
                         bsSize="xsmall"
                         onClick={() => this.setState({displayDeleteModal: true})}
-                        style={{marginLeft: 5 + 'px'}}>
+                        style={{marginLeft: '30px'}}>
                     <span className="glyphicon glyphicon-trash"></span>
                 </Button>
                 <Modal show={this.state.displayDeleteModal}>
@@ -138,7 +139,7 @@ class CategoryForm extends React.Component {
                                 <input name="utf8" type="hidden" value="✓" />
                                 <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />
                                 {input_edit}
-                                <Table bordered condensed responsive id="category_form_table">
+                                <Table bordered id="category_form_table">
                                     <tbody>
                                         <tr>
                                             <td><label htmlFor="category_name">Name</label></td>

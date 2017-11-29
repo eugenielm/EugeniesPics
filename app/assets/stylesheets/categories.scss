@@ -16,15 +16,17 @@
 
 .cat_pic {
     position: relative;
-    height: calc(33.33% - 20px);
-    width: calc(33.33% - 20px);
-    margin-bottom: 5px;
-    background-color: black
+    width: 32.8%;
+    margin-bottom: 6px;
 }
 
 .cat_pic img {
     height: 100%;
     width: 100%;
+}
+
+.cat_pic:hover {
+    background-color: black;
 }
 
 .cat_pic:hover a {
@@ -40,9 +42,9 @@
 
 .catname {
     color: white;
-    font-size: 30px;
+    font-size: 40px;
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-weight: lighter;
+    font-weight: 300;
     letter-spacing: 0.5px;
     position: absolute;
     left: 0; right: 0; top: 50%;
@@ -60,23 +62,19 @@
 
 
 
-@media screen and (max-width: 1200px) and (min-width: 769px) {
-    #all_cats div:nth-child(odd) {
-        height: calc(50% - 15px);
-        width: calc(50% - 15px);
+@media screen and (max-width: 1500px) and (min-width: 993px) {
+    .cat_pic {
+        width: 49.3%;
     }
-    #all_cats div:nth-child(even) {
-        height: calc(50% - 15px);
-        width: calc(50% - 15px);
+}
+
+@media screen and (max-width: 992px) {
+    .cat_pic {
+        width: calc(100% - 12px);
     }
 }
 
 @media screen and (max-width: 768px) {
-    #all_cats div {
-        height: calc(100% - 12px);
-        width: calc(100% - 12px);
-    }
-
     .catname {
         opacity: 1;
         font-size: 36px;
@@ -86,7 +84,7 @@
 @media screen and (max-width: 425px) {
     .catname {
         opacity: 1;
-        font-size: 26px;
+        font-size: 30px;
     }
 }
 

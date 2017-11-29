@@ -88,7 +88,7 @@ class PresentationForm extends React.Component {
                     <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />
                     {input_edit}
                     
-                    <Table responsive striped bordered>
+                    <Table responsive bordered striped id="presentation_form_table">
                         <tbody>
                             <tr>
                                 <td><label htmlFor="choose-language">Language</label>{newLangLink}</td>

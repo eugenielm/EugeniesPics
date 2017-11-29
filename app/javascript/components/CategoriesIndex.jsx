@@ -60,7 +60,7 @@ class EditDeleteCategory extends React.Component {
         <Modal show={this.state.displayDeleteModal}
                style={{padding: '15px', marginTop: '30vh'}}>
             <Modal.Body>
-                <div style={{margin: '20px'}}>
+                <div className="confirm_delete_modal">
                     Are you sure you want to destroy the '{this.props.cat_name}' category?
                     <br/><br/>
                     <Button bsStyle="danger" 
@@ -111,7 +111,7 @@ class CategoriesIndex extends React.Component {
   
   render() {
     const new_cat_link = this.props.user && this.props.user.superadmin ?
-                          <Button style={{marginLeft: '10px', marginTop: '-7px', fontFamily: 'Arial, Helvetica, sans-serif', opacity: '0.75'}} 
+                          <Button style={{marginLeft: '10px', marginTop: '-7px', opacity: '0.75'}} 
                                   bsStyle="success" 
                                   bsSize="xsmall" 
                                   href="/categories/new">
@@ -120,7 +120,7 @@ class CategoriesIndex extends React.Component {
                           : null;
     return (
       <div id="categories-page">
-        <div className="page-title">ALL GALLERIES{new_cat_link}</div>
+        <div className="page-title">All galleries{new_cat_link}</div>
           <div id="all_cats">
             { this.state.categories.map(c => <CategoryComponent user={this.props.user} key={c.id} category={c}/>) }
           </div>

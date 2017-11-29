@@ -121,7 +121,7 @@ class Navibar extends React.Component {
                           title="Admin" 
                           open={this.state.openAdmin} 
                           onToggle={this.handleCollapseAdmin}
-                          pullRight>
+                          pullRight noCaret>
             <IndexLinkContainer to='/languages'>
               <MenuItem eventKey={(numberOfCategories + 2).toString() + '.1'}>languages</MenuItem>
             </IndexLinkContainer>

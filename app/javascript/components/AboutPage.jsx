@@ -119,7 +119,7 @@ class AboutPage extends React.Component {
                     {this.state.presentationContent.map((s, index) => <p key={index}>{s}</p>)}
                 </div>
                 <div id="contact_me">
-                    <Button id="contact_btn" bsSize="small"
+                    <Button id="contact_btn" bsSize="medium"
                             onClick={() => this.setState({ panelOpen: !this.state.panelOpen })}>
                         Contact me
                     </Button>

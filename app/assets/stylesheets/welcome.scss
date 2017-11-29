@@ -24,9 +24,9 @@
 
 #home-page div.carousel.slide {
     width: 96vw;
-    height: 90%;
+    height: 85%;
     max-height: 120vw;
-    margin: 4% auto 0 auto;
+    margin: 2% auto 0 auto;
 }
 
 @media screen and (max-width: 425px) {
@@ -58,14 +58,14 @@
 
 #home-page div.carousel.slide div.carousel-inner div.item div.carousel-caption p {
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-weight: lighter;
-    letter-spacing: 0.4px;
-    font-size: 1.5em;
+    font-weight: 300;
+    letter-spacing: 0.6px;
+    font-size: 2em;
     display: inline;
     margin: auto;
     padding: 3px 8px 5px 8px;
     border-radius: 25px;
-    text-shadow: 1px 2px 2px black;
+    text-shadow: 1px 1px 5px black;
 }
 
 #home-page a.carousel-control {
@@ -84,6 +84,11 @@
 #home-page ol.carousel-indicators li { background-color: white; border-color: rgb(93, 93, 93); }
 #home-page ol.carousel-indicators li.active { background-color: black; border-color: white; }
 
+@media screen and (max-width: 425px) {
+    #home-page div.carousel.slide div.carousel-inner div.item div.carousel-caption p {
+        font-size: 1.5em;
+    }
+}
 
 /*********************************************************************/
 /* about/contact page */
@@ -106,7 +111,10 @@
 
 #about_presentation p {
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-weight: 300;
     font-size: 16px;
+    line-height: 20px;
+    text-align: justify;
 }
 
 @media screen and (max-width: 767px) and (min-width: 426px) {
@@ -153,7 +161,8 @@ button.lang_btns.active, button.lang_btns.active:hover {
 #contact_me div.panel-body { padding: 10px }
 
 #contact_btn {
-    font-family: verdana, arial, helvetica, sans-serif;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-weight: 300;
     outline: none;
 }
 

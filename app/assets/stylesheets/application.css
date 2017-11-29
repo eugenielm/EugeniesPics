@@ -43,9 +43,9 @@ a.btn { color: white }
 .page-title {
     color: white;
     text-shadow: 1px 1px 3px black;
-    font-size: 28px;
+    font-size: 30px;
     margin: 1.2vh auto;
-    font-family: ubuntu;
+    font-family: Italiana;
     text-decoration: overline;
     display: inline-block;
 }
@@ -58,11 +58,11 @@ a.btn { color: white }
 }
 
 @media screen and (max-width: 767px) and (min-width: 426px) {
-    .page-title, .admin-page-title {font-size: 22px}
+    .page-title, .admin-page-title {font-size: 24px}
 }
 
 @media screen and (max-width: 426px) {
-    .page-title, .admin-page-title {font-size: 18px}
+    .page-title, .admin-page-title {font-size: 20px}
 }
 
 
@@ -98,7 +98,7 @@ a#home-link { text-decoration: none }
 
 div#menuitems {
     position: absolute;
-    left: 0; right: 0; bottom: 0;
+    left: 0; right: 0; bottom: 10px;
 }
 
 a.btn.btn-default { color: black }
@@ -120,9 +120,9 @@ a.btn.btn-default { color: black }
     padding: 0.2vw 0.6vw;
     margin-left: 1.2vh;
     margin-right: 1.2vh;
-    font-size: 16px;
+    font-size: 18px;
     display: inline-block;
-    text-shadow: 1px 1px 20px black;
+    text-shadow: 1px 1px 30px black;
     color: white; /* font-color */
 }
 
@@ -130,7 +130,6 @@ a.btn.btn-default { color: black }
 #page-header #menuitems li a {
     color: white;
     background: none;
-    font-size: 16px;
     text-decoration: none;
     outline: 0;
 }
@@ -194,6 +193,7 @@ button#admin_dropdown {
     border: solid thin #929292;
     font-size: 16px;
     background-image: none;
+    padding: 8px;
 }
 
 #admin_dropdown:hover { background-color: rgba(255,255,255,0.3) }
@@ -203,7 +203,7 @@ button#admin_dropdown {
     #page-header { height: 100px }
     
     #site-name { line-height: 80px; font-size: 36px; }
-    #site-name-2 {margin-top: -30px; font-size: 14px; }
+    #site-name-2 {margin-top: -30px; font-size: 15px; }
 
     /* dropdown menu with categories */
     #page-header div.dropdown.btn-group:nth-of-type(2) {
@@ -241,18 +241,15 @@ button#admin_dropdown {
         color: darkgray;
     }
 
-    /* admin dropdown menu */
+    /* admin dropdown menu centered vertically */
     #page-header div.dropdown.btn-group:nth-of-type(3) {
-        top: 10px; right: 10px;
+        top: 32px; right: 10px;
     }
 
     #page-header div.dropdown.btn-group:nth-of-type(3) #admin_dropdown {
         margin: 0;
-        width: calc(6vw + 30px);
         text-align: center;
         font-size: 14px;
-        padding: 2px 4px;
-
     }
 
     #page-header div.dropdown.btn-group:nth-of-type(3) li a {
@@ -273,8 +270,8 @@ button#admin_dropdown {
 
     #page-header { height: 60px }
     
-    #site-name { line-height: 45px; font-size: 26px; }
-    #site-name-2 {margin-top: -20px; font-size: 11px; }
+    #site-name { line-height: 45px; font-size: 7.5vw; }
+    #site-name-2 {margin-top: -20px; font-size: 3.2vw; }
 
     /* dropdown menu with categories */
     #page-header div.dropdown.btn-group:nth-of-type(2) {
@@ -312,16 +309,14 @@ button#admin_dropdown {
 
     /* admin dropdown menu */
     #page-header div.dropdown.btn-group:nth-of-type(3) {
-        top: 10px; right: 10px;
+        top: 16px; right: 10px;
     }
 
     #page-header div.dropdown.btn-group:nth-of-type(3) #admin_dropdown {
         margin: 0;
-        width: calc(6vw + 30px);
+        padding: 6px;
         text-align: center;
-        /* background-color: rgba(255,255,255,0.8); */
         font-size: 11px;
-        padding: 1px 3px;
         box-shadow: none;
     }
 
@@ -354,18 +349,18 @@ button#admin_dropdown {
 #footer p {
     color: white;
     text-shadow: 1px 1px 1px black;
-    font-size: 12px;
+    font-size: 13px;
     font-family: ubuntu;
     display: table-cell;
     vertical-align: middle;
 }
 
 @media screen and (max-width: 768px) and (min-width: 426px) {
-    #footer p { font-size: 11px; }
+    #footer p { font-size: 12px; }
 }
 
 @media screen and (max-width: 425px) {
-    #footer p { font-size: 10px }
+    #footer p { font-size: 11px }
 }
 
 /*********************************************************************/
@@ -417,7 +412,8 @@ div.form-layout table td input { width: 100% }
 #picdescription_form_table tbody,
 #language_form_table tbody,
 #user_form_table tbody,
-#user_details_table tbody {
+#user_details_table tbody,
+#presentation_form_table tbody {
     background-color: white;
     border: solid thick white;
     opacity: 0.9;
@@ -429,7 +425,7 @@ div.form-layout table td input { width: 100% }
 div.notice.alert {
     min-width: 150px;
     max-width: 80%;
-    padding: 5px;
+    padding: 15px;
     position: fixed;
     top: 3vh;
     right: 3vh;

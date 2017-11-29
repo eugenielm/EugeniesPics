@@ -20,6 +20,7 @@ class PictureContent extends React.Component {
                      positionLeft={this.props.positionLeft} 
                      positionTop={this.props.positionTop} 
                      placement="bottom" 
+                     style={{textAlign: 'center'}}
                      title={this.props.pic_description.language_name + " description"}>
                 {sentences.map((s, index) => <p key={index}>{s}</p>)}
                 <Button bsStyle="primary" 
@@ -33,7 +34,7 @@ class PictureContent extends React.Component {
                 <Button bsStyle="danger" 
                         bsSize="xsmall"
                         onClick={() => this.setState({displayDeleteModal: true})}
-                        style={{marginLeft: 5 + 'px'}}>
+                        style={{marginLeft: '30px'}}>
                     <span className="glyphicon glyphicon-trash"></span>
                 </Button>
                 <Modal show={this.state.displayDeleteModal}>
@@ -49,7 +50,6 @@ class PictureContent extends React.Component {
                                         + "/pictures/" + this.props.picture_id
                                         + "/pic_descriptions/" + this.props.pic_description.description_id}
                                     data-method="delete"
-                                    style={{marginLeft: '5px'}}
                                     >Yes
                             </Button>
                             <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
@@ -162,9 +162,10 @@ class PictureForm extends React.Component {
                             ("/categories/" + (this.state.category_id) + "/pictures");
         
         const descriptions_popovers = this.state.pic_descriptions.map((d, index) => 
-            (<OverlayTrigger key={index} trigger="click" 
+            (<OverlayTrigger key={index}
+                             trigger="click" 
                              placement="bottom"
-                             overlay={<PictureContent {...this.props} 
+                             overlay={<PictureContent {...this.props}
                                                       pic_description={d} 
                                                       picture_title={this.state.picture_title}
                                                       category_id={this.state.category_id}
@@ -187,7 +188,7 @@ class PictureForm extends React.Component {
                 <input name="utf8" type="hidden" value="✓" />
                 <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />
                 {input_edit}
-                <Table bordered condensed responsive id="picture_form_table">
+                <Table bordered id="picture_form_table">
                     <tbody>
                         <tr>
                             <td><label htmlFor="choose-cat">Category</label></td>
@@ -273,7 +274,7 @@ class PictureForm extends React.Component {
             <div className="form-layout" style={{display: this.state.display}}>
                 <div className="admin-page-title">{ this.state.picture_id ? ("Edit '" + this.state.picture_title + "'") : "New picture"} 
                     <Button bsStyle="primary" bsSize="xsmall" className="back-link" 
-                            href={"/categories/" + this.props.match.params.category_id + "/pictures"} style={{marginLeft: 5 + 'px'}}>
+                            href={"/categories/" + this.props.match.params.category_id + "/pictures"} style={{marginLeft: '5px'}}>
                         <span className="glyphicon glyphicon-arrow-left"></span>
                     </Button>
                 </div>
