@@ -118,8 +118,8 @@ class CategoryForm extends React.Component {
     render() {
         const input_edit = React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'});
         const catpic_info = this.state.catpic_url == this.state.prev_catpic_url ? 
-                                (<div><p>Current picture:</p><img src={this.state.catpic_url} /></div>)
-                                : (<p>Picture about to be uploaded: {this.state.catpic_name}</p>);
+                                (<div><p style={{color: 'white'}}>Current picture:</p><img src={this.state.catpic_url} /></div>)
+                                : (<p style={{color: 'white'}}>Picture about to be uploaded: {this.state.catpic_name}</p>);
 
         const descriptions_popovers = this.state.cat_descriptions.map((d, index) => 
                                         (<OverlayTrigger key={index} trigger="click" 
@@ -138,7 +138,7 @@ class CategoryForm extends React.Component {
                                 <input name="utf8" type="hidden" value="✓" />
                                 <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />
                                 {input_edit}
-                                <Table bordered condensed hover responsive id="category_form_table">
+                                <Table bordered condensed responsive id="category_form_table">
                                     <tbody>
                                         <tr>
                                             <td><label htmlFor="category_name">Name</label></td>

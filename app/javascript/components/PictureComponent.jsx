@@ -134,80 +134,82 @@ class PictureComponent extends React.Component {
         const descriptionsLength = Object.entries(this.props.currentPicture.descriptions).length;
         
         return (
-            <Col lg={3} md={4} sm={6} xs={6} className="picture-element">
-            <div className="picture_pic">
-                <Link onClick={() => {this.setState({showModal: true})}} 
-                      to={'/categories/' + this.props.category_id + '/pictures/' + this.props.currentPicture.id.toString()}>
-                    <Image src={this.props.currentPicture.pic_url_small} alt={this.props.currentPicture.title} responsive />
-                </Link>
-                
-                <Modal className="picture_modal"
-                       show={this.state.showModal}
-                       dialogClassName="custom-modal"
-                       animation={false}
-                >
-                    <Modal.Header>
-                        <Link to={'/categories/' + this.props.category_id + '/pictures'} id="close_button">X</Link>
-                        <Modal.Title id="contained-modal-title-lg">
-                            <span>{this.props.currentPicture.title}</span>
-                        </Modal.Title>
-                    </Modal.Header>
+            <Col lg={4} md={6} sm={6} xs={6} className="picture-element">
+                <div className="picture_pic">
+                    <Link onClick={() => {this.setState({showModal: true})}} 
+                          to={'/categories/' + this.props.category_id + '/pictures/' + this.props.currentPicture.id.toString()}>
+                        <Image src={this.props.currentPicture.pic_url_small} alt={this.props.currentPicture.title}/>
+                        <p>{this.props.currentPicture.title}</p>
+                        <p>(c) {this.props.currentPicture.author} - all rights reserved</p>
+                    </Link>
                     
-                    <Modal.Body>
-                        <Link className="prev-pic" 
-                              to={'/categories/' + this.props.category_id + '/pictures/' + this.props.prevPicture.id}>
-                            <span id="chevron-left" className="glyphicon glyphicon-menu-left"></span>
-                        </Link>
+                    <Modal className="picture_modal"
+                        show={this.state.showModal}
+                        dialogClassName="custom-modal"
+                        animation={false}
+                    >
+                        <Modal.Header>
+                            <Link to={'/categories/' + this.props.category_id + '/pictures'} id="close_button">X</Link>
+                            <Modal.Title id="contained-modal-title-lg">
+                                <span>{this.props.currentPicture.title}</span>
+                            </Modal.Title>
+                        </Modal.Header>
                         
-                            {(this.state.showModal && !this.state.showDescription && descriptionsLength > 0) ?
-                                
-                                <OverlayTrigger placement="bottom" overlay={tooltip}>
-                                    <Image src={this.props.currentPicture.pic_url_medium}
-                                           alt={this.props.currentPicture.title}
-                                           onClick={this.props.showPicDescription}
-                                           responsive />
-                                </OverlayTrigger>
+                        <Modal.Body>
+                            <Link className="prev-pic" 
+                                to={'/categories/' + this.props.category_id + '/pictures/' + this.props.prevPicture.id}>
+                                <span id="chevron-left" className="glyphicon glyphicon-menu-left"></span>
+                            </Link>
+                            
+                                {(this.state.showModal && !this.state.showDescription && descriptionsLength > 0) ?
+                                    
+                                    <OverlayTrigger placement="bottom" overlay={tooltip}>
+                                        <Image src={this.props.currentPicture.pic_url_medium}
+                                            alt={this.props.currentPicture.title}
+                                            onClick={this.props.showPicDescription}
+                                            responsive />
+                                    </OverlayTrigger>
 
-                                : <Image src={this.props.currentPicture.pic_url_medium}
-                                         alt={this.props.currentPicture.title}
-                                         onClick={this.props.showPicDescription}
-                                         responsive />
-                            }
+                                    : <Image src={this.props.currentPicture.pic_url_medium}
+                                            alt={this.props.currentPicture.title}
+                                            onClick={this.props.showPicDescription}
+                                            responsive />
+                                }
 
-                        {this.state.showDescription && descriptionsLength > 0 ? 
-                            (this.state.language ?
-                                (this.props.currentPicture.descriptions[this.state.language] ?
-                                    (<span className="pic-description">{this.props.currentPicture.descriptions[this.state.language]}</span>)
+                            {this.state.showDescription && descriptionsLength > 0 ? 
+                                (this.state.language ?
+                                    (this.props.currentPicture.descriptions[this.state.language] ?
+                                        (<span className="pic-description">{this.props.currentPicture.descriptions[this.state.language]}</span>)
+                                        : (this.props.currentPicture.descriptions['EN'] ?
+                                            (<span className="pic-description">{this.props.currentPicture.descriptions['EN']}</span>) 
+                                            : (<span className="pic-description">{Object.entries(this.props.currentPicture.descriptions)[0][1]}</span>)))
                                     : (this.props.currentPicture.descriptions['EN'] ?
-                                        (<span className="pic-description">{this.props.currentPicture.descriptions['EN']}</span>) 
-                                        : (<span className="pic-description">{Object.entries(this.props.currentPicture.descriptions)[0][1]}</span>)))
-                                : (this.props.currentPicture.descriptions['EN'] ?
-                                    <span className="pic-description">{this.props.currentPicture.descriptions['EN']}</span> 
-                                    : <span className="pic-description">{Object.entries(this.props.currentPicture.descriptions)[0][1]}</span>)
-                            )
-                        : null}
-                        
-                        <Link className="next-pic" 
-                              to={'/categories/' + this.props.category_id + '/pictures/' + this.props.nextPicture.id}>
-                            <span id="chevron-right" className="glyphicon glyphicon-menu-right"></span>
-                        </Link>
-                    </Modal.Body>
+                                        <span className="pic-description">{this.props.currentPicture.descriptions['EN']}</span> 
+                                        : <span className="pic-description">{Object.entries(this.props.currentPicture.descriptions)[0][1]}</span>)
+                                )
+                            : null}
+                            
+                            <Link className="next-pic" 
+                                to={'/categories/' + this.props.category_id + '/pictures/' + this.props.nextPicture.id}>
+                                <span id="chevron-right" className="glyphicon glyphicon-menu-right"></span>
+                            </Link>
+                        </Modal.Body>
 
-                    <Modal.Footer>
-                        <span id="pic_copyright">(c) {this.props.currentPicture.author} - all rights reserved</span>
-                        <button id="fb_share_btn_pic" onClick={this.triggerShareDialog}>
-                            <i className="fa fa-facebook-official"></i>
-                            <span>Share</span>
-                        </button>
-                    </Modal.Footer>
-                
-                </Modal>
+                        <Modal.Footer>
+                            <span id="pic_copyright">(c) {this.props.currentPicture.author} - all rights reserved</span>
+                            <button id="fb_share_btn_pic" onClick={this.triggerShareDialog}>
+                                <i className="fa fa-facebook-official"></i>
+                                <span>Share</span>
+                            </button>
+                        </Modal.Footer>
+                    
+                    </Modal>
 
-                {this.props.user && this.props.user.superadmin ?
-                    (<EditDeletePicture cat_id={this.props.category_id} 
-                                        pic_id={this.props.currentPicture.id} 
-                                        pic_title={this.props.currentPicture.title} />) : null}
-            </div>
+                    {this.props.user && this.props.user.superadmin ?
+                        (<EditDeletePicture cat_id={this.props.category_id} 
+                                            pic_id={this.props.currentPicture.id} 
+                                            pic_title={this.props.currentPicture.title} />) : null}
+                </div>
         </Col>
         )
     }

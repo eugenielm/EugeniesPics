@@ -207,6 +207,6 @@ class PicturesIndex extends React.Component {
             </div>
         );
     }
-}
+};
 
 export default PicturesIndex;

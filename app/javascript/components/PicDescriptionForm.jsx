@@ -116,7 +116,7 @@ class PicDescriptionForm extends React.Component {
                     {input_edit}
                     <input type="hidden" value={this.props.match.params.picture_id} name="pic_description[picture_id]" />
                     
-                    <Table responsive bordered striped>
+                    <Table responsive bordered striped id="catdescription_form_table">
                         <tbody>
                             <tr>
                                 <td><label htmlFor="choose-language">Language</label>{newLangLink}</td>

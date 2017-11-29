@@ -174,8 +174,12 @@ class PictureForm extends React.Component {
         
         const input_edit = React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'});
         const pic_info = this.state.picture_id ?
-            (this.state.pic_url == this.state.prev_pic_url ? (<div><p>Current picture:</p><img src={this.state.pic_url} /></div>) : (<p>Picture about to be uploaded: {this.state.picfile_name}</p>))
-            : (this.state.pic_url ? (<p>Picture about to be uploaded: {this.state.picture_title}</p>) : null)
+            (this.state.pic_url == this.state.prev_pic_url ?
+                    (<div><p style={{color: 'white'}}>Current picture:</p><img src={this.state.pic_url} /></div>)
+                    : (<p style={{color: 'white'}}>Picture about to be uploaded: {this.state.picfile_name}</p>))
+            : (this.state.pic_url ?
+                (<p style={{color: 'white'}}>Picture about to be uploaded: {this.state.picture_title}</p>)
+                : null)
 
         const category_form = this.state.picture_id ?
             (<form encType="multipart/form-data" action={form_action} method="post" 
@@ -183,7 +187,7 @@ class PictureForm extends React.Component {
                 <input name="utf8" type="hidden" value="✓" />
                 <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />
                 {input_edit}
-                <Table bordered condensed hover responsive id="picture_form_table">
+                <Table bordered condensed responsive id="picture_form_table">
                     <tbody>
                         <tr>
                             <td><label htmlFor="choose-cat">Category</label></td>

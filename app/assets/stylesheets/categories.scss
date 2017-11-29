@@ -7,88 +7,89 @@
     padding-bottom: 40px;
 }
 
-@media screen and (min-width: 768px) {
-    *[id^="category_"].col-md-4.col-sm-6.col-xs-6 {
-        height: 350px;
-        padding: 10px;
-        margin-bottom: 15px;
-    }
-}
-
-@media screen and (min-width: 560px) and (max-width: 767px) {
-    *[id^="category_"].col-md-4.col-sm-6.col-xs-6 {
-        height: 250px;
-        padding: 7px;
-        margin-bottom: 11px;
-    }
-}
-
-@media screen and (max-width: 559px) {
-    *[id^="category_"].col-md-4.col-sm-6.col-xs-6 {
-        height: 170px;
-        padding: 5px;
-        margin-bottom: 5px;
-    }
-}
-
-*[id^="category_"] img {
-    max-height: 95%;
-    max-width: 95%;
-    margin: auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 1;
-    -webkit-transition: opacity 0.2s linear 0s; /* For Safari 3.1 to 6.0 */
-    transition: opacity 0.2s linear 0s;
+#all_cats {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
 }
 
 .cat_pic {
-    height: 100%;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 5px;
-    background-color: white;
-    border-radius: 3px;
     position: relative;
-    box-shadow: 10px 10px 20px black;
+    height: calc(33.33% - 20px);
+    width: calc(33.33% - 20px);
+    margin-bottom: 5px;
+    background-color: black
 }
 
-.cat_pic:hover a { text-decoration: none }
+.cat_pic img {
+    height: 100%;
+    width: 100%;
+}
+
+.cat_pic:hover a {
+    text-decoration: none;
+    background-color: transparent;
+}
 
 .cat_pic:hover img {
-    opacity: 0.3;
+    opacity: 0.7;
     -webkit-transition: opacity 0.3s linear 0s; /* For Safari 3.1 to 6.0 */
     transition: opacity 0.3s linear 0s;
 }
 
-*[id^="category_"] .catname {
-    color: black;
-    font-size: 22px;
-    font-family: ubuntu;
+.catname {
+    color: white;
+    font-size: 30px;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-weight: lighter;
+    letter-spacing: 0.5px;
     position: absolute;
-    bottom: 0; left: 0; right: 0;
-    margin-bottom: 15px;
+    left: 0; right: 0; top: 50%;
     opacity: 0;
     -webkit-transition: opacity 0.2s linear 0s; /* For Safari 3.1 to 6.0 */
     transition: opacity 0.2s linear 0s;
+    text-shadow: 1px 1px 1px black;
 }
 
 .cat_pic:hover .catname {
     opacity: 1;
-    -webkit-transition: opacity 0.8s linear 0.1s; /* For Safari 3.1 to 6.0 */
-    transition: opacity 0.8s linear 0.1s;
+    -webkit-transition: opacity 0.5s linear; /* For Safari 3.1 to 6.0 */
+    transition: opacity 0.5s linear;
+}
+
+
+
+@media screen and (max-width: 1200px) and (min-width: 769px) {
+    #all_cats div:nth-child(odd) {
+        height: calc(50% - 15px);
+        width: calc(50% - 15px);
+    }
+    #all_cats div:nth-child(even) {
+        height: calc(50% - 15px);
+        width: calc(50% - 15px);
+    }
 }
 
 @media screen and (max-width: 768px) {
-    .cat_pic:hover .catname {font-size: 18px}
+    #all_cats div {
+        height: calc(100% - 12px);
+        width: calc(100% - 12px);
+    }
+
+    .catname {
+        opacity: 1;
+        font-size: 36px;
+    }
 }
 
 @media screen and (max-width: 425px) {
-    .cat_pic:hover .catname {font-size: 14px}
+    .catname {
+        opacity: 1;
+        font-size: 26px;
+    }
 }
+
 
 /* admin buttons to edit categories on the category index */
 #edit-delete-cat #cat_admin_overlay_btn {

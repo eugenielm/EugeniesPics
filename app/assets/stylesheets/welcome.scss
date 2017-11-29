@@ -2,20 +2,37 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#home-page {
+    height: calc(100vh - 220px); /* header is 160px and footer 30px + 30px margin */
+}
+
+@media screen and (max-width: 767px) and (min-width: 425px) {
+    #home-page {
+        height: calc(100vh - 160px); /* header is 100px and footer 30px + 30px margin */
+    }
+}
+
+@media screen and (max-width: 424px) {
+    #home-page {
+        height: calc(100vh - 120px); /* header is 60px and footer 30px + 30px margin */
+        max-height: 150vw;
+    }
+}
+
 
 /* Home page carousel */
 
 #home-page div.carousel.slide {
     width: 96vw;
-    /* Home page header height is 130px, home page footer height is 30px, plus some margin */
-    height: calc(100vh - 300px);
-    margin: 50px auto;
+    height: 90%;
+    max-height: 120vw;
+    margin: 4% auto 0 auto;
 }
 
 @media screen and (max-width: 425px) {
     #home-page div.carousel.slide {
-        height: 155vw;
-        margin: calc((100vh - 155vw - 160px)/2) auto;
+        height: 125vw;
+        margin: calc((100vh - 125vw - 90px)/2) auto;
     }
 }
 
@@ -40,13 +57,15 @@
 }
 
 #home-page div.carousel.slide div.carousel-inner div.item div.carousel-caption p {
-    font-family: ubuntu;
-    font-size: 1.2em;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-weight: lighter;
+    letter-spacing: 0.4px;
+    font-size: 1.5em;
     display: inline;
     margin: auto;
     padding: 3px 8px 5px 8px;
     border-radius: 25px;
-    text-shadow: 1px 1px 15px black;
+    text-shadow: 1px 2px 2px black;
 }
 
 #home-page a.carousel-control {
@@ -81,6 +100,12 @@
     background-color: #fff;
     padding: 20px 20px 15px 20px;
     margin-bottom: 20px;
+    opacity: 0.9;
+    border-radius: 3px;
+}
+
+#about_presentation p {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     font-size: 16px;
 }
 

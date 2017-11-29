@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
-import { Button, Grid, Row, Col, Image, Modal, Popover, OverlayTrigger } from 'react-bootstrap';
+import { Button, Grid, Modal, Popover, OverlayTrigger } from 'react-bootstrap';
 
 
 const CatAdminActionsElement = (props) => {
@@ -81,16 +81,14 @@ class EditDeleteCategory extends React.Component {
 
 const CategoryComponent = props => {
   return (
-    <Col md={4} sm={6} xs={6} id={"category_" + props.category.id}>
       <div className="cat_pic">
         <Link to={"/categories/" + props.category.id + "/pictures"}>
-          <Image src={props.category.catpic_url} alt={props.category.name + "'s category'"} responsive />
+          <img src={props.category.catpic_url} alt={props.category.name + "'s category'"} style={{height: '100%', overflow: 'hidden'}}/>
           <p className="catname">{props.category.name.toUpperCase()}</p>
         </Link>
         { props.user && props.user.superadmin ?
           <EditDeleteCategory cat_id={props.category.id} cat_name={props.category.name} /> : null }
       </div>
-    </Col>
   );
 };
 
@@ -123,11 +121,9 @@ class CategoriesIndex extends React.Component {
     return (
       <div id="categories-page">
         <div className="page-title">ALL GALLERIES{new_cat_link}</div>
-        <Grid>
-          <Row id="all_categories" className="show-grid">
+          <div id="all_cats">
             { this.state.categories.map(c => <CategoryComponent user={this.props.user} key={c.id} category={c}/>) }
-          </Row>
-        </Grid>
+          </div>
       </div>
     );
   }

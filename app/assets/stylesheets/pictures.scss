@@ -1,6 +1,6 @@
 #pictures-page {
-    // width: 96%;
-    // margin: auto;
+    width: 98vw;
+    margin: auto;
     text-align: center;
     /* needed for proper footer layout */
     padding-bottom: 40px;
@@ -59,46 +59,21 @@
 
 .picture_pic {
     height: 100%;
+    max-height: 50vw;
     width: 100%;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 5px;
-    background-color: white;
+    background-color: black;
     border-radius: 3px;
     position: relative;
-    // box-shadow: 5px 5px 12px darkgrey;
+    box-shadow: 5px 5px 60px #909090;
 }
 
-// see https://paulund.co.uk/learn-css-box-shadow
-.picture_pic:before, .picture_pic:after
-{
-  z-index: -1;
-  position: absolute;
-  content: "";
-  bottom: 25px;
-  left: 10px;
-  width: 50%;
-  top: 80%;
-  max-width:300px;
-  background: #777;
-  box-shadow: 0 23px 10px #777;
-  transform: rotate(-5deg);
+.picture-element {
+    padding: 5px !important;
 }
-
-.picture_pic:after
-{
-  transform: rotate(5deg);
-  right: 10px;
-  left: auto;
-}
-
-// needed for the picture shadow above
-.picture-element { z-index: 1 }
 
 .picture-element img {
-    max-height: 95%;
-    max-width: 95%;
+    max-height: 94%;
+    max-width: 94%;
     margin: auto;
     position: absolute;
     top: 50%;
@@ -106,7 +81,45 @@
     transform: translate(-50%, -50%);
 }
 
-.picture_pic:hover img { opacity: 0.8 }
+.picture_pic:hover a {background-color: transparent}
+
+.picture_pic p {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-weight: lighter;
+    font-size: 14px;
+    letter-spacing: 0.7px;
+    color: white;
+    text-shadow: 1px 1px 20px black;
+    opacity: 0;
+    position: absolute;
+    text-align: center;
+    -webkit-transition: opacity 0.1s linear 0s;
+    transition: opacity 0.1s linear 0s;
+}
+
+/* Picture title position */
+.picture_pic p:nth-child(2) {
+    top: 5px; left: 0; right: 0;
+}
+
+/* Picture copyright position */
+.picture_pic p:nth-child(3) {
+    bottom: 0; left: 0; right: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .picture_pic p {font-size: 12px}
+}
+
+@media screen and (max-width: 425px) {
+    .picture_pic p {font-size: 11px}
+}
+
+.picture_pic:hover p {
+    opacity: 1;
+    -webkit-transition: opacity 0.3s linear 0s;
+    transition: opacity 0.3s linear 0s;
+}
 
 #cat_admin_overlay_btn {
     position: absolute;
@@ -129,9 +142,34 @@
 }
 
 
+@media screen and (min-width: 1720px) {
+    .picture-element.col-lg-4.col-md-6.col-sm-6.col-xs-6 {
+        height: 540px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1719px) {
+    .picture-element.col-lg-4.col-md-6.col-sm-6.col-xs-6 {
+        height: 350px;
+    }
+}
+
+@media screen and (min-width: 560px) and (max-width: 767px) {
+    .picture-element.col-lg-4.col-md-6.col-sm-6.col-xs-6 {
+        height: 280px;
+    }
+}
+
+@media screen and (max-width: 559px) {
+    .picture-element.col-lg-4.col-md-6.col-sm-6.col-xs-6 {
+        height: 220px;
+    }
+}
+
+
 /* modal */
 
-div.picture_modal.in.modal { background-color: rgba(0, 0, 0, 0.6) }
+div.picture_modal.in.modal { background-color: rgba(0, 0, 0, 0.9) }
 
 .custom-modal.modal-dialog {
     height: 90vh;
@@ -303,37 +341,6 @@ div.picture_modal div.modal-footer button.btn {
     text-shadow: none;
     padding: 3px 4px 0 5px;
     outline: 0;
-}
-
-@media screen and (min-width: 1720px) {
-    .picture-element.col-lg-3.col-md-4.col-sm-6.col-xs-6 {
-        height: 400px;
-        padding: 15px;
-        margin-bottom: 10px;
-    }
-}
-
-@media screen and (min-width: 768px) and (max-width: 1719px) {
-    .picture-element.col-lg-3.col-md-4.col-sm-6.col-xs-6 {
-        height: 330px;
-        padding: 10px;
-        margin-bottom: 7px;
-    }
-}
-
-@media screen and (min-width: 560px) and (max-width: 767px) {
-    .picture-element.col-lg-3.col-md-4.col-sm-6.col-xs-6 {
-        height: 250px;
-        padding: 7px;
-        margin-bottom: 4px;
-    }
-}
-
-@media screen and (max-width: 559px) {
-    .picture-element.col-lg-3.col-md-4.col-sm-6.col-xs-6 {
-        height: 170px;
-        padding: 5px;
-    }
 }
 
 /* FB sharing button in picture modal */

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal, Table } from 'react-bootstrap';
 
 class UserDetails extends React.Component {
     componentWillMount() {
@@ -33,39 +33,59 @@ class UserDetails extends React.Component {
                                 </Button>)
                             : null }
                         </div>
-                        <br/>
-                        <p><strong>Username:</strong> {this.state.user.username}</p>
-                        <p><strong>Email:</strong> {this.state.user.email}</p>
-                        <p><strong>Admin:</strong> {admin}</p>
-                        <p><strong>Created:</strong> {this.state.user.created_at}</p>
-                        <p><strong>Updated:</strong> {this.state.user.updated_at}</p>
-                        <p>
-                            <Button bsSize="xsmall" bsStyle="success" href={ "/users/" + this.state.user.id + "/edit" } style={{marginRight: 10 + 'px'}} >
-                                <span className="glyphicon glyphicon-edit"></span>
-                            </Button>
-                            <Button bsSize="xsmall" bsStyle="danger" onClick={() => this.setState({displayDeleteModal: true})}>
-                                <span className="glyphicon glyphicon-trash"></span>
-                            </Button>
+
+
+                        <Table responsive bordered striped id="user_details_table">
+                            <tbody>
+                                <tr>
+                                    <td><label>Username</label></td>
+                                    <td>{this.state.user.username}</td>
+                                </tr>
+                                <tr>
+                                    <td><label>Email address</label></td>
+                                    <td>{this.state.user.email}</td>
+                                </tr>
+                                <tr>
+                                    <td><label>Admin</label></td>
+                                    <td>{admin}</td>
+                                </tr>
+                                <tr>
+                                    <td><label>Created</label></td>
+                                    <td>{this.state.user.created_at}</td>
+                                </tr>
+                                <tr>
+                                    <td><label>Updated</label></td>
+                                    <td>{this.state.user.updated_at}</td>
+                                </tr>
+                            </tbody>
+                        </Table>
+
+                        <Button bsSize="xsmall" bsStyle="success" href={ "/users/" + this.state.user.id + "/edit" } style={{marginRight: 10 + 'px'}} >
+                            <span className="glyphicon glyphicon-edit"></span>
+                        </Button>
+
+                        <Button bsSize="xsmall" bsStyle="danger" onClick={() => this.setState({displayDeleteModal: true})}>
+                            <span className="glyphicon glyphicon-trash"></span>
+                        </Button>
                             
-                            <Modal show={this.state.displayDeleteModal}>
-                                <Modal.Body>
-                                    <div className="confirm_delete_modal">
-                                        Are you sure you want to destroy {this.state.user.username}'s profile?
-                                        <br/><br/>
-                                        <Button bsStyle="danger" 
-                                                bsSize="xsmall"
-                                                onClick={() => this.setState({displayDeleteModal: false})}
-                                                href={ "/users/" + this.state.user.id }
-                                                data-method="delete"
-                                                style={{marginLeft: '5px'}}
-                                                >Yes
-                                        </Button>
-                                        <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
-                                                onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
-                                    </div>
-                                </Modal.Body>
-                            </Modal>
-                        </p>
+                        <Modal show={this.state.displayDeleteModal}>
+                            <Modal.Body>
+                                <div className="confirm_delete_modal">
+                                    Are you sure you want to destroy {this.state.user.username}'s profile?
+                                    <br/><br/>
+                                    <Button bsStyle="danger" 
+                                            bsSize="xsmall"
+                                            onClick={() => this.setState({displayDeleteModal: false})}
+                                            href={ "/users/" + this.state.user.id }
+                                            data-method="delete"
+                                            style={{marginLeft: '5px'}}
+                                            >Yes
+                                    </Button>
+                                    <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
+                                            onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
+                                </div>
+                            </Modal.Body>
+                        </Modal>
                     </div>
                 );
             }

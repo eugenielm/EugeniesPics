@@ -103,6 +103,11 @@ div#menuitems {
 
 a.btn.btn-default { color: black }
 
+#page-header li {
+    font-family: italiana;
+    letter-spacing: 0.5px;
+}
+
 #page-header #menuitems #gallery_btn,
 #page-header #menuitems #about_button,
 #page-header #menuitems li {
@@ -110,7 +115,8 @@ a.btn.btn-default { color: black }
     border-radius: 0;
     box-shadow: none;
     background: none;
-    font-family: ubuntu;
+    font-family: italiana;
+    letter-spacing: 0.5px;
     padding: 0.2vw 0.6vw;
     margin-left: 1.2vh;
     margin-right: 1.2vh;
@@ -163,7 +169,8 @@ a.btn.btn-default { color: black }
     position: absolute;
     top: 20px; right: 20px;
     margin: 0;
-    font-family: ubuntu;
+    font-family: italiana;
+    letter-spacing: 0.5px;
     font-size: 16px;
 }
 
@@ -192,7 +199,7 @@ button#admin_dropdown {
 #admin_dropdown:hover { background-color: rgba(255,255,255,0.3) }
 
 
-@media screen and (max-width: 768px) and (min-width: 426px) {
+@media screen and (max-width: 767px) and (min-width: 425px) {
     #page-header { height: 100px }
     
     #site-name { line-height: 80px; font-size: 36px; }
@@ -224,7 +231,8 @@ button#admin_dropdown {
 
     #page-header div.dropdown.btn-group:nth-of-type(2) a {
         line-height: 30px;
-        font-family: ubuntu;
+        font-family: italiana;
+        letter-spacing: 0.5px;
         font-size: 14px;
     }
 
@@ -248,7 +256,8 @@ button#admin_dropdown {
     }
 
     #page-header div.dropdown.btn-group:nth-of-type(3) li a {
-        font-family: ubuntu;
+        font-family: italiana;
+        letter-spacing: 0.5px;
         font-size: 12px;
         line-height: 24px;
     }
@@ -260,7 +269,7 @@ button#admin_dropdown {
 }
 
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 424px) {
 
     #page-header { height: 60px }
     
@@ -291,7 +300,8 @@ button#admin_dropdown {
 
     #page-header div.dropdown.btn-group:nth-of-type(2) a {
         line-height: 30px;
-        font-family: ubuntu;
+        font-family: italiana;
+        letter-spacing: 0.5px;
         font-size: 14px;
     }
 
@@ -316,7 +326,8 @@ button#admin_dropdown {
     }
 
     #page-header div.dropdown.btn-group:nth-of-type(3) li a {
-        font-family: ubuntu;
+        font-family: italiana;
+        letter-spacing: 0.5px;
         font-size: 12px;
         line-height: 24px;
     }
@@ -342,6 +353,7 @@ button#admin_dropdown {
 
 #footer p {
     color: white;
+    text-shadow: 1px 1px 1px black;
     font-size: 12px;
     font-family: ubuntu;
     display: table-cell;
@@ -400,7 +412,12 @@ div.form-layout table td label { margin: 0 }
 div.form-layout table td input { width: 100% }
 
 #picture_form_table tbody,
-#category_form_table tbody {
+#category_form_table tbody,
+#catdescription_form_table tbody,
+#picdescription_form_table tbody,
+#language_form_table tbody,
+#user_form_table tbody,
+#user_details_table tbody {
     background-color: white;
     border: solid thick white;
     opacity: 0.9;
@@ -432,7 +449,6 @@ div.notice.alert button.close {
     padding: 20px;
     z-index: 2;
     background-color: white;
-    opacity: 0.9;
     margin-top: 10vh;
 }
 

@@ -103,7 +103,7 @@ class LanguageForm extends React.Component {
                     <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />
                     {input_edit}
                     
-                    <Table responsive>
+                    <Table responsive bordered striped id="language_form_table">
                         <tbody>
                             <tr>
                                 <td><label htmlFor="lang_name">Language</label></td>

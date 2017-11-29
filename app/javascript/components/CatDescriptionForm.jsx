@@ -110,7 +110,7 @@ class CatDescriptionForm extends React.Component {
                     {input_edit}
                     <input type="hidden" value={this.props.match.params.category_id} name="cat_description[category_id]" />
                     
-                    <Table responsive bordered striped>
+                    <Table responsive bordered striped id="catdescription_form_table">
                         <tbody>
                             <tr>
                                 <td><label htmlFor="choose-language">Language</label>{newLangLink}</td>

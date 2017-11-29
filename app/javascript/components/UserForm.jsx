@@ -87,7 +87,7 @@ class UserForm extends React.Component {
                     {this.state.firstUser && !this.state.id ? <input type="hidden" name="user[superadmin]" value="true" readOnly={true} /> : null}
                     {input_edit}
 
-                    <Table responsive bordered striped>
+                    <Table responsive bordered striped id="user_form_table">
                         <tbody>
                             <tr>
                                 <td><label htmlFor="user_username">Username</label></td>
