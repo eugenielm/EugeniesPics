@@ -15,7 +15,7 @@ class Category < ApplicationRecord
   
   # http://www.rubydoc.info/gems/paperclip/Paperclip/ClassMethods
   # the '#' sign is used to centrally crop the image to fit the dimensions specified
-  has_attached_file :catpic, styles: { medium: "1500x1500#", small: "599x599#" },
+  has_attached_file :catpic, styles: { medium: "1800x1200#", small: "900x600#" },
                     default_style: 'small', :default_url => "/missing.jpg"
   validates_attachment :catpic, size: { in: 0..4000.kilobytes }
   validates_attachment_file_name :catpic, matches: [/png\z/i, /jpe?g\z/i]
