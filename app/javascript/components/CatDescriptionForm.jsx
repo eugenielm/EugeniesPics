@@ -6,21 +6,22 @@ import ErrorsComponent from './ErrorsComponent';
 
 
 const LanguageChoice = props => {
-    return <option value={props.data.id}>{props.data.name}</option>
+    return <option value={props.data.id} disabled={props.takenLangs.includes(props.data.id) ? true : false}>{props.data.name}</option>
 };
 
 
 class CatDescriptionForm extends React.Component {
 
     componentWillMount() {
-        this.setState({ display: "none",
-                        token: this.props.token,
+        this.setState({ token: this.props.token,
                         errors: this.props.cat_description_errors || null,
                         user: this.props.user || null,
                         languages: [],
+                        existingCatdescriptions: [],
                         category_name: '',
                         cat_description_id: this.props.match.params.cat_description_id || '',
                         language_id: this.props.cat_description_data ? this.props.cat_description_data.language_id : '',
+                        cat_descr_language_name: '',
                         content: this.props.cat_description_data ? this.props.cat_description_data.content : ''});
         this.handleLanguageId = this.handleLanguageId.bind(this);
         this.handleContent = this.handleContent.bind(this);
@@ -34,7 +35,15 @@ class CatDescriptionForm extends React.Component {
             return resp.json();
           })
           .then(function(languages) {
-            this.setState({ languages });
+            let cat_descr_language_name;
+            if (this.state.cat_description_id) {
+                for (let i=0; i < languages.length; i++) {
+                    if (languages[i].id == this.state.language_id) {
+                        cat_descr_language_name = languages[i].name;
+                    }
+                }
+            }
+            this.setState({ languages, cat_descr_language_name });
           }.bind(this))
 
         fetch('/categories/' + this.props.match.params.category_id + '/cat_descriptions.json',
@@ -44,7 +53,12 @@ class CatDescriptionForm extends React.Component {
         })
         .then(function(cat_descriptions) {
             const category_name = cat_descriptions.pop();
-            this.setState({ category_name, display: "block" })
+            // now cat_descriptions = [{id: 'id', language_id: 'lang id', language_name: 'lang name', content: 'desc content'}, {etc.}, {etc.}]
+            const existingCatdescriptions = [];
+            for (let i=0; i < cat_descriptions.length; i++) {
+                existingCatdescriptions.push(cat_descriptions[i].language_id);
+            }
+            this.setState({ category_name, existingCatdescriptions });
         }.bind(this))
 
     }
@@ -61,8 +75,8 @@ class CatDescriptionForm extends React.Component {
 
     handleSubmit(event) {
         let alerts = '';
-        if (this.state.content.length < 10) {
-            alerts += "A category description must be at least 10 characters long and at most 1000 characters. "
+        if (this.state.content.length < 2) {
+            alerts += "A category description must be at least 2 characters long and at most 1000 characters. "
         }
         if (!this.state.language_id || this.state.language_id == "-- select --") {
             alerts += "Please select a language."
@@ -90,7 +104,7 @@ class CatDescriptionForm extends React.Component {
                                 : ("Create description for " + this.state.category_name);
 
         return (
-            <div className="form-layout" style={{display: this.state.display}}>
+            <div className="form-layout">
                 <div className="admin-page-title">{page_title}
                     <Button bsStyle="primary"
                             bsSize="xsmall" 
@@ -112,26 +126,44 @@ class CatDescriptionForm extends React.Component {
                     
                     <Table responsive bordered striped id="catdescription_form_table">
                         <tbody>
-                            <tr>
-                                <td><label htmlFor="choose-language">Language</label>{newLangLink}</td>
-                                <td>
-                                    <FormGroup controlId="formControlsSelect">
-                                        <FormControl componentClass="select" 
-                                                     value={this.state.language_id || "-- select --"} 
-                                                     name="cat_description[language_id]" 
-                                                     onChange={this.handleLanguageId}>
-                                            <option value="-- select --">-- select --</option>
-                                            { this.state.languages.map(pres => <LanguageChoice key={pres.id} data={pres} />) }>
-                                        </FormControl>
-                                    </FormGroup>
-                                </td>
-                            </tr>
+                            {this.state.cat_description_id ?
+                                (<tr>
+                                    <td><label htmlFor="choose-language">Language</label></td>
+                                    <td>
+                                        <FormGroup controlId="formControlsSelect">
+                                            <FormControl componentClass="select" 
+                                                         value={this.state.language_id} 
+                                                         name="cat_description[language_id]" 
+                                                         onChange={this.handleLanguageId}>
+                                                <option value={this.state.language_id}>{this.state.cat_descr_language_name}</option>
+                                            >
+                                            </FormControl>
+                                        </FormGroup>
+                                    </td>
+                                </tr>)
+                                : (<tr>
+                                    <td><label htmlFor="choose-language">Language</label>{newLangLink}</td>
+                                    <td>
+                                        <FormGroup controlId="formControlsSelect">
+                                            <FormControl componentClass="select" 
+                                                         value={this.state.language_id || "-- select --"}
+                                                         name="cat_description[language_id]" 
+                                                         onChange={this.handleLanguageId}>
+                                                <option value="-- select --">-- select --</option>
+                                                { this.state.languages.map(descr => <LanguageChoice key={descr.id} 
+                                                                                                    data={descr} 
+                                                                                                    takenLangs={this.state.existingCatdescriptions} />) }>
+                                            </FormControl>
+                                        </FormGroup>
+                                    </td>
+                                </tr>)
+                            }
                             <tr>
                                 <td><label htmlFor="pres_content">Description</label></td>
                                 <td>
                                     <FormGroup controlId="formControlsTextarea">
                                         <FormControl componentClass="textarea" 
-                                                     placeholder={"Describe " + this.state.category_name}
+                                                     placeholder={"Describe " + this.state.category_name + " gallery"}
                                                      style={{height: '250px'}}
                                                      name="cat_description[content]" 
                                                      value={this.state.content || ''} 
