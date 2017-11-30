@@ -51,18 +51,20 @@ a.btn { color: white }
 }
 
 .admin-page-title {
-    font-size: 28px;
+    font-size: 24px;
     color: white;
     text-shadow: 1px 1px 20px black;
     margin: 1.2vh auto;
 }
 
 @media screen and (max-width: 767px) and (min-width: 426px) {
-    .page-title, .admin-page-title {font-size: 24px}
+    .page-title {font-size: 24px}
+    .admin-page-title {font-size: 20px}
 }
 
 @media screen and (max-width: 426px) {
-    .page-title, .admin-page-title {font-size: 20px}
+    .page-title {font-size: 20px}
+    .admin-page-title {font-size: 16px}
 }
 
 
