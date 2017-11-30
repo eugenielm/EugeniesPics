@@ -6,21 +6,22 @@ import ErrorsComponent from './ErrorsComponent';
 
 
 const LanguageChoice = props => {
-    return <option value={props.data.id}>{props.data.name}</option>
+    return <option value={props.data.id} disabled={props.takenLangs.includes(props.data.id) ? true : false}>{props.data.name}</option>
 };
 
 
 class PicDescriptionForm extends React.Component {
 
     componentWillMount() {
-        this.setState({ display: "none",
-                        token: this.props.token,
+        this.setState({ token: this.props.token,
                         errors: this.props.pic_description_errors || null,
                         user: this.props.user || null,
                         languages: [],
                         picture_title: '',
+                        existingPicdescriptions: [],
                         pic_description_id: this.props.match.params.pic_description_id || '',
                         language_id: this.props.pic_description_data ? this.props.pic_description_data.language_id : '',
+                        pic_descr_language_name: '',
                         content: this.props.pic_description_data ? this.props.pic_description_data.content : ''});
         this.handleLanguageId = this.handleLanguageId.bind(this);
         this.handleContent = this.handleContent.bind(this);
@@ -34,7 +35,15 @@ class PicDescriptionForm extends React.Component {
             return resp.json();
           })
           .then(function(languages) {
-            this.setState({ languages, display: "block" });
+            let pic_descr_language_name;
+            if (this.state.pic_description_id) {
+                for (let i=0; i < languages.length; i++) {
+                    if (languages[i].id == this.state.language_id) {
+                        pic_descr_language_name = languages[i].name;
+                    }
+                }
+            }
+            this.setState({ languages, pic_descr_language_name });
           }.bind(this))
 
         fetch('/categories/' + this.props.match.params.category_id 
@@ -46,7 +55,12 @@ class PicDescriptionForm extends React.Component {
         })
         .then(function(pic_descriptions) {
             const picture_title = pic_descriptions.pop();
-            this.setState({ picture_title, display: "block" })
+            // now pic_descriptions = [{id: 'id', language_id: 'lang id', language_name: 'lang name', content: 'desc content'}, {etc.}, {etc.}]
+            const existingPicdescriptions = [];
+            for (let i=0; i < pic_descriptions.length; i++) {
+                existingPicdescriptions.push(pic_descriptions[i].language_id);
+            }
+            this.setState({ picture_title, existingPicdescriptions });
         }.bind(this))
 
     }
@@ -95,7 +109,7 @@ class PicDescriptionForm extends React.Component {
                                 : ("Create description for '" + this.state.picture_title + "'");
 
         return (
-            <div className="form-layout" style={{display: this.state.display}}>
+            <div className="form-layout">
                 <div className="admin-page-title">{page_title}
                     <Button bsStyle="primary"
                             bsSize="xsmall" 
@@ -118,20 +132,39 @@ class PicDescriptionForm extends React.Component {
                     
                     <Table responsive bordered striped id="catdescription_form_table">
                         <tbody>
-                            <tr>
-                                <td><label htmlFor="choose-language">Language</label>{newLangLink}</td>
-                                <td>
-                                    <FormGroup controlId="formControlsSelect">
-                                        <FormControl componentClass="select" 
-                                                     value={this.state.language_id || "-- select --"} 
-                                                     name="pic_description[language_id]" 
-                                                     onChange={this.handleLanguageId}>
-                                            <option value="-- select --">-- select --</option>
-                                            { this.state.languages.map(pres => <LanguageChoice key={pres.id} data={pres} />) }>
-                                        </FormControl>
-                                    </FormGroup>
-                                </td>
-                            </tr>
+                            {this.state.pic_description_id ?
+                                (<tr>
+                                    <td><label htmlFor="choose-language">Language</label></td>
+                                    <td>
+                                        <FormGroup controlId="formControlsSelect">
+                                            <FormControl componentClass="select" 
+                                                         value={this.state.language_id} 
+                                                         name="pic_description[language_id]" 
+                                                         onChange={this.handleLanguageId}>
+                                                <option value={this.state.language_id}>{this.state.pic_descr_language_name}</option>
+                                            >
+                                            </FormControl>
+                                        </FormGroup>
+                                    </td>
+                                </tr>)
+
+                                : (<tr>
+                                    <td><label htmlFor="choose-language">Language</label>{newLangLink}</td>
+                                    <td>
+                                        <FormGroup controlId="formControlsSelect">
+                                            <FormControl componentClass="select" 
+                                                         value={this.state.language_id || "-- select --"}
+                                                         name="pic_description[language_id]" 
+                                                         onChange={this.handleLanguageId}>
+                                                <option value="-- select --">-- select --</option>
+                                                { this.state.languages.map(pres => <LanguageChoice key={pres.id} 
+                                                                                                data={pres}
+                                                                                                takenLangs={this.state.existingPicdescriptions} />) }>
+                                            </FormControl>
+                                        </FormGroup>
+                                    </td>
+                                </tr>)
+                            }
                             <tr>
                                 <td><label htmlFor="pres_content">Description</label></td>
                                 <td>
