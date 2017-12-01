@@ -96,7 +96,7 @@ class CategoryForm extends React.Component {
     }
 
     handleNameChange(event) {
-        if (event.target.value.match(/^[\w\ \u00E0-\u00FC\-¨()[\]_&=+*ˆ@#%\^]{0,30}$/)) {
+        if (event.target.value.match(/^[\w\ \u00E0-\u00FC\-¨()[\]_&=+*ˆ@#%\^]{0,20}$/)) {
             this.setState({category_name: event.target.value});
         }  
     }
@@ -110,8 +110,8 @@ class CategoryForm extends React.Component {
     }
 
     handleSubmit(event) {
-        if (!this.state.category_name || this.state.category_name.length < 2 || this.state.category_name.length > 30) {
-            alert("A category name must be at least 2 characters long and at most 30 characters.")
+        if (!this.state.category_name || this.state.category_name.length < 2 || this.state.category_name.length > 20) {
+            alert("A category name must be at least 2 characters long and at most 20 characters.")
             event.preventDefault();
         }
     }
@@ -119,8 +119,13 @@ class CategoryForm extends React.Component {
     render() {
         const input_edit = React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'});
         const catpic_info = this.state.catpic_url == this.state.prev_catpic_url ? 
-                                (<div><p style={{color: 'white'}}>Current picture:</p><img src={this.state.catpic_url} /></div>)
-                                : (<p style={{color: 'white'}}>Picture about to be uploaded: {this.state.catpic_name}</p>);
+                                (<div>
+                                    <p style={{color: 'white', fontSize: '14px', textShadow: '1px 1px 10px black'}}>Current picture:</p>
+                                    <img src={this.state.catpic_url} />
+                                </div>)
+                                : (<p style={{color: 'white', fontSize: '14px', textShadow: '1px 1px 10px black'}}>
+                                    Picture about to be uploaded: {this.state.catpic_name}
+                                  </p>);
 
         const descriptions_popovers = this.state.cat_descriptions.map((d, index) => 
                                         (<OverlayTrigger key={index} trigger="click" 
