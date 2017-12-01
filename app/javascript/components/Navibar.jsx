@@ -73,8 +73,10 @@ class Navibar extends React.Component {
           <p id="site-name">EUGENIE'S PICS</p>
           <p id="site-name-2">- Photographs by Eugénie Le Moulec -</p>
         </Link>
+
+        <hr style={{width: '450px', margin: '0 auto'}}/>
                     
-        <div className="d-flex justify-content-around hidden-xs" id="menuitems">
+        <div className="hidden-xs" id="menuitems">
             
             { this.state.path == '/categories' ?
                 <Button href="/categories" active={true} id="gallery_btn">~ All galleries ~</Button>
@@ -109,6 +111,8 @@ class Navibar extends React.Component {
             <MenuItem eventKey={2} >Info & <span className="glyphicon glyphicon-envelope"></span></MenuItem>
           </IndexLinkContainer>
 
+          <MenuItem divider/>
+
           { this.state.categories.map(c => <CategoriesLinks key={c.id} 
                                                             cat_id={c.id} 
                                                             cat_name={c.name} 
@@ -131,7 +135,7 @@ class Navibar extends React.Component {
             <IndexLinkContainer to='/users'>
               <MenuItem eventKey={(numberOfCategories + 2).toString() + '.3'}>users</MenuItem>
             </IndexLinkContainer>
-            <MenuItem divider style={{padding: '1px'}} />
+            <MenuItem divider/>
             <IndexLinkContainer to="/logout" data-method="delete">
               <MenuItem eventKey={(numberOfCategories + 2).toString() + '.4'}>log out</MenuItem>
             </IndexLinkContainer>

@@ -1,11 +1,19 @@
 #languages {
     width: 96%;
-    margin: auto;
+    margin: 170px auto 0 auto;
     max-width: 800px;
     text-align: center;
     height: 100%;
     /* needed for proper footer layout */
-    padding-bottom: 40px;
+    padding-bottom: 30px;
+}
+
+@media screen and (max-width: 767px) and (min-width: 426px) {
+    #languages { margin: 120px auto 0 auto }
+}
+
+@media screen and (max-width: 425px) {
+    #languages { margin: 70px auto 0 auto }
 }
 
 #language-table {

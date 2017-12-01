@@ -176,10 +176,17 @@ class PictureForm extends React.Component {
         const input_edit = React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'});
         const pic_info = this.state.picture_id ?
             (this.state.pic_url == this.state.prev_pic_url ?
-                    (<div><p style={{color: 'white'}}>Current picture:</p><img src={this.state.pic_url} /></div>)
-                    : (<p style={{color: 'white'}}>Picture about to be uploaded: {this.state.picfile_name}</p>))
+                    (<div>
+                        <p style={{color: 'white', fontSize: '14px', textShadow: '1px 1px 10px black'}}>Current picture:</p>
+                        <img src={this.state.pic_url} />
+                    </div>)
+                    : (<p style={{color: 'white', fontSize: '14px', textShadow: '1px 1px 10px black'}}>
+                            Picture about to be uploaded: {this.state.picfile_name}
+                       </p>))
             : (this.state.pic_url ?
-                (<p style={{color: 'white'}}>Picture about to be uploaded: {this.state.picture_title}</p>)
+                (<p style={{color: 'white', fontSize: '14px', textShadow: '1px 1px 10px black'}}>
+                    Picture about to be uploaded: {this.state.picture_title}
+                 </p>)
                 : null)
 
         const category_form = this.state.picture_id ?

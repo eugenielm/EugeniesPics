@@ -31,7 +31,7 @@ const CatAdminActionsElement = (props) => {
                  style={{zIndex: 2, textAlign: 'center'}}
                  positionLeft={props.positionLeft} 
                  positionTop={props.positionTop}
-                 placement="right">
+                 placement="left">
             {edit_cat_link}{delete_cat_link}{new_picture_link}
         </Popover>
     );
@@ -41,18 +41,26 @@ const CatAdminActionsElement = (props) => {
 class PicturesIndex extends React.Component {
 
     componentWillMount() {
-        this.setState({ categoryName: '', 
-                        descriptionContent: null,
-                        pictures: [], 
-                        categoryDescriptions: {}, 
-                        availableLanguages: [],
-                        language: '',
-                        panelOpen: false,
-                        showPicDesc: false,
-                        displayDeleteModal: false});
+        this.setState(this.initialState);
+        this.initialState = this.initialState.bind(this);
         this.handleCategoryDescription = this.handleCategoryDescription.bind(this);
         this.showPicDescription = this.showPicDescription.bind(this);
         this.handleDeleteModal = this.handleDeleteModal.bind(this);
+    }
+
+    initialState() {
+        return {
+            categoryName: '', 
+            descriptionContent: null,
+            pictures: [], 
+            categoryDescriptions: {}, 
+            availableLanguages: [],
+            language: '',
+            panelOpen: false,
+            showPicDesc: false,
+            displayDeleteModal: false,
+            display: 'none',
+        };
     }
 
     componentDidMount() {
@@ -78,8 +86,12 @@ class PicturesIndex extends React.Component {
                                                  : (availableLanguages.includes('EN') ? 'EN' : availableLanguages[0]);
             const categoryDescription = categoryDescriptions[language];
             const descriptionContent = categoryDescription ? categoryDescription.split('\r\n') : null;
-            this.setState({categoryName, pictures, availableLanguages, language, categoryDescriptions, descriptionContent});
+            this.setState({categoryName, pictures, availableLanguages, language, categoryDescriptions, descriptionContent, display: 'block'});
         }.bind(this));
+    }
+
+    componentWillUnmount() {
+        this.setState({display: 'none'});
     }
 
     // this method is needed to triger re-rendering when switching from one categories index page to another
@@ -132,11 +144,11 @@ class PicturesIndex extends React.Component {
                                  onClick={() => this.handleCategoryDescription(lang)}>{lang}</Button>);
         
         return (
-            <div id="pictures-page">
+            <div id="pictures-page" style={{display: this.state.display}}>
 
                 { this.props.user && this.props.user.superadmin ?
                     <OverlayTrigger trigger="click" 
-                                    placement="right" 
+                                    placement="left" 
                                     overlay={<CatAdminActionsElement {...this.props} 
                                                                      category_id={this.props.match.params.category_id}
                                                                      handleDeleteModal={this.handleDeleteModal} />} >

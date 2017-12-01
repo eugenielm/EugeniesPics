@@ -1,7 +1,22 @@
-.user-info td > a:hover { background-color: transparent }
+.user-info {
+    width: 96%;
+    margin: 170px auto 0 auto;
+    max-width: 800px;
+    text-align: center;
+    height: 100%;
+    /* needed for proper footer layout */
+    padding-bottom: 30px;
+}
+
+@media screen and (max-width: 767px) and (min-width: 426px) {
+    .user-info { margin: 120px auto 0 auto }
+}
+
+@media screen and (max-width: 425px) {
+    .user-info { margin: 70px auto 0 auto }
+}
 
 #users_table {
     background-color: white;
-    opacity: 0.9;
     border: solid thick white;
 }

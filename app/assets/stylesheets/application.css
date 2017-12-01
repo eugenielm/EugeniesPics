@@ -19,22 +19,25 @@
 html { height: 100% }
 
 body {
-    margin: 0px;
     height: 100%;
-    min-height: 100vh;
+    min-height: 100vh !important;
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    margin: 0; padding: 0;
 }
 
-#app-component, #app-container { min-height: 100vh }
+#app-component, #app-container {
+    min-height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0; left: 0; right: 0;
+}
 
 #app-container {
     font-family: Arial, Helvetica, sans-serif;
     background-image: url('/eugeniespics_bkgd.jpg');
     background-size: cover;
-    /* needed for footer absolute position */
-    position: relative;
 }
-
-.container { width: 94% }
 
 .inline {display: inline}
 
@@ -44,8 +47,10 @@ a.btn { color: white }
     color: white;
     text-shadow: 1px 1px 3px black;
     font-size: 30px;
-    margin: 1.2vh auto;
-    font-family: Italiana;
+    margin: 20px auto;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.3px;
     text-decoration: overline;
     display: inline-block;
 }
@@ -54,7 +59,7 @@ a.btn { color: white }
     font-size: 24px;
     color: white;
     text-shadow: 1px 1px 20px black;
-    margin: 1.2vh auto;
+    margin: 0 auto;
 }
 
 @media screen and (max-width: 767px) and (min-width: 426px) {
@@ -69,311 +74,26 @@ a.btn { color: white }
 
 
 /*********************************************************************/
-/* Page header - Navibar */
+/* Forms */
 
-#page-header {
-    text-align: center;
-    height: 160px;
-    padding: 0px 15px;
-    position: sticky;
-    z-index: 2; /* needed for the dropdown menus to be above the page content when opened */
-    box-shadow: 1px 1px 30px;
+.form-layout {
+    width: 90%;
+    max-width: 700px;
+    margin: 170px auto 0 auto; /* 150px for the header + 20px margin for the title */
+    /* for footer proper layout (NB: footer height is 30px) */
+    padding-bottom: 30px;
 }
 
-a#home-link { text-decoration: none }
-
-#site-name, #site-name-2 {
-    font-family: italiana;
-    color: white;
-    text-shadow: 1px 1px 30px rgb(0, 0, 0);
-}
-
-#site-name {
-    font-size: 48px;
-    line-height: 80px;
-}
-
-#site-name-2 {
-    font-size: 16px;
-    margin-top: -25px;
-}
-
-div#menuitems {
-    position: absolute;
-    left: 0; right: 0; bottom: 10px;
-}
-
-a.btn.btn-default { color: black }
-
-#page-header li {
-    font-family: italiana;
-    letter-spacing: 0.5px;
-}
-
-#page-header #menuitems #gallery_btn,
-#page-header #menuitems #about_button,
-#page-header #menuitems li {
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-    background: none;
-    font-family: italiana;
-    letter-spacing: 0.5px;
-    padding: 0.2vw 0.6vw;
-    margin-left: 1.2vh;
-    margin-right: 1.2vh;
-    font-size: 18px;
-    display: inline-block;
-    text-shadow: 1px 1px 30px black;
-    color: white; /* font-color */
-}
-
-/* categories menu items */
-#page-header #menuitems li a {
-    color: white;
-    background: none;
-    text-decoration: none;
-    outline: 0;
-}
-
-/* All categories and About buttons hover */
-#page-header #menuitems #gallery_btn:hover,
-#page-header #menuitems #about_button:hover,
-#page-header #menuitems li:hover {
-    background-color: rgba(255,255,255,0.4);
-}
-
-#page-header #menuitems li a:hover {
-    background: none; /* prevent default black background on a:hover */
-}
-
-#page-header #gallery_btn.active,
-#page-header #about_button.active {
-    font-style: italic;
-    background-color: transparent !important;
-    cursor: default;
-    text-decoration: overline;
-}
-
-#page-header #menuitems li.active {
-    background-color: transparent;
-}
-
-#page-header #menuitems li.active a {
-    cursor: default;
-    font-style: italic;
-    text-decoration: overline;
-}
-
-/* Admin menu button position on wide screens in on the top right corner */
-#page-header div.dropdown.btn-group:nth-of-type(3) {
-    position: absolute;
-    top: 20px; right: 20px;
-    margin: 0;
-    font-family: italiana;
-    letter-spacing: 0.5px;
-    font-size: 16px;
-}
-
-/* Admin menu list items line-height */
-#page-header div.dropdown.btn-group:nth-of-type(3) li a {
-    line-height: 24px;
-}
-
-/* Open admin dropdown */
-#page-header div.dropdown.open.btn-group li.active a {
-    background-image: none; /* needed to set a background color */
-    background-color: #b1bdca;
-}
-
-/* Admin menu items */
-
-button#admin_dropdown {
-    color: white;
-    text-shadow: none;
-    background-color: rgba(0,0,0,0.2);
-    border: solid thin #929292;
-    font-size: 16px;
-    background-image: none;
-    padding: 8px;
-}
-
-#admin_dropdown:hover { background-color: rgba(255,255,255,0.3) }
-
-
-@media screen and (max-width: 767px) and (min-width: 425px) {
-    #page-header { height: 100px }
-    
-    #site-name { line-height: 80px; font-size: 36px; }
-    #site-name-2 {margin-top: -30px; font-size: 15px; }
-
-    /* dropdown menu with categories */
-    #page-header div.dropdown.btn-group:nth-of-type(2) {
-        position: absolute;
-        top: 20px; left: 15px;
+@media screen and (max-width: 767px) and (min-width: 426px) {
+    .form-layout {
+        margin: 120px auto 0 auto; /* 100px for the header + 20px margin for the title */
     }
-
-    button#menuitems.visible-xs,
-    button#menuitems.visible-xs:active,
-    button#menuitems.visible-xs:active {
-        font-size: 40px;
-        border: none;
-        background-color: rgba(255,255,255,0.25);
-        background-image: none;
-        box-shadow: 1px 1px 15px white;
-        text-shadow: none;
-        padding: 10px 14px 0 14px;
-    }
-
-    button#menuitems.visible-xs:hover,
-    button#menuitems.visible-xs:focus {
-        background-color: rgba(255,255,255,0.6);
-        border: solid thin white;
-    }
-
-    #page-header div.dropdown.btn-group:nth-of-type(2) a {
-        line-height: 30px;
-        font-family: italiana;
-        letter-spacing: 0.5px;
-        font-size: 14px;
-    }
-
-    #page-header div.dropdown.btn-group:nth-of-type(2) a.active {
-        text-decoration: none;
-        color: darkgray;
-    }
-
-    /* admin dropdown menu centered vertically */
-    #page-header div.dropdown.btn-group:nth-of-type(3) {
-        top: 32px; right: 10px;
-    }
-
-    #page-header div.dropdown.btn-group:nth-of-type(3) #admin_dropdown {
-        margin: 0;
-        text-align: center;
-        font-size: 14px;
-    }
-
-    #page-header div.dropdown.btn-group:nth-of-type(3) li a {
-        font-family: italiana;
-        letter-spacing: 0.5px;
-        font-size: 12px;
-        line-height: 24px;
-    }
-
-    #page-header div.dropdown.btn-group:nth-of-type(3) li a:focus,
-    #page-header div.dropdown.btn-group:nth-of-type(2) a:focus {
-        outline: 0;
-    }
-}
-
-
-@media screen and (max-width: 424px) {
-
-    #page-header { height: 60px }
-    
-    #site-name { line-height: 45px; font-size: 7.5vw; }
-    #site-name-2 {margin-top: -20px; font-size: 3.2vw; }
-
-    /* dropdown menu with categories */
-    #page-header div.dropdown.btn-group:nth-of-type(2) {
-        position: absolute;
-        top: 10px; left: 10px;
-    }
-
-    button#menuitems.visible-xs {
-        font-size: 24px;
-        border: none;
-        background-color: rgba(255,255,255,0.25);
-        background-image: none;
-        box-shadow: 1px 1px 15px white;
-        text-shadow: none;
-        padding: 8px 12px 0 12px;
-    }
-
-    button#menuitems.visible-xs:hover,
-    button#menuitems.visible-xs:focus {
-        background-color: rgba(255,255,255,0.6);
-        border: solid thin white;
-    }
-
-    #page-header div.dropdown.btn-group:nth-of-type(2) a {
-        line-height: 30px;
-        font-family: italiana;
-        letter-spacing: 0.5px;
-        font-size: 14px;
-    }
-
-    #page-header div.dropdown.btn-group:nth-of-type(2) a.active {
-        text-decoration: none;
-        color: darkgray;
-    }
-
-    /* admin dropdown menu */
-    #page-header div.dropdown.btn-group:nth-of-type(3) {
-        top: 16px; right: 10px;
-    }
-
-    #page-header div.dropdown.btn-group:nth-of-type(3) #admin_dropdown {
-        margin: 0;
-        padding: 6px;
-        text-align: center;
-        font-size: 11px;
-        box-shadow: none;
-    }
-
-    #page-header div.dropdown.btn-group:nth-of-type(3) li a {
-        font-family: italiana;
-        letter-spacing: 0.5px;
-        font-size: 12px;
-        line-height: 24px;
-    }
-
-    #page-header div.dropdown.btn-group:nth-of-type(3) li a:focus,
-    #page-header div.dropdown.btn-group:nth-of-type(2) a:focus {
-        outline: 0;
-    }
-}
-
-/*********************************************************************/
-/* Page footer */
-
-#footer {
-    background: var(--site-footer);
-    text-align: center;
-    height: 30px;
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    display: table;
-}
-
-#footer p {
-    color: white;
-    text-shadow: 1px 1px 1px black;
-    font-size: 13px;
-    font-family: ubuntu;
-    display: table-cell;
-    vertical-align: middle;
-}
-
-@media screen and (max-width: 768px) and (min-width: 426px) {
-    #footer p { font-size: 12px; }
 }
 
 @media screen and (max-width: 425px) {
-    #footer p { font-size: 11px }
-}
-
-/*********************************************************************/
-/* Forms */
-
-.form-layout, .user-info {
-    width: 90%;
-    max-width: 700px;
-    margin: auto;
-    /* needed for proper footer layout */
-    padding-bottom: 50px;
+    .form-layout {
+        margin: 80px auto 0 auto; /* 60px for the header + 20px margin for the title */
+    }
 }
 
 .form-layout h2, .form-layout h3 { margin-bottom: 5vh }
@@ -421,6 +141,7 @@ div.form-layout table td input { width: 100% }
     opacity: 0.9;
 }
 
+
 /*********************************************************************/
 /* notices (Rails flash layout) */
 
@@ -465,42 +186,4 @@ div.notice.alert button.close {
     src: url('/fonts/UbuntuMono-R.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
-}
-
-
-/*********************************************************************/
-/* Facebook share button in home, all galleries and pictures index pages */
-
-#fb_share_btn {
-    border: none;
-    height: 20px;
-    width: 58px;
-    display: flex;
-    position: absolute;
-    bottom: -20px;
-    right: 20px;
-    padding: 3px 5px;
-    border-radius: 3px;
-    box-shadow: 1px 1px 20px #ededed;
-    background-color: #3B5998;
-    color: white;
-    outline: 0;
-}
-
-#fb_share_btn > span {
-    display: inline-flex;
-    vertical-align: middle;
-    font-size: 11px;
-    font-family: Helvetica, Arial, sans-serif;
-    margin-left: 5px;
-    letter-spacing: 0.5px;
-    
-}
-
-#fb_share_btn:hover {
-    opacity: 0.9;
-}
-
-@media screen and (max-width: 768px) {
-    #fb_share_btn { right: 10px }
 }

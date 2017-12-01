@@ -1,10 +1,18 @@
 #categories-page {
     width: 100%;
     position: relative;
-    margin: auto;
+    margin: 160px auto 0 auto;
     text-align: center;
-    /* needed for proper footer layout */
-    padding-bottom: 40px;
+    /* for footer proper layout (NB: footer height is 30px) */
+    padding-bottom: 30px;
+}
+
+@media screen and (max-width: 767px) and (min-width: 425px) {
+    #categories-page { margin: 110px auto 0 auto }
+}
+
+@media screen and (max-width: 424px) {
+    #categories-page { margin: 60px auto 0 auto }
 }
 
 #all_cats {
@@ -35,9 +43,10 @@
 }
 
 .cat_pic:hover img {
-    opacity: 0.7;
-    -webkit-transition: opacity 0.3s linear 0s; /* For Safari 3.1 to 6.0 */
-    transition: opacity 0.3s linear 0s;
+    opacity: 0.8;
+    filter: blur(4px);
+    -webkit-transition: opacity 0.2s linear 0s; /* For Safari 3.1 to 6.0 */
+    transition: opacity 0.2s linear 0s;
 }
 
 .catname {
@@ -51,7 +60,7 @@
     opacity: 0;
     -webkit-transition: opacity 0.2s linear 0s; /* For Safari 3.1 to 6.0 */
     transition: opacity 0.2s linear 0s;
-    text-shadow: 1px 1px 1px black;
+    text-shadow: 2px 2px 4px black;
 }
 
 .cat_pic:hover .catname {

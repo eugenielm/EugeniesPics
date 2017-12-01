@@ -3,19 +3,23 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 #home-page {
-    height: calc(100vh - 220px); /* header is 160px and footer 30px + 30px margin */
+    /* header height is 150px */
+    margin-top: 150px;
+    height: calc(100vh - 150px); /* NB: 100% doesn't work */
 }
 
 @media screen and (max-width: 767px) and (min-width: 425px) {
     #home-page {
-        height: calc(100vh - 160px); /* header is 100px and footer 30px + 30px margin */
+        margin-top: 100px;
+        height: calc(100vh - 100px); /* header is 100px */
     }
 }
 
 @media screen and (max-width: 424px) {
     #home-page {
-        height: calc(100vh - 120px); /* header is 60px and footer 30px + 30px margin */
-        max-height: 150vw;
+        margin-top: 60px;
+        height: calc(100vh - 60px); /* header is 60px */
+        max-height: 150%;
     }
 }
 
@@ -23,22 +27,23 @@
 /* Home page carousel */
 
 #home-page div.carousel.slide {
-    width: 96vw;
-    height: 85%;
-    max-height: 120vw;
-    margin: 2% auto 0 auto;
-}
-
-@media screen and (max-width: 425px) {
-    #home-page div.carousel.slide {
-        height: 125vw;
-        margin: calc((100vh - 125vw - 90px)/2) auto;
-    }
+    position: relative;
+    width: 98%;
+    height: 95%;
+    margin: auto;
 }
 
 #home-page div.carousel.slide div.carousel-inner {
-    height: 100%;
+    /* carousel indicators have a height of 18px and a 10px-bottom margin,
+    plus a 20px bottom for screens wider than 768px */
+    height: calc(100% - 48px);
     width: 100%;
+}
+
+@media screen and (max-width: 767px) {
+    #home-page div.carousel.slide div.carousel-inner {
+        height: calc(100% - 28px);
+    }
 }
 
 #home-page div.carousel.slide div.carousel-inner div.item {
@@ -49,23 +54,24 @@
 
 #home-page div.carousel.slide div.carousel-inner div.item img {
     max-width: 100%;
-    max-height: 100%;
+    max-height: 90%;
     position: absolute;
     left: 50%;
     top: 50%;
+    transform: translate(-50%, -50%);
     -webkit-transform: translateY(-50%) translateX(-50%);
 }
 
 #home-page div.carousel.slide div.carousel-inner div.item div.carousel-caption p {
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     font-weight: 300;
-    letter-spacing: 0.6px;
+    letter-spacing: 1px;
     font-size: 2em;
     display: inline;
     margin: auto;
     padding: 3px 8px 5px 8px;
     border-radius: 25px;
-    text-shadow: 1px 1px 5px black;
+    text-shadow: 1px 3px 3px black;
 }
 
 #home-page a.carousel-control {
@@ -80,7 +86,6 @@
     text-shadow: 3px 3px 10px black;
 }
 
-#home-page ol.carousel-indicators { bottom: 0 }
 #home-page ol.carousel-indicators li { background-color: white; border-color: rgb(93, 93, 93); }
 #home-page ol.carousel-indicators li.active { background-color: black; border-color: white; }
 
@@ -96,9 +101,19 @@
 #contact_page {
     width: 96%;
     max-width: 600px;
-    margin: auto;
+    margin: 160px auto 0 auto; /* header has a height of 150px + 10px extra margin */
     padding: 20px;
     height: 100%;
+    /* for footer proper layout (NB: footer height is 30px) */
+    padding-bottom: 30px;
+}
+
+@media screen and (max-width: 767px) and (min-width: 426px) {
+    #contact_page { margin: 110px auto 0 auto } /* header has a height of 100px + 10px extra margin */
+}
+
+@media screen and (max-width: 425px) {
+    #contact_page { margin: 70px auto 0 auto } /* header has a height of 60px + 10px extra margin */
 }
 
 #about_presentation {
