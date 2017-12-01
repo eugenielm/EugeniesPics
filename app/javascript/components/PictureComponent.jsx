@@ -55,7 +55,7 @@ class EditDeletePicture extends React.Component {
                                                                  category_id={this.props.cat_id}
                                                                  picture_id={this.props.pic_id}
                                                                  handleDeleteModal={this.handleDeleteModal} />} >
-                    <Button id="pic_admin_overlay_btn">
+                    <Button className="pic_admin_overlay_btn">
                         <span className="glyphicon glyphicon-cog"></span>
                     </Button>
                 </OverlayTrigger>

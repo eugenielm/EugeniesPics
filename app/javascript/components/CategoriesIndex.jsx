@@ -45,14 +45,14 @@ class EditDeleteCategory extends React.Component {
 
   render() {
     return (
-      <div id="edit-delete-cat">
+      <div className="edit-delete-cat">
 
           <OverlayTrigger trigger="click" 
                           placement="right" 
                           overlay={<CatAdminActionsElement {...this.props} 
                                                            category_id={this.props.cat_id}
                                                            handleCatDeleteModal={this.handleCatDeleteModal} />} >
-            <Button id="cat_admin_overlay_btn">
+            <Button className="cat_admin_overlay_btn">
                 <span className="glyphicon glyphicon-cog"></span>
             </Button>
           </OverlayTrigger>

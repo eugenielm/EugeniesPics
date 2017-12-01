@@ -43,6 +43,8 @@ body {
 
 a.btn { color: white }
 
+a:hover { background: none }
+
 .page-title {
     color: white;
     text-shadow: 1px 1px 3px black;
@@ -60,6 +62,7 @@ a.btn { color: white }
     color: white;
     text-shadow: 1px 1px 20px black;
     margin: 0 auto;
+    text-align: center;
 }
 
 @media screen and (max-width: 767px) and (min-width: 426px) {

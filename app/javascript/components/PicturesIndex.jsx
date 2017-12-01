@@ -152,7 +152,7 @@ class PicturesIndex extends React.Component {
                                     overlay={<CatAdminActionsElement {...this.props} 
                                                                      category_id={this.props.match.params.category_id}
                                                                      handleDeleteModal={this.handleDeleteModal} />} >
-                        <Button id="cat_admin_overlay_btn">
+                        <Button className="cat_admin_overlay_btn">
                             <span className="glyphicon glyphicon-cog"></span>
                         </Button>
                     </OverlayTrigger>

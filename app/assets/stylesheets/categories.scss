@@ -2,9 +2,9 @@
     width: 100%;
     position: relative;
     margin: 160px auto 0 auto;
-    text-align: center;
     /* for footer proper layout (NB: footer height is 30px) */
     padding-bottom: 30px;
+    text-align: center;
 }
 
 @media screen and (max-width: 767px) and (min-width: 425px) {
@@ -99,13 +99,19 @@
 
 
 /* admin buttons to edit categories on the category index */
-#edit-delete-cat #cat_admin_overlay_btn {
+.edit-delete-cat .cat_admin_overlay_btn {
     position: absolute;
     top: 1px; left: 1px;
     outline: 0;
-    background: white;
-    opacity: 0.6;
+    opacity: 0.7;
     box-shadow: none;
-    color: #078498;
+    color: black;
+    background: #86a8d0;
+    text-shadow: none;
     padding: 3px 5px 1px 5px;
+    width: 26px;
+}
+
+.edit-delete-cat .cat_admin_overlay_btn:hover {
+    box-shadow: 1px 1px 20px white;
 }
