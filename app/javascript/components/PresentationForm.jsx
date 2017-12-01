@@ -6,7 +6,11 @@ import ErrorsComponent from './ErrorsComponent';
 
 
 const LanguageChoice = props => {
-    return <option value={props.data.id}>{props.data.name}</option>
+    // the list of keys returned by Object.keys(obj) are stringified
+    return <option value={props.data.id}
+                   disabled={Object.keys(props.usedLanguages).includes(props.data.id.toString()) ? true : false}>
+                   {props.data.name}
+           </option>
 };
 
 
@@ -18,6 +22,7 @@ class PresentationForm extends React.Component {
                         errors: this.props.presentation_errors || null,
                         user: this.props.user || null,
                         languages: [],
+                        usedLanguages: {},
                         presentation_id: this.props.match.params ? this.props.match.params.presentation_id : '',
                         presentation_content: this.props.presentation_data ? this.props.presentation_data.content : '',
                         presentation_language_id: this.props.presentation_data ? this.props.presentation_data.language_id : '' });
@@ -29,11 +34,29 @@ class PresentationForm extends React.Component {
     componentDidMount() {
 
         fetch('/languages.json', {credentials: 'same-origin'})
-        .then(function(resp) {
+          .then(function(resp) {
             return resp.json();
           })
           .then(function(languages) {
             this.setState({ languages, display: "block" });
+          }.bind(this));
+
+        // needed to deactivate already taken languages for a new presentation
+        fetch('/presentations.json', {credentials: 'same-origin'})
+          .then(function(resp) {
+            return resp.json();
+          })
+          .then(function(presentations) {
+              // presentations = {'LANG_ABBREV1': [pres_content1, language_name1, pres_id1, lang_id1], 'LANG2': [etc.]}
+              let usedLanguages = {};
+              Object.values(presentations).forEach(
+                  (v) => {
+                      const newKey = v[3];
+                      const newValue = v[1];
+                      usedLanguages[newKey] = newValue;
+                  }
+              )
+            this.setState({ usedLanguages })
           }.bind(this))
 
     }
@@ -92,24 +115,40 @@ class PresentationForm extends React.Component {
                         <tbody>
                             <tr>
                                 <td><label htmlFor="choose-language">Language</label>{newLangLink}</td>
-                                <td>
-                                    <FormGroup controlId="formControlsSelect">
-                                        <FormControl componentClass="select" 
-                                                     value={this.state.presentation_language_id || "-- select --"} 
-                                                     name="presentation[language_id]" 
-                                                     onChange={this.handleLanguageId}>
-                                            <option value="-- select --">-- select --</option>
-                                            { this.state.languages.map(pres => <LanguageChoice key={pres.id} data={pres} />) }>
-                                        </FormControl>
-                                    </FormGroup>
-                                </td>
+                                {this.state.presentation_id ?
+                                    (<td>
+                                        <FormGroup controlId="formControlsSelect">
+                                            <FormControl componentClass="select" readOnly 
+                                                         value={this.state.presentation_language_id} 
+                                                         name="presentation[language_id]">
+                                                <option value={this.state.presentation_language_id}>
+                                                    {this.state.usedLanguages[this.state.presentation_language_id]}
+                                                </option>
+                                            </FormControl>
+                                        </FormGroup>
+                                    </td>)
+                                :
+                                    <td>
+                                        <FormGroup controlId="formControlsSelect">
+                                            <FormControl componentClass="select" 
+                                                        value={this.state.presentation_language_id || "-- select --"} 
+                                                        name="presentation[language_id]" 
+                                                        onChange={this.handleLanguageId}>
+                                                <option value="-- select --">-- select --</option>
+                                                { this.state.languages.map(lang => <LanguageChoice key={lang.id} 
+                                                                                                   data={lang} 
+                                                                                                   usedLanguages={this.state.usedLanguages} />) }>
+                                            </FormControl>
+                                        </FormGroup>
+                                    </td>
+                                }
                             </tr>
                             <tr>
                                 <td><label htmlFor="pres_content">Presentation</label></td>
                                 <td>
                                     <FormGroup controlId="formControlsTextarea">
                                         <FormControl componentClass="textarea" 
-                                                     placeholder={"Mention the title of this page on the first line!\r\nTell your story"} 
+                                                     placeholder={"Mention the title of your presentation page on the first line! (e.g. 'About me')\r\n\r\nTell your story"} 
                                                      style={{height: '400px'}}
                                                      name="presentation[content]" 
                                                      value={this.state.presentation_content || ''} 

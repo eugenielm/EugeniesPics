@@ -5,8 +5,8 @@ class PresentationsController < ApplicationController
     def index
         @presentations = {}
         Presentation.all.each do |p|
-            @presentations[p.language.abbreviation] = [p.content, p.language.name, p.id]
-            # @presentations = {'LANG1': [content1, language1, id1], 'LANG2': [content2, language2, id2]}
+            @presentations[p.language.abbreviation] = [p.content, p.language.name, p.id, p.language.id]
+            # @presentations = {'LANG_ABBREV1': [pres_content1, language_name1, pres_id1, lang_id1], 'LANG2': [etc.]}
         end
 
         respond_to do |format|

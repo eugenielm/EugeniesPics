@@ -44,7 +44,7 @@ class EditDeletePresentation extends React.Component {
 };
 
 const PresentationComponent = props => {
-  // props.presentation = ['LANG1', [content1, language1, id1]]
+  // props.presentation = ['LANG_ABBREV1', [pres_content1, language_name1, pres_id1, lang_id1]]]
   // remove the first line because it's the page title
   const sentences = props.presentation[1][0].split('\r\n');
   return (
@@ -66,7 +66,7 @@ class Presentations extends React.Component {
     
       componentWillMount() {
         this.setState({ presentations: {}, display: "none" });
-        // presentations = {'LANG1': [content1, language1, id1], 'LANG2': [content2, language2, id2]}
+        // presentations = {'LANG_ABBREV1': [pres_content1, language_name1, pres_id1, lang_id1], 'LANG2': [etc.]}
       }
     
       componentDidMount() {
@@ -84,14 +84,14 @@ class Presentations extends React.Component {
           <div id="presentations" style={{display: this.state.display}}>
             <div className="admin-page-title">'About me' presentations <Button bsStyle="success" 
                                                                                bsSize="xsmall" 
-                                                                               style={{opacity: '0.75'}}
+                                                                               style={{opacity: '0.75', paddingLeft: '6px'}}
                                                                                href="/presentations/new">
                                                                           <span className="glyphicon glyphicon-plus"></span>
                                                                       </Button>
             </div>
             { Object.entries(this.state.presentations).map((pres, i) => <PresentationComponent key={i} presentation={pres}/>) }
-            {/* presentations = {'LANG1': [content1, language1, id1], 'LANG2': [content2, language2, id2]}, 
-                so Object.entries(presentations) returns: [['LANG1', [content1, language1, id1]], ['LANG2', [content2, language2, id2]]] */}
+            {/* presentations = {'LANG_ABBREV1': [pres_content1, language_name1, pres_id1, lang_id1], 'LANG2': [etc.]}, 
+                so Object.entries(presentations) returns: [['LANG_ABBREV1', [pres_content1, language_name1, pres_id1, lang_id1]], ['LANG2', [etc.]]] */}
           </div>
         );
       }
