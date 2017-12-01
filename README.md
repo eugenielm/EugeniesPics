@@ -1,8 +1,16 @@
 EugeniesPics
 ==========
 
-'EugeniesPics' is a photography gallery website (WIP!), whose backend is
-implemented with Ruby on Rails - the frontend will be implemented using React.
+'EugeniesPics' is a dynamic photography gallery website.
+The backend is implemented with Ruby on Rails and the frontend with 
+ReactJS (using Wepback).
+
+A Puma webserver is used instead of the default RoR webserver bacause it's
+single threaded (which is fine in development).
+However Puma is better suited for production since it can handle multiple 
+requests concurrently.
+
+Nota Bene: this Puma webserver is configured to listen on port 3001.
 
 More about Ruby on Rails web framework: http://guides.rubyonrails.org/
 
@@ -10,7 +18,8 @@ More about Ruby on Rails web framework: http://guides.rubyonrails.org/
 Repository content
 ------------------
 + an app directory, containing:
-  + assets directory
+  + assets directory (which contains all the stylesheets, images/favicon.ico, 
+  and images/eugeniespics.jpg used when sharing on FB)
   + channels directory
   + controllers directory
   + helpers directory
@@ -46,24 +55,23 @@ update, yarn
 + lib directory, containing 2 empty directories: assets and tasks
 
 + a public directory containing: 404.html, 422.html, 500.html,
-apple-touch-icon-precomposed.png, apple-touch-icon.png, favicon.ico, robots.txt
+apple-touch-icon-precomposed.png, apple-touch-icon.png, favicon.ico, robots.txt,
+missing.jpg, eugeniespics_bckgd.jpg
 
 + a test directory, containing:
-  + a controllers directory, containing the tests for the categories, pictures,
-  sessions, users and welcome controllers
-  + a fixtures directory, containing a files directory (empty), and 3 files:
-  categories.yml, pictures.yml and users.yml
+  + a controllers directory, containing the tests for all the controllers
+  + a fixtures directory, containing a files directory (empty) and fixtures
   + a helpers directory (empty)
   + an integration directory (empty)
-  + a mailers directory (empty)
-  + a models directory, containg the tests for the user, category, and picture
-  models
+  + a mailers directory
+  + a models directory, containg the tests for all the models
   + a system directory, containing categories_test.rb and users_test.rb
   + application_system_test_case.rb
   + test_helper.rb
 
 + a vendor directory (empty)
 
++ babelrc: needed for Webpacker (gem used for ReactJS support)
 + .gitignore: containing the names of the files which are not to be committed in
 version control
 + Gemfile
@@ -96,30 +104,24 @@ with brew:
     ```sh
     bundle exec rails server
     ```
-NB: by default the server will run locally on port 3000
-To use another port:
-```sh
-bundle exec rails server -p <port>
-```
 
-5. To create a superadmin user profile:
-  + go to the URL: 'http://localhost:3000/signup'
+5. You also need to run the webpack dev server locally for React components support.
+In your terminal, navigate to the app directory and run the following command:
+  ```sh
+  ./bin/webpack-dev-server
+  ```
+More info on the Wepacker gem here: https://github.com/rails/webpacker
+
+6. To create a superadmin user profile:
+  + go to the URL: 'http://localhost:3001/signup'
   + use the form to sign up
-  + in the command line, run
-  ```sh
-  rails console
-  ```
-  + once in the rails console, type in:
-  ```sh
-  u = User.last
-  ```
-  + and finally you can run the following command to be allowed to CRUD objects:
-  ```sh
-  u.update_column :superadmin, true
-  ```
+  + only the first user to register has super admin powers and can administrate 
+  the website!
 
-6. With your rails server still running locally on port 3000, you can log in on
-'http://localhost:3000/login' and create/update/delete categories and pictures!
+7. With both your Rails server and wepback dev server running locally, you can log
+in on 'http://localhost:3001/login' and create/update/delete categories and pictures!
+
+8. Nota Bene: you can access the login page on 'http://localhost:3001/login'
 
 
 How to run the tests
@@ -133,4 +135,7 @@ In the command line, navigate to the project directory and run the following com
 Room for improvement
 --------------------
 This project is still WIP:
-- need to implement the front-end with React framework
+- allow the user to request a new password if they lost it
+- allow the user to upload the picture for the website background
+- allow the user to upload the default picture for categories (currently missing.jpg)
+- implement a Facebook 'like' button?
