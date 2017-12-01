@@ -178,7 +178,7 @@ class PicturesIndex extends React.Component {
                     </Modal.Body>
                 </Modal>
                 
-                <div className="page-title">{this.state.categoryName}</div>
+                <div className="page-title">{this.state.categoryName.toUpperCase()}</div>
                 
                 {this.state.descriptionContent ? 
                     <div className="inline">

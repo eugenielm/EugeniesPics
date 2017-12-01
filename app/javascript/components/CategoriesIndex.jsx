@@ -120,7 +120,7 @@ class CategoriesIndex extends React.Component {
                           : null;
     return (
       <div id="categories-page">
-        <div className="page-title">All galleries{new_cat_link}</div>
+        <div className="page-title">ALL GALLERIES{new_cat_link}</div>
           <div id="all_cats">
             { this.state.categories.map(c => <CategoryComponent user={this.props.user} key={c.id} category={c}/>) }
           </div>
