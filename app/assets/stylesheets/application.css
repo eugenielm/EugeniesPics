@@ -47,32 +47,33 @@ a:hover { background: none }
 
 .page-title {
     color: white;
-    text-shadow: 1px 1px 3px black;
-    font-size: 30px;
+    text-shadow: 1px 1px 5px black;
+    font-size: 36px;
     margin: 20px auto;
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     font-weight: 300;
     letter-spacing: 0.3px;
-    text-decoration: overline;
     display: inline-block;
 }
 
 .admin-page-title {
-    font-size: 24px;
+    font-size: 26px;
     color: white;
-    text-shadow: 1px 1px 20px black;
+    text-shadow: 1px 1px 5px black;
     margin: 0 auto;
     text-align: center;
 }
 
+.form-layout .admin-page-title { margin-bottom: 30px }
+
 @media screen and (max-width: 767px) and (min-width: 426px) {
-    .page-title {font-size: 24px}
-    .admin-page-title {font-size: 20px}
+    .page-title {font-size: 30px}
+    .admin-page-title {font-size: 22px}
 }
 
 @media screen and (max-width: 426px) {
-    .page-title {font-size: 20px}
-    .admin-page-title {font-size: 16px}
+    .page-title {font-size: 24px}
+    .admin-page-title {font-size: 20px}
 }
 
 

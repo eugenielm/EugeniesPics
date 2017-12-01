@@ -2,8 +2,8 @@
     width: 98vw;
     margin: 160px auto 0 auto; /* 150px for the header + 10px margin for the title */
     text-align: center;
-    /* for footer proper layout (NB: footer height is 30px) */
-    padding-bottom: 30px;
+    /* for footer proper layout (NB: footer height is 30px + 10px margin to breath) */
+    padding-bottom: 40px;
 }
 
 #pictures-page .page-title { margin-bottom: 0 }
@@ -103,7 +103,7 @@
     font-size: 14px;
     letter-spacing: 0.7px;
     color: white;
-    text-shadow: 1px 1px 20px black;
+    text-shadow: 1px 1px 5px black;
     opacity: 0;
     position: absolute;
     text-align: center;
@@ -178,17 +178,17 @@ button.pic_admin_overlay_btn:hover {
 }
 
 @media screen and (min-width: 560px) and (max-width: 767px) {
-    .picture-element.col-lg-4.col-md-6.col-sm-6.col-xs-6 { height: 280px }
+    .picture-element.col-lg-4.col-md-6.col-sm-6.col-xs-6 { height: 260px }
     button.cat_admin_overlay_btn { top: 120px }
 }
 
 @media screen and (min-width: 426px) and (max-width: 559px) {
-    .picture-element.col-lg-4.col-md-6.col-sm-6.col-xs-6 { height: 220px }
+    .picture-element.col-lg-4.col-md-6.col-sm-6.col-xs-6 { height: 200px }
     button.cat_admin_overlay_btn { top: 120px }
 }
 
 @media screen and (max-width: 425px) {
-    .picture-element.col-lg-4.col-md-6.col-sm-6.col-xs-6 { height: 220px }
+    .picture-element.col-lg-4.col-md-6.col-sm-6.col-xs-6 { height: 180px }
     button.cat_admin_overlay_btn { top: 75px; right: 15px }
 }
 

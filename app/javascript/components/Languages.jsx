@@ -77,7 +77,7 @@ class Languages extends React.Component {
               Available languages <Button className="new-language-button" 
                                           bsStyle="success" 
                                           bsSize="xsmall" 
-                                          style={{opacity: '0.75'}}
+                                          style={{opacity: '0.75', paddingLeft: '6px'}}
                                           href="/languages/new">
                                       <span className="glyphicon glyphicon-plus"></span>
                                   </Button>

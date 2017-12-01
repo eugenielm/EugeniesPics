@@ -2,10 +2,12 @@
     width: 100%;
     position: relative;
     margin: 160px auto 0 auto;
-    /* for footer proper layout (NB: footer height is 30px) */
-    padding-bottom: 30px;
+    /* for footer proper layout (NB: footer height is 30px + 20px to breath) */
+    padding-bottom: 50px;
     text-align: center;
 }
+
+#categories-page .page-title { margin-bottom: 30px }
 
 @media screen and (max-width: 767px) and (min-width: 425px) {
     #categories-page { margin: 110px auto 0 auto }

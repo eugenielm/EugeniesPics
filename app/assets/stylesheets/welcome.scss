@@ -29,7 +29,7 @@
 #home-page div.carousel.slide {
     position: relative;
     width: 98%;
-    height: 95%;
+    height: 85%;
     margin: auto;
 }
 
@@ -108,8 +108,14 @@
     padding-bottom: 30px;
 }
 
-@media screen and (max-width: 767px) and (min-width: 426px) {
+#contact_page .page-title {
+    line-height: 22px; /* for alignment with the languages buttons */
+    margin-bottom: 40px;
+}
+
+@media screen and (max-width: 767px) {
     #contact_page { margin: 110px auto 0 auto } /* header has a height of 100px + 10px extra margin */
+    #contact_page .page-title { margin-bottom: 30px }
 }
 
 @media screen and (max-width: 425px) {
