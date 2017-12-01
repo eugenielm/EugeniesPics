@@ -192,7 +192,20 @@ button.lang_btns.active, button.lang_btns.active:hover {
 #contact_me div.actions {
     margin-top: -10px;
     margin-left: 10px;
+    width: 60px;
+    padding: 4px 6px;
+    background: #55a9c5;
+    box-shadow: 1px 1px 15px #9c9c9c;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    font-size: 14px;
 }
+
+#contact_me div.actions:hover {
+    box-shadow: 1px 1px 15px #676767;
+}
+
+#contact_me div.actions input { letter-spacing: 0.5px }
 
 form#contact_form div.actions input {
     background: var(--site-footer);
