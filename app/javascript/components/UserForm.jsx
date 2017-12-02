@@ -12,15 +12,17 @@ class UserForm extends React.Component {
                         id: this.props.user_data.id || null,
                         username: this.props.user_data.username || '',
                         email: this.props.user_data.email || '',
-                        password: '',
-                        password_confirmation: '',
+                        password: this.props.user_data.password_digest || '',
+                        password_confirmation: this.props.user_data.password_digest || '',
                         user: this.props.user,
                         firstUser: false,
+                        passwordFieldDisabled: true,
                         })
         this.handleUsername = this.handleUsername.bind(this);
         this.handleEmail = this.handleEmail.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
         this.handlePasswordConfirmation = this.handlePasswordConfirmation.bind(this);
+        this.handlePasswordField = this.handlePasswordField.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -72,6 +74,10 @@ class UserForm extends React.Component {
         }
     }
 
+    handlePasswordField() {
+        this.setState({passwordFieldDisabled: false, password: '', password_confirmation: ''});
+    }
+
     render() {
         const page_title = !this.state.id ? "Create user" : "Edit user";
         const form_action = this.state.id ? ("/users/" + this.state.id) : ("/users");
@@ -87,26 +93,57 @@ class UserForm extends React.Component {
                     {this.state.firstUser && !this.state.id ? <input type="hidden" name="user[superadmin]" value="true" readOnly={true} /> : null}
                     {input_edit}
 
-                    <Table bordered striped id="user_form_table">
-                        <tbody>
-                            <tr>
-                                <td><label htmlFor="user_username">Username</label></td>
-                                <td><input id="user_username" type="text" name="user[username]" maxLength="72" value={this.state.username || ''} onChange={this.handleUsername} /></td>
-                            </tr>
-                            <tr>
-                                <td><label htmlFor="user_email">Email address</label></td>
-                                <td><input id="user_email" type="email" name="user[email]" maxLength="255" value={this.state.email || ''} onChange={this.handleEmail} /></td>
-                            </tr>
-                            <tr>
-                                <td><label htmlFor="user_password">Password</label></td>
-                                <td><input id="user_password" type="password" name="user[password]" value={this.state.password || ''} onChange={this.handlePassword} /></td>
-                            </tr>
-                            <tr>
-                                <td><label htmlFor="user_password_confirmation">Password confirmation</label></td>
-                                <td><input id="user_password_confirmation" type="password" name="user[password_confirmation]" value={this.state.password_confirmation || ''} onChange={this.handlePasswordConfirmation} /></td>
-                            </tr>
-                        </tbody>
-                    </Table>
+                    {this.state.passwordFieldDisabled && this.state.id ?
+
+                        <Table bordered striped id="user_form_table">
+                            <tbody>
+                                <tr>
+                                    <td><label htmlFor="user_username">Username</label></td>
+                                    <td><input id="user_username" type="text" name="user[username]" maxLength="72" value={this.state.username || ''} onChange={this.handleUsername} /></td>
+                                </tr>
+                                <tr>
+                                    <td><label htmlFor="user_email">Email address</label></td>
+                                    <td><input id="user_email" type="email" name="user[email]" maxLength="255" value={this.state.email || ''} onChange={this.handleEmail} /></td>
+                                </tr>
+                                <tr>
+                                    <td><label htmlFor="user_password">Password &nbsp;
+                                            <a target="_blank" onClick={this.handlePasswordField} 
+                                                               style={{fontWeight: 'normal', fontSize: '11px'}}>
+                                                [Change]
+                                            </a>
+                                        </label>
+                                    </td>
+                                    <td>x-x-x-x-x-x-x-x-x-x-x-x-x</td>
+                                </tr>
+                            </tbody>
+                        </Table>
+                    :
+                        <Table bordered striped id="user_form_table">
+                            <tbody>
+                                <tr>
+                                    <td><label htmlFor="user_username">Username</label></td>
+                                    <td><input id="user_username" type="text" name="user[username]" maxLength="72" value={this.state.username || ''} onChange={this.handleUsername} /></td>
+                                </tr>
+                                <tr>
+                                    <td><label htmlFor="user_email">Email address</label></td>
+                                    <td><input id="user_email" type="email" name="user[email]" maxLength="255" value={this.state.email || ''} onChange={this.handleEmail} /></td>
+                                </tr>
+
+                                <tr>
+                                    <td><label htmlFor="user_password">Password</label></td>
+                                    <td><input id="user_password" type="password" name="user[password]" 
+                                               value={this.state.password || ''} 
+                                               onChange={this.handlePassword} /></td>
+                                </tr>
+                                <tr>
+                                    <td><label htmlFor="user_password_confirmation">Password confirmation</label></td>
+                                    <td><input id="user_password_confirmation" type="password" name="user[password_confirmation]" 
+                                               value={this.state.password_confirmation || ''} 
+                                               onChange={this.handlePasswordConfirmation} /></td>
+                                </tr>
+                            </tbody>
+                        </Table>
+                    }
 
                     <div className="actions">
                         <input type="submit" name="commit" value={this.state.id ? "Submit changes" : "Create user"} />

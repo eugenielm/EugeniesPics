@@ -60,15 +60,26 @@ class UsersController < ApplicationController
     end
   end
 
-  def update
+  def update    
     respond_to do |format|
-      if @user.update(user_params)
-        flash[:info] = 'User was successfully updated.'
-        format.html { redirect_to @user }
-        format.json { render :show, status: :ok, location: @user }
+      if params["user"]["password"]
+        if @user.update(user_params)
+          flash[:info] = 'User was successfully updated.'
+          format.html { redirect_to @user }
+          format.json { render :show, status: :ok, location: @user }
+        else
+          format.html { render :edit }
+          # format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
       else
-        format.html { render :edit }
-        # format.json { render json: @user.errors, status: :unprocessable_entity }
+        puts "edit_user_params"
+        if @user.update(edit_user_params)
+          flash[:info] = 'User was successfully updated.'
+          format.html { redirect_to @user }
+          format.json { render :show, status: :ok, location: @user }
+        else
+          format.html { render :edit }
+        end
       end
     end
   end
@@ -90,6 +101,11 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:username, :email, :password, :password_confirmation, :superadmin)
+    end
+
+    # if the user doesn't want to update their password, remove password and password_confirmation from strong params
+    def edit_user_params
+      params.require(:user).permit(:username, :email, :superadmin)
     end
 
     def get_user

@@ -10,7 +10,7 @@ class User < ApplicationRecord
 
   #http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html
   has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }
+  validates :password, presence: true, length: { minimum: 6 }, :if => :password
 
   # Returns the hash digest of the given string (needeed for fixtures)
   def User.digest(string)
