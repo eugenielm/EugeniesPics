@@ -10,7 +10,10 @@ class PicturesController < ApplicationController
     @fb_image = @category.catpic.url(:small)
 
     @pictures = Array.new
-    @category.pictures.each do |pic|
+    @unsorted_pictures = @category.pictures
+    # sort pictures by title for them to be displayed in order
+    @sorted_pictures = @unsorted_pictures.sort { |a,b| a.title.downcase <=> b.title.downcase }
+    @sorted_pictures.each do |pic|
       all_descriptions = {}
       pic.pic_descriptions.each do |d|
         if d.language # condition needeed for the pictures_controller_test to pass
