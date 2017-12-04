@@ -69,7 +69,7 @@ class PictureForm extends React.Component {
         this.setState({ category_id: this.props.match.params.category_id,
                         picture_id: this.props.match.params.picture_id,
                         picture_title: this.props.picture_data.title || '',
-                        author: this.props.picture_data.author || '',
+                        author: this.props.picture_data.author || 'Eugénie Le Moulec',
                         pic_descriptions: [],
                         pic_url: '',
                         prev_pic_url: '',
