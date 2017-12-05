@@ -96,7 +96,7 @@ class CategoryForm extends React.Component {
     }
 
     handleNameChange(event) {
-        if (event.target.value.match(/^[\w\ \u00E0-\u00FC\-¨()[\]_&=+*ˆ@#%\^]{0,20}$/)) {
+        if (event.target.value.match(/^[\w\ \u00E0-\u00FC\-¨()[\]_&=+*ˆ@#%\^\']{0,20}$/)) {
             this.setState({category_name: event.target.value});
         }  
     }
