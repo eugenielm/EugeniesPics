@@ -120,7 +120,7 @@ class Navibar extends React.Component {
                                                             index={this.state.categories.indexOf(c)} />) }
         </DropdownButton>
 
-        {this.props.user && this.props.user.superadmin ? 
+        {this.props.user ? 
           <DropdownButton id="admin_dropdown" 
                           title="Admin" 
                           open={this.state.openAdmin} 
@@ -132,9 +132,14 @@ class Navibar extends React.Component {
             <IndexLinkContainer to='/presentations'>
               <MenuItem eventKey={(numberOfCategories + 2).toString() + '.2'}>presentations</MenuItem>
             </IndexLinkContainer>
-            <IndexLinkContainer to='/users'>
-              <MenuItem eventKey={(numberOfCategories + 2).toString() + '.3'}>users</MenuItem>
-            </IndexLinkContainer>
+            {this.props.user.superadmin ?
+              <IndexLinkContainer to='/users'>
+                <MenuItem eventKey={(numberOfCategories + 2).toString() + '.3'}>users</MenuItem>
+              </IndexLinkContainer>
+            : <IndexLinkContainer to={'/users/' + this.props.user.id}>
+                <MenuItem eventKey={(numberOfCategories + 2).toString() + '.3'}>your profile</MenuItem>
+              </IndexLinkContainer>
+            }
             <MenuItem divider/>
             <IndexLinkContainer to="/logout" data-method="delete">
               <MenuItem eventKey={(numberOfCategories + 2).toString() + '.4'}>log out</MenuItem>
@@ -147,14 +152,6 @@ class Navibar extends React.Component {
           <i className="fa fa-facebook-official"></i>
           <span>Share</span>
         </button>
-                  
-        { this.props.user && !this.props.user.superadmin ?
-          <Button id="logout-button" 
-                  bsStyle="danger" 
-                  bsSize="xsmall" 
-                  data-method="delete" 
-                  href="/logout">Log out</Button>
-        : null }
       
       </div>
     )

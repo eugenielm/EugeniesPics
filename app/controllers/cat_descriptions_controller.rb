@@ -1,5 +1,5 @@
 class CatDescriptionsController < ApplicationController
-    before_action :admin_power
+    before_action :check_authentication
     before_action :get_category
     before_action :get_cat_description, except: [:index, :new, :create]
     
@@ -75,22 +75,15 @@ class CatDescriptionsController < ApplicationController
             params.require(:cat_description).permit(:content, :language_id, :category_id)
         end
 
-        def admin_power
+        def check_authentication
             if !logged_in?
-                if request.format == :json
-                    head :unauthorized
-                    return
-                end
-                session[:prev_url] = request.fullpath
-                flash[:info] = "You need to be logged in for this action."
-                redirect_to login_path
-            elsif !is_superadmin?
-                if request.format == :json
-                    head :unauthorized
-                    return
-                end
-                flash[:danger] = "Unauthorized action."
-                redirect_to root_path
+              if request.format == :json
+                head :unauthorized
+                return
+              end
+              session[:prev_url] = request.fullpath
+              flash[:danger] = "You need to be logged in for this action."
+              redirect_to login_path
             end
         end
 

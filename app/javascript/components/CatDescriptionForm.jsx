@@ -79,7 +79,10 @@ class CatDescriptionForm extends React.Component {
             alerts += "A category description must be at least 2 characters long and at most 1000 characters. "
         }
         if (!this.state.language_id || this.state.language_id == "-- select --") {
-            alerts += "Please select a language."
+            alerts += "Please select a language. "
+        }
+        if (this.state.user && !this.state.user.superadmin) {
+            alerts += "You don't have the required permissions to create a description."
         }
         if (alerts) {
             alert(alerts);
@@ -92,7 +95,7 @@ class CatDescriptionForm extends React.Component {
                             ("/categories/" + this.props.match.params.category_id + "/cat_descriptions/" + this.state.cat_description_id)
                             : ("/categories/" + this.props.match.params.category_id + "/cat_descriptions");
         const input_edit = this.state.cat_description_id ? React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'}) : null;
-        const newLangLink = (this.state.user && this.state.user.superadmin) ?
+        const newLangLink = (this.state.user) ?
                                 (<Button id="new_lang_link" bsSize="xsmall" bsStyle="success" 
                                          style={{marginLeft: '7px', paddingRight: '3px', opacity: '0.75'}}
                                          href={"/languages/new?redirect_to_cat_desc_edit=" + encodeURIComponent(this.props.match.url)}>
@@ -175,7 +178,8 @@ class CatDescriptionForm extends React.Component {
                     </Table>
 
                     <div className="actions">
-                        <input type="submit" name="commit" value={ this.state.cat_description_id ? "Submit changes" : "Create description"} />
+                        <input type="submit" name="commit" 
+                               value={ this.state.cat_description_id ? "Submit changes" : "Create description"} />
                     </div>
                 </form>
             </div>

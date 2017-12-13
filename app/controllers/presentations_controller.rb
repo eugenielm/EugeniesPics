@@ -1,5 +1,5 @@
 class PresentationsController < ApplicationController
-    before_action :admin_power, except: [:index, :show]
+    before_action :check_authentication, except: [:index, :show]
     before_action :get_presentation, except: [:index, :new, :create]
     
     def index
@@ -74,22 +74,15 @@ class PresentationsController < ApplicationController
             params.require(:presentation).permit(:content, :language_id)
         end
 
-        def admin_power
+        def check_authentication
             if !logged_in?
-                if request.format == :json
-                    head :unauthorized
-                    return
-                end
-                session[:prev_url] = request.fullpath
-                flash[:danger] = "You need to be logged in for this action."
-                redirect_to login_path
-            elsif !is_superadmin?
-                if request.format == :json
-                    head :unauthorized
-                    return
-                end
-                flash[:danger] = "Unauthorized action."
-                redirect_to root_path
+              if request.format == :json
+                head :unauthorized
+                return
+              end
+              session[:prev_url] = request.fullpath
+              flash[:danger] = "You need to be logged in for this action."
+              redirect_to login_path
             end
         end
 

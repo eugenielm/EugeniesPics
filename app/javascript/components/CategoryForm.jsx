@@ -4,6 +4,13 @@ import { Button, Table, Popover, OverlayTrigger, Modal } from 'react-bootstrap';
 import ErrorsComponent from './ErrorsComponent';
 
 
+const unauthorizedActionPopover = (
+    <Popover id="popover-trigger-click-hover" title="">
+      You don't have the permissions to delete this category.
+    </Popover>
+);
+
+
 class CategoryContent extends React.Component {
     componentWillMount() {
         this.setState({displayDeleteModal: false});
@@ -34,22 +41,40 @@ class CategoryContent extends React.Component {
                 </Button>
                 <Modal show={this.state.displayDeleteModal}>
                     <Modal.Body>
-                        <div className="confirm_delete_modal">
-                            Are you sure you want to destroy the {this.props.cat_description.language_name} description 
-                            of {this.props.category_name}?
-                            <br/><br/>
-                            <Button bsStyle="danger" 
-                                    bsSize="xsmall"
-                                    onClick={() => this.setState({displayDeleteModal: false})}
-                                    href={"/categories/" + this.props.category_id 
-                                        + "/cat_descriptions/" + this.props.cat_description.description_id}
-                                    data-method="delete"
-                                    style={{marginLeft: '5px'}}
-                                    >Yes
-                            </Button>
-                            <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
-                                    onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
-                        </div>
+                        {this.props.user && this.props.user.superadmin ?
+                            <div className="confirm_delete_modal">
+                                Are you sure you want to destroy the {this.props.cat_description.language_name} description 
+                                of {this.props.category_name}?
+                                <br/><br/>
+                                <Button bsStyle="danger" 
+                                        bsSize="xsmall"
+                                        onClick={() => this.setState({displayDeleteModal: false})}
+                                        href={"/categories/" + this.props.category_id 
+                                            + "/cat_descriptions/" + this.props.cat_description.description_id}
+                                        data-method="delete"
+                                        style={{marginLeft: '5px'}}
+                                        >Yes
+                                </Button>
+                                <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
+                                        onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
+                            </div>
+                        :
+                            <OverlayTrigger trigger={['hover', 'click']} placement="bottom" overlay={unauthorizedActionPopover}>
+                                <div className="confirm_delete_modal">
+                                    Are you sure you want to destroy the {this.props.cat_description.language_name} description 
+                                    of {this.props.category_name}?
+                                    <br/><br/>
+                                    <Button bsStyle="danger" 
+                                            bsSize="xsmall"
+                                            disabled={true}
+                                            style={{marginLeft: '5px'}}
+                                            >Yes
+                                    </Button>
+                                    <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
+                                            onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
+                                </div>
+                            </OverlayTrigger>
+                        }
                     </Modal.Body>
                 </Modal>
             </Popover>
@@ -110,8 +135,15 @@ class CategoryForm extends React.Component {
     }
 
     handleSubmit(event) {
+        let alerts = "";
         if (!this.state.category_name || this.state.category_name.length < 2 || this.state.category_name.length > 20) {
-            alert("A category name must be at least 2 characters long and at most 20 characters.")
+            alerts += "A category name must be at least 2 characters long and at most 20 characters. ";
+        }
+        if (this.state.user && !this.state.user.superadmin) {
+            alerts += "You don't have the required permissions to create or edit a category.";
+        }
+        if (alerts) {
+            alert(alerts);
             event.preventDefault();
         }
     }
@@ -132,6 +164,7 @@ class CategoryForm extends React.Component {
                                                          placement="bottom"
                                                          overlay={<CategoryContent {...this.props} 
                                                                                    cat_description={d} 
+                                                                                   user={this.state.user}
                                                                                    category_name={this.state.category_name}
                                                                                    category_id={this.state.category_id} />}>
                                             <Button bsSize="xsmall" style={{marginLeft: '10px'}}>{d.language_abbr}</Button>
@@ -203,7 +236,8 @@ class CategoryForm extends React.Component {
                                 href={"/categories/" + this.state.category_id} style={{marginLeft: 5 + 'px'}}>
                             <span className="glyphicon glyphicon-arrow-left"></span>
                         </Button>
-                        : <Button bsStyle="primary" bsSize="xsmall" className="back-link" href="/categories" style={{marginLeft: 5 + 'px'}}>
+                        : <Button bsStyle="primary" bsSize="xsmall" className="back-link" href="/categories" 
+                                  style={{marginLeft: 5 + 'px'}}>
                             <span className="glyphicon glyphicon-arrow-left"></span>
                           </Button>
                     }

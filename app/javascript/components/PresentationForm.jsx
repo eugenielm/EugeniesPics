@@ -77,7 +77,10 @@ class PresentationForm extends React.Component {
             alerts += "A presentation must be at least 10 characters long and at most 1000 characters. "
         }
         if (!this.state.presentation_language_id || this.state.presentation_language_id == "-- select --") {
-            alerts += "Please select a language."
+            alerts += "Please select a language. "
+        }
+        if (this.state.user && !this.state.user.superadmin) {
+            alerts += "You don't have the required permissions to create or edit a presentation."
         }
         if (alerts) {
             alert(alerts);

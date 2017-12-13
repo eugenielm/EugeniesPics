@@ -3,10 +3,16 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import { Button, Col, Image, Modal, OverlayTrigger, Tooltip, Panel, Popover } from 'react-bootstrap';
 
+
 const tooltip = (
     <Tooltip id="tooltip">~ C ~ L ~ I ~ C ~ K ~</Tooltip>
 );
 
+const unauthorizedActionPopover = (
+    <Popover id="popover-trigger-click-hover" title="">
+      You don't have the permissions to delete this picture.
+    </Popover>
+);
 
 const PicAdminActionsElement = (props) => {
     const edit_cat_link = <Button bsStyle="primary" 
@@ -62,20 +68,37 @@ class EditDeletePicture extends React.Component {
 
                 <Modal show={this.state.displayDelePicteModal}>
                     <Modal.Body>
-                        <div className="confirm_delete_modal">
-                            Are you sure you want to destroy '{this.props.pic_title}'?
-                            <br/><br/>
-                            <Button bsStyle="danger" 
-                                    bsSize="xsmall"
-                                    onClick={() => this.setState({displayDelePicteModal: false})}
-                                    href={ "/categories/" + this.props.cat_id + "/pictures/" + this.props.pic_id }
-                                    data-method="delete"
-                                    style={{marginLeft: '5px'}}
-                                    >Yes
-                            </Button>
-                            <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
-                                    onClick={() => this.setState({displayDelePicteModal: false})}>No</Button>
-                        </div>
+                        {this.props.user && this.props.user.superadmin ?
+                            <div className="confirm_delete_modal">
+                                Are you sure you want to destroy '{this.props.pic_title}'?
+                                <br/><br/>
+                                <Button bsStyle="danger" 
+                                        bsSize="xsmall"
+                                        onClick={() => this.setState({displayDelePicteModal: false})}
+                                        href={ "/categories/" + this.props.cat_id + "/pictures/" + this.props.pic_id }
+                                        data-method="delete"
+                                        style={{marginLeft: '5px'}}
+                                        >Yes
+                                </Button>
+                                <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
+                                        onClick={() => this.setState({displayDelePicteModal: false})}>No</Button>
+                            </div>
+                        :
+                            <OverlayTrigger trigger={['hover', 'click']} placement="bottom" overlay={unauthorizedActionPopover}>
+                                <div className="confirm_delete_modal">
+                                    Are you sure you want to destroy '{this.props.pic_title}'?
+                                    <br/><br/>
+                                    <Button bsStyle="danger" 
+                                            bsSize="xsmall"
+                                            disabled={true}
+                                            style={{marginLeft: '5px'}}
+                                            >Yes
+                                    </Button>
+                                    <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
+                                            onClick={() => this.setState({displayDelePicteModal: false})}>No</Button>
+                                </div>
+                            </OverlayTrigger>
+                        }
                     </Modal.Body>
                 </Modal>
             </div>
@@ -165,15 +188,15 @@ class PictureComponent extends React.Component {
                                     
                                     <OverlayTrigger placement="bottom" overlay={tooltip}>
                                         <Image src={this.props.currentPicture.pic_url_medium}
-                                            alt={this.props.currentPicture.title}
-                                            onClick={this.props.showPicDescription}
-                                            responsive />
+                                               alt={this.props.currentPicture.title}
+                                               onClick={this.props.showPicDescription}
+                                               responsive />
                                     </OverlayTrigger>
 
                                     : <Image src={this.props.currentPicture.pic_url_medium}
-                                            alt={this.props.currentPicture.title}
-                                            onClick={this.props.showPicDescription}
-                                            responsive />
+                                             alt={this.props.currentPicture.title}
+                                             onClick={this.props.showPicDescription}
+                                             responsive />
                                 }
 
                             {this.state.showDescription && descriptionsLength > 0 ? 
@@ -205,9 +228,10 @@ class PictureComponent extends React.Component {
                     
                     </Modal>
 
-                    {this.props.user && this.props.user.superadmin ?
+                    {this.props.user ?
                         (<EditDeletePicture cat_id={this.props.category_id} 
                                             pic_id={this.props.currentPicture.id} 
+                                            user={this.props.user}
                                             pic_title={this.props.currentPicture.title} />) : null}
                 </div>
         </Col>

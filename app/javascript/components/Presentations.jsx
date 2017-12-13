@@ -1,7 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal, Popover, OverlayTrigger } from 'react-bootstrap';
 
+
+const unauthorizedActionPopover = (
+  <Popover id="popover-trigger-click-hover" title="">
+    You don't have the permissions to delete this presentation.
+  </Popover>
+);
 
 class EditDeletePresentation extends React.Component {
   componentWillMount() {
@@ -23,6 +29,7 @@ class EditDeletePresentation extends React.Component {
 
         <Modal show={this.state.displayDeleteModal}>
             <Modal.Body>
+              {this.props.user && this.props.user.superadmin ?
                 <div className="confirm_delete_modal">
                     Are you sure you want to destroy {this.props.pres_lang} presentation?
                     <br/><br/>
@@ -36,12 +43,28 @@ class EditDeletePresentation extends React.Component {
                     <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
                             onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
                 </div>
+              :
+                <OverlayTrigger trigger={['hover', 'click']} placement="bottom" overlay={unauthorizedActionPopover}>
+                  <div className="confirm_delete_modal">
+                    Are you sure you want to destroy {this.props.pres_lang} presentation?
+                    <br/><br/>
+                    <Button bsStyle="danger" 
+                            bsSize="xsmall"
+                            disabled={true}
+                            >Yes
+                    </Button>
+                    <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
+                            onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
+                  </div>
+                </OverlayTrigger>
+              }  
             </Modal.Body>
         </Modal>
       </span>
     );
   }
 };
+
 
 const PresentationComponent = props => {
   // props.presentation = ['LANG_ABBREV1', [pres_content1, language_name1, pres_id1, lang_id1]]]
@@ -51,7 +74,8 @@ const PresentationComponent = props => {
     <div className="single-presentation">
       <h4>
         {props.presentation[1][1][0].toUpperCase() + props.presentation[1][1].slice(1)} presentation
-        <EditDeletePresentation pres_id={props.presentation[1][2]} 
+        <EditDeletePresentation user={props.user}
+                                pres_id={props.presentation[1][2]} 
                                 pres_lang={props.presentation[1][1]} />
       </h4>
       <div className="presentation-content">

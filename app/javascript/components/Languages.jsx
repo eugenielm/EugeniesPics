@@ -1,6 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Table, Modal } from 'react-bootstrap';
+import { Button, Table, Modal, Popover, OverlayTrigger } from 'react-bootstrap';
+
+
+const unauthorizedActionPopover = (
+  <Popover id="popover-trigger-click-hover" title="">
+    You don't have the permissions to delete this presentation.
+  </Popover>
+);
 
 class EditDeleteLanguage extends React.Component {
   componentWillMount() {
@@ -23,19 +30,35 @@ class EditDeleteLanguage extends React.Component {
         
         <Modal show={this.state.displayDeleteModal}>
           <Modal.Body>
+            {this.props.user && this.props.user.superadmin ?
+              <div className="confirm_delete_modal">
+                Are you sure you want to destroy the {this.props.lang_name} language?
+                <br/><br/>
+                <Button bsStyle="danger" 
+                        bsSize="xsmall"
+                        onClick={() => this.setState({displayDeleteModal: false})}
+                        href={ "/languages/" + this.props.lang_id }
+                        data-method="delete"
+                        >Yes
+                </Button>
+                <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
+                        onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
+            </div>
+          :
+            <OverlayTrigger trigger={['hover', 'click']} placement="bottom" overlay={unauthorizedActionPopover}>
               <div className="confirm_delete_modal">
                   Are you sure you want to destroy the {this.props.lang_name} language?
                   <br/><br/>
                   <Button bsStyle="danger" 
                           bsSize="xsmall"
-                          onClick={() => this.setState({displayDeleteModal: false})}
-                          href={ "/languages/" + this.props.lang_id }
-                          data-method="delete"
+                          disabled={true}
                           >Yes
                   </Button>
                   <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
                           onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
               </div>
+            </OverlayTrigger>
+            }
           </Modal.Body>
         </Modal>
 
@@ -44,12 +67,13 @@ class EditDeleteLanguage extends React.Component {
   }
 };
 
+
 const LanguageComponent = props => (
     <tr className="language-element">
         <td>{props.language.id}</td>
         <td>{props.language.name}</td>
         <td>{props.language.abbreviation}</td>
-        <td><EditDeleteLanguage lang_id={props.language.id} lang_name={props.language.name} /></td>
+        <td><EditDeleteLanguage lang_id={props.language.id} lang_name={props.language.name} user={props.user} /></td>
     </tr>
 );
 
@@ -92,7 +116,7 @@ class Languages extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                { this.state.languages.map(lang => <LanguageComponent key={lang.id} language={lang}/>) }
+                { this.state.languages.map(lang => <LanguageComponent key={lang.id} language={lang} user={this.props.user}/>) }
               </tbody>
             </Table>
 

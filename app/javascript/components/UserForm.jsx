@@ -68,6 +68,9 @@ class UserForm extends React.Component {
         if (!this.state.password || this.state.password.length < 6) {
             alerts += "Your password must be at least 6 characters long. ";
         }
+        if (this.state.user && !this.state.user.superadmin && this.state.user.id != this.state.id) {
+            alerts += "You don't have the required permissions for this action."
+        }
         if (alerts) {
             alert(alerts);
             event.preventDefault();
@@ -113,7 +116,7 @@ class UserForm extends React.Component {
                                             </a>
                                         </label>
                                     </td>
-                                    <td>x-x-x-x-x-x-x-x-x-x-x-x-x</td>
+                                    <td>••••••••••••••••</td>
                                 </tr>
                             </tbody>
                         </Table>

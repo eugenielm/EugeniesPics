@@ -1,10 +1,11 @@
 class LanguagesController < ApplicationController
-    before_action :admin_power
+    before_action :check_authentication
     before_action :get_language, except: [:index, :new, :create]
     before_action :get_redirect_link, only: [:create, :update]
     
     def index
-        @languages = Language.all
+        @unsorted_languages = Language.all
+        @languages = @unsorted_languages.sort { |a,b| a.name.downcase <=> b.name.downcase }
         respond_to do |format|
             format.html
             format.json {render :json => @languages}
@@ -105,22 +106,15 @@ class LanguagesController < ApplicationController
                                                 [:id, :content, pictures_attributes: [:id, :title, :author, :picfile]])
         end
 
-        def admin_power
+        def check_authentication
             if !logged_in?
-                if request.format == :json
-                    head :unauthorized
-                    return
-                end
-                session[:prev_url] = request.fullpath
-                flash[:danger] = "You need to be logged in for this action."
-                redirect_to login_path
-            elsif logged_in? && !is_superadmin?
-                if request.format == :json
-                    head :unauthorized
-                    return
-                end
-                flash[:danger] = "Unauthorized action."
-                redirect_to root_path
+              if request.format == :json
+                head :unauthorized
+                return
+              end
+              session[:prev_url] = request.fullpath
+              flash[:danger] = "You need to be logged in for this action."
+              redirect_to login_path
             end
         end
 

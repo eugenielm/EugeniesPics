@@ -24,7 +24,7 @@
     plus a 20px bottom for screens wider than 768px */
     height: calc(100% - 48px);
     width: 100%;
-    padding: 1%;
+    padding: 2%;
 }
 
 #home-page div.carousel.slide div.carousel-inner div.item {
@@ -43,6 +43,11 @@
     -webkit-transform: translateY(-50%) translateX(-50%);
 }
 
+#home-page div.carousel.slide div.carousel-inner div.item div.carousel-caption {
+    bottom: 0;
+    padding-bottom: 0;
+}
+
 #home-page div.carousel.slide div.carousel-inner div.item div.carousel-caption p {
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     font-weight: 300;
@@ -50,7 +55,7 @@
     font-size: 2em;
     display: inline;
     margin: auto;
-    padding: 3px 8px 5px 8px;
+    padding: 10px;
     border-radius: 25px;
     text-shadow: 1px 3px 3px black;
     -ms-word-break: break-all;

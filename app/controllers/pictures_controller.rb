@@ -1,7 +1,7 @@
 class PicturesController < ApplicationController
   before_action :require_category
   before_action :require_picture, :except => [:index, :new, :create]
-  before_action :admin_power, :except => [:index, :show]
+  before_action :check_authentication, :except => [:index, :show]
 
   def index
     @fb_url = category_url(@category) + '/pictures'
@@ -141,7 +141,7 @@ class PicturesController < ApplicationController
       end
     end
 
-    def admin_power
+    def check_authentication
       if !logged_in?
         if request.format == :json
           head :unauthorized
@@ -150,13 +150,6 @@ class PicturesController < ApplicationController
         session[:prev_url] = request.fullpath
         flash[:danger] = "You need to be logged in for this action."
         redirect_to login_path
-      elsif !is_superadmin?
-        if request.format == :json
-          head :unauthorized
-          return
-        end
-        flash[:danger] = "Unauthorized action."
-        redirect_to root_path
       end
     end
 

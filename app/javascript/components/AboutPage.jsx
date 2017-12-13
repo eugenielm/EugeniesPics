@@ -1,7 +1,71 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Table, FormGroup, FormControl, Panel } from 'react-bootstrap';
+import { Button, Table, FormGroup, FormControl, Panel, Modal, Popover, OverlayTrigger } from 'react-bootstrap';
 import ReCAPTCHA from 'react-google-recaptcha';
+
+
+const unauthorizedActionPopover = (
+    <Popover id="popover-trigger-click-hover" title="">
+      You don't have the permissions to delete this presentation.
+    </Popover>
+);
+
+class EditDeletePresentation extends React.Component {
+    componentWillMount() {
+      this.setState({displayDeleteModal: false});
+    }
+  
+    render() {
+      return (
+        <span>
+          <Button bsSize="xsmall" bsStyle="info" style={{ marginLeft: '17px', opacity: '0.75' }} 
+                  href={ "/presentations/" + this.props.pres_id + "/edit" }>
+            <span className="glyphicon glyphicon-edit"></span>
+          </Button>
+  
+          <Button bsSize="xsmall" bsStyle="danger" style={{ marginLeft: '20px', outline: 0, opacity: '0.75' }}
+                  onClick={() => this.setState({displayDeleteModal: true})}>
+              <span className="glyphicon glyphicon-trash"></span>
+          </Button>
+  
+          <Modal show={this.state.displayDeleteModal}>
+              <Modal.Body>
+                {this.props.user && this.props.user.superadmin ?
+                  <div className="confirm_delete_modal">
+                      Are you sure you want to destroy {this.props.pres_lang} presentation?
+                      <br/><br/>
+                      <Button bsStyle="danger" 
+                              bsSize="xsmall"
+                              onClick={() => this.setState({displayDeleteModal: false})}
+                              href={ "/presentations/" + this.props.pres_id }
+                              data-method="delete"
+                              >Yes
+                      </Button>
+                      <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
+                              onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
+                  </div>
+                :
+                  <OverlayTrigger trigger={['hover', 'click']} placement="bottom" overlay={unauthorizedActionPopover}>
+                    <div className="confirm_delete_modal">
+                      Are you sure you want to destroy {this.props.pres_lang} presentation?
+                      <br/><br/>
+                      <Button bsStyle="danger" 
+                              bsSize="xsmall"
+                              disabled={true}
+                              >Yes
+                      </Button>
+                      <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
+                              onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
+                  </div>
+                  </OverlayTrigger>
+                }  
+              </Modal.Body>
+          </Modal>
+        </span>
+      );
+    }
+  };
+
 
 class AboutPage extends React.Component {
     componentWillMount() {
@@ -42,7 +106,7 @@ class AboutPage extends React.Component {
           const presentationContent = presentation.split('\r\n');
           const pageTitle = presentationContent.shift();
           this.setState({ presentations, availableLanguages, presentationContent, pageTitle, language })
-          // presentations = {'LANG1': [content1, language1, id1], 'LANG2': [content2, language2, id2]}
+          // presentations = {'LANG_ABBREV1': [pres_content1, language_name1, pres_id1, lang_id1], 'LANG2': [etc.]}
         }.bind(this))
     }
 
@@ -76,7 +140,6 @@ class AboutPage extends React.Component {
         } else {
             this.setState({recaptchaResponse: null});
         }
-        
     }
 
     handleSubmit(e) {
@@ -108,9 +171,17 @@ class AboutPage extends React.Component {
                                                      disabled={lang == this.state.language ? true : false}
                                                      className='lang_btns'
                                                      onClick={() => this.handleContent(lang)}>{lang}</Button>);
+        const pres = this.state.presentations[this.state.language];
         return (
             <div id="contact_page">
-                <div className="page-title" style={{marginTop: 0 + 'px'}}>{this.state.pageTitle}</div>
+                <div className="page-title" style={{marginTop: 0 + 'px'}}>
+                    {this.state.pageTitle}
+                    {pres ?
+                        <EditDeletePresentation user={this.props.user}
+                                                pres_id={pres[2]} 
+                                                pres_lang={pres[1]} />
+                        : null}
+                </div>
                 { languageButtons ?
                     <div id="language_buttons">{languageButtons}</div>
                     : null

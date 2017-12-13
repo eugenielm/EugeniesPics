@@ -4,6 +4,12 @@ import { Button, Table, FormGroup, FormControl, OverlayTrigger, Popover, Modal }
 import ErrorsComponent from './ErrorsComponent';
 
 
+const unauthorizedActionPopover = (
+    <Popover id="popover-trigger-click-hover" title="">
+      You don't have the permissions to destroy this description.
+    </Popover>
+);
+
 const CategoryChoice = props => {
     return <option value={props.data.id}>{props.data.name}</option>
 };
@@ -39,22 +45,39 @@ class PictureContent extends React.Component {
                 </Button>
                 <Modal show={this.state.displayDeleteModal}>
                     <Modal.Body>
-                        <div className="confirm_delete_modal">
-                            Are you sure you want to destroy the {this.props.pic_description.language_name} description 
-                            of {this.props.picture_title}?
-                            <br/><br/>
-                            <Button bsStyle="danger" 
-                                    bsSize="xsmall"
-                                    onClick={() => this.setState({displayDeleteModal: false})}
-                                    href={"/categories/" + this.props.category_id 
-                                        + "/pictures/" + this.props.picture_id
-                                        + "/pic_descriptions/" + this.props.pic_description.description_id}
-                                    data-method="delete"
-                                    >Yes
-                            </Button>
-                            <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
-                                    onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
-                        </div>
+                        {this.props.user && this.props.user.superadmin ?
+                            <div className="confirm_delete_modal">
+                                Are you sure you want to destroy the {this.props.pic_description.language_name} description 
+                                of {this.props.picture_title}?
+                                <br/><br/>
+                                <Button bsStyle="danger" 
+                                        bsSize="xsmall"
+                                        onClick={() => this.setState({displayDeleteModal: false})}
+                                        href={"/categories/" + this.props.category_id 
+                                            + "/pictures/" + this.props.picture_id
+                                            + "/pic_descriptions/" + this.props.pic_description.description_id}
+                                        data-method="delete"
+                                        >Yes
+                                </Button>
+                                <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
+                                        onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
+                            </div>
+                        :
+                        <OverlayTrigger trigger={['hover', 'click']} placement="bottom" overlay={unauthorizedActionPopover}>
+                            <div className="confirm_delete_modal">
+                                Are you sure you want to destroy the {this.props.pic_description.language_name} description 
+                                of {this.props.picture_title}?
+                                <br/><br/>
+                                <Button bsStyle="danger" 
+                                        bsSize="xsmall"
+                                        disabled={true}
+                                        >Yes
+                                </Button>
+                                <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
+                                        onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
+                            </div>
+                        </OverlayTrigger>
+                        }
                     </Modal.Body>
                 </Modal>
             </Popover>
@@ -148,7 +171,10 @@ class PictureForm extends React.Component {
             alerts += "A picture author name must be at least 2 characters long (max 30 char). ";
         }
         if (!this.state.pic_url) {
-            alerts += "You must upload a picture (max size = 1.5Mb).";
+            alerts += "You must upload a picture (max size = 4Mb). ";
+        }
+        if (this.state.user && !this.state.user.superadmin) {
+            alerts += "You don't have the required permissions to create or edit a picture."
         }
         if (alerts) {
             alert(alerts);
@@ -166,6 +192,7 @@ class PictureForm extends React.Component {
                              trigger="click" 
                              placement="bottom"
                              overlay={<PictureContent {...this.props}
+                                                      user={this.state.user}
                                                       pic_description={d} 
                                                       picture_title={this.state.picture_title}
                                                       category_id={this.state.category_id}

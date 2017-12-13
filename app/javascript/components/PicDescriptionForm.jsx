@@ -81,7 +81,10 @@ class PicDescriptionForm extends React.Component {
             alerts += "A picture description must be at least 2 characters long and at most 500 characters. "
         }
         if (!this.state.language_id || this.state.language_id == "-- select --") {
-            alerts += "Please select a language."
+            alerts += "Please select a language. "
+        }
+        if (this.state.user && !this.state.user.superadmin) {
+            alerts += "You don't have the required permissions to create a picture description."
         }
         if (alerts) {
             alert(alerts);
@@ -158,8 +161,8 @@ class PicDescriptionForm extends React.Component {
                                                          onChange={this.handleLanguageId}>
                                                 <option value="-- select --">-- select --</option>
                                                 { this.state.languages.map(pres => <LanguageChoice key={pres.id} 
-                                                                                                data={pres}
-                                                                                                takenLangs={this.state.existingPicdescriptions} />) }>
+                                                                                                   data={pres}
+                                                                                                   takenLangs={this.state.existingPicdescriptions} />) }>
                                             </FormControl>
                                         </FormGroup>
                                     </td>
@@ -182,7 +185,7 @@ class PicDescriptionForm extends React.Component {
                     </Table>
 
                     <div className="actions">
-                        <input type="submit" name="commit" value={ this.state.pic_description_id ? "Submit changes" : "Create description"} />
+                        <input type="submit" name="commit" value={this.state.pic_description_id ? "Submit changes" : "Create description"} />
                     </div>
                 </form>
             </div>

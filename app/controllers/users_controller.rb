@@ -1,37 +1,30 @@
 class UsersController < ApplicationController
-  before_action :check_authentication, :except => [:index, :new, :create]
+  before_action :check_authentication, :except => [:new, :create]
   before_action :get_user, :only => [:show, :edit, :update, :destroy]
   # because bcrypt and has_secure_password are used
   protect_from_forgery
 
   def index
-    if request.format == :json
-      if !logged_in? || !is_superadmin?
-        head :unauthorized
-        return
-      end
+    if logged_in? && !is_superadmin?
+      flash[:danger] = "You were redirected because you don't have the required permissions for the requested page."
+      redirect_to user_url(@current_user)
     else
-      if !logged_in?
-        session[:prev_url] = request.fullpath
-        flash[:danger] = 'You need to be logged in for this action.'
-        redirect_to login_path
-      elsif !is_superadmin?
-        flash[:danger] = "Unauthorized action."
-        redirect_to root_path
+      respond_to do |format|
+        format.html
+        format.json { render json: User.all }
       end
     end
-
-    respond_to do |format|
-      format.html
-      format.json { render json: User.all }
-    end
-    
   end
 
   def show
   end
 
   def new
+    # prevent from creating a 3rd user (1st user is admin, and 2nd one is the demo user with no admin permissions)
+    if User.all.length > 1
+      flash[:danger] = "Sorry, you can't create a new user."
+      redirect_to root_path
+    end
     @user = User.new
     # @first_user is used to set superadmin to 'true' only if it's the first user to register
     @first_user = User.all.length == 0
@@ -116,20 +109,14 @@ class UsersController < ApplicationController
     end
 
     def check_authentication
-      if request.format == :json
-        if !logged_in? || !(is_superadmin? || current_user.id == params[:id].to_i)
+      if !logged_in?
+        if request.format == :json
           head :unauthorized
           return
         end
-      else
-        if !logged_in?
-          session[:prev_url] = request.fullpath
-          flash[:danger] = "You need to be logged in for this action."
-          redirect_to login_path
-        elsif !(is_superadmin? || current_user.id == params[:id].to_i)
-          flash[:danger] = "Unauthorized action."
-          redirect_to root_path
-        end
+        session[:prev_url] = request.fullpath
+        flash[:danger] = "You need to be logged in for this action."
+        redirect_to login_path
       end
-    end
+  end
 end

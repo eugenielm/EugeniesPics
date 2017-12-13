@@ -23,6 +23,7 @@ import PresentationForm from './PresentationForm';
 import CatDescriptionForm from './CatDescriptionForm';
 import PicDescriptionForm from './PicDescriptionForm';
 
+
 class App extends React.Component {
   
   componentWillMount() {
@@ -34,8 +35,7 @@ class App extends React.Component {
     this.setState({langPref: lang});
   }
 
-  render() {
-    
+  render() {    
     return (
       <Router>
         <div id="app-container">

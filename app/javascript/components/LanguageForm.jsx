@@ -58,19 +58,24 @@ class LanguageForm extends React.Component {
     handleSubmit(event) {
         let lang_abbr = [];
         let lang_names = [];
+        let alerts = "";
         Object.values(this.state.languages).map(l => l.id != this.state.language_id ? lang_abbr.push(l.abbreviation) : null);
         Object.values(this.state.languages).map(l => l.id != this.state.language_id ? lang_names.push(l.name) : null);        
         if (!this.state.language_abbr || this.state.language_abbr.length < 2 
             || !this.state.language_name || this.state.language_name.length < 2) {
-            alert("A language abbreviation length must be between 2 and 5 chars, and its name between 2 and 30 chars.");
-            event.preventDefault();
+            alerts += "A language abbreviation length must be between 2 and 5 chars, and its name between 2 and 30 chars. ";
         }
         if (lang_abbr.includes(this.state.language_abbr)) {
-            alert("The language abbreviation you entered already exists.");
-            event.preventDefault();
+            alerts += "The language abbreviation you entered already exists. ";
         }
         if (lang_names.includes(this.state.language_name)) {
-            alert("The language name you entered already exists.");
+            alerts += "The language name you entered already exists. ";
+        }
+        if (this.state.user && !this.state.user.superadmin) {
+            alerts += "You don't have the required permissions to create or edit a language.";
+        }
+        if (alerts) {
+            alert(alerts);
             event.preventDefault();
         }
     }
@@ -121,7 +126,8 @@ class LanguageForm extends React.Component {
                     </Table>
 
                     <div className="actions">
-                        <input type="submit" name="commit" value={ this.state.language_id ? "Submit changes" : "Create language"} />
+                        <input type="submit" name="commit" 
+                               value={ this.state.language_id ? "Submit changes" : "Create language"} />
                     </div>
                 </form>
             </div>

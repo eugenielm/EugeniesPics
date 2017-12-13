@@ -5,6 +5,13 @@ import { Button, Grid, Row, Panel, Modal, OverlayTrigger, Popover } from 'react-
 import PictureComponent from './PictureComponent';
 
 
+const unauthorizedActionPopover = (
+    <Popover id="popover-trigger-click-hover" title="">
+      You don't have the permissions to delete this category.
+    </Popover>
+);
+
+
 const CatAdminActionsElement = (props) => {
     const edit_cat_link = <Button bsStyle="primary" 
                                   bsSize="xsmall" 
@@ -146,10 +153,11 @@ class PicturesIndex extends React.Component {
         return (
             <div id="pictures-page" style={{display: this.state.display}}>
 
-                { this.props.user && this.props.user.superadmin ?
+                { this.props.user ?
                     <OverlayTrigger trigger="click" 
                                     placement="left" 
                                     overlay={<CatAdminActionsElement {...this.props} 
+                                                                     user={this.props.user}
                                                                      category_id={this.props.match.params.category_id}
                                                                      handleDeleteModal={this.handleDeleteModal} />} >
                         <Button className="cat_admin_overlay_btn">
@@ -161,20 +169,37 @@ class PicturesIndex extends React.Component {
 
                 <Modal show={this.state.displayDeleteModal}>
                     <Modal.Body>
-                        <div className="confirm_delete_modal">
-                            Are you sure you want to destroy '{this.state.categoryName}' category?
-                            <br/><br/>
-                            <Button bsStyle="danger" 
-                                    bsSize="xsmall"
-                                    onClick={() => this.setState({displayDeleteModal: false})}
-                                    href={"/categories/" + this.props.match.params.category_id}
-                                    data-method="delete"
-                                    style={{marginLeft: '5px'}}
-                                    >Yes
-                            </Button>
-                            <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
-                                    onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
-                        </div>
+                        {this.props.user && this.props.user.superadmin ?
+                            <div className="confirm_delete_modal">
+                                Are you sure you want to destroy '{this.state.categoryName}' category?
+                                <br/><br/>
+                                <Button bsStyle="danger" 
+                                        bsSize="xsmall"
+                                        onClick={() => this.setState({displayDeleteModal: false})}
+                                        href={"/categories/" + this.props.match.params.category_id}
+                                        data-method="delete"
+                                        style={{marginLeft: '5px'}}
+                                        >Yes
+                                </Button>
+                                <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
+                                        onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
+                            </div>
+                        :
+                            <OverlayTrigger trigger={['hover', 'click']} placement="bottom" overlay={unauthorizedActionPopover}>
+                                <div className="confirm_delete_modal">
+                                    Are you sure you want to destroy '{this.state.categoryName}' category?
+                                    <br/><br/>
+                                    <Button bsStyle="danger" 
+                                            bsSize="xsmall"
+                                            disabled={true}
+                                            style={{marginLeft: '5px'}}
+                                            >Yes
+                                    </Button>
+                                    <Button bsSize="xsmall" bsStyle="primary" style={{marginLeft: '30px'}} 
+                                            onClick={() => this.setState({displayDeleteModal: false})}>No</Button>
+                                </div>
+                            </OverlayTrigger>
+                        }
                     </Modal.Body>
                 </Modal>
                 
