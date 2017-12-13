@@ -33,6 +33,7 @@
 .cat_pic img {
     height: 100%;
     width: 100%;
+    border: solid black;
 }
 
 .cat_pic:hover {
@@ -54,15 +55,20 @@
 .catname {
     color: white;
     font-size: 40px;
+    line-height: 35px;
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     font-weight: 300;
     letter-spacing: 0.5px;
     position: absolute;
+    margin: 0 15px;
     left: 0; right: 0; top: 50%;
     opacity: 0;
     -webkit-transition: opacity 0.2s linear 0s; /* For Safari 3.1 to 6.0 */
     transition: opacity 0.2s linear 0s;
     text-shadow: 2px 2px 4px black;
+    -ms-word-break: break-all;
+    word-break: break-all;
+    word-break: break-word;
 }
 
 .cat_pic:hover .catname {
@@ -89,6 +95,7 @@
     .catname {
         opacity: 1;
         font-size: 36px;
+        line-height: 30px;
     }
 }
 
@@ -96,6 +103,7 @@
     .catname {
         opacity: 1;
         font-size: 30px;
+        line-height: 25px;
     }
 }
 

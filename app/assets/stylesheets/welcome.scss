@@ -2,27 +2,12 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
 #home-page {
     /* header height is 150px */
     margin-top: 150px;
-    height: calc(100vh - 150px); /* NB: 100% doesn't work */
+    height: calc(100vh - 220px); /* NB: 100% doesn't work */
 }
-
-@media screen and (max-width: 767px) and (min-width: 425px) {
-    #home-page {
-        margin-top: 100px;
-        height: calc(100vh - 100px); /* header is 100px */
-    }
-}
-
-@media screen and (max-width: 424px) {
-    #home-page {
-        margin-top: 60px;
-        height: calc(100vh - 60px); /* header is 60px */
-        max-height: 150%;
-    }
-}
-
 
 /* Home page carousel */
 
@@ -30,7 +15,8 @@
     position: relative;
     width: 98%;
     height: 85%;
-    margin: auto;
+    margin: 220px auto 0 auto;
+    background-color: rgba(0,0,0,0.3);
 }
 
 #home-page div.carousel.slide div.carousel-inner {
@@ -38,12 +24,7 @@
     plus a 20px bottom for screens wider than 768px */
     height: calc(100% - 48px);
     width: 100%;
-}
-
-@media screen and (max-width: 767px) {
-    #home-page div.carousel.slide div.carousel-inner {
-        height: calc(100% - 28px);
-    }
+    padding: 1%;
 }
 
 #home-page div.carousel.slide div.carousel-inner div.item {
@@ -72,6 +53,9 @@
     padding: 3px 8px 5px 8px;
     border-radius: 25px;
     text-shadow: 1px 3px 3px black;
+    -ms-word-break: break-all;
+    word-break: break-all;
+    word-break: break-word;
 }
 
 #home-page a.carousel-control {
@@ -89,7 +73,28 @@
 #home-page ol.carousel-indicators li { background-color: white; border-color: rgb(93, 93, 93); }
 #home-page ol.carousel-indicators li.active { background-color: black; border-color: white; }
 
+@media screen and (max-width: 767px) and (min-width: 426px) {
+    #home-page {
+        margin-top: 100px;
+        height: calc(100vh - 150px); /* header is 100px + 80px to center vertically */
+    }
+    #home-page div.carousel.slide {
+        margin: 150px auto 0 auto;
+    }
+    #home-page div.carousel.slide div.carousel-inner {
+        height: calc(100% - 28px);
+    }
+}
+
 @media screen and (max-width: 425px) {
+    #home-page {
+        margin-top: 60px;
+        height: calc(100vh - 90px); /* header is 60px + 30px to center vertically */
+        max-height: 150%;
+    }
+    #home-page div.carousel.slide {
+        margin: 90px auto 0 auto;
+    }
     #home-page div.carousel.slide div.carousel-inner div.item div.carousel-caption p {
         font-size: 1.5em;
     }
