@@ -61,7 +61,7 @@
     letter-spacing: 0.5px;
     position: absolute;
     margin: 0 15px;
-    left: 0; right: 0; top: 50%;
+    left: 0; right: 0; top: 48%;
     opacity: 0;
     -webkit-transition: opacity 0.2s linear 0s; /* For Safari 3.1 to 6.0 */
     transition: opacity 0.2s linear 0s;
@@ -96,6 +96,13 @@
         opacity: 1;
         font-size: 36px;
         line-height: 30px;
+    }
+
+    .cat_pic {background-color: black}
+
+    .cat_pic img {
+        filter: blur(1px);
+        opacity: 0.8;
     }
 }
 
