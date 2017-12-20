@@ -186,6 +186,18 @@
       <% end %>
     <% end %>
 
+    <% if @setting %>
+      <%= content_tag :div,
+      id: "setting_data",
+      data: @setting.to_json do %>
+      <% end %>
+
+      <%= content_tag :div,
+      id: "setting_errors",
+      data: @setting.errors.full_messages.to_json do %>
+      <% end %>
+    <% end %>
+
 
     <div id="app-component"></div>
 

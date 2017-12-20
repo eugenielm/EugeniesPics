@@ -16,6 +16,9 @@ document.addEventListener('turbolinks:load', () => {
   const csrf_token = document.getElementById('csrf_token') ?
                      document.getElementById('csrf_token').getAttribute('data').split('content=')[2].slice(1, -4) : null;
   
+  const setting_errors = document.getElementById('setting_errors') 
+                         && JSON.parse(document.getElementById('setting_errors').getAttribute('data')).length > 0 ?
+                         JSON.parse(document.getElementById('setting_errors').getAttribute('data')) : null;
   const category_errors = document.getElementById('category_errors') 
                           && JSON.parse(document.getElementById('category_errors').getAttribute('data')).length > 0 ?
                           JSON.parse(document.getElementById('category_errors').getAttribute('data')) : null;
@@ -38,6 +41,8 @@ document.addEventListener('turbolinks:load', () => {
                                  && JSON.parse(document.getElementById('pic_description_errors').getAttribute('data')).length > 0 ?
                                  JSON.parse(document.getElementById('pic_description_errors').getAttribute('data')) : null;              
   
+  const setting_data = document.getElementById('setting_data') ?
+                       JSON.parse(document.getElementById('setting_data').getAttribute('data')) : null;
   const user_data = document.getElementById('user_data') ?
                     JSON.parse(document.getElementById('user_data').getAttribute('data')) : null;
   const category_data = document.getElementById('category_data') ?
@@ -68,6 +73,7 @@ document.addEventListener('turbolinks:load', () => {
   ReactDOM.render(
     <App user={window.user} 
          token={csrf_token} 
+         setting_errors={setting_errors}
          category_errors={category_errors} 
          picture_errors={picture_errors} 
          user_errors={user_errors} 
@@ -75,6 +81,7 @@ document.addEventListener('turbolinks:load', () => {
          language_errors={language_errors} 
          cat_description_errors={cat_description_errors}
          pic_description_errors={pic_description_errors} 
+         setting_data={setting_data}
          user_data={user_data} 
          category_data={category_data} 
          picture_data={picture_data} 

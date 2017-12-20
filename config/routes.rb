@@ -12,8 +12,8 @@ Rails.application.routes.draw do
   resources :users
   get '/signup', to: 'users#new'
 
+  resources :settings
   resources :languages
-  
   resources :presentations
 
   resources :categories do

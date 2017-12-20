@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171022220439) do
+ActiveRecord::Schema.define(version: 20171219184438) do
 
   create_table "cat_descriptions", force: :cascade do |t|
     t.text "content"
@@ -74,6 +74,18 @@ ActiveRecord::Schema.define(version: 20171022220439) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["language_id"], name: "index_presentations_on_language_id", unique: true
+  end
+
+  create_table "settings", force: :cascade do |t|
+    t.string "maintitle"
+    t.string "subtitle"
+    t.string "navbarcolor"
+    t.string "navbarfont"
+    t.string "background_file_name"
+    t.string "background_content_type"
+    t.integer "background_file_size"
+    t.datetime "background_updated_at"
+    t.string "background_color", default: "#eeeeee"
   end
 
   create_table "users", force: :cascade do |t|
