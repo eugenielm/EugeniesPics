@@ -1,7 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Table } from 'react-bootstrap';
+import { Button, Table, OverlayTrigger, Popover } from 'react-bootstrap';
 import ErrorsComponent from './ErrorsComponent';
+import { SketchPicker } from 'react-color';
+
+
+const PopoverColorPicker = (props) => {
+    return (
+        <Popover id="popover-trigger-click" placement="bottom" positionLeft={props.positionLeft} positionTop={props.positionTop}>
+            <SketchPicker
+                color={props.currentColor}
+                onChangeComplete={props.handleColorChange}
+            />
+        </Popover>
+    )
+};
 
 
 class SettingForm extends React.Component {
@@ -84,37 +97,16 @@ class SettingForm extends React.Component {
         }  
     }
 
-    handleNavbarcolor(event) {
-        if (event.target.value.length > 0 && event.target.value.length <= 7) {
-            this.setState({navbarcolor: event.target.value});
-        }
-        if (event.target.value.match(/#[0-9a-z]{6}/i)) {
-            this.props.updateBackgroundImage(this.state.backgroundImage);
-            this.props.updateBackgroundImageName(this.state.backgroundImageName);
-            this.props.updateNavbarcolor(event.target.value);
-        }
+    handleNavbarcolor(col) {
+        this.props.updateNavbarcolor(col.hex);
     }
 
-    handleNavbarfont(event) {
-        if (event.target.value.length > 0 && event.target.value.length <= 7) {
-            this.setState({navbarfont: event.target.value});
-        }
-        if (event.target.value.match(/#[0-9a-z]{6}/i)) {
-            this.props.updateBackgroundImage(this.state.backgroundImage);
-            this.props.updateBackgroundImageName(this.state.backgroundImageName);
-            this.props.updateNavbarfont(event.target.value);
-        }
+    handleNavbarfont(col) {
+        this.props.updateNavbarfont(col.hex);
     }
 
-    handleBackgroundColor(event) {
-        if (event.target.value.length > 0 && event.target.value.length <= 7) {
-            this.setState({backgroundColor: event.target.value});
-        }
-        if (event.target.value.match(/#[0-9a-z]{6}/i)) {
-            this.props.updateBackgroundImage(this.state.backgroundImage);
-            this.props.updateBackgroundImageName(this.state.backgroundImageName);
-            this.props.updateBackgroundColor(event.target.value);
-        }
+    handleBackgroundColor(col) {
+        this.props.updateBackgroundColor(col.hex);
     }
 
     handleDeleteBackground() {
@@ -127,14 +119,17 @@ class SettingForm extends React.Component {
 
     handleSubmit(event) {
         let alerts = '';
-        if (!this.state.navbarcolor.match(/#[0-9a-z]{6}/i) || !this.state.navbarfont.match(/#[0-9a-z]{6}/i)) {
-            alerts += "Colors units must have the HEX format: #xxxxxx (with either integers or letters from 'a' to 'f'). "
+        if (!this.state.navbarcolor.match(/#[0-9a-z]{6}/i)) {
+            alerts += "Please provide a background color for the navigation bar. "
+        }
+        if (!this.state.navbarfont.match(/#[0-9a-z]{6}/i)) {
+            alerts += "Please provide a background color for the website main title and subtitle fonts. "
         }
         if (!this.state.backgroundImage && !this.state.backgroundColor.match(/#[0-9a-z]{6}/i)) {
-            alerts += "Please provide a background color in the HEX format: #xxxxxx (with either integers or letters from 'a' to 'f'). "
+            alerts += "Please provide a background color for the website body. "
         }
         if (this.props.user && !this.props.user.superadmin) {
-            alerts += "You don't have the required permissions to create or edit a presentation."
+            alerts += "You don't have the required permissions to edit the website layout."
         }
         if (alerts) {
             alert(alerts);
@@ -157,7 +152,7 @@ class SettingForm extends React.Component {
                     <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly />
                     {input_edit}
                     
-                    <Table bordered responsive id="setting_form_table">
+                    <Table bordered responsive striped id="setting_form_table">
                         <tbody>
                             <tr>
                                 <td><label htmlFor="setting_maintitle">Website main title</label></td>
@@ -173,17 +168,31 @@ class SettingForm extends React.Component {
                             </tr>
                             <tr>
                                 <td><label htmlFor="setting_navbarfont">Main title and sub-title color</label></td>
-                                <td><input id="setting_navbarfont" type="text" name="setting[navbarfont]" 
-                                                                               placeholder="HEX format only (#789def)" 
-                                                                               value={this.state.navbarfont || '#'} 
-                                                                               onChange={this.handleNavbarfont} /></td>
+                                <td><input id="setting_navbarfont" readOnly type="text" name="setting[navbarfont]" 
+                                                                                        value={this.state.navbarfont}
+                                                                                        style={{width: "70px"}} />
+                                <OverlayTrigger trigger="click" placement="bottom" 
+                                                                overlay={<PopoverColorPicker {...this.props}
+                                                                                             handleColorChange={this.handleNavbarfont}
+                                                                                             currentColor={this.state.navbarfont} />}
+                                >
+                                    <Button bsSize="xsmall" style={{height: "23px", marginLeft: "5px", marginTop: "-2px", outline: 0}}>Pick a color</Button>
+                                </OverlayTrigger>
+                                </td>
                             </tr>
                             <tr>
                                 <td><label htmlFor="setting_navbarcolor">Navigation bar background color</label></td>
-                                <td><input id="setting_navbarcolor" type="text" name="setting[navbarcolor]" 
-                                                                                placeholder="HEX format only (#789def)" 
-                                                                                value={this.state.navbarcolor || '#'} 
-                                                                                onChange={this.handleNavbarcolor} /></td>
+                                <td><input id="setting_navbarcolor" readOnly type="text" name="setting[navbarcolor]" 
+                                                                                         value={this.state.navbarcolor}
+                                                                                         style={{width: "70px"}} />
+                                <OverlayTrigger trigger="click" placement="bottom" 
+                                                                overlay={<PopoverColorPicker {...this.props}
+                                                                                             handleColorChange={this.handleNavbarcolor}
+                                                                                             currentColor={this.state.navbarcolor} />}
+                                >
+                                    <Button bsSize="xsmall" style={{height: "23px", marginLeft: "5px", marginTop: "-2px", outline: 0}}>Pick a color</Button>
+                                </OverlayTrigger>
+                                </td>
                             </tr>
                             <tr>
                                 <td><label htmlFor="background_file">Upload background image</label>
@@ -195,7 +204,7 @@ class SettingForm extends React.Component {
                             </tr>
                             <tr>
                                 <td><label>
-                                        {this.state.backgroundImageName ? "Delete '" + this.state.backgroundImageName + "'" : ""}
+                                        {this.state.backgroundImageName ? "Delete '" + this.state.backgroundImageName + "'" : "Background color"}
                                         {this.state.backgroundImageName ?
                                             <input type="checkbox" onChange={this.handleDeleteBackground}
                                                                    disabled={!this.props.backgroundImage && !this.state.backgroundImage ? true : false}
@@ -204,11 +213,18 @@ class SettingForm extends React.Component {
                                     </label>
                                 </td>
                                 {!this.state.backgroundImage || this.state.deleteBackground ?
-                                    <td>
-                                        Background color: <input type="text" name="setting[background_color]"
-                                                                             value={this.state.backgroundColor || "#"}
-                                                                             onChange={this.handleBackgroundColor}
-                                                                             style={{width: "80px"}}/>
+                                    <td><input readOnly type="text" name="setting[background_color]" 
+                                                                    value={this.state.backgroundColor}
+                                                                    style={{width: "70px"}} />
+                                        <OverlayTrigger trigger="click" placement="bottom" 
+                                                                        overlay={<PopoverColorPicker {...this.props}
+                                                                                                     handleColorChange={this.handleBackgroundColor}
+                                                                                                     currentColor={this.state.backgroundColor} />}
+                                        >
+                                            <Button bsSize="xsmall" style={{height: "23px", marginLeft: "5px", marginTop: "-2px", outline: 0}}>
+                                                Pick a color
+                                            </Button>
+                                        </OverlayTrigger>
                                     </td>
                                     : <td></td>}
                             </tr>
