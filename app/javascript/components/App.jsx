@@ -22,25 +22,94 @@ import Presentations from './Presentations';
 import PresentationForm from './PresentationForm';
 import CatDescriptionForm from './CatDescriptionForm';
 import PicDescriptionForm from './PicDescriptionForm';
+import SettingForm from './SettingForm';
 
 
 class App extends React.Component {
   
   componentWillMount() {
-    this.setState({langPref: ''});
+    this.setState({langPref: '',
+                   backgroundImage: null,
+                   backgroundImageName: null,
+                   backgroundColor: "",
+                   maintitle: "",
+                   subtitle: "",
+                   navbarcolor: "",
+                   navbarfont: "",
+                   settingId: undefined });
     this.updateLangPref = this.updateLangPref.bind(this);
+    this.updateNavbarcolor = this.updateNavbarcolor.bind(this);
+    this.updateNavbarfont = this.updateNavbarfont.bind(this);
+    this.updateBackgroundColor = this.updateBackgroundColor.bind(this);
+    this.updateMaintitle = this.updateMaintitle.bind(this);
+    this.updateSubtitle = this.updateSubtitle.bind(this);
+    this.updateBackgroundImage = this.updateBackgroundImage.bind(this);
+    this.updateBackgroundImageName = this.updateBackgroundImageName.bind(this);
+  }
+
+  componentDidMount() {
+      fetch('/settings.json', {credentials: 'same-origin'})
+      .then(function(resp) {
+        return resp.json();
+      })
+      .then(function(settings) {
+        this.setState({ backgroundImage: settings.background_url,
+                        backgroundImageName: settings.background_name,
+                        backgroundColor: settings.background_color,
+                        maintitle: settings.maintitle,
+                        subtitle: settings.subtitle, 
+                        navbarcolor: settings.navbarcolor,
+                        navbarfont: settings.navbarfont,
+                        settingId: settings.id })
+      }.bind(this))
   }
 
   updateLangPref(lang) {
     this.setState({langPref: lang});
   }
 
-  render() {    
+  updateNavbarcolor(col) {
+      this.setState({navbarcolor: col});
+  }
+
+  updateNavbarfont(col) {
+      this.setState({navbarfont: col});
+  }
+
+  updateBackgroundColor(col) {
+      this.setState({backgroundColor: col});
+  }
+
+  updateMaintitle(newTitle) {
+      this.setState({maintitle: newTitle});
+  }
+
+  updateSubtitle(newSubtitle) {
+      this.setState({subtitle: newSubtitle});
+  }
+
+  updateBackgroundImage(newImg) {
+      this.setState({backgroundImage: newImg});
+  }
+
+  updateBackgroundImageName(newName) {
+      this.setState({backgroundImageName: newName});
+  }
+
+  render() {
+    const backgroundStyle = this.state.backgroundImage ? { backgroundImage: "url(" + this.state.backgroundImage + ")" }
+                                                       : { backgroundColor: this.state.backgroundColor || "#eeeeee" }
     return (
       <Router>
-        <div id="app-container">
+
+         <div id="app-container" style={backgroundStyle}>
           
-          <Route path="/" render={(props2) => <Navibar {...this.props} {...props2} />} />
+          <Route path="/" render={(props2) => <Navibar {...this.props} {...props2} 
+                                                       maintitle={this.state.maintitle}
+                                                       subtitle={this.state.subtitle}
+                                                       navbarcolor={this.state.navbarcolor}
+                                                       navbarfont={this.state.navbarfont}
+                                                       settingId={this.state.settingId} />} />
           { this.props.flash_danger.length > 0 ? (<NoticeDanger flash_danger={this.props.flash_danger} />) : null }
           { this.props.flash_info.length > 0 ? (<NoticeInfo flash_info={this.props.flash_info} />) : null }
           { this.props.flash_success.length > 0 ? (<NoticeSuccess flash_success={this.props.flash_success} />) : null }
@@ -49,7 +118,8 @@ class App extends React.Component {
 
             <Route exact path="/" component={HomePage}/>
             <Route exact path="/index" component={HomePage}/>} />
-            <Route exact path="/about" render={(props2) => <AboutPage {...this.props} {...props2} langPref={this.state.langPref} updateLangPref={this.updateLangPref}/>} />
+            <Route exact path="/about" render={(props2) => <AboutPage {...this.props} {...props2} langPref={this.state.langPref} 
+                                                                                                  updateLangPref={this.updateLangPref}/>} />
 
             <Route exact path="/categories" 
                   render={(props2) => this.props.category_errors ? (<CategoryForm {...this.props} {...props2} />) 
@@ -130,6 +200,24 @@ class App extends React.Component {
             <Route exact path="/users/:user_id" 
                    render={(props2) => this.props.user_errors ? (<UserForm {...this.props} {...props2} />) 
                                                               : (<UserDetails {...this.props} {...props2} />)} />
+
+            <Route path="/settings" render={(props2) => <SettingForm {...this.props} {...props2} 
+                                                                     backgroundImage={this.state.backgroundImage} 
+                                                                     settingId={this.state.settingId}
+                                                                     backgroundColor={this.state.backgroundColor}
+                                                                     navbarcolor={this.state.navbarcolor}
+                                                                     navbarfont={this.state.navbarfont}
+                                                                     maintitle={this.state.maintitle}
+                                                                     subtitle={this.state.subtitle}
+                                                                     backgroundImageName={this.state.backgroundImageName}
+                                                                     updateBackgroundColor={this.updateBackgroundColor}
+                                                                     updateNavbarcolor={this.updateNavbarcolor}
+                                                                     updateNavbarfont={this.updateNavbarfont}
+                                                                     updateMaintitle={this.updateMaintitle} 
+                                                                     updateSubtitle={this.updateSubtitle}
+                                                                     updateBackgroundImage={this.updateBackgroundImage}
+                                                                     updateBackgroundImageName={this.updateBackgroundImageName} /> } />
+          
           </Switch>
           
           <Route path="/" component={Footer} />

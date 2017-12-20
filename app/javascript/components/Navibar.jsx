@@ -68,10 +68,10 @@ class Navibar extends React.Component {
   render () {
     const numberOfCategories = this.state.categories.length;
     return (
-      <div id="page-header">
+      <div id="page-header" style={{backgroundColor: this.props.navbarcolor}}>
         <Link to='/' id="home-link">
-          <p id="site-name">EUGENIE'S PICS</p>
-          <p id="site-name-2">- Photographs by Eugénie Le Moulec -</p>
+          <p id="site-name" style={{color: this.props.navbarfont}}>{this.props.maintitle}</p>
+          <p id="site-name-2" style={{color: this.props.navbarfont}}>{this.props.subtitle}</p>
         </Link>
 
         <hr style={{width: '450px', margin: '0 auto'}}/>
@@ -126,23 +126,32 @@ class Navibar extends React.Component {
                           open={this.state.openAdmin} 
                           onToggle={this.handleCollapseAdmin}
                           pullRight noCaret>
+            {this.props.settingId ? 
+              <IndexLinkContainer to={'/settings/' + this.props.settingId + '/edit'}>
+                <MenuItem eventKey={(numberOfCategories + 2).toString() + '.1'}>settings</MenuItem>
+              </IndexLinkContainer>
+            :
+              <IndexLinkContainer to='/settings/new'>
+                <MenuItem eventKey={(numberOfCategories + 2).toString() + '.1'}>settings</MenuItem>
+              </IndexLinkContainer>
+            }
             <IndexLinkContainer to='/languages'>
-              <MenuItem eventKey={(numberOfCategories + 2).toString() + '.1'}>languages</MenuItem>
+              <MenuItem eventKey={(numberOfCategories + 2).toString() + '.2'}>languages</MenuItem>
             </IndexLinkContainer>
             <IndexLinkContainer to='/presentations'>
-              <MenuItem eventKey={(numberOfCategories + 2).toString() + '.2'}>presentations</MenuItem>
+              <MenuItem eventKey={(numberOfCategories + 2).toString() + '.3'}>presentations</MenuItem>
             </IndexLinkContainer>
             {this.props.user.superadmin ?
               <IndexLinkContainer to='/users'>
-                <MenuItem eventKey={(numberOfCategories + 2).toString() + '.3'}>users</MenuItem>
+                <MenuItem eventKey={(numberOfCategories + 2).toString() + '.4'}>users</MenuItem>
               </IndexLinkContainer>
             : <IndexLinkContainer to={'/users/' + this.props.user.id}>
-                <MenuItem eventKey={(numberOfCategories + 2).toString() + '.3'}>your profile</MenuItem>
+                <MenuItem eventKey={(numberOfCategories + 2).toString() + '.4'}>your profile</MenuItem>
               </IndexLinkContainer>
             }
             <MenuItem divider/>
             <IndexLinkContainer to="/logout" data-method="delete">
-              <MenuItem eventKey={(numberOfCategories + 2).toString() + '.4'}>log out</MenuItem>
+              <MenuItem eventKey={(numberOfCategories + 2).toString() + '.5'}>log out</MenuItem>
             </IndexLinkContainer>
           </DropdownButton>
           
