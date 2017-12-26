@@ -73,7 +73,7 @@ class PresentationForm extends React.Component {
 
     handleSubmit(event) {
         let alerts = '';
-        if (this.state.presentation_content.length < 10) {
+        if (!this.state.presentation_content || this.state.presentation_content.length < 10) {
             alerts += "A presentation must be at least 10 characters long and at most 1000 characters. "
         }
         if (!this.state.presentation_language_id || this.state.presentation_language_id == "-- select --") {
