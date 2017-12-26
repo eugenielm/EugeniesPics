@@ -176,7 +176,7 @@ class SettingForm extends React.Component {
                                                                                              handleColorChange={this.handleNavbarfont}
                                                                                              currentColor={this.state.navbarfont} />}
                                 >
-                                    <Button bsSize="xsmall" style={{height: "23px", marginLeft: "5px", marginTop: "-2px", outline: 0}}>Pick a color</Button>
+                                    <Button bsSize="xsmall" style={{height: "23px", marginLeft: "5px", marginTop: "-4px", outline: 0}}>Pick a color</Button>
                                 </OverlayTrigger>
                                 </td>
                             </tr>
@@ -190,7 +190,7 @@ class SettingForm extends React.Component {
                                                                                              handleColorChange={this.handleNavbarcolor}
                                                                                              currentColor={this.state.navbarcolor} />}
                                 >
-                                    <Button bsSize="xsmall" style={{height: "23px", marginLeft: "5px", marginTop: "-2px", outline: 0}}>Pick a color</Button>
+                                    <Button bsSize="xsmall" style={{height: "23px", marginLeft: "5px", marginTop: "-4px", outline: 0}}>Pick a color</Button>
                                 </OverlayTrigger>
                                 </td>
                             </tr>
@@ -221,7 +221,7 @@ class SettingForm extends React.Component {
                                                                                                      handleColorChange={this.handleBackgroundColor}
                                                                                                      currentColor={this.state.backgroundColor} />}
                                         >
-                                            <Button bsSize="xsmall" style={{height: "23px", marginLeft: "5px", marginTop: "-2px", outline: 0}}>
+                                            <Button bsSize="xsmall" style={{height: "23px", marginLeft: "5px", marginTop: "-4px", outline: 0}}>
                                                 Pick a color
                                             </Button>
                                         </OverlayTrigger>
