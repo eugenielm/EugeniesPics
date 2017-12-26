@@ -17,7 +17,7 @@ class PresentationsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to '/about'
 
     get presentations_url + ".json"
-    assert_equal @response.body, {'EN':["aaaaaaaaaa","MyLang1",1],'FR':["bbbbbbbbb","MyLang2",2]}.to_json
+    assert_equal @response.body, {'EN':["aaaaaaaaaa","MyLang1",1,1],'FR':["bbbbbbbbb","MyLang2",2,2]}.to_json
   end
 
   # show
@@ -73,60 +73,56 @@ class PresentationsControllerTest < ActionDispatch::IntegrationTest
   ################ non superadmin authenticated user ################
 
   #index
-  test "non superadmin user shouldn't get the presentations index" do
+  test "non superadmin user should get the presentations index" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
     get presentations_url
-    assert_response :found
-    assert_redirected_to '/about'
+    assert_response :success
     
     get presentations_url + ".json"
-    assert_equal @response.body, {'EN':["aaaaaaaaaa","MyLang1",1],'FR':["bbbbbbbbb","MyLang2",2]}.to_json
+    assert_equal @response.body, {'EN':["aaaaaaaaaa","MyLang1",1,1],'FR':["bbbbbbbbb","MyLang2",2,2]}.to_json
   end
 
   # new
-  test "non superadmin user shouldn't get the new action" do
+  test "non superadmin user should get the new action" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
     get new_presentation_url
-    assert_response :found
-    assert_redirected_to root_url
+    assert_response :success
   end
 
   # edit
-  test "non superadmin user shouldn't get the edit action" do
+  test "non superadmin user should get the edit action" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
     get edit_presentation_url(@presentation)
-    assert_response :found
-    assert_redirected_to root_url
-    assert_equal "Unauthorized action.", flash[:danger]
+    assert_response :success
   end
 
   # create
-  test "non superadmin user shouldn't get the create action" do
+  test "non superadmin user should get the create action (but will be prevented from doing so in the React component)" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
     post presentations_url, params: { presentation: { content: 'new presentation', language_id: 3 } }
     assert_response :found
-    assert_redirected_to root_url
-    assert_equal "Unauthorized action.", flash[:danger]
+    assert_redirected_to presentations_url
+    assert_equal 'MyLang3 presentation was successfully created.', flash[:success]
   end
 
   # update
-  test "non superadmin user shouldn't get the update action" do
+  test "non superadmin user should get the update action (but will be prevented from doing so in the React component)" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
     patch presentation_url(@presentation), params: { presentation: { content: 'updated presentation' } }
     assert_response :found
-    assert_redirected_to root_url
-    assert_equal "Unauthorized action.", flash[:danger]
+    assert_redirected_to presentations_url
+    assert_equal 'MyLang1 presentation was successfully updated.', flash[:success]
   end
 
   # destroy
-  test "non superadmin user shouldn't get the destroy action" do
+  test "non superadmin user should get the destroy action (but will be prevented from doing so in the React component)" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
-    assert_no_difference('Presentation.count') do
+    assert_difference('Presentation.count', -1) do
       delete presentation_url(@presentation)
     end
     assert_response :found
-    assert_redirected_to root_url
-    assert_equal "Unauthorized action.", flash[:danger]
+    assert_redirected_to presentations_url
+    assert_equal 'MyLang1 presentation was successfully destroyed.', flash[:danger]
   end
   
 
@@ -139,7 +135,7 @@ class PresentationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     
     get presentations_url + ".json"
-    assert_equal @response.body, {'EN':["aaaaaaaaaa","MyLang1",1],'FR':["bbbbbbbbb","MyLang2",2]}.to_json
+    assert_equal @response.body, {'EN':["aaaaaaaaaa","MyLang1",1,1],'FR':["bbbbbbbbb","MyLang2",2,2]}.to_json
   end
 
   # new

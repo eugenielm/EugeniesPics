@@ -16,7 +16,7 @@ class CatDescriptionsControllerTest < ActionDispatch::IntegrationTest
     get category_catdescriptions_url(@category)
     assert_response :found
     assert_redirected_to login_url
-    assert_equal "You need to be logged in for this action.", flash[:info]
+    assert_equal "You need to be logged in for this action.", flash[:danger]
   end
 
   # show
@@ -24,7 +24,7 @@ class CatDescriptionsControllerTest < ActionDispatch::IntegrationTest
     get category_catdescription_url(@category, @cat_description)
     assert_response :found
     assert_redirected_to login_url
-    assert_equal "You need to be logged in for this action.", flash[:info]
+    assert_equal "You need to be logged in for this action.", flash[:danger]
   end
 
   # new
@@ -32,7 +32,7 @@ class CatDescriptionsControllerTest < ActionDispatch::IntegrationTest
     get category_catdescriptions_url(@category)
     assert_response :found
     assert_redirected_to login_url
-    assert_equal "You need to be logged in for this action.", flash[:info]
+    assert_equal "You need to be logged in for this action.", flash[:danger]
   end
 
   # edit
@@ -40,7 +40,7 @@ class CatDescriptionsControllerTest < ActionDispatch::IntegrationTest
     get edit_category_catdescription_url(@category, @cat_description)
     assert_response :found
     assert_redirected_to login_url
-    assert_equal "You need to be logged in for this action.", flash[:info]
+    assert_equal "You need to be logged in for this action.", flash[:danger]
   end
 
   # create
@@ -48,7 +48,7 @@ class CatDescriptionsControllerTest < ActionDispatch::IntegrationTest
     post category_catdescriptions_url(@category), params: { cat_description: { content: 'new category description', language_id: 2, category_id: 1 } }
     assert_response :found
     assert_redirected_to login_url
-    assert_equal "You need to be logged in for this action.", flash[:info]
+    assert_equal "You need to be logged in for this action.", flash[:danger]
   end
 
   # update
@@ -56,7 +56,7 @@ class CatDescriptionsControllerTest < ActionDispatch::IntegrationTest
     patch category_catdescription_url(@category, @cat_description), params: { cat_description: { content: 'updated category description' } }
     assert_response :found
     assert_redirected_to login_url
-    assert_equal "You need to be logged in for this action.", flash[:info]
+    assert_equal "You need to be logged in for this action.", flash[:danger]
   end
 
   # destroy
@@ -66,75 +66,76 @@ class CatDescriptionsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_response :found
     assert_redirected_to login_url
-    assert_equal "You need to be logged in for this action.", flash[:info]
+    assert_equal "You need to be logged in for this action.", flash[:danger]
   end
 
 
   ################ non superadmin authenticated user ################
 
   #index
-  test "non superadmin user shouldn't get the category descriptions index" do
+  test "non superadmin user should get the category descriptions index" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
     get category_catdescriptions_url(@category)
     assert_response :found
-    assert_redirected_to root_url
-    assert_equal "Unauthorized action.", flash[:danger]
+    assert_redirected_to category_url(@category)
+    
+    get category_catdescriptions_url(@category) + '.json'
+    expected = '[{"id":1,"language":"MyLang1","language_id":1,"content":"this is a category description"},"MyCat1"]'
+    assert_equal expected, @response.body
   end
 
   # show
-  test "non superadmin user shouldn't get the show action" do
+  test "non superadmin user should get the show action" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
     get category_catdescription_url(@category, @cat_description)
     assert_response :found
-    assert_redirected_to root_url
-    assert_equal "Unauthorized action.", flash[:danger]
+    assert_redirected_to category_url(@category)
   end
 
   # new
-  test "non superadmin user shouldn't get the new action" do
+  test "non superadmin user should get the new action" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
     get new_category_catdescription_url(@category)
-    assert_response :found
-    assert_redirected_to root_url
-    assert_equal "Unauthorized action.", flash[:danger]
+    assert_response :success
   end
 
   # edit
-  test "non superadmin user shouldn't get the edit action" do
+  test "non superadmin user should get the edit action" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
     get edit_category_catdescription_url(@category, @cat_description)
-    assert_response :found
-    assert_redirected_to root_url
-    assert_equal "Unauthorized action.", flash[:danger]
+    assert_response :success
   end
 
   # create
-  test "non superadmin user shouldn't be allowed to create a category description" do
+  test "non superadmin user should be allowed to create a category description (but will prevented from doing so by React component)" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
-    post category_catdescriptions_url(@category), params: { cat_description: { content: 'new category description', language_id: 2, category_id: 1 } }
+    assert_difference('CatDescription.count') do
+      post category_catdescriptions_url(@category),
+           params: { cat_description: { content: 'new category description', language_id: 2, category_id: 1 } }
+    end
     assert_response :found
-    assert_redirected_to root_url
-    assert_equal "Unauthorized action.", flash[:danger]
+    assert_redirected_to edit_category_url(@category)
+    assert_equal 'MyLang2 description of MyCat1 was successfully added.', flash[:success]
   end
 
   # update
-  test "non superadmin user shouldn't be allowed to update a category description" do
+  test "non superadmin user should be allowed to update a category description (but will prevented from doing so by React component)" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
     patch category_catdescription_url(@category, @cat_description), params: { cat_description: { content: 'updated category description' } }
     assert_response :found
-    assert_redirected_to root_url
-    assert_equal "Unauthorized action.", flash[:danger]
+    assert_redirected_to edit_category_url(@category)
+    assert_equal 'MyLang1 description of MyCat1 was successfully updated.', flash[:success]
   end
 
   # destroy
-  test "non superadmin user shouldn't be allowed to destroy a category description" do
+  test "non superadmin user should be allowed to destroy a category description (but will prevented from doing so by React component)" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
-    assert_no_difference('CatDescription.count') do
+    assert_difference('CatDescription.count', -1) do
       delete category_catdescription_url(@category, @cat_description)
     end
     assert_response :found
-    assert_redirected_to root_url
-    assert_equal "Unauthorized action.", flash[:danger]
+    assert_redirected_to edit_category_url(@category)
+    assert_equal 'MyLang1 description of MyCat1 category was destroyed.', flash[:danger]
   end
   
 

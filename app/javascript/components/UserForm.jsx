@@ -15,7 +15,6 @@ class UserForm extends React.Component {
                         password: this.props.user_data.password_digest || '',
                         password_confirmation: this.props.user_data.password_digest || '',
                         user: this.props.user,
-                        firstUser: false,
                         passwordFieldDisabled: true,
                         })
         this.handleUsername = this.handleUsername.bind(this);
@@ -24,16 +23,6 @@ class UserForm extends React.Component {
         this.handlePasswordConfirmation = this.handlePasswordConfirmation.bind(this);
         this.handlePasswordField = this.handlePasswordField.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    componentDidMount() {
-        fetch("/users/new.json")
-        .then(function(resp) {
-            return resp.json();
-        })
-        .then(function(res) {
-            this.setState({firstUser: res})
-        }.bind(this))
     }
 
     handleUsername(event) {
@@ -93,7 +82,6 @@ class UserForm extends React.Component {
                 <form encType="multipart/form-data" action={form_action} method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
                     <input name="utf8" type="hidden" value="✓" />
                     <input type="hidden" name="authenticity_token" value={this.state.token} readOnly={true} />
-                    {this.state.firstUser && !this.state.id ? <input type="hidden" name="user[superadmin]" value="true" readOnly={true} /> : null}
                     {input_edit}
 
                     {this.state.passwordFieldDisabled && this.state.id ?

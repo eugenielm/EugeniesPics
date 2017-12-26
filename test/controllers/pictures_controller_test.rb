@@ -58,12 +58,10 @@ class PicturesControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'You need to be logged in for this action.', flash[:danger]
   end
 
-  test "authenticated non-admin user should be redirected to root_url when new picture" do
+  test "authenticated non-admin user should get the new picture page" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
     get new_category_picture_url(@category)
-    assert_redirected_to root_url
-    follow_redirect!
-    assert_equal 'Unauthorized action.', flash[:danger]
+    assert_response :success
   end
 
   test "authenticated admin user should get new picture" do
@@ -73,6 +71,36 @@ class PicturesControllerTest < ActionDispatch::IntegrationTest
   end
 
   # create
+  test "unauthenticated user shouldn't be allowed to create a picture" do
+    assert_no_difference('Picture.count') do
+      post category_pictures_url(@category),
+        params: { picture: { id: 3, # the 2 fixtures already have id=1 and id=2
+                              title: 'new picture',
+                              author: 'EG',
+                              category_id: @category.id,
+                              picfile: fixture_file_upload('files/test_pict.jpg', 'image/jpg') }}
+    end
+    assert_redirected_to login_path
+    follow_redirect!
+    assert_equal "You need to be logged in for this action.", flash[:danger]
+  end
+
+  test "authenticated non-admin user should be able to create a picture (but will prevented from doing so by React component)" do
+    post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
+    assert_difference('Picture.count') do
+      post category_pictures_url(@category),
+        params: { picture: { id: 3, # the 2 fixtures already have id=1 and id=2
+                              title: 'new picture',
+                              author: 'EG',
+                              category_id: @category.id,
+                              picfile: fixture_file_upload('files/test_pict.jpg', 'image/jpg') }}
+    end
+    @picture = Picture.find(3)
+    assert_redirected_to edit_category_picture_url(@category, @picture)
+    follow_redirect!
+    assert_equal 'Picture was successfully created.', flash[:success]
+  end
+
   test "authenticated admin user should be able to create a picture" do
     post login_url, params: { session: { email: @user_admin.email, password: "adminpassword" }}
     assert_difference('Picture.count') do
@@ -97,12 +125,10 @@ class PicturesControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'You need to be logged in for this action.', flash[:danger]
   end
 
-  test "authenticated non-admin user should be redirected to root when get edit picture" do
+  test "authenticated non-admin user should be able to get edit picture" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
     get edit_category_picture_url(@category, @picture)
-    assert_redirected_to root_url
-    follow_redirect!
-    assert_equal 'Unauthorized action.', flash[:danger]
+    assert_response :success
   end
 
   test "authenticated admin user should get edit picture" do
@@ -119,12 +145,13 @@ class PicturesControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'You need to be logged in for this action.', flash[:danger]
   end
 
-  test "authenticated non-admin user should be redirected to root when patch update picture" do
+  test "authenticated non-admin user should be able to update a picture (but will prevented from doing so by React component)" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
-    patch category_picture_url(@category, @picture), params: { picture: { title: 'new title', author: 'EG', category_id: @category.id } }
-    assert_redirected_to root_url
-    follow_redirect!
-    assert_equal 'Unauthorized action.', flash[:danger]
+    patch category_picture_url(@category, @picture), 
+      params: { picture: { title: 'new title', author: 'EG', category_id: @category.id } }
+    assert :found
+    assert_redirected_to category_pictures_url(@category)
+    assert_equal 'Picture was successfully updated.', flash[:success]
   end
 
   test "authenticated admin user should be able to update a picture" do
@@ -148,12 +175,12 @@ class PicturesControllerTest < ActionDispatch::IntegrationTest
 
   test "authenticated non-admin user should be redirected to login when destroy picture" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
-    assert_no_difference('Picture.count') do
+    assert_difference('Picture.count', -1) do
       delete category_picture_url(@category, @picture)
     end
-    assert_redirected_to root_url
-    follow_redirect!
-    assert_equal 'Unauthorized action.', flash[:danger]
+    assert :found
+    assert_redirected_to category_pictures_url(@category)
+    assert_equal 'Picture was destroyed.', flash[:danger]
   end
 
   test "authenticated admin user should be able to destroy a picture" do

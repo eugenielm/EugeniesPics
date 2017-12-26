@@ -5,8 +5,12 @@ class UsersController < ApplicationController
   protect_from_forgery
 
   def index
-    if logged_in? && !is_superadmin?
-      flash[:danger] = "You were redirected because you don't have the required permissions for the requested page."
+    if !logged_in?
+      session[:prev_url] = request.fullpath
+      flash[:danger] = "You need to be logged to access the required page."
+      redirect_to login_path
+    elsif logged_in? && !is_superadmin?
+      flash[:info] = "You were redirected because you don't have the required permissions for the requested page."
       redirect_to user_url(@current_user)
     else
       respond_to do |format|
@@ -26,34 +30,38 @@ class UsersController < ApplicationController
       redirect_to root_path
     end
     @user = User.new
-    # @first_user is used to set superadmin to 'true' only if it's the first user to register
-    @first_user = User.all.length == 0
-    respond_to do |format|
-      format.html
-      format.json { render json: @first_user }
-    end
   end
 
   def edit
   end
 
   def create
-    @user = User.new(user_params)
-
-    respond_to do |format|
-      if @user.save
-        flash[:success] = "You're now registered and logged in!"
-        log_in @user # log_in method implemented in SessionsHelper which is imported in ApplicationController
-        format.html { redirect_to @user }
-        format.json { render :show, status: :created, location: @user }
+    if User.all.length > 1
+      flash[:danger] = "Sorry, you can't create a new user."
+      redirect_to root_path
+    
+    else
+      @user = User.new(user_params)
+      if User.all.length == 0
+        @user[:superadmin] = true
       else
-        format.html { render :new }
-        # format.json { render json: @user.errors, status: :unprocessable_entity }
+        @user[:superadmin] = false
+      end
+
+      respond_to do |format|
+        if @user.save
+          flash[:success] = "You're now registered and logged in!"
+          log_in @user # log_in method implemented in SessionsHelper which is imported in ApplicationController
+          format.html { redirect_to @user }
+          format.json { render :show, status: :created, location: @user }
+        else
+          format.html { render :new }
+        end
       end
     end
   end
 
-  def update    
+  def update
     respond_to do |format|
       if params["user"]["password"]
         if @user.update(user_params)
@@ -62,10 +70,8 @@ class UsersController < ApplicationController
           format.json { render :show, status: :ok, location: @user }
         else
           format.html { render :edit }
-          # format.json { render json: @user.errors, status: :unprocessable_entity }
         end
       else
-        puts "edit_user_params"
         if @user.update(edit_user_params)
           flash[:info] = 'User was successfully updated.'
           format.html { redirect_to @user }
@@ -106,6 +112,10 @@ class UsersController < ApplicationController
       if @user.nil?
         redirect_to root_path
       end
+      if !is_superadmin? && current_user.id != @user.id
+        flash[:danger] = "You were redirected because you don't have the required permissions."
+        redirect_to user_url(@current_user)
+      end
     end
 
     def check_authentication
@@ -118,5 +128,5 @@ class UsersController < ApplicationController
         flash[:danger] = "You need to be logged in for this action."
         redirect_to login_path
       end
-  end
+    end
 end

@@ -72,59 +72,55 @@ class LanguagesControllerTest < ActionDispatch::IntegrationTest
   ################ non superadmin authenticated user ################
 
   #index
-  test "non superadmin user shouldn't get the languages index" do
+  test "non superadmin user should get the languages index" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
     get languages_url
-    assert_response :found
-    assert_redirected_to root_url
-    assert_equal "Unauthorized action.", flash[:danger]
+    assert_response :success
   end
 
   # new
-  test "non superadmin user shouldn't get the new action" do
+  test "non superadmin user should get the new action" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
     get new_language_url
-    assert_response :found
-    assert_redirected_to root_url
-    assert_equal "Unauthorized action.", flash[:danger]
+    assert_response :success
   end
 
   # edit
-  test "non superadmin user shouldn't get the edit action" do
+  test "non superadmin user should get the edit action" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
     get edit_language_url(@language)
-    assert_response :found
-    assert_redirected_to root_url
-    assert_equal "Unauthorized action.", flash[:danger]
+    assert_response :success
   end
 
   # create
-  test "non superadmin user shouldn't be able to create a language" do
+  test "non superadmin user should be able to create a language (but will be prevented from doing so by React component)" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
-    post languages_url, params: { language: { name: 'new language name', abbreviation: 'NL' } }
+    post languages_url, params: { language: { name: 'new_language_name', abbreviation: 'NL' } }
     assert_response :found
-    assert_redirected_to root_url
-    assert_equal "Unauthorized action.", flash[:danger]
+    assert_redirected_to languages_url
+    assert_equal 'new_language_name language was successfully created.', flash[:success]
   end
 
   # update
-  test "non superadmin user shouldn't be able to update a language" do
+  test "non superadmin user should be able to update a language (but will be prevented from doing so by React component)" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
-    patch language_url(@language), params: { language: { name: 'updated language name' } }
+    assert_no_difference('Language.count') do
+      patch language_url(@language), params: { language: { name: 'new_lang' } }
+    end
     assert_response :found
-    assert_redirected_to root_url
-    assert_equal "Unauthorized action.", flash[:danger]
+    assert_redirected_to languages_url
+    assert_equal 'new_lang language was successfully updated.', flash[:success]
   end
 
   # destroy
-  test "non superadmin user shouldn't be able to destroy a language" do
+  test "non superadmin user should be able to destroy a language (but will be prevented from doing so by React component)" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
-    assert_no_difference('Language.count') do
+    assert_difference('Language.count', -1) do
       delete language_url(@language)
     end
     assert_response :found
-    assert_redirected_to root_url
-    assert_equal "Unauthorized action.", flash[:danger]
+    assert_redirected_to languages_url
+    assert_equal 'MyLang1 language was destroyed.', flash[:danger]
   end
   
 

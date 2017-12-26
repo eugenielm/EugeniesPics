@@ -1,4 +1,5 @@
 class SettingsController < ApplicationController
+    before_action :check_authentication, :except => :index
     before_action :get_setting
 
   def index
@@ -85,6 +86,14 @@ class SettingsController < ApplicationController
 
     def get_setting
         @setting = Setting.first rescue nil
+    end
+
+    def check_authentication
+      if !logged_in?
+        session[:prev_url] = request.fullpath
+        flash[:danger] = "You need to be logged in for this action."
+        redirect_to login_path
+      end
     end
 
 end

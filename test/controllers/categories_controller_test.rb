@@ -51,11 +51,10 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     follow_redirect!
   end
 
-  test "authenticated non-admin user should be redirected to root_url when getting new category" do
+  test "authenticated non-admin user should get the new category form" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
     get new_category_url
-    assert_redirected_to root_url
-    follow_redirect!
+    assert_response :success
   end
 
   test "authenticated admin user should get new category" do
@@ -83,15 +82,13 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_equal "You need to be logged in for this action.", flash[:danger]
   end
 
-  test "authenticated non-admin user should be redirected to root when getting edit category" do
+  test "authenticated non-admin user should should get the edit category page" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
     get edit_category_url(@category)
-    assert_redirected_to root_url
-    follow_redirect!
-    assert_equal "Unauthorized action.", flash[:danger]
+    assert_response :success
   end
 
-  test "authenticated admin user should get edit" do
+  test "authenticated admin user should get the edit category page" do
     post login_url, params: { session: { email: @user_admin.email, password: "adminpassword" }}
     get edit_category_url(@category)
     assert_response :success
@@ -105,12 +102,12 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_equal "You need to be logged in for this action.", flash[:danger]
   end
 
-  test "authenticated non-admin user should be redirected to root when updating category" do
+  test "authenticated non-admin user is allowed to update a category (but will be prevented from doing so by the corresponding React component)" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
     patch category_url(@category), params: { category: { name: 'new name' } }
-    assert_redirected_to root_url
+    assert_redirected_to category_url(@category)
     follow_redirect!
-    assert_equal "Unauthorized action.", flash[:danger]
+    assert_equal '"new name" category was successfully updated.', flash[:success]
   end
 
   test "authenticated admin user should be able to update a category" do
@@ -131,14 +128,12 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_equal "You need to be logged in for this action.", flash[:danger]
   end
 
-  test "authenticated non-admin user should be redirected to login when destroying a category" do
+  test "authenticated non-admin user should be allowed to destroy a category (but will be prevented from doing so in React component)" do
     post login_url, params: { session: { email: @user_non_admin.email, password: "nonadminpassword" }}
-    assert_no_difference('Category.count') do
+    assert_difference('Category.count', -1) do
       delete category_url(@category)
     end
-    assert_redirected_to root_url
-    follow_redirect!
-    assert_equal "Unauthorized action.", flash[:danger]
+    assert_redirected_to categories_url
   end
 
   test "authenticated admin user should be able to destroy category" do

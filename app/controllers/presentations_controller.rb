@@ -10,7 +10,7 @@ class PresentationsController < ApplicationController
         end
 
         respond_to do |format|
-            if is_superadmin?
+            if logged_in?
                 format.html
             else
                 format.html { redirect_to "/about" }

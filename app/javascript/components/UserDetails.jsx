@@ -76,7 +76,7 @@ class UserDetails extends React.Component {
                             
                         <Modal show={this.state.displayDeleteModal}>
                             <Modal.Body>
-                                {this.state.user.superadmin || this.state.user.id == this.props.match.params.user_id ?
+                                {this.state.user.superadmin ?
                                     <div className="confirm_delete_modal">
                                         Are you sure you want to destroy {this.state.user.username}'s profile?
                                         <br/><br/>
