@@ -10,7 +10,12 @@ class Setting < ApplicationRecord
   # the '#' sign is used to centrally crop the image to fit the dimensions specified
   has_attached_file :background, styles: { medium: "2500x2500>" },
                     :default_style => 'medium'
-  validates_attachment :background, size: { in: 0..4000.kilobytes }
+  validates_attachment :background, size: { in: 0..2000.kilobytes }
   validates_attachment_file_name :background, matches: [/png\z/i, /jpe?g\z/i]
+
+  has_attached_file :id_picture, styles: { small: "500x500>" },
+                    :default_style => 'small'
+  validates_attachment :id_picture, size: { in: 0..3000.kilobytes }
+  validates_attachment_file_name :id_picture, matches: [/png\z/i, /jpe?g\z/i]
 
 end
