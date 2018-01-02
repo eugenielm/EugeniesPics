@@ -1,10 +1,11 @@
 class SettingsController < ApplicationController
-    before_action :check_authentication, :except => :index
-    before_action :get_setting
+  before_action :check_authentication, :except => :index
+  before_action :get_setting
 
   def index
     if @setting.nil?
       @settings = { background_url: nil,
+                    id_picture_url: nil,
                     background_color: "#eeeeee",
                     maintitle: "WEBSITE TITLE",
                     subtitle: "- Website subtitle -",
@@ -22,7 +23,9 @@ class SettingsController < ApplicationController
                     maintitle: @setting.maintitle,
                     subtitle: @setting.subtitle,
                     navbarcolor: @setting.navbarcolor,
-                    navbarfont: @setting.navbarfont }
+                    navbarfont: @setting.navbarfont,
+                    id_picture_url: @setting.id_picture_file_name ? @setting.id_picture.url : nil,
+                    id_picture_name: @setting.id_picture_file_name ? @setting.id_picture_file_name : nil, }
       respond_to do |format|
         format.html { redirect_to edit_setting_url(@setting) }
         format.json { render :json => @settings }
@@ -66,8 +69,12 @@ class SettingsController < ApplicationController
   def update
     respond_to do |format|
       if @setting.update(setting_params)
-        if params[:setting][:background] == nil
+        if params[:setting][:background] == nil && !params[:original_bckgd_pic]
           @setting.background = nil
+          @setting.save
+        end
+        if params[:setting][:id_picture] == nil && !params[:original_id_pic]
+          @setting.id_picture = nil
           @setting.save
         end
         flash[:success] = 'Your settings were successfully updated.'
@@ -81,11 +88,12 @@ class SettingsController < ApplicationController
 
   private
     def setting_params
-        params.require(:setting).permit(:maintitle, :subtitle, :navbarcolor, :navbarfont, :background, :background_color)
+      params.require(:setting).permit(
+        :maintitle, :subtitle, :navbarcolor, :navbarfont, :background, :background_color, :id_picture)
     end
 
     def get_setting
-        @setting = Setting.first rescue nil
+      @setting = Setting.first rescue nil
     end
 
     def check_authentication

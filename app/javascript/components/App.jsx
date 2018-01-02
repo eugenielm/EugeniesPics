@@ -36,7 +36,9 @@ class App extends React.Component {
                    subtitle: "",
                    navbarcolor: "",
                    navbarfont: "",
-                   settingId: undefined });
+                   settingId: undefined,
+                   idPicture: undefined,
+                   idPictureName: undefined});
     this.updateLangPref = this.updateLangPref.bind(this);
     this.updateNavbarcolor = this.updateNavbarcolor.bind(this);
     this.updateNavbarfont = this.updateNavbarfont.bind(this);
@@ -45,22 +47,32 @@ class App extends React.Component {
     this.updateSubtitle = this.updateSubtitle.bind(this);
     this.updateBackgroundImage = this.updateBackgroundImage.bind(this);
     this.updateBackgroundImageName = this.updateBackgroundImageName.bind(this);
+    this.updateIdPicture = this.updateIdPicture.bind(this);
+    this.updateIdPictureName = this.updateIdPictureName.bind(this);
   }
 
   componentDidMount() {
       fetch('/settings.json', {credentials: 'same-origin'})
       .then(function(resp) {
-        return resp.json();
+      return resp.json();
       })
       .then(function(settings) {
-        this.setState({ backgroundImage: settings.background_url,
-                        backgroundImageName: settings.background_name,
-                        backgroundColor: settings.background_color,
-                        maintitle: settings.maintitle,
-                        subtitle: settings.subtitle, 
-                        navbarcolor: settings.navbarcolor,
-                        navbarfont: settings.navbarfont,
-                        settingId: settings.id })
+            this.setState({ backgroundImage: settings.background_url,
+                            backgroundImageName: settings.background_name,
+                            backgroundColor: this.props.setting_data ? this.props.setting_data.background_color 
+                                                                     : settings.background_color,
+                            maintitle: this.props.setting_data ? this.props.setting_data.maintitle 
+                                                               : settings.maintitle,
+                            subtitle: this.props.setting_data ? this.props.setting_data.subtitle 
+                                                              : settings.subtitle, 
+                            navbarcolor: this.props.setting_data ? this.props.setting_data.navbarcolor 
+                                                                 : settings.navbarcolor,
+                            navbarfont: this.props.setting_data ? this.props.setting_data.navbarfont 
+                                                                : settings.navbarfont,
+                            settingId: settings.id,
+                            idPicture: settings.id_picture_url,
+                            idPictureName: settings.id_picture_name
+                          })
       }.bind(this))
   }
 
@@ -96,6 +108,14 @@ class App extends React.Component {
       this.setState({backgroundImageName: newName});
   }
 
+  updateIdPicture(newImg) {
+      this.setState({idPicture: newImg});
+  }
+
+  updateIdPictureName(newName) {
+      this.setState({idPictureName: newName});
+  }
+
   render() {
     const backgroundStyle = this.state.backgroundImage ? { backgroundImage: "url(" + this.state.backgroundImage + ")" }
                                                        : { backgroundColor: this.state.backgroundColor || "#eeeeee" }
@@ -118,8 +138,11 @@ class App extends React.Component {
 
             <Route exact path="/" component={HomePage}/>
             <Route exact path="/index" component={HomePage}/>} />
-            <Route exact path="/about" render={(props2) => <AboutPage {...this.props} {...props2} langPref={this.state.langPref} 
-                                                                                                  updateLangPref={this.updateLangPref}/>} />
+            <Route exact path="/about" render={(props2) => <AboutPage {...this.props} {...props2} 
+                                                                      langPref={this.state.langPref} 
+                                                                      updateLangPref={this.updateLangPref}
+                                                                      idPicture={this.state.idPicture}/>}
+            />
 
             <Route exact path="/categories" 
                   render={(props2) => this.props.category_errors ? (<CategoryForm {...this.props} {...props2} />) 
@@ -210,13 +233,17 @@ class App extends React.Component {
                                                                      maintitle={this.state.maintitle}
                                                                      subtitle={this.state.subtitle}
                                                                      backgroundImageName={this.state.backgroundImageName}
+                                                                     idPicture={this.state.idPicture}
+                                                                     idPictureName={this.state.idPictureName}
                                                                      updateBackgroundColor={this.updateBackgroundColor}
                                                                      updateNavbarcolor={this.updateNavbarcolor}
                                                                      updateNavbarfont={this.updateNavbarfont}
                                                                      updateMaintitle={this.updateMaintitle} 
                                                                      updateSubtitle={this.updateSubtitle}
                                                                      updateBackgroundImage={this.updateBackgroundImage}
-                                                                     updateBackgroundImageName={this.updateBackgroundImageName} /> } />
+                                                                     updateBackgroundImageName={this.updateBackgroundImageName}
+                                                                     updateIdPicture={this.updateIdPicture}
+                                                                     updateIdPictureName={this.updateIdPictureName} /> } />
           
           </Switch>
           

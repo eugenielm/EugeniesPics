@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Table, FormGroup, FormControl, Panel, Modal, Popover, OverlayTrigger } from 'react-bootstrap';
+import { Button, Table, FormGroup, FormControl, Panel, Modal, Popover, OverlayTrigger, Image } from 'react-bootstrap';
 import ReCAPTCHA from 'react-google-recaptcha';
 
 
@@ -18,12 +18,12 @@ class EditDeletePresentation extends React.Component {
     render() {
       return (
         <span>
-          <Button bsSize="xsmall" bsStyle="info" style={{ marginLeft: '17px', opacity: '0.75' }} 
+          <Button bsSize="xsmall" bsStyle="info" style={{ marginLeft: '12px', opacity: '0.75' }} 
                   href={ "/presentations/" + this.props.pres_id + "/edit" }>
             <span className="glyphicon glyphicon-edit"></span>
           </Button>
   
-          <Button bsSize="xsmall" bsStyle="danger" style={{ marginLeft: '20px', outline: 0, opacity: '0.75' }}
+          <Button bsSize="xsmall" bsStyle="danger" style={{ marginLeft: '15px', outline: 0, opacity: '0.75' }}
                   onClick={() => this.setState({displayDeleteModal: true})}>
               <span className="glyphicon glyphicon-trash"></span>
           </Button>
@@ -169,6 +169,7 @@ class AboutPage extends React.Component {
                                                      key={i} 
                                                      active={lang == this.state.language ? true : false}
                                                      disabled={lang == this.state.language ? true : false}
+                                                     style={lang == this.state.language ? {opacity: 0.85} : {opacity: 1}}
                                                      className='lang_btns'
                                                      onClick={() => this.handleContent(lang)}>{lang}</Button>);
         const pres = this.state.presentations[this.state.language];
@@ -187,6 +188,10 @@ class AboutPage extends React.Component {
                     : null
                 }
                 <div id="about_presentation">
+                    {this.props.idPicture ? 
+                        <Image src={this.props.idPicture}
+                               alt="Photographer ID picture"
+                               id="id_picture" /> : null}
                     {this.state.presentationContent.map((s, index) => <p key={index}>{s}</p>)}
                 </div>
                 <div id="contact_me">
@@ -195,28 +200,34 @@ class AboutPage extends React.Component {
                         Contact me
                     </Button>
                     <Panel collapsible expanded={this.state.panelOpen}>
-                        <form id="contact_form" encType="multipart/form-data" action='/about' method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit}>
+                        <form id="contact_form" 
+                              encType="multipart/form-data" 
+                              action='/about' 
+                              method="post" 
+                              acceptCharset="UTF-8" 
+                              onSubmit={this.handleSubmit}>
                             <input name="utf8" type="hidden" value="✓" />
                             <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />
+                            
                             <Table responsive>
                                 <tbody>
                                     <tr>
                                         <td><input id="message_name" 
-                                                type="text" 
-                                                name="message[name]" 
-                                                placeholder="Name*"
-                                                maxLength="72" 
-                                                value={this.state.userName || ''} 
-                                                onChange={this.handleUserName} /></td>
+                                                   type="text" 
+                                                   name="message[name]" 
+                                                   placeholder="Name*"
+                                                   maxLength="72" 
+                                                   value={this.state.userName || ''} 
+                                                   onChange={this.handleUserName} /></td>
                                     </tr>
                                     <tr>
                                         <td><input id="message_email" 
-                                                type="email" 
-                                                name="message[email]" 
-                                                placeholder="Email*"
-                                                maxLength="255" 
-                                                value={this.state.emailAddress || ''} 
-                                                onChange={this.handleEmailAddress} /></td>
+                                                   type="email" 
+                                                   name="message[email]" 
+                                                   placeholder="Email*"
+                                                   maxLength="255" 
+                                                   value={this.state.emailAddress || ''} 
+                                                   onChange={this.handleEmailAddress} /></td>
                                     </tr>
                                     <tr>
                                         <td>
