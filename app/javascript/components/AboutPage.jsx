@@ -175,7 +175,7 @@ class AboutPage extends React.Component {
         const pres = this.state.presentations[this.state.language];
         return (
             <div id="contact_page">
-                <div className="page-title" style={{marginTop: 0 + 'px'}}>
+                <div className="page-title">
                     {this.state.pageTitle}
                     {pres ?
                         <EditDeletePresentation user={this.props.user}
