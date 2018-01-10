@@ -172,6 +172,13 @@ class Navibar extends React.Component {
           </button>
           
           : null}
+
+        {this.props.demo_mode && !this.props.user ?
+          <p style={{fontSize: "14px", color: '#d80606', textShadow: '2px 2px 10px black', fontStyle: 'italic'}}>
+            You need to be logged in to fully experience this demo!
+          </p>
+        
+          : null}
       
       </div>
     )
