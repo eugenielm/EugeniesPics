@@ -13,6 +13,9 @@ import App from '../components/App'
 
 
 document.addEventListener('turbolinks:load', () => {
+
+  const demoMode = document.getElementById('demo_mode').getAttribute('data');
+
   const csrf_token = document.getElementById('csrf_token') ?
                      document.getElementById('csrf_token').getAttribute('data').split('content=')[2].slice(1, -4) : null;
   
@@ -72,7 +75,8 @@ document.addEventListener('turbolinks:load', () => {
 
   ReactDOM.render(
     <App user={window.user} 
-         token={csrf_token} 
+         token={csrf_token}
+         demo_mode={demoMode} 
          setting_errors={setting_errors}
          category_errors={category_errors} 
          picture_errors={picture_errors} 

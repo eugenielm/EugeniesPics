@@ -157,10 +157,21 @@ class Navibar extends React.Component {
           
         : null}
 
-        <button id="fb_share_btn" onClick={this.triggerShareDialog}>
-          <i className="fa fa-facebook-official"></i>
-          <span>Share</span>
-        </button>
+        {!this.props.user && this.props.demo_mode ?
+          <Link to="/login" 
+                style={{position: "absolute", top: '10px', right: '10px', color: 'white', textShadow: '2px 2px 10px black'}}>
+            Log in
+          </Link>
+          : null}
+
+        {!this.props.demo_mode ?
+
+          <button id="fb_share_btn" onClick={this.triggerShareDialog}>
+            <i className="fa fa-facebook-official"></i>
+            <span>Share</span>
+          </button>
+          
+          : null}
       
       </div>
     )

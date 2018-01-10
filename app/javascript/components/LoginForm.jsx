@@ -5,7 +5,7 @@ import { Table } from 'react-bootstrap';
 class LoginForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {email: '', password: ''};
+        this.state = this.props.demo_mode ? {email: 'demoaccount@example.com', password: 'demoaccount'} : {email: '', password: ''};
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);

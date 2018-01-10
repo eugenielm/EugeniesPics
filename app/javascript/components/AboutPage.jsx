@@ -245,13 +245,15 @@ class AboutPage extends React.Component {
                             </Table>
 
                             <div className="actions">
-                                <input type="submit" name="commit" value="Send" />
+                                <input type="submit" name="commit" value="Send" disabled={this.props.demo_mode} />
                             </div>
 
-                            <ReCAPTCHA sitekey="6LctkTYUAAAAABfLXQzX4brqTbRniz3cuR5AgDYp"
-                                       size='compact'
-                                       style={{float: 'right', marginTop: '-33px'}}
-                                       onChange={(e) => this.handleRecaptcha(e)} />
+                            {!this.props.demo_mode ?
+                                <ReCAPTCHA sitekey="6LctkTYUAAAAABfLXQzX4brqTbRniz3cuR5AgDYp"
+                                        size='compact'
+                                        style={{float: 'right', marginTop: '-33px'}}
+                                        onChange={(e) => this.handleRecaptcha(e)} />
+                                : null}
                         </form>
                     </Panel>
                 </div>

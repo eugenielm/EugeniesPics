@@ -99,6 +99,11 @@
     data: csrf_meta_tags do %>
     <% end %>
 
+    <%= content_tag :div,
+      id: "demo_mode",
+      data: ENV["DEMO_MODE"] do %>
+    <% end %>
+
 
     <% if @category %>
       <%= content_tag :div,
