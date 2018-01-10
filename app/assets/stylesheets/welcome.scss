@@ -119,8 +119,9 @@
 }
 
 #contact_page .page-title {
-    line-height: 22px; /* for alignment with the languages buttons */
-    margin-bottom: 40px;
+    line-height: 30px;
+    margin-bottom: 20px;
+    display: block;
 }
 
 @media screen and (max-width: 767px) {
@@ -159,9 +160,8 @@
 }
 
 #language_buttons {
-    display: inline-block;
     float: right;
-    margin-top: 3px;
+    margin-bottom: 10px;
 }
 
 button.lang_btns {
