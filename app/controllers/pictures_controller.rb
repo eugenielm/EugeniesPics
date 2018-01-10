@@ -15,11 +15,12 @@ class PicturesController < ApplicationController
     @sorted_pictures = @unsorted_pictures.sort { |a,b| a.title.downcase <=> b.title.downcase }
     @sorted_pictures.each do |pic|
       all_descriptions = {}
-      pic.pic_descriptions.each do |d|
+      @sorted_descriptions = pic.pic_descriptions.sort { |a,b| a.language.abbreviation.downcase <=> b.language.abbreviation.downcase }
+      @sorted_descriptions.each do |d|
         if d.language # condition needeed for the pictures_controller_test to pass
           all_descriptions[d.language.abbreviation] = d.content
         end
-      end  
+      end 
       @pictures.push({
         id: pic.id,
         title: pic.title,
@@ -57,7 +58,8 @@ class PicturesController < ApplicationController
     @fb_image = @picture.picfile.url(:small)
     
     @pic_with_descriptions = []
-    @picture.pic_descriptions.each do |d|
+    @sorted_descriptions = @picture.pic_descriptions.sort { |a,b| a.language.abbreviation.downcase <=> b.language.abbreviation.downcase }
+    @sorted_descriptions.each do |d|
       @pic_with_descriptions.push({:description_id => d.id,
                                    :language_name => d.language.name,
                                    :language_abbr => d.language.abbreviation,
