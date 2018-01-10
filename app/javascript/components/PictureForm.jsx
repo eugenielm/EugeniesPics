@@ -257,7 +257,8 @@ class PictureForm extends React.Component {
                         </tr>
                         <tr>
                             <td><label htmlFor="picture_file">Picture</label></td>
-                            <td><input id="picture_picfile" accept=".png, .jpg, .jpeg" type="file" name="picture[picfile]" onChange={this.handlePicfile} /></td>
+                            <td><input id="picture_picfile" accept=".png, .jpg, .jpeg" type="file" name="picture[picfile]" 
+                                       onChange={this.handlePicfile} style={{color: "transparent"}} /></td>
                         </tr>
                     </tbody>
                 </Table>
