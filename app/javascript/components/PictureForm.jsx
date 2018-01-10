@@ -145,7 +145,7 @@ class PictureForm extends React.Component {
     }
 
     handleAuthor(event) {
-        if (event.target.value.match(/^[\w\ \u00E0-\u00FC\-¨()!?.\^]{0,30}$/)) {
+        if (event.target.value.match(/^[\w\ \u00E0-\u00FC\-¨()!?*.\^]{0,30}$/)) {
             this.setState({author: event.target.value});
         }
     }
