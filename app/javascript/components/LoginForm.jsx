@@ -37,7 +37,7 @@ class LoginForm extends React.Component {
         return (
             <div className="form-layout">
                 <div className="admin-page-title" id="login_title">Login</div>
-                <form action='/login' method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit}>
+                <form action='/login' method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} style={{maxWidth: '450px', margin: 'auto'}}>
                     <input name="utf8" type="hidden" value="✓" />
                     <input type="hidden" name="authenticity_token" value={this.props.token} readOnly={true} />
                     
