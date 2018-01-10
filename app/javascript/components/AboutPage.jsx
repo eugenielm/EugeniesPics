@@ -177,7 +177,7 @@ class AboutPage extends React.Component {
             <div id="contact_page">
                 <div className="page-title">
                     {this.state.pageTitle}
-                    {pres ?
+                    {pres && this.props.user ?
                         <EditDeletePresentation user={this.props.user}
                                                 pres_id={pres[2]} 
                                                 pres_lang={pres[1]} />
