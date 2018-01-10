@@ -174,7 +174,7 @@ class Navibar extends React.Component {
           : null}
 
         {this.props.demo_mode && !this.props.user ?
-          <p style={{fontSize: "14px", color: '#d80606', textShadow: '2px 2px 10px black', fontStyle: 'italic'}}>
+          <p style={{fontSize: "14px", color: '#fb0a0a', textShadow: '2px 2px 8px black', fontStyle: 'italic', marginTop: '-10px'}}>
             You need to be logged in to fully experience this demo!
           </p>
         
