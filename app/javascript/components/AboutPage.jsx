@@ -119,7 +119,7 @@ class AboutPage extends React.Component {
     }
 
     handleUserName(e) {
-        if (e.target.value.match(/^[0-9a-zA-Z -]*$/) !== null) {
+        if (e.target.value.match(/^[A-Za-z\ \u00E0-\u00FC\-¨\^]*$/) !== null) {
             this.setState({userName: e.target.value});
         }
     }
