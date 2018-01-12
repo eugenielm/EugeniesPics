@@ -5,13 +5,20 @@ class PicturesControllerTest < ActionDispatch::IntegrationTest
     @category = categories(:one)
     @categories = Category.all
     @cat_description = cat_descriptions(:one)
+    @pic_description = pic_descriptions(:one)
+    @pic_description2 = pic_descriptions(:three)
     @language = languages(:one)
     @picture = pictures(:Pict1)
+    @picture2 = pictures(:Pict2)
     @user_non_admin = users(:one)
     @user_admin = users(:two)
   end
 
   test "any user should get the pictures index" do
+    post login_url, params: {session: {email: @user_admin.email, password: "adminpassword" }}
+    # the following pic_description raises an error because it has no language_id
+    delete category_picture_picdescription_url(@category, @picture2, @pic_description2)
+    
     get category_pictures_url(@category)
     assert_response :success
 

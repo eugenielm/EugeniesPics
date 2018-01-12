@@ -65,8 +65,13 @@ class PicDescriptionsController < ApplicationController
 
   def destroy
     @pic_description.destroy
-    flash[:danger] = @pic_description.language.name \
-                     + ' description of "' + @picture.title + '" was destroyed.'
+    if @pic_description.language # needed to pass the test when destroying a pic_description with no language
+      flash[:danger] = @pic_description.language.name \
+                      + ' description of "' + @picture.title + '" was destroyed.'
+    else
+      flash[:danger] = 'A description of "' + @picture.title + '" was destroyed.'
+    end
+
     respond_to do |format|
       format.html { redirect_to edit_category_picture_url(@category, @picture) }
       format.json { head :no_content }
