@@ -11,7 +11,8 @@ class CategoriesController < ApplicationController
     @fb_url = categories_url
 
     @categories = Array.new
-    Category.all.each do |c|
+    @sorted_categories = Category.all.sort { |a,b| a.name <=> b.name }
+    @sorted_categories.each do |c|
       @categories.push({id: c.id,
                         name: c.name,
                         catpic_url: c.catpic.url(:small),})
