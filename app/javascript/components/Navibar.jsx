@@ -79,9 +79,9 @@ class Navibar extends React.Component {
         <div className="hidden-xs" id="menuitems">
             
             { this.state.path == '/categories' ?
-                <Button href="/categories" active={true} id="gallery_btn">~ All galleries ~</Button>
+                <Button href="/categories" active={true} id="gallery_btn">* All galleries *</Button>
                   :
-                <IndexLinkContainer to='/categories' id="gallery_btn"><Button>~ All galleries ~</Button></IndexLinkContainer>
+                <IndexLinkContainer to='/categories' id="gallery_btn"><Button>* All galleries *</Button></IndexLinkContainer>
             }
 
               { this.state.categories.map(c => <CategoriesLinks key={c.id} 
@@ -91,7 +91,7 @@ class Navibar extends React.Component {
                                                                 index={this.state.categories.indexOf(c)} />) }
 
             <IndexLinkContainer to='/about' id="about_button">
-              <Button>Info & <span className="glyphicon glyphicon-envelope"></span></Button>
+              <Button>* Info & <span className="glyphicon glyphicon-envelope"></span> *</Button>
             </IndexLinkContainer>
             
         </div>
