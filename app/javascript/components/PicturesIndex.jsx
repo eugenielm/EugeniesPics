@@ -66,7 +66,6 @@ class PicturesIndex extends React.Component {
             panelOpen: false,
             showPicDesc: false,
             displayDeleteModal: false,
-            display: 'none',
         };
     }
 
@@ -93,12 +92,8 @@ class PicturesIndex extends React.Component {
                                                  : (availableLanguages.includes('EN') ? 'EN' : availableLanguages[0]);
             const categoryDescription = categoryDescriptions[language];
             const descriptionContent = categoryDescription ? categoryDescription.split('\r\n') : null;
-            this.setState({categoryName, pictures, availableLanguages, language, categoryDescriptions, descriptionContent, display: 'block'});
+            this.setState({categoryName, pictures, availableLanguages, language, categoryDescriptions, descriptionContent});
         }.bind(this));
-    }
-
-    componentWillUnmount() {
-        this.setState({display: 'none'});
     }
 
     // this method is needed to triger re-rendering when switching from one categories index page to another
@@ -124,7 +119,6 @@ class PicturesIndex extends React.Component {
                 this.setState({categoryName, pictures, availableLanguages, language, categoryDescriptions, descriptionContent, panelOpen: false});
             }.bind(this));
         }
-        window.scrollTo(0, 0);
     }
 
     handleCategoryDescription(lang) {
@@ -143,6 +137,7 @@ class PicturesIndex extends React.Component {
     }
 
     render() {
+        window.scrollTo(0, 0);
         const languageButtons = this.state.availableLanguages.map(
             (lang, i) => <Button bsSize="xsmall" 
                                  key={i} 
@@ -152,21 +147,7 @@ class PicturesIndex extends React.Component {
                                  onClick={() => this.handleCategoryDescription(lang)}>{lang}</Button>);
         
         return (
-            <div id="pictures-page" style={{display: this.state.display}}>
-
-                { this.props.user ?
-                    <OverlayTrigger trigger="click" 
-                                    placement="left" 
-                                    overlay={<CatAdminActionsElement {...this.props} 
-                                                                     user={this.props.user}
-                                                                     category_id={this.props.match.params.category_id}
-                                                                     handleDeleteModal={this.handleDeleteModal} />} >
-                        <Button className="cat_admin_overlay_btn">
-                            <span className="glyphicon glyphicon-cog"></span>
-                        </Button>
-                    </OverlayTrigger>
-                    : null
-                }
+            <div id="pictures-page">
 
                 <Modal show={this.state.displayDeleteModal}>
                     <Modal.Body>
@@ -207,7 +188,7 @@ class PicturesIndex extends React.Component {
                 <div className="page-title">{this.state.categoryName.toUpperCase()}</div>
                 
                 {this.state.descriptionContent ? 
-                    <div className="inline">
+                    <div style={{display: "inline-block"}}>
                         <Button id="cat_desc_btn" bsSize="xsmall"
                                 onClick={() => this.setState({ panelOpen: !this.state.panelOpen })}>
                             <span className={this.state.panelOpen ? "glyphicon glyphicon-circle-arrow-up"
@@ -220,6 +201,20 @@ class PicturesIndex extends React.Component {
                             {this.state.descriptionContent.map((s, index) => <p key={index} style={{textAlign: 'justify'}}>{s}</p>)}
                         </Panel>
                     </div>
+                    : null
+                }
+
+                { this.props.user ?
+                    <OverlayTrigger trigger="click" 
+                                    placement="left" 
+                                    overlay={<CatAdminActionsElement {...this.props} 
+                                                                     user={this.props.user}
+                                                                     category_id={this.props.match.params.category_id}
+                                                                     handleDeleteModal={this.handleDeleteModal} />} >
+                        <Button className="cat_admin_overlay_btn" style={{display: "inline-block"}}>
+                            <span className="glyphicon glyphicon-cog"></span>
+                        </Button>
+                    </OverlayTrigger>
                     : null
                 }
 
