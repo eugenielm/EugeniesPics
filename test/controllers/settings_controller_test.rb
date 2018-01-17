@@ -12,8 +12,6 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
   test "unauthenticated user should be redirected to login_url when requesting the settings index" do
     get settings_url
     assert_redirected_to login_path
-    follow_redirect!
-    assert_equal "You need to be logged in for this action.", flash[:danger]
   end
 
   test "authenticated user should be properly redirected when requesting the settings index" do

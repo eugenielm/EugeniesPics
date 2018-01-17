@@ -19,8 +19,6 @@ class SettingsController < ApplicationController
         end
       else
         respond_to do |format|
-          session[:prev_url] = request.fullpath
-          flash[:danger] = "You need to be logged in for this action."
           format.html { redirect_to login_path }
           format.json { render :json => @settings }
         end
@@ -39,16 +37,14 @@ class SettingsController < ApplicationController
                     id_picture_name: @setting.id_picture_file_name ? @setting.id_picture_file_name : nil,
                   }
 
-      if !logged_in?
+      if logged_in?
         respond_to do |format|
-          session[:prev_url] = request.fullpath
-          flash[:danger] = "You need to be logged in for this action."
-          format.html { redirect_to login_path }
+          format.html { redirect_to edit_setting_url(@setting) }
           format.json { render :json => @settings }
         end
       else
         respond_to do |format|
-          format.html { redirect_to edit_setting_url(@setting) }
+          format.html { redirect_to login_path }
           format.json { render :json => @settings }
         end
       end

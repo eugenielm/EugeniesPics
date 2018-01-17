@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
       # SessionsHelper is included in application_controller
       log_in user
       flash[:success] = "You've been logged in."
-      !session[:prev_url].nil? ? redirect_path = session[:prev_url] : redirect_path = root_path
+      !session[:prev_url].nil? && session[:prev_url] != "/settings.json" ? redirect_path = session[:prev_url] : redirect_path = root_path
       session.delete(:prev_url) unless session[:prev_url].nil?
       redirect_to redirect_path
     else
