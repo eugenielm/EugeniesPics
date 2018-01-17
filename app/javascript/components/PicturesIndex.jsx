@@ -124,6 +124,7 @@ class PicturesIndex extends React.Component {
                 this.setState({categoryName, pictures, availableLanguages, language, categoryDescriptions, descriptionContent, panelOpen: false});
             }.bind(this));
         }
+        window.scrollTo(0, 0);
     }
 
     handleCategoryDescription(lang) {
