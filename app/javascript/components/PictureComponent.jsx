@@ -157,7 +157,7 @@ class PictureComponent extends React.Component {
         const descriptionsLength = Object.entries(this.props.currentPicture.descriptions).length;
         
         return (
-            <Col lg={4} md={6} sm={6} xs={6} className="picture-element">
+            <Col lg={4} md={6} sm={6} xs={12} className="picture-element">
                 <div className="picture_pic">
                     <Link onClick={() => {this.setState({showModal: true})}} 
                           to={'/categories/' + this.props.category_id + '/pictures/' + this.props.currentPicture.id.toString()}>
