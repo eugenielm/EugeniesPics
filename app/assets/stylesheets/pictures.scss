@@ -60,22 +60,16 @@
     margin-left: 15px;
     margin-top: -18px;
     outline: none;
-    padding: 6px 10px 4px 10px;
+    padding: 6px 10px 5px 10px;
     border-radius: 5px;
 }
 
 @media screen and (max-width: 767px) and (min-width: 426px) {
-    #cat_desc_btn {
-        margin-top: -15px;
-        padding: 5px 8px 2px 8px;
-    }
+    #cat_desc_btn {margin-top: -14px;}
 }
 
 @media screen and (max-width: 425px) {
-    #cat_desc_btn {
-        margin-top: -10px;
-        padding: 2px 6px 0px 6px;
-    }
+    #cat_desc_btn {margin-top: -12px}
 }
 
 #category_description {
@@ -157,7 +151,7 @@ button.cat_admin_overlay_btn {
     background: #86a8d0 !important;
     opacity: 0.8;
     width: 34px;
-    padding: 6px 9px 4px 9px;
+    padding: 5px 9px 3px 8px;
     box-shadow: 1px 1px 10px white;
     text-shadow: none;
     outline: 0 !important;
