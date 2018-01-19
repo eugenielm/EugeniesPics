@@ -206,13 +206,19 @@ class PictureForm extends React.Component {
                     (<div>
                         <p style={{color: 'white', fontSize: '14px', textShadow: '1px 1px 10px black'}}>Current picture:</p>
                         <img src={this.state.pic_url} />
+                        <p style={{color: 'white', fontSize: '12px', textShadow: '1px 1px 10px black', marginTop: '5px', 
+                           MsWordBreak: "break-all", wordBreak: "break-all", wordBreak: "break-word"}}>
+                           ({this.state.picfile_name})
+                        </p>
                     </div>)
-                    : (<p style={{color: 'white', fontSize: '14px', textShadow: '1px 1px 10px black'}}>
+                    : (<p style={{color: 'white', fontSize: '14px', textShadow: '1px 1px 10px black',
+                                  MsWordBreak: "break-all", wordBreak: "break-all", wordBreak: "break-word"}}>
                             Picture about to be uploaded: {this.state.picfile_name}
                        </p>))
             : (this.state.pic_url ?
-                (<p style={{color: 'white', fontSize: '14px', textShadow: '1px 1px 10px black'}}>
-                    Picture about to be uploaded: {this.state.picture_title}
+                (<p style={{color: 'white', fontSize: '14px', textShadow: '1px 1px 10px black',
+                    MsWordBreak: "break-all", wordBreak: "break-all", wordBreak: "break-word"}}>
+                    Picture about to be uploaded: {this.state.picfile_name}
                  </p>)
                 : null)
 
