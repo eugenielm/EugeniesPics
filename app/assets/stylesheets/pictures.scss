@@ -313,6 +313,10 @@ div.picture_modal.in.modal { background-color: rgba(0, 0, 0, 0.9) }
     z-index: 10;
 }
 
+@media screen and (max-width: 425px) {
+    .prev-pic span, .next-pic span {display: none}
+}
+
 .prev-pic { left: 0 }
 .next-pic { right: 0 }
 
