@@ -144,7 +144,7 @@
     transition: opacity 0.3s linear 0s;
 }
 
-button.cat_admin_overlay_btn {
+#pictures-page button.cat_admin_overlay_btn {
     margin-left: 15px;
     margin-top: -15px;
     background: #86a8d0 !important;
@@ -183,7 +183,7 @@ button.pic_admin_overlay_btn:hover {
 
 @media screen and (min-width: 768px) and (max-width: 1719px) {
     .picture-element.col-lg-4.col-md-6.col-sm-6.col-xs-12 { height: 350px }
-    button.cat_admin_overlay_btn {margin-top: -18px;}
+    #pictures-page button.cat_admin_overlay_btn {margin-top: -18px;}
 }
 
 @media screen and (min-width: 426px) and (max-width: 767px) {
@@ -193,7 +193,6 @@ button.pic_admin_overlay_btn:hover {
         float: none;
         margin: auto;
     }
-    button.cat_admin_overlay_btn {margin-top: -15px;}
 }
 
 @media screen and (max-width: 425px) {
@@ -204,7 +203,7 @@ button.pic_admin_overlay_btn:hover {
         float: none;
         margin: auto;
     }
-    button.cat_admin_overlay_btn {margin-top: -12px;}
+    #pictures-page button.cat_admin_overlay_btn {margin-top: -12px;}
 }
 
 
