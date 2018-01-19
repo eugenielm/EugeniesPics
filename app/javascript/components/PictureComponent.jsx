@@ -113,6 +113,7 @@ class PictureComponent extends React.Component {
         this.setState(this.initialState(this.props));
         this.initialState = this.initialState.bind(this);
         this.triggerShareDialog = this.triggerShareDialog.bind(this);
+        this.handlePicWithKeyboard = this.handlePicWithKeyboard.bind(this);
     }
 
     initialState(props) {
@@ -135,6 +136,15 @@ class PictureComponent extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState(this.initialState(nextProps));
+    }
+
+    handlePicWithKeyboard(event) {
+        if (event.keyCode == 37) {
+            window.location.pathname = '/categories/' + this.props.category_id + '/pictures/' + this.props.prevPicture.id;
+        }
+        if (event.keyCode == 39) {
+            window.location.pathname = '/categories/' + this.props.category_id + '/pictures/' + this.props.nextPicture.id;
+        }
     }
 
     triggerShareDialog() {
@@ -170,6 +180,7 @@ class PictureComponent extends React.Component {
                         show={this.state.showModal}
                         dialogClassName="custom-modal"
                         animation={false}
+                        onKeyDown={this.handlePicWithKeyboard}
                     >
                         <Modal.Header>
                             <Link to={'/categories/' + this.props.category_id + '/pictures'} id="close_button">X</Link>
