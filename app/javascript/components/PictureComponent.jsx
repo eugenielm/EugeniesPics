@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import { Button, Col, Image, Modal, OverlayTrigger, Tooltip, Panel, Popover } from 'react-bootstrap';
+import ReactEventComponent from "react-swipe-event-component";
 
 
 const tooltip = (
@@ -107,13 +108,122 @@ class EditDeletePicture extends React.Component {
 };
 
 
+class SwipableModal extends ReactEventComponent {
+    
+    componentWillMount() {
+        this.handlePicWithKeyboard = this.handlePicWithKeyboard.bind(this);
+        this.triggerShareDialog = this.triggerShareDialog.bind(this);
+    }
+
+    handlePicWithKeyboard(event) {
+        if (event.keyCode == 37) {
+            window.location.pathname = '/categories/' + this.props.category_id + '/pictures/' + this.props.prevPicture.id;
+        }
+        if (event.keyCode == 39) {
+            window.location.pathname = '/categories/' + this.props.category_id + '/pictures/' + this.props.nextPicture.id;
+        }
+    }
+
+    handleSwipeRight() {
+        window.location.pathname = '/categories/' + this.props.category_id + '/pictures/' + this.props.prevPicture.id;
+    }
+
+    handleSwipeLeft() {
+        window.location.pathname = '/categories/' + this.props.category_id + '/pictures/' + this.props.nextPicture.id;
+    }
+
+    triggerShareDialog() {
+        FB.ui({
+            method: 'share',
+            href: window.location.origin + "/categories/" + this.props.category_id + '/pictures/' + this.props.picture_id,
+        }, function(response) {
+            if (typeof(response) === 'undefined') {
+                alert('Posting was cancelled!');
+            }
+            else if (response && !response.error_message) {
+                alert('Posting completed!');
+            } else {
+                alert('Sorry, an error has occurred :\\');
+            }
+        });
+    }
+
+    render() {
+        return (
+            <Modal className="picture_modal"
+                show={this.props.showModal}
+                dialogClassName="custom-modal"
+                animation={false}
+                onKeyDown={this.handlePicWithKeyboard}
+                {...this.touchEventProperties}
+            >
+                <Modal.Header>
+                    <Link to={'/categories/' + this.props.category_id + '/pictures'} id="close_button">X</Link>
+                    <Modal.Title id="contained-modal-title-lg">
+                        <span>{this.props.currentPicture.title}</span>
+                    </Modal.Title>
+                </Modal.Header>
+                
+                <Modal.Body>
+                    <Link className="prev-pic" 
+                        to={'/categories/' + this.props.category_id + '/pictures/' + this.props.prevPicture.id}>
+                        <span id="chevron-left" className="glyphicon glyphicon-menu-left"></span>
+                    </Link>
+                    
+                        {(this.props.showModal && !this.props.showDescription && this.props.descriptionsLength > 0) ?
+                            
+                            <OverlayTrigger placement="bottom" overlay={tooltip}>
+                                <Image src={this.props.currentPicture.pic_url_medium}
+                                        alt={this.props.currentPicture.title}
+                                        onClick={this.props.showPicDescription}
+                                        responsive />
+                            </OverlayTrigger>
+
+                            : <Image src={this.props.currentPicture.pic_url_medium}
+                                        alt={this.props.currentPicture.title}
+                                        onClick={this.props.showPicDescription}
+                                        responsive />
+                        }
+
+                    {this.props.showDescription && this.props.descriptionsLength > 0 ? 
+                        (this.props.language ?
+                            (this.props.currentPicture.descriptions[this.props.language] ?
+                                (<span className="pic-description">{this.props.currentPicture.descriptions[this.props.language]}</span>)
+                                : (this.props.currentPicture.descriptions['EN'] ?
+                                    (<span className="pic-description">{this.props.currentPicture.descriptions['EN']}</span>) 
+                                    : (<span className="pic-description">{Object.entries(this.props.currentPicture.descriptions)[0][1]}</span>)))
+                            : (this.props.currentPicture.descriptions['EN'] ?
+                                <span className="pic-description">{this.props.currentPicture.descriptions['EN']}</span> 
+                                : <span className="pic-description">{Object.entries(this.props.currentPicture.descriptions)[0][1]}</span>)
+                        )
+                    : null}
+                    
+                    <Link className="next-pic" 
+                        to={'/categories/' + this.props.category_id + '/pictures/' + this.props.nextPicture.id}>
+                        <span id="chevron-right" className="glyphicon glyphicon-menu-right"></span>
+                    </Link>
+                </Modal.Body>
+
+                <Modal.Footer>
+                    <span id="pic_copyright">(c) {this.props.currentPicture.author} - all rights reserved</span>
+                    <button id="fb_share_btn_pic" onClick={this.triggerShareDialog}>
+                        <i className="fa fa-facebook-official"></i>
+                        <span>Share</span>
+                    </button>
+                </Modal.Footer>
+            
+            </Modal>
+        )
+    }
+
+};
+
+
 class PictureComponent extends React.Component {
 
     componentWillMount() {
         this.setState(this.initialState(this.props));
         this.initialState = this.initialState.bind(this);
-        this.triggerShareDialog = this.triggerShareDialog.bind(this);
-        this.handlePicWithKeyboard = this.handlePicWithKeyboard.bind(this);
     }
 
     initialState(props) {
@@ -138,31 +248,6 @@ class PictureComponent extends React.Component {
         this.setState(this.initialState(nextProps));
     }
 
-    handlePicWithKeyboard(event) {
-        if (event.keyCode == 37) {
-            window.location.pathname = '/categories/' + this.props.category_id + '/pictures/' + this.props.prevPicture.id;
-        }
-        if (event.keyCode == 39) {
-            window.location.pathname = '/categories/' + this.props.category_id + '/pictures/' + this.props.nextPicture.id;
-        }
-    }
-
-    triggerShareDialog() {
-        FB.ui({
-            method: 'share',
-            href: window.location.origin + "/categories/" + this.props.category_id + '/pictures/' + this.props.picture_id,
-        }, function(response) {
-            if (typeof(response) === 'undefined') {
-                alert('Posting was cancelled!');
-            }
-            else if (response && !response.error_message) {
-                alert('Posting completed!');
-            } else {
-                alert('Sorry, an error has occurred :\\');
-            }
-        });
-    }
-
     render() {
         const descriptionsLength = Object.entries(this.props.currentPicture.descriptions).length;
         
@@ -176,68 +261,13 @@ class PictureComponent extends React.Component {
                         <p>(c) {this.props.currentPicture.author} - all rights reserved</p>
                     </Link>
                     
-                    <Modal className="picture_modal"
-                        show={this.state.showModal}
-                        dialogClassName="custom-modal"
-                        animation={false}
-                        onKeyDown={this.handlePicWithKeyboard}
-                    >
-                        <Modal.Header>
-                            <Link to={'/categories/' + this.props.category_id + '/pictures'} id="close_button">X</Link>
-                            <Modal.Title id="contained-modal-title-lg">
-                                <span>{this.props.currentPicture.title}</span>
-                            </Modal.Title>
-                        </Modal.Header>
-                        
-                        <Modal.Body>
-                            <Link className="prev-pic" 
-                                to={'/categories/' + this.props.category_id + '/pictures/' + this.props.prevPicture.id}>
-                                <span id="chevron-left" className="glyphicon glyphicon-menu-left"></span>
-                            </Link>
-                            
-                                {(this.state.showModal && !this.state.showDescription && descriptionsLength > 0) ?
-                                    
-                                    <OverlayTrigger placement="bottom" overlay={tooltip}>
-                                        <Image src={this.props.currentPicture.pic_url_medium}
-                                               alt={this.props.currentPicture.title}
-                                               onClick={this.props.showPicDescription}
-                                               responsive />
-                                    </OverlayTrigger>
+                    <SwipableModal {...this.props}
+                                   showModal={this.state.showModal}
+                                   showDescription={this.state.showDescription}
+                                   descriptionsLength={descriptionsLength}
+                                   language={this.state.language}
 
-                                    : <Image src={this.props.currentPicture.pic_url_medium}
-                                             alt={this.props.currentPicture.title}
-                                             onClick={this.props.showPicDescription}
-                                             responsive />
-                                }
-
-                            {this.state.showDescription && descriptionsLength > 0 ? 
-                                (this.state.language ?
-                                    (this.props.currentPicture.descriptions[this.state.language] ?
-                                        (<span className="pic-description">{this.props.currentPicture.descriptions[this.state.language]}</span>)
-                                        : (this.props.currentPicture.descriptions['EN'] ?
-                                            (<span className="pic-description">{this.props.currentPicture.descriptions['EN']}</span>) 
-                                            : (<span className="pic-description">{Object.entries(this.props.currentPicture.descriptions)[0][1]}</span>)))
-                                    : (this.props.currentPicture.descriptions['EN'] ?
-                                        <span className="pic-description">{this.props.currentPicture.descriptions['EN']}</span> 
-                                        : <span className="pic-description">{Object.entries(this.props.currentPicture.descriptions)[0][1]}</span>)
-                                )
-                            : null}
-                            
-                            <Link className="next-pic" 
-                                to={'/categories/' + this.props.category_id + '/pictures/' + this.props.nextPicture.id}>
-                                <span id="chevron-right" className="glyphicon glyphicon-menu-right"></span>
-                            </Link>
-                        </Modal.Body>
-
-                        <Modal.Footer>
-                            <span id="pic_copyright">(c) {this.props.currentPicture.author} - all rights reserved</span>
-                            <button id="fb_share_btn_pic" onClick={this.triggerShareDialog}>
-                                <i className="fa fa-facebook-official"></i>
-                                <span>Share</span>
-                            </button>
-                        </Modal.Footer>
-                    
-                    </Modal>
+                                    />
 
                     {this.props.user ?
                         (<EditDeletePicture cat_id={this.props.category_id} 
