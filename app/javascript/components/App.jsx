@@ -23,6 +23,7 @@ import PresentationForm from './PresentationForm';
 import CatDescriptionForm from './CatDescriptionForm';
 import PicDescriptionForm from './PicDescriptionForm';
 import SettingForm from './SettingForm';
+import createBrowserHistory from 'history/createBrowserHistory';
 
 
 class App extends React.Component {
@@ -117,10 +118,11 @@ class App extends React.Component {
   }
 
   render() {
+    const history = createBrowserHistory();
     const backgroundStyle = this.state.backgroundImage ? { backgroundImage: "url(" + this.state.backgroundImage + ")" }
                                                        : { backgroundColor: this.state.backgroundColor || "#eeeeee" }
     return (
-      <Router>
+      <Router history={history}>
 
          <div id="app-container" style={backgroundStyle}>
           

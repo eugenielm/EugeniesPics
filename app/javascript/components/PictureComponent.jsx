@@ -117,19 +117,19 @@ class SwipableModal extends ReactEventComponent {
 
     handlePicWithKeyboard(event) {
         if (event.keyCode == 37) {
-            window.location.pathname = '/categories/' + this.props.category_id + '/pictures/' + this.props.prevPicture.id;
+            this.props.history.push('/categories/' + this.props.category_id + '/pictures/' + this.props.prevPicture.id);
         }
         if (event.keyCode == 39) {
-            window.location.pathname = '/categories/' + this.props.category_id + '/pictures/' + this.props.nextPicture.id;
+            this.props.history.push('/categories/' + this.props.category_id + '/pictures/' + this.props.nextPicture.id);
         }
     }
 
     handleSwipeRight() {
-        window.location.pathname = '/categories/' + this.props.category_id + '/pictures/' + this.props.prevPicture.id;
+        this.props.history.push('/categories/' + this.props.category_id + '/pictures/' + this.props.prevPicture.id);
     }
 
     handleSwipeLeft() {
-        window.location.pathname = '/categories/' + this.props.category_id + '/pictures/' + this.props.nextPicture.id;
+        this.props.history.push('/categories/' + this.props.category_id + '/pictures/' + this.props.nextPicture.id);
     }
 
     triggerShareDialog() {

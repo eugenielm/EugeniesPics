@@ -234,7 +234,8 @@ class PicturesIndex extends React.Component {
                                                             language={this.state.language}
                                                             user={this.props.user}
                                                             showPicDescription={this.showPicDescription}
-                                                            showPicDesc={this.state.showPicDesc} />)}
+                                                            showPicDesc={this.state.showPicDesc}
+                                                            history={this.props.history} />)}
                     </Row>
                 </Grid>
             </div>
