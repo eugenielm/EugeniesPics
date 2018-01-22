@@ -118,12 +118,11 @@ button#menuitems.visible-xs,
     background-color: #cebaba;
     background-image: none;
     text-shadow: none;
-    box-shadow: 1px 1px 20px #b9b9b9;
+    box-shadow: 1px 1px 10px #b9b9b9;
 }
 
 button#menuitems.visible-xs:hover,
 .dropdown.open button#menuitems.visible-xs {
-    box-shadow: 1px 1px 20px white !important;
     border: solid thin #cebaba !important;
 }
 
@@ -153,12 +152,18 @@ button#menuitems.visible-xs:hover,
 /* Admin menu button position on wide screens in on the top right corner */
 #page-header div.dropdown.btn-group:nth-of-type(3) {
     position: absolute;
-    top: 20px; right: 20px;
+    top: 15px; right: 15px;
     margin: 0;
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     font-weight: 300;
     letter-spacing: 0.5px;
     font-size: 16px;
+}
+
+#page-header div.dropdown.btn-group:nth-of-type(3):hover,
+#page-header div.dropdown.open.btn-group:nth-of-type(3) {
+    top: 14px;
+    right: 14px;
 }
 
 /* Admin menu button layout */
@@ -170,12 +175,11 @@ button#menuitems.visible-xs:hover,
     background-color: #86a8d0;
     background-image: none;
     text-shadow: none;
-    box-shadow: 1px 1px 15px #adadad;
+    box-shadow: 1px 1px 10px #adadad;
 }
 
 .dropdown.open button#admin_dropdown,
 .dropdown.btn-group button#admin_dropdown:hover {
-    box-shadow: 1px 1px 20px white !important;
     border: solid thin #86a8d0 !important;
 }
 
@@ -211,13 +215,18 @@ button#menuitems.visible-xs:hover,
     
     #page-header { height: 100px }
     
-    #site-name { line-height: 80px; font-size: 4.5vw; }
-    #site-name-2 {margin-top: -30px; font-size: 2.5vw; }
+    #site-name { line-height: 75px; font-size: 6vw; }
+    #site-name-2 {margin-top: -23px; font-size: 2.8vw; }
 
     /* dropdown menu with categories */
     #page-header div.dropdown.btn-group:nth-of-type(2) {
         position: absolute;
         top: 20px; left: 20px;
+    }
+
+    #page-header div.dropdown.btn-group:nth-of-type(2):hover,
+    #page-header div.dropdown.open.btn-group:nth-of-type(2) {
+        top: 19px; left: 19px;
     }
 
     button#menuitems.visible-xs,
@@ -237,10 +246,9 @@ button#menuitems.visible-xs:hover,
         top: 32px; right: 17px;
     }
 
-    #page-header button#admin_dropdown {
-        padding: 7px;
-        font-size: 14px;
-        width: 70px;
+    #page-header div.dropdown.btn-group:nth-of-type(3):hover,
+    #page-header div.dropdown.open.btn-group:nth-of-type(3) {
+        top: 31px; right: 16px;
     }
 }
 
@@ -250,18 +258,31 @@ button#menuitems.visible-xs:hover,
     hr { display: none }
 
     body {
-        height: calc(100% - 60px); /* header is fixed and its height is 60px */
+        height: calc(100% - 75px); /* header is fixed and its height is 75px */
      }
 
-    #page-header { height: 60px }
+    #page-header { height: 75px }
     
-    #site-name { line-height: 45px; font-size: 5vw; }
-    #site-name-2 {margin-top: -20px; font-size: 3.3vw; }
+    #site-name {
+        line-height: 55px;
+        font-size: 7vw;
+        font-family: ubuntu; // for the titles to be readable on small devices
+    }
+    #site-name-2 {
+        margin-top: -20px;
+        font-size: 3vw;
+        font-family: ubuntu; // for the titles to be readable on small devices
+    }
 
     /* dropdown menu with categories */
     #page-header div.dropdown.btn-group:nth-of-type(2) {
         position: absolute;
-        top: 11px; left: 11px;
+        top: 19px; left: 8px;
+    }
+
+    #page-header div.dropdown.btn-group:nth-of-type(2):hover,
+    #page-header div.dropdown.open.btn-group:nth-of-type(2) {
+        top: 18px; left: 7px;
     }
 
     button#menuitems.visible-xs,
@@ -278,7 +299,12 @@ button#menuitems.visible-xs:hover,
 
     /* admin dropdown menu */
     #page-header div.dropdown.btn-group:nth-of-type(3) {
-        top: 16px; right: 10px;
+        top: 23px; right: 8px;
+    }
+
+    #page-header div.dropdown.btn-group:nth-of-type(3):hover,
+    #page-header div.dropdown.open.btn-group:nth-of-type(3) {
+        top: 22px; right: 7px;
     }
 
     #page-header button#admin_dropdown {
@@ -328,14 +354,22 @@ button#menuitems.visible-xs:hover,
     width: 58px;
     display: flex;
     position: absolute;
-    bottom: -25px;
-    left: 5px;
+    bottom: -30px;
+    left: 10px;
     padding: 3px 5px;
     border-radius: 3px;
     box-shadow: 1px 1px 10px #ffffff;
     background-color: #3B5998;
     color: white;
     outline: 0;
+}
+
+@media screen and (max-width: 768px) {
+    #fb_share_btn {bottom: -25px; left: 5px;}
+}
+
+@media screen and (max-width: 425px) {
+    #fb_share_btn {bottom: -22px; left: 2px;}
 }
 
 #fb_share_btn > span {
@@ -350,4 +384,30 @@ button#menuitems.visible-xs:hover,
 
 #fb_share_btn:hover {
     opacity: 0.9;
+}
+
+
+/*********************************************************************/
+/* Demo warning */
+
+#demo_warning {
+    font-size: 14px;
+    color: #fb0a0a;
+    text-shadow: 2px 2px 8px black;
+    font-style: italic;
+    margin-top: -20px;
+}
+
+@media screen and (max-width: 768px) {
+    #demo_warning {
+        margin-top: 22px;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    #demo_warning {
+        font-size: 12px;
+        margin-top: 12px;
+        line-height: 13px;
+    }
 }

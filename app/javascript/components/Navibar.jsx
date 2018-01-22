@@ -102,9 +102,9 @@ class Navibar extends React.Component {
                         className="visible-xs">
       
           { this.state.path == '/categories' ?
-            <MenuItem eventKey={1} href="/categories" active={true} id="gallery_btn">~ All galleries ~</MenuItem>
+            <MenuItem eventKey={1} href="/categories" active={true} id="gallery_btn">All galleries</MenuItem>
               :
-            <IndexLinkContainer to='/categories' id="gallery_btn"><MenuItem eventKey={1}>~ All galleries ~</MenuItem></IndexLinkContainer>
+            <IndexLinkContainer to='/categories' id="gallery_btn"><MenuItem eventKey={1}>All galleries</MenuItem></IndexLinkContainer>
           }
 
           <IndexLinkContainer to='/about' id="about_button">
@@ -174,7 +174,7 @@ class Navibar extends React.Component {
           : null}
 
         {this.props.demo_mode && !this.props.user ?
-          <p style={{fontSize: "14px", color: '#fb0a0a', textShadow: '2px 2px 8px black', fontStyle: 'italic', marginTop: '-10px'}}>
+          <p id="demo_warning">
             You need to be logged in to fully experience this demo!
           </p>
         

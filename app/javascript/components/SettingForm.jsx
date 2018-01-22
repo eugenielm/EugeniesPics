@@ -204,30 +204,38 @@ class SettingForm extends React.Component {
                             </tr>
                             <tr>
                                 <td><label htmlFor="setting_navbarfont">Main title and sub-title color</label></td>
-                                <td><input id="setting_navbarfont" readOnly type="text" name="setting[navbarfont]" 
-                                                                                        value={this.state.navbarfont}
-                                                                                        style={{width: "70px"}} />
-                                <OverlayTrigger trigger="click" placement="bottom" 
-                                                                overlay={<PopoverColorPicker {...this.props}
-                                                                                             handleColorChange={this.handleNavbarfont}
-                                                                                             currentColor={this.state.navbarfont} />}
-                                >
-                                    <Button bsSize="xsmall" style={{height: "23px", marginLeft: "5px", marginTop: "-4px", outline: 0}}>Pick a color</Button>
-                                </OverlayTrigger>
+                                <td><OverlayTrigger trigger="click" placement="bottom" 
+                                                                    overlay={<PopoverColorPicker {...this.props}
+                                                                                                 handleColorChange={this.handleNavbarfont}
+                                                                                                 currentColor={this.state.navbarfont} />}
+                                    >
+                                        <Button id="setting_navbarfont" 
+                                                style={{background: this.state.navbarfont, 
+                                                        border: "solid thin #b3b3b3",
+                                                        borderRadius: '3px', 
+                                                        width: '30px', 
+                                                        height: '25px'}}>
+                                        </Button>
+                                    </OverlayTrigger>
+                                    <input hidden readonly type="text" name="setting[navbarfont]" value={this.state.navbarfont} />
                                 </td>
                             </tr>
                             <tr>
                                 <td><label htmlFor="setting_navbarcolor">Navigation bar background color</label></td>
-                                <td><input id="setting_navbarcolor" readOnly type="text" name="setting[navbarcolor]" 
-                                                                                         value={this.state.navbarcolor}
-                                                                                         style={{width: "70px"}} />
-                                <OverlayTrigger trigger="click" placement="bottom" 
+                                <td><OverlayTrigger trigger="click" placement="bottom" 
                                                                 overlay={<PopoverColorPicker {...this.props}
                                                                                              handleColorChange={this.handleNavbarcolor}
                                                                                              currentColor={this.state.navbarcolor} />}
-                                >
-                                    <Button bsSize="xsmall" style={{height: "23px", marginLeft: "5px", marginTop: "-4px", outline: 0}}>Pick a color</Button>
-                                </OverlayTrigger>
+                                    >
+                                        <Button id="setting_navbarcolor" 
+                                                style={{background: this.state.navbarcolor, 
+                                                        border: "solid thin #b3b3b3",
+                                                        borderRadius: '3px', 
+                                                        width: '30px',
+                                                        height: '25px'}}>
+                                        </Button>
+                                    </OverlayTrigger>
+                                    <input hidden readonly type="text" name="setting[navbarcolor]" value={this.state.navbarcolor} />
                                 </td>
                             </tr>
                             <tr>
@@ -277,7 +285,7 @@ class SettingForm extends React.Component {
                                 <td><input id="id_picture_file" accept=".png, .jpg, .jpeg" type="file" name={this.state.idPicture ? "setting[id_picture]" : ""}
                                                                                                        onClick={this.emptyFileLoaderId}
                                                                                                        onChange={this.handleIdPicture}
-                                                                                                       style={{color: "transparent", display: "inline", width: "78px"}} />
+                                                                                                       style={{color: "transparent", display: "inline", width: "85px"}} />
                                 </td>
                             </tr>
                         </tbody>

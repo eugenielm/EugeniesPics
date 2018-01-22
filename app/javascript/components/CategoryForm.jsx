@@ -154,6 +154,10 @@ class CategoryForm extends React.Component {
                                 (<div>
                                     <p style={{color: 'white', fontSize: '14px', textShadow: '1px 1px 10px black'}}>Current picture:</p>
                                     <img src={this.state.catpic_url} />
+                                    <p style={{color: 'white', fontSize: '12px', textShadow: '1px 1px 10px black', marginTop: '5px', 
+                                        MsWordBreak: "break-all", wordBreak: "break-all", wordBreak: "break-word"}}>
+                                        ({this.state.catpic_name})
+                                    </p>
                                 </div>)
                                 : (<p style={{color: 'white', fontSize: '14px', textShadow: '1px 1px 10px black'}}>
                                     Picture about to be uploaded: {this.state.catpic_name}

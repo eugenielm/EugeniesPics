@@ -2,7 +2,12 @@
 <html>
   <head>
 
-    <title>Eugenie's pics</title>
+    <% if ENV["DEMO_MODE"].nil? %>
+      <title>Eugenie's pics</title>
+    <% else %>
+      <title>Eugenie's pics DEMO</title>
+    <% end %>
+    
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>

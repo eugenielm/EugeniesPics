@@ -77,7 +77,7 @@ class UsersIndex extends React.Component {
             <div className="user-info" style={{display: this.state.display}}>
                 <div className="admin-page-title" style={{textAlign: 'center'}}>
                     Users <Button href="/users/new" bsSize="xsmall" bsStyle="success" 
-                                  style={{opacity: '0.75', paddingLeft: '6px'}}>
+                                  style={{opacity: '0.75', paddingLeft: '6px', marginLeft: "5px"}}>
                             <span className="glyphicon glyphicon-plus"></span>
                           </Button>
                 </div>

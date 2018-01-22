@@ -74,7 +74,14 @@ class UserForm extends React.Component {
         const page_title = !this.state.id ? "Create user" : "Edit user";
         const form_action = this.state.id ? ("/users/" + this.state.id) : ("/users");
         const input_edit = this.state.id ? React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'}) : null;
-        const back_to_users = this.state.user && this.state.user.superadmin ? <Button bsStyle="primary" bsSize="xsmall" className="back-link"><Link to="/users">See users list</Link></Button> : null;
+        const back_to_users = this.state.user && this.state.user.superadmin ? 
+            <Button bsStyle="primary" bsSize="xsmall" className="back-link" style={{marginLeft: "5px"}}>
+                <Link to="/users">
+                    <span className="glyphicon glyphicon-arrow-left"></span>
+                </Link>
+            </Button> 
+            : null;
+
         return (
             <div className="form-layout">
                 <div className="admin-page-title">{page_title} {back_to_users}</div>

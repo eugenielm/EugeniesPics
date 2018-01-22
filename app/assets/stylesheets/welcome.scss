@@ -95,8 +95,8 @@
 
 @media screen and (max-width: 425px) {
     #home-page {
-        margin-top: 60px;
-        height: calc(100vh - 90px); /* header is 60px + 30px to center vertically */
+        margin-top: 100px;
+        height: calc(100vh - 100px); /* to center vertically with a 100px margin-top */
         max-height: 150%;
     }
     #home-page div.carousel.slide {

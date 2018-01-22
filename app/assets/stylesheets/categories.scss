@@ -13,8 +13,9 @@
     #categories-page { margin: 110px auto 0 auto }
 }
 
-@media screen and (max-width: 424px) {
-    #categories-page { margin: 60px auto 0 auto }
+@media screen and (max-width: 425px) {
+    #categories-page { margin: 75px auto 0 auto }
+    #categories-page .page-title { margin-bottom: 20px }
 }
 
 #all_cats {

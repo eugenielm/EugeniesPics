@@ -197,7 +197,7 @@ class PictureForm extends React.Component {
                                                       picture_title={this.state.picture_title}
                                                       category_id={this.state.category_id}
                                                       picture_id={this.state.picture_id} />}>
-                <Button bsSize="xsmall" style={{marginLeft: '10px'}}>{d.language_abbr}</Button>
+                <Button bsSize="xsmall" style={{margin: "3px 10px 3px 0"}}>{d.language_abbr}</Button>
             </OverlayTrigger>));
         
         const input_edit = React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'});
@@ -252,11 +252,11 @@ class PictureForm extends React.Component {
                             <td><label htmlFor="picture_descriptions">Picture descriptions</label></td>
                             <td><Button bsStyle="success" 
                                         bsSize="xsmall"
-                                        style={{opacity: '0.75'}}
+                                        style={{opacity: '0.75', marginRight: "10px"}}
                                         href={"/categories/" + this.props.match.params.category_id
                                              + "/pictures/" + this.props.match.params.picture_id
                                              + "/pic_descriptions/new"}>
-                                    <span style={{paddingLeft: 2 + 'px'}} className="glyphicon glyphicon-plus"></span>
+                                    <span style={{paddingLeft: '2px'}} className="glyphicon glyphicon-plus"></span>
                                 </Button>
                                 {descriptions_popovers}
                             </td>

@@ -41,6 +41,11 @@ body {
 
 .inline {display: inline}
 
+input {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
 a.btn { color: white }
 
 a:hover { background: none }
@@ -64,14 +69,14 @@ a:hover { background: none }
     text-align: center;
 }
 
-.form-layout .admin-page-title { margin-bottom: 30px }
+.form-layout .admin-page-title { margin-bottom: 20px }
 
 @media screen and (max-width: 767px) and (min-width: 426px) {
     .page-title {font-size: 30px}
     .admin-page-title {font-size: 22px}
 }
 
-@media screen and (max-width: 426px) {
+@media screen and (max-width: 425px) {
     .page-title {font-size: 24px}
     .admin-page-title {font-size: 20px}
 }
@@ -96,7 +101,7 @@ a:hover { background: none }
 
 @media screen and (max-width: 425px) {
     .form-layout {
-        margin: 80px auto 0 auto; /* 60px for the header + 20px margin for the title */
+        margin: 95px auto 0 auto; /* 60px for the header + 20px margin for the title */
     }
 }
 
@@ -111,6 +116,7 @@ a:hover { background: none }
 
 div.actions input {
     border-radius: 3px;
+    padding: 5px 10px;
     color: white;
     /* BS 'success' style color - used for all submit buttons except in the contact form */
     background-image: linear-gradient(to bottom,#5cb85c 0,#419641 100%);
