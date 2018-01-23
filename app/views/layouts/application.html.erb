@@ -50,13 +50,17 @@
     <% end %>
     <% if @fb_title %>
       <meta property="og:title"       content="<%= @fb_title %>" />
-    <% else %>
+    <% elsif @fb_title.nil? && ENV["DEMO_MODE"].nil? %>
       <meta property="og:title"       content="Eugenie's pics" />
+    <% else %>
+      <meta property="og:title"       content="Eugenie's pics (demo)" />
     <% end %>
     <% if @fb_description %>
       <meta property="og:description" content="<%= @fb_description %>" />
-    <% else %>
+    <% elsif @fb_description.nil? && ENV["DEMO_MODE"].nil? %>
       <meta property="og:description" content="Photography galleries by Eugénie Le Moulec" />
+    <% else %>
+      <meta property="og:description" content="Photography website demo by Eugénie Le Moulec" />
     <% end %>
     <% if @fb_image %>
       <meta property="og:image"       content="<%= @fb_image %>" />
