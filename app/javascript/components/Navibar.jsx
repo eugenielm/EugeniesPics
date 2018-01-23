@@ -53,7 +53,7 @@ class Navibar extends React.Component {
         method: 'share',
         href: urlToShare,
     }, function(response) {
-        if (typeof(response) === 'undefined') {
+        if (typeof(response) === 'undefined' || response && response.error_code === 4201) {
             alert('Posting was cancelled!');
         }
         else if (response && !response.error_message) {
