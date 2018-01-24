@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '2.3.4'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -62,7 +63,8 @@ gem "bcrypt", "~> 3.1"
 gem "rails-controller-testing", "~> 1.0"
 
 # Added at 2017-08-02 18:19:06 -0700 by EGlelek (needed for file attachment to pictures):
-gem "paperclip", "~> 5.1"
+# updated from 5.1 to 5.2 2018-01-23
+gem "paperclip", "~> 5.2"
 
 # Added at 2017-08-02 20:04:27 -0700 by EGlelek (Paperclip storage adapter for AWS S3):
 gem "aws-sdk", "~> 2.10"
