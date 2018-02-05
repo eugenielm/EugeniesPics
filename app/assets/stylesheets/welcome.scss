@@ -16,7 +16,7 @@
     width: 98%;
     height: 85%;
     margin: 220px auto 0 auto;
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(255,255,255,0.3);
     border-radius: 5px;
     box-shadow: 2px 2px 20px #656363;
 }
@@ -59,7 +59,7 @@
     margin: auto;
     padding: 10px;
     border-radius: 25px;
-    text-shadow: 1px 3px 3px black;
+    text-shadow: 2px 2px 2px black;
     -ms-word-break: break-all;
     word-break: break-all;
     word-break: break-word;
@@ -95,12 +95,12 @@
 
 @media screen and (max-width: 425px) {
     #home-page {
-        margin-top: 100px;
-        height: calc(100vh - 100px); /* to center vertically with a 100px margin-top */
+        margin-top: 110px;
+        height: calc(100vh - 110px); /* to center vertically with a 100px margin-top */
         max-height: 150%;
     }
     #home-page div.carousel.slide {
-        margin: 90px auto 0 auto;
+        margin: 110px auto 0 auto;
     }
     #home-page div.carousel.slide div.carousel-inner div.item div.carousel-caption p {
         font-size: 1.5em;
