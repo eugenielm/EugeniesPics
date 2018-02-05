@@ -28,7 +28,7 @@
     "rails-erb-loader": "^5.1.0",
     "react": "^15.6.1",
     "react-async-script": "^0.9.1",
-    "react-bootstrap": "^0.31.3",
+    "react-bootstrap": "^0.32.1",
     "react-color": "^2.13.8",
     "react-dom": "^15.6.1",
     "react-google-recaptcha": "^0.9.7",
