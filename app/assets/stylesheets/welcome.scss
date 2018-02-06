@@ -14,6 +14,7 @@
 #home-page div.carousel.slide {
     position: relative;
     width: 98%;
+    max-width: 95vh;
     height: 85%;
     margin: 220px auto 0 auto;
     background-color: rgba(255,255,255,0.3);
@@ -21,12 +22,16 @@
     box-shadow: 2px 2px 20px #656363;
 }
 
+#home-page ol.carousel-indicators {
+    bottom: 25px;
+}
+
 #home-page div.carousel.slide div.carousel-inner {
     /* carousel indicators have a height of 18px and a 10px-bottom margin,
     plus a 20px bottom for screens wider than 768px */
-    height: calc(100% - 48px);
+    height: 100%;
     width: 100%;
-    padding: 2%;
+    padding: 0 2%;
 }
 
 #home-page div.carousel.slide div.carousel-inner div.item {
@@ -37,16 +42,16 @@
 
 #home-page div.carousel.slide div.carousel-inner div.item img {
     max-width: 100%;
-    max-height: 90%;
+    max-height: 82%;
     position: absolute;
     left: 50%;
-    top: 55%;
+    top: 50%;
     transform: translate(-50%, -50%);
     -webkit-transform: translateY(-50%) translateX(-50%);
 }
 
 #home-page div.carousel.slide div.carousel-inner div.item div.carousel-caption {
-    bottom: 0;
+    bottom: 2px;
     padding-bottom: 0;
 }
 
@@ -105,6 +110,13 @@
     #home-page div.carousel.slide div.carousel-inner div.item div.carousel-caption p {
         font-size: 1.5em;
     }
+}
+
+/* if using a mobile device horizontally */
+@media screen and (max-height: 425px) and (orientation: landscape) {
+    #home-page div.carousel-caption p {font-size: 14px !important}
+    #home-page div.carousel.slide ol.carousel-indicators {bottom: 10px !important}
+    #home-page div.carousel.slide div.carousel-inner {height: 100% !important} 
 }
 
 /*********************************************************************/
