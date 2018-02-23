@@ -120,7 +120,7 @@ const CategoryComponent = props => {
 class CategoriesIndex extends React.Component {
 
   componentWillMount() {
-    this.setState({ categories: [] });
+    this.setState({ categories: [], display: "none" });
   }
 
   componentDidMount() {
@@ -129,7 +129,7 @@ class CategoriesIndex extends React.Component {
       return resp.json();
     })
     .then(function(categories) {
-      this.setState({ categories })
+      this.setState({ categories, display: "block" })
     }.bind(this))
   }
   
@@ -143,7 +143,7 @@ class CategoriesIndex extends React.Component {
                           </Button>
                           : null;
     return (
-      <div id="categories-page">
+      <div id="categories-page" style={{display: this.state.display}}>
         <div className="page-title">ALL GALLERIES{new_cat_link}</div>
           <div id="all_cats">
             { this.state.categories.map(c => <CategoryComponent user={this.props.user} key={c.id} category={c}/>) }

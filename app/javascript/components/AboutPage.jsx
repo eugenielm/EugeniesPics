@@ -79,7 +79,8 @@ class AboutPage extends React.Component {
                        messageBody: '',
                        token: this.props.token,
                        panelOpen: false,
-                       recaptchaResponse: null});
+                       recaptchaResponse: null,
+                       display: "none"});
         this.handleContent = this.handleContent.bind(this);
         this.handleUserName = this.handleUserName.bind(this);
         this.handleEmailAddress = this.handleEmailAddress.bind(this);
@@ -105,7 +106,7 @@ class AboutPage extends React.Component {
                                                                           : '';
           const presentationContent = presentation.split('\r\n');
           const pageTitle = presentationContent.shift();
-          this.setState({ presentations, availableLanguages, presentationContent, pageTitle, language })
+          this.setState({ presentations, availableLanguages, presentationContent, pageTitle, language, display: "block" })
           // presentations = {'LANG_ABBREV1': [pres_content1, language_name1, pres_id1, lang_id1], 'LANG2': [etc.]}
         }.bind(this))
     }
@@ -174,7 +175,7 @@ class AboutPage extends React.Component {
                                                      onClick={() => this.handleContent(lang)}>{lang}</Button>);
         const pres = this.state.presentations[this.state.language];
         return (
-            <div id="contact_page">
+            <div id="contact_page" style={{display: this.state.display}}>
                 <div className="page-title">
                     {this.state.pageTitle}
                     {pres && this.props.user ?
