@@ -29,7 +29,8 @@ import createBrowserHistory from 'history/createBrowserHistory';
 class App extends React.Component {
   
   componentWillMount() {
-    this.setState({langPref: '',
+    this.setState({langPref: (typeof(Storage) !== "undefined") && (window.localStorage.getItem("language")) ? 
+                        window.localStorage.getItem("language") : '',
                    backgroundImage: null,
                    backgroundImageName: null,
                    backgroundColor: "",
@@ -78,7 +79,10 @@ class App extends React.Component {
   }
 
   updateLangPref(lang) {
-    this.setState({langPref: lang});
+      if (typeof(Storage) !== "undefined") {
+            window.localStorage.setItem("language", lang);
+      }
+      this.setState({langPref: lang});
   }
 
   updateNavbarcolor(col) {
