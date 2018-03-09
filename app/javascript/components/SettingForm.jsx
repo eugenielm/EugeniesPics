@@ -48,22 +48,32 @@ class SettingForm extends React.Component {
     }
 
     handleBackgroundImage(event) {
-        if (event.target.files[0] && event.target.files[0].size < 2000000) {
+        if (event.target.files[0] && event.target.files[0].size < 2000000 && this.props.user.superadmin) {
             document.getElementById("settingForm").submit();
         } else {
-            alert("The background picture you uploaded exceeded the max size of 2Mb ("
-            + (event.target.files[0].size / 1000) + "ko)");
-            event.target.value = "";
+            if (event.target.files[0] && event.target.files[0].size >= 2000000) {
+                alert("The background picture you uploaded exceeded the max size of 2Mb ("
+                + (event.target.files[0].size / 1000) + "ko)");
+                event.target.value = "";
+            } else {
+                this.props.updatePreviewSettings(["backgroungImage", event.target.files[0]]);
+                this.props.updatePreviewSettings(["backgroundImageName", event.target.files[0].name]);
+            }
         }
     }
 
     handleIdPicture(event) {
-        if (event.target.files[0] && event.target.files[0].size < 3000000) {
+        if (event.target.files[0] && event.target.files[0].size < 3000000 && this.props.user.superadmin) {
             document.getElementById("settingForm").submit();
         } else {
-            alert("The ID picture you uploaded exceeded the max size of 3Mb ("
-            + (event.target.files[0].size / 1000) + "ko)");
-            event.target.value = "";
+            if (event.target.files[0] && event.target.files[0].size >= 3000000) {
+                alert("The ID picture you uploaded exceeded the max size of 3Mb ("
+                + (event.target.files[0].size / 1000) + "ko)");
+                event.target.value = "";
+            } else {
+                this.props.updatePreviewSettings(["idPicture", event.target.files[0]]);
+                this.props.updatePreviewSettings(["idPictureName", event.target.files[0].name]);
+            }
         }
     }
 
@@ -214,9 +224,11 @@ class SettingForm extends React.Component {
                             </tr>
                             <tr>
                                 <td><label htmlFor="background_file">Upload background image</label><br/>
-                                (Current: {this.props.settings.backgroundImageName ? 
-                                    <p style={{margin: 0}}>{this.props.settings.backgroundImageName})</p>
-                                    : <span> none)</span>}
+                                {this.props.settings.backgroundImageName ? 
+                                    this.props.settings.backgroundImageName == this.props.settings.originalBackgroundImageName ?
+                                        <p style={{margin: 0}}>(Current: {this.props.settings.backgroundImageName})</p>
+                                        : <p style={{margin: 0}}>(To be uploaded: {this.props.settings.backgroundImageName})</p>
+                                    : <span>(Current: none)</span>}
                                 </td>
                                 <td><input id="background_file" accept=".png, .jpg, .jpeg" 
                                                                 type="file" 
@@ -228,7 +240,7 @@ class SettingForm extends React.Component {
                             
                             {this.props.settings.originalBackgroundImage ?
                                 <tr>
-                                    <td>Delete current background picture</td>
+                                    <td>Delete background picture</td>
                                     <td><input type="checkbox" 
                                                id="delBackgroundPic"
                                                onChange={this.handleDeleteBackground}
@@ -256,10 +268,12 @@ class SettingForm extends React.Component {
                                 : null }
                             
                             <tr>
-                                <td><label htmlFor="background_file">ID picture in contact page</label><br/>
-                                    Current: {this.props.settings.idPictureName ? 
-                                                <p style={{margin: 0, display: "inline"}}> {this.props.settings.idPictureName}</p> 
-                                                : <span> none</span>}
+                                <td><label htmlFor="idpicture_file">ID picture in contact page</label><br/>
+                                    {this.props.settings.idPictureName ? 
+                                        this.props.settings.idPictureName == this.props.settings.originalIdPictureName ?
+                                            <p style={{margin: 0, display: "inline"}}>Current: {this.props.settings.idPictureName}</p> 
+                                            : <p style={{margin: 0, display: "inline"}}>To be uploaded: {this.props.settings.idPictureName}</p>
+                                        : <span>Current: none</span>}
                                     {this.props.settings.idPictureName ? " - delete" : null}
                                     {this.props.settings.idPictureName ? 
                                         <input type="checkbox" onChange={this.handleDeleteIdPicture}
