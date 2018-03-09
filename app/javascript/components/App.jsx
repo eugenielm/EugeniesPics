@@ -127,7 +127,7 @@ class App extends React.Component {
             if (typeof(Storage) !== "undefined") {
                   window.localStorage.setItem("langPref", lang);
             }
-            mainSettings = this.state.mainSettings;
+            let mainSettings = this.state.mainSettings;
             mainSettings.langPref = lang;
             this.setState({ mainSettings });
       }
@@ -165,7 +165,9 @@ class App extends React.Component {
 
                         <Route exact path="/about" render={(props2) => <AboutPage {...this.props} 
                                                                                   {...props2} 
-                                                                                  idPicture={this.state.mainSettings.idPicture} /> } />
+                                                                                  idPicture={this.state.mainSettings.idPicture}
+                                                                                  langPref={this.state.mainSettings.langPref}
+                                                                                  updateLangPref={this.updateLangPref} /> } />
 
                         <Route exact path="/categories" 
                                render={(props2) => this.props.category_errors ? (<CategoryForm {...this.props} {...props2}/>) 
@@ -214,14 +216,12 @@ class App extends React.Component {
                                render={(props2) => this.props.picture_errors ? 
                                                       <PictureForm {...this.props} {...props2} /> 
                                                       : <PicturesIndex langPref={this.state.mainSettings.langPref} 
-                                                                        updateLangPref={this.updateLangPref} 
                                                                         {...this.props} {...props2} /> } />
                         
                         <Route exact path="/categories/:category_id/pictures/:picture_id/pic_descriptions" 
                                render={(props2) => this.props.pic_description_errors ? 
                                                       <PicDescriptionForm {...this.props} {...props2} /> 
                                                       : <PictureForm langPref={this.state.mainSettings.langPref} 
-                                                                     updateLangPref={this.updateLangPref}
                                                                      {...this.props} {...props2} /> } />
 
                         <Route exact path="/categories/:category_id/pictures/:picture_id/pic_descriptions/new" 
