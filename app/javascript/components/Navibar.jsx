@@ -15,9 +15,11 @@ const CategoriesLinks = (props) => {
 
 class Navibar extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {categories: [], path: this.props.location.pathname, open: false, openAdmin: false};
+  componentWillMount() {
+    this.setState({ categories: [], 
+                    path: this.props.location.pathname, 
+                    open: false, 
+                    openAdmin: false });
     this.handleCollapse = this.handleCollapse.bind(this);
     this.handleCollapseAdmin = this.handleCollapseAdmin.bind(this);
     this.triggerShareDialog = this.triggerShareDialog.bind(this);
@@ -68,10 +70,10 @@ class Navibar extends React.Component {
   render () {
     const numberOfCategories = this.state.categories.length;
     return (
-      <div id="page-header" style={{backgroundColor: this.props.navbarcolor}}>
+      <div id="page-header" style={{backgroundColor: this.props.settings["navbarcolor"]}}>
         <Link to='/' id="home-link">
-          <p id="site-name" style={{color: this.props.navbarfont}}>{this.props.maintitle}</p>
-          <p id="site-name-2" style={{color: this.props.navbarfont}}>{this.props.subtitle}</p>
+          <p id="site-name" style={{color: this.props.settings["navbarfont"]}}>{this.props.settings["maintitle"]}</p>
+          <p id="site-name-2" style={{color: this.props.settings["navbarfont"]}}>{this.props.settings["subtitle"]}</p>
         </Link>
 
         <hr style={{width: '450px', margin: '0 auto'}}/>
@@ -126,8 +128,8 @@ class Navibar extends React.Component {
                           open={this.state.openAdmin} 
                           onToggle={this.handleCollapseAdmin}
                           pullRight noCaret>
-            {this.props.settingId ? 
-              <IndexLinkContainer to={'/settings/' + this.props.settingId + '/edit'}>
+            {this.props.settings.settingId ? 
+              <IndexLinkContainer to={'/settings/' + this.props.settings.settingId + '/edit'}>
                 <MenuItem eventKey={(numberOfCategories + 2).toString() + '.1'}>settings</MenuItem>
               </IndexLinkContainer>
             :

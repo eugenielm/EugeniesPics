@@ -7,7 +7,9 @@ import { SketchPicker } from 'react-color';
 
 const PopoverColorPicker = (props) => {
     return (
-        <Popover id="popover-trigger-click" placement="bottom" positionLeft={props.positionLeft} positionTop={props.positionTop}>
+        <Popover id="popover-trigger-click" placement="bottom" 
+                                            positionLeft={props.positionLeft} 
+                                            positionTop={props.positionTop}>
             <SketchPicker
                 color={props.currentColor}
                 onChangeComplete={props.handleColorChange}
@@ -20,7 +22,13 @@ const PopoverColorPicker = (props) => {
 class SettingForm extends React.Component {
 
     componentWillMount() {
-        this.initialState = this.initialState.bind(this);
+        if (!this.props.previewing) {
+            this.props.updatePreviewMode(true);
+        }
+        this.setState({
+            deleteBackgroundPic: false,
+            deleteIdPic: false,
+        });
         this.handleBackgroundImage = this.handleBackgroundImage.bind(this);
         this.handleIdPicture = this.handleIdPicture.bind(this);
         this.handleBackgroundColor = this.handleBackgroundColor.bind(this);
@@ -31,129 +39,95 @@ class SettingForm extends React.Component {
         this.handleNavbarcolor = this.handleNavbarcolor.bind(this);
         this.handleNavbarfont = this.handleNavbarfont.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.emptyFileLoaderBckgd = this.emptyFileLoaderBckgd.bind(this);
-        this.emptyFileLoaderId = this.emptyFileLoaderId.bind(this);
-        this.setState(this.initialState(this.props));
+        
     }
 
-    initialState(props) {
-        return { token: props.token,
-                 errors: props.setting_errors || null,
-                 user: props.user || null,
-                 backgroundImage: props.backgroundImage,
-                 idPicture: props.idPicture,
-                 deleteBackground: false,
-                 deleteIdPicture: false,
-                 backgroundColor: props.backgroundColor,
-                 backgroundImageName: props.backgroundImageName,
-                 idPictureName: props.idPictureName,
-                 maintitle: props.maintitle,
-                 subtitle: props.subtitle,
-                 navbarcolor: props.navbarcolor,
-                 navbarfont: props.navbarfont,
-                 setting_id: props.settingId,
-                 original_bckgd_pic: true,
-                 original_id_pic: true,
-                };
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (this.props != nextProps) {
-            this.setState(this.initialState(nextProps));
-        }
+    componentWillUnmount() {
+        this.props.updatePreviewMode(false);
+        this.props.reinitializePreviewSettings();
     }
 
     handleBackgroundImage(event) {
         if (event.target.files[0] && event.target.files[0].size < 2000000) {
-            this.setState({ backgroundImage: event.target.files[0],
-                            backgroundImageName: event.target.files[0].name,
-                            deleteBackground: false});
+            document.getElementById("settingForm").submit();
         } else {
-            alert("The background picture you uploaded exceeded the max size of 2Mb (" + (event.target.files[0].size / 1000) + "ko)");
+            alert("The background picture you uploaded exceeded the max size of 2Mb ("
+            + (event.target.files[0].size / 1000) + "ko)");
             event.target.value = "";
         }
     }
 
     handleIdPicture(event) {
         if (event.target.files[0] && event.target.files[0].size < 3000000) {
-            this.setState({ idPicture: event.target.files[0],
-                            idPictureName: event.target.files[0].name,
-                            deleteIdPicture: false});
+            document.getElementById("settingForm").submit();
         } else {
-            alert("The ID picture you uploaded exceeded the max size of 3Mb (" + (event.target.files[0].size / 1000) + "ko)");
+            alert("The ID picture you uploaded exceeded the max size of 3Mb ("
+            + (event.target.files[0].size / 1000) + "ko)");
             event.target.value = "";
         }
     }
 
-    emptyFileLoaderBckgd(e) {
-        // needed to be sure the form is up-to-date with the picture that's gonna be submitted
-        e.target.value = "";
-        this.setState({deleteBackground: true,
-                       backgroundImage: null,
-                       backgroundImageName: undefined});
-    }
-
-    emptyFileLoaderId(e) {
-        // needed to be sure the form is up-to-date with the picture that's gonna be submitted
-        e.target.value = "";
-        this.setState({deleteIdPicture: true,
-                       idPicture: null,
-                       idPictureName: undefined});
-    }
-
     handleMaintitle(event) {
         if (event.target.value.length <= 20) {
-            this.setState({maintitle: event.target.value});
-            this.props.updateMaintitle(event.target.value);
+            this.props.updatePreviewSettings(["maintitle", event.target.value]);
         }  
     }
 
     handleSubtitle(event) {
         if (event.target.value.length <= 40) {
-            this.setState({subtitle: event.target.value});
-            this.props.updateSubtitle(event.target.value);
+            this.props.updatePreviewSettings(["subtitle", event.target.value]);
         }  
     }
 
     handleNavbarcolor(col) {
-        this.props.updateNavbarcolor(col.hex);
+        this.props.updatePreviewSettings(["navbarcolor", col.hex]);
     }
 
     handleNavbarfont(col) {
-        this.props.updateNavbarfont(col.hex);
+        this.props.updatePreviewSettings(["navbarfont", col.hex]);
     }
 
     handleBackgroundColor(col) {
-        this.props.updateBackgroundColor(col.hex);
+        this.props.updatePreviewSettings(["backgroundColor", col.hex]);
     }
 
     handleDeleteBackground() {
-        this.setState({deleteBackground: !this.state.deleteBackground,
-                       backgroundImage: null,
-                       backgroundImageName: null,
-                       original_bckgd_pic: false});
-        this.props.backgroundImage ? this.props.updateBackgroundImage(null) : null;
-        this.props.backgroundImageName ? this.props.updateBackgroundImageName(null) : null;
+        if (document.getElementById("delBackgroundPic").checked) {
+            this.props.updatePreviewSettings(["backgroundImage", null]);
+            this.props.updatePreviewSettings(["backgroundImageName", null]);
+            this.setState({deleteBackgroundPic: true});
+        } else {
+            if (this.props.settings.originalBackgroundImage) {
+                this.props.updatePreviewSettings(["backgroundImage", this.props.settings.originalBackgroundImage]);
+                this.props.updatePreviewSettings(["backgroundImageName", this.props.settings.originalBackgroundImageName]);
+                this.setState({deleteBackgroundPic: false});
+            }
+        }
     }
 
     handleDeleteIdPicture() {
-        this.setState({deleteIdPicture: !this.state.deleteIdPicture,
-                       idPicture: null,
-                       idPictureName: null,
-                       original_id_pic: false});
-        this.props.idPicture ? this.props.updateIdPicture(null) : null;
-        this.props.idPictureName ? this.props.updateIdPictureName(null) : null;
+        if (document.getElementById("delIdPic").checked) {
+            this.props.updatePreviewSettings(["idPicture", null]);
+            this.props.updatePreviewSettings(["idPictureName", null]);
+            this.setState({deleteIdPic: true});
+        } else {
+            if (this.props.settings.originalIdImage) {
+                this.props.updatePreviewSettings(["idPicture", this.props.settings.originalIdPicture]);
+                this.props.updatePreviewSettings(["idPictureName", this.props.settings.originalIdPictureName]);
+                this.setState({deleteIdPic: false});
+            }
+        }
     }
 
     handleSubmit(event) {
         let alerts = '';
-        if (!this.state.navbarcolor.match(/#[0-9a-z]{6}/i)) {
+        if (!this.props.settings.navbarcolor.match(/#[0-9a-z]{6}/i)) {
             alerts += "Please provide a background color for the navigation bar. "
         }
-        if (!this.state.navbarfont.match(/#[0-9a-z]{6}/i)) {
+        if (!this.props.settings.navbarfont.match(/#[0-9a-z]{6}/i)) {
             alerts += "Please provide a background color for the website main title and subtitle fonts. "
         }
-        if (!this.state.backgroundImage && !this.state.backgroundColor.match(/#[0-9a-z]{6}/i)) {
+        if (!this.props.settings.backgroundImage && !this.props.settings.backgroundColor.match(/#[0-9a-z]{6}/i)) {
             alerts += "Please provide a background color for the website body. "
         }
         if (this.props.user && !this.props.user.superadmin) {
@@ -166,24 +140,33 @@ class SettingForm extends React.Component {
     }
 
     render() {
-        const form_action = this.props.settingId ? ("/settings/" + this.props.settingId) : ("/settings");
-        const input_edit = this.props.settingId ? React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'}) : null;
-        const page_title = this.props.settingId ? "Edit settings" : "New settings";
+        const form_action = this.props.settings.settingId ? 
+                            ("/settings/" + this.props.settingId) 
+                            : ("/settings");
+        const input_edit = this.props.settings.settingId ? 
+                            React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'}) 
+                            : null;
+        const page_title = this.props.settings.settingId ? "Edit settings" : "New settings";
 
         return (
             <div className="form-layout">
                 <div className="admin-page-title">{page_title}</div>
 
-                { this.state.errors ? (<ErrorsComponent errors={this.state.errors} model={"setting"} />) : null }
-                <form encType="multipart/form-data" action={form_action} method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit} >
+                { this.props.setting_errors ? (<ErrorsComponent errors={this.props.setting_errors} model={"setting"} />) : null }
+                <form encType="multipart/form-data" 
+                      action={form_action} 
+                      method="post" 
+                      acceptCharset="UTF-8" 
+                      id="settingForm"
+                      onSubmit={this.handleSubmit} >
                     <input name="utf8" type="hidden" value="✓" />
-                    <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly />
+                    <input type="hidden" name="authenticity_token" value={this.props.token || ''} readOnly />
 
-                    {this.state.original_bckgd_pic && this.state.backgroundImageName ? 
-                        <input type="hidden" name="original_bckgd_pic" value={true}/>
+                    {this.state.deleteBackgroundPic ? 
+                        <input type="hidden" name="deleteBackgroundPic" value={true}/>
                         : null}
-                    {this.state.original_id_pic && this.state.idPictureName ? 
-                        <input type="hidden" name="original_id_pic" value={true}/>
+                    {this.state.deleteIdPic ? 
+                        <input type="hidden" name="deleteIdPic" value={true}/>
                         : null}
                     
                     {input_edit}
@@ -193,106 +176,109 @@ class SettingForm extends React.Component {
                             <tr>
                                 <td><label htmlFor="setting_maintitle">Website main title</label></td>
                                 <td><input id="setting_maintitle" type="text" name="setting[maintitle]" 
-                                                                              value={this.state.maintitle || ''} 
+                                                                              value={this.props.settings.maintitle || ''} 
                                                                               onChange={this.handleMaintitle} /></td>
                             </tr>
                             <tr>
                                 <td><label htmlFor="setting_subtitle">Website sub-title</label></td>
                                 <td><input id="setting_subtitle" type="text" name="setting[subtitle]" 
-                                                                             value={this.state.subtitle || ''} 
+                                                                             value={this.props.settings.subtitle || ''} 
                                                                              onChange={this.handleSubtitle} /></td>
                             </tr>
                             <tr>
                                 <td><label htmlFor="setting_navbarfont">Main title and sub-title color</label></td>
                                 <td><OverlayTrigger trigger="click" placement="bottom" 
                                                                     overlay={<PopoverColorPicker {...this.props}
-                                                                                                 handleColorChange={this.handleNavbarfont}
-                                                                                                 currentColor={this.state.navbarfont} />}
+                                                                                handleColorChange={this.handleNavbarfont}
+                                                                                currentColor={this.props.settings.navbarfont} />}
                                     >
-                                        <Button id="setting_navbarfont" 
-                                                style={{background: this.state.navbarfont, 
-                                                        border: "solid thin #b3b3b3",
-                                                        borderRadius: '3px', 
-                                                        width: '30px', 
-                                                        height: '25px'}}>
+                                        <Button id="setting_navbarfont" style={{background: this.props.settings.navbarfont}}>
                                         </Button>
                                     </OverlayTrigger>
-                                    <input hidden readonly type="text" name="setting[navbarfont]" value={this.state.navbarfont} />
+                                    <input hidden readOnly type="text" name="setting[navbarfont]" value={this.props.settings.navbarfont} />
                                 </td>
                             </tr>
                             <tr>
                                 <td><label htmlFor="setting_navbarcolor">Navigation bar background color</label></td>
-                                <td><OverlayTrigger trigger="click" placement="bottom" 
-                                                                overlay={<PopoverColorPicker {...this.props}
-                                                                                             handleColorChange={this.handleNavbarcolor}
-                                                                                             currentColor={this.state.navbarcolor} />}
+                                <td><OverlayTrigger trigger="click"
+                                                    placement="bottom" 
+                                                    overlay={<PopoverColorPicker {...this.props}
+                                                                handleColorChange={this.handleNavbarcolor}
+                                                                currentColor={this.props.settings.navbarcolor} />}
                                     >
-                                        <Button id="setting_navbarcolor" 
-                                                style={{background: this.state.navbarcolor, 
-                                                        border: "solid thin #b3b3b3",
-                                                        borderRadius: '3px', 
-                                                        width: '30px',
-                                                        height: '25px'}}>
+                                        <Button id="setting_navbarcolor" style={{background: this.props.settings.navbarcolor}}>
                                         </Button>
                                     </OverlayTrigger>
-                                    <input hidden readonly type="text" name="setting[navbarcolor]" value={this.state.navbarcolor} />
+                                    <input hidden readOnly type="text" name="setting[navbarcolor]" value={this.props.settings.navbarcolor} />
                                 </td>
                             </tr>
                             <tr>
                                 <td><label htmlFor="background_file">Upload background image</label><br/>
-                                (Current: {this.state.backgroundImage ? <p style={{margin: 0}}>{this.state.backgroundImageName})</p>
-                                                                      : <span> none)</span>}</td>
-                                <td><input id="background_file" accept=".png, .jpg, .jpeg" type="file" name="setting[background]"
-                                                                                                       onClick={this.emptyFileLoaderBckgd}
-                                                                                                       onChange={this.handleBackgroundImage}
-                                                                                                       style={{color: "transparent"}} /></td>
-                            </tr>
-                            <tr>
-                                <td><label>
-                                    {this.state.backgroundImageName ? "Delete '" + this.state.backgroundImageName + "'" : "Background color"}
-                                    {this.state.backgroundImageName ?
-                                        <input type="checkbox" onChange={this.handleDeleteBackground}
-                                                               style={{width: "auto", marginLeft: "10px"}} />
-                                        : null}
-                                    </label>
+                                (Current: {this.props.settings.backgroundImageName ? 
+                                    <p style={{margin: 0}}>{this.props.settings.backgroundImageName})</p>
+                                    : <span> none)</span>}
                                 </td>
-                                {!this.state.backgroundImage || this.state.deleteBackground ?
-                                    <td><input readOnly type="text" name="setting[background_color]" 
-                                                                    value={this.state.backgroundColor}
-                                                                    style={{width: "70px"}} />
+                                <td><input id="background_file" accept=".png, .jpg, .jpeg" 
+                                                                type="file" 
+                                                                name="setting[background]"
+                                                                onChange={this.handleBackgroundImage}
+                                                                style={{color: "transparent"}} />
+                                </td>
+                            </tr>
+                            
+                            {this.props.settings.originalBackgroundImage ?
+                                <tr>
+                                    <td>Delete current background picture</td>
+                                    <td><input type="checkbox" 
+                                               id="delBackgroundPic"
+                                               onChange={this.handleDeleteBackground}
+                                               style={{width: "auto", marginLeft: "10px"}} /></td>
+                                </tr>
+                                : null }
+                                
+                            {!this.props.settings.backgroundImage ?
+                                <tr>
+                                    <td><label>Choose background color</label></td>
+                                    <td><input hidden readOnly type="text" 
+                                                               name="setting[background_color]" 
+                                                               value={this.props.settings.backgroundColor} />
                                         <OverlayTrigger trigger="click" placement="bottom" 
                                                                         overlay={<PopoverColorPicker {...this.props}
-                                                                                                     handleColorChange={this.handleBackgroundColor}
-                                                                                                     currentColor={this.state.backgroundColor} />}
+                                                                                    handleColorChange={this.handleBackgroundColor}
+                                                                                    currentColor={this.props.settings.backgroundColor} />}
                                         >
-                                            <Button bsSize="xsmall" style={{height: "23px", marginLeft: "5px", marginTop: "-4px", outline: 0}}>
-                                                Pick a color
+                                            <Button id="setting_backgroundcolor" 
+                                                    style={{background: this.props.settings.backgroundColor}}>
                                             </Button>
                                         </OverlayTrigger>
                                     </td>
-                                    : <td></td>}
-                            </tr>
+                                </tr>
+                                : null }
+                            
                             <tr>
-                                <td><label htmlFor="background_file">ID picture</label><br/>
-                                    Current: {this.state.idPicture ? <p style={{margin: 0, display: "inline"}}>{this.state.idPictureName} </p> 
-                                                                    : <span> none</span>}
-                                    {this.state.idPictureName ? " > delete" : null}
-                                    {this.state.idPictureName ? 
+                                <td><label htmlFor="background_file">ID picture in contact page</label><br/>
+                                    Current: {this.props.settings.idPictureName ? 
+                                                <p style={{margin: 0, display: "inline"}}> {this.props.settings.idPictureName}</p> 
+                                                : <span> none</span>}
+                                    {this.props.settings.idPictureName ? " - delete" : null}
+                                    {this.props.settings.idPictureName ? 
                                         <input type="checkbox" onChange={this.handleDeleteIdPicture}
+                                                               id="delIdPic"
                                                                style={{width: "auto", marginLeft: "8px"}} />
                                         : null}
                                 </td>
-                                <td><input id="id_picture_file" accept=".png, .jpg, .jpeg" type="file" name={this.state.idPicture ? "setting[id_picture]" : ""}
-                                                                                                       onClick={this.emptyFileLoaderId}
-                                                                                                       onChange={this.handleIdPicture}
-                                                                                                       style={{color: "transparent", display: "inline", width: "85px"}} />
+                                <td><input id="id_picture_file" accept=".png, .jpg, .jpeg" 
+                                                                type="file" 
+                                                                name="setting[id_picture]"
+                                                                onChange={this.handleIdPicture}
+                                                                style={{color: "transparent", display: "inline", width: "85px"}} />
                                 </td>
                             </tr>
                         </tbody>
                     </Table>
 
                     <div className="actions">
-                        <input type="submit" name="commit" value={this.props.settingId ? "Submit changes" : "Submit settings"} />
+                        <input type="submit" name="commit" value={this.props.settings.settingId ? "Submit changes" : "Submit settings"} />
                     </div>
                 </form>
             </div>

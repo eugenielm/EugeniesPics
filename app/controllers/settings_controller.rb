@@ -97,11 +97,11 @@ class SettingsController < ApplicationController
   def update
     respond_to do |format|
       if @setting.update(setting_params)
-        if params[:setting][:background] == nil && !params[:original_bckgd_pic]
+        if params[:setting][:background] == nil && params[:deleteBackgroundPic]
           @setting.background = nil
           @setting.save
         end
-        if params[:setting][:id_picture] == nil && !params[:original_id_pic]
+        if params[:setting][:id_picture] == nil && params[:deleteIdPic]
           @setting.id_picture = nil
           @setting.save
         end
