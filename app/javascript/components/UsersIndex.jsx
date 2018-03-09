@@ -81,7 +81,6 @@ class UsersIndex extends React.Component {
                             <span className="glyphicon glyphicon-plus"></span>
                           </Button>
                 </div>
-                <br/>
 
                 <Table bordered condensed hover responsive id="users_table">
                     <thead>
