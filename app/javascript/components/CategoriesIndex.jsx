@@ -103,17 +103,35 @@ class EditDeleteCategory extends React.Component {
   )};
 };
 
-const CategoryComponent = props => {
-  return (
-      <div className="cat_pic">
-        <Link to={"/categories/" + props.category.id + "/pictures"}>
-          <img src={props.category.catpic_url} alt={props.category.name + "'s category'"} style={{height: '100%', overflow: 'hidden'}}/>
-          <p className="catname">{props.category.name.toUpperCase()}</p>
-        </Link>
-        { props.user ?
-          <EditDeleteCategory cat_id={props.category.id} cat_name={props.category.name} user={props.user} /> : null }
-      </div>
-  );
+
+class CategoryComponent extends React.Component {
+  componentWillMount() {
+    this.setState({ display: "none" });
+    this.handleLoading = this.handleLoading.bind(this);
+  }
+
+  handleLoading() {
+    this.setState({ display: "block" });
+  }
+
+  render() {
+    return (
+        <div className="cat_pic" style={{display: this.state.display}}>
+          <Link to={"/categories/" + this.props.category.id + "/pictures"}>
+            <img src={this.props.category.catpic_url} 
+                 alt={this.props.category.name + "'s category'"} 
+                 style={{height: '100%', overflow: 'hidden'}}
+                 onLoad={this.handleLoading}/>
+            <p className="catname">{this.props.category.name.toUpperCase()}</p>
+          </Link>
+          { this.props.user ?
+            <EditDeleteCategory cat_id={this.props.category.id} 
+                                cat_name={this.props.category.name} 
+                                user={this.props.user} /> 
+            : null }
+        </div>
+    );
+  }
 };
 
 
