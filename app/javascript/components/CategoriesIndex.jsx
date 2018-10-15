@@ -118,7 +118,10 @@ class CategoryComponent extends React.Component {
     return (
         <div className="cat_pic" style={{display: this.state.display}}>
           <Link to={"/categories/" + this.props.category.id + "/pictures"}>
-            <img src={this.props.category.catpic_url} 
+            <img src={screen.width < 1000 || screen.height < 1000 ? 
+                          (screen.width < 600 || screen.height < 600 ? this.props.category.catpic_url_small 
+                                                                     : this.props.category.catpic_url_medium)
+                          : this.props.category.catpic_url_large} 
                  alt={this.props.category.name + "'s category'"} 
                  style={{height: '100%', overflow: 'hidden'}}
                  onLoad={this.handleLoading}/>

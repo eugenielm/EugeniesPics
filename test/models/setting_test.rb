@@ -47,13 +47,13 @@ class SettingTest < ActiveSupport::TestCase
     assert_not settings(:Setting1).valid?
   end
 
-  test "background_file_size should be less than 2Mb (= 2048000 bytes) inclusive" do
-    settings(:Setting1).background_file_size = 2048001
+  test "background_file_size should be less than 8Mb (= 8388608 bytes) inclusive" do
+    settings(:Setting1).background_file_size = 8388609
     assert_not settings(:Setting1).valid?
   end
 
-  test "id_picture_file_size should be less than 3Mb (= 3072000 bytes) inclusive" do
-    settings(:Setting1).id_picture_file_size = 3072001
+  test "id_picture_file_size should be less than 8Mb (= 8388608 bytes) inclusive" do
+    settings(:Setting1).id_picture_file_size = 8388609
     assert_not settings(:Setting1).valid?
   end
 

@@ -151,10 +151,10 @@ class PictureForm extends React.Component {
     }
 
     handlePicfile(event) {
-        if (event.target.files[0].size < 4000000) {
+        if (event.target.files[0].size < 8000000) {
             this.setState({ pic_url: event.target.files[0], picfile_name: event.target.files[0].name });
         } else {
-            alert("The picture you uploaded exceeded the max size of 4Mb (" + (event.target.files[0].size / 1000) + "ko)");
+            alert("The picture you uploaded exceeded the max size of 8Mb (" + (event.target.files[0].size / 1000) + "ko)");
         }
     }
 

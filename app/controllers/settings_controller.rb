@@ -26,14 +26,18 @@ class SettingsController < ApplicationController
     
     else
       @settings = { id: @setting.id,
-                    background_url: @setting.background_file_name ? @setting.background.url : nil,
+                    # at first there was no 'small' style but only 'medium'
+                    background_url_small: @setting.background_file_name ? (File.exist?(@setting.background.url(:small)) ? @setting.background.url(:small) : @setting.background.url(:medium)) : nil,
+                    background_url_medium: @setting.background_file_name ? @setting.background.url(:medium) : nil,
                     background_name: @setting.background_file_name ? @setting.background_file_name : nil,
                     background_color: @setting.background_color,
                     maintitle: @setting.maintitle,
                     subtitle: @setting.subtitle,
                     navbarcolor: @setting.navbarcolor,
                     navbarfont: @setting.navbarfont,
-                    id_picture_url: @setting.id_picture_file_name ? @setting.id_picture.url : nil,
+                    id_picture_url_small: @setting.id_picture_file_name ? @setting.id_picture.url(:small) : nil,
+                    # at first there was no 'medium' style but only 'small'
+                    id_picture_url_medium: @setting.id_picture_file_name ? (File.exist?(@setting.id_picture.url(:medium)) ? @setting.id_picture.url(:medium) : @setting.id_picture.url(:small)) : nil,
                     id_picture_name: @setting.id_picture_file_name ? @setting.id_picture_file_name : nil,
                   }
 

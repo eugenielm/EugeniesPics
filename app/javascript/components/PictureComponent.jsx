@@ -122,6 +122,9 @@ class SwipableModal extends ReactEventComponent {
         if (event.keyCode == 39) {
             this.props.history.push('/categories/' + this.props.category_id + '/pictures/' + this.props.nextPicture.id);
         }
+        if (event.keyCode == 27) {
+            this.props.history.push('/categories/' + this.props.category_id + '/pictures');
+        }
     }
 
     handleSwipeRight() {
@@ -173,13 +176,15 @@ class SwipableModal extends ReactEventComponent {
                         {(this.props.showModal && !this.props.showDescription && this.props.descriptionsLength > 0) ?
                             
                             <OverlayTrigger placement="bottom" overlay={tooltip}>
-                                <Image src={this.props.currentPicture.pic_url_medium}
+                                <Image src={screen.width < 510 || screen.height < 510 ? this.props.currentPicture.pic_url_medium
+                                                                                      : this.props.currentPicture.pic_url_large}
                                         alt={this.props.currentPicture.title}
                                         onClick={this.props.showPicDescription}
                                         responsive />
                             </OverlayTrigger>
 
-                            : <Image src={this.props.currentPicture.pic_url_medium}
+                            : <Image src={screen.width < 510 || screen.height < 510 ? this.props.currentPicture.pic_url_medium
+                                                                                    : this.props.currentPicture.pic_url_large}
                                         alt={this.props.currentPicture.title}
                                         onClick={this.props.showPicDescription}
                                         responsive />
@@ -256,7 +261,9 @@ class PictureComponent extends React.Component {
                 <div className="picture_pic">
                     <Link onClick={() => {this.setState({showModal: true})}} 
                           to={'/categories/' + this.props.category_id + '/pictures/' + this.props.currentPicture.id.toString()}>
-                        <Image src={this.props.currentPicture.pic_url_small} alt={this.props.currentPicture.title}/>
+                        <Image src={screen.width < 600 || screen.height < 600 ? this.props.currentPicture.pic_url_small 
+                                                                              : this.props.currentPicture.pic_url_medium} 
+                               alt={this.props.currentPicture.title}/>
                         <p>{this.props.currentPicture.title}</p>
                         <p>(c) {this.props.currentPicture.author} - all rights reserved</p>
                     </Link>

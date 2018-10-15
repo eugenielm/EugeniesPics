@@ -48,11 +48,11 @@ class SettingForm extends React.Component {
     }
 
     handleBackgroundImage(event) {
-        if (event.target.files[0] && event.target.files[0].size < 2000000 && this.props.user.superadmin) {
+        if (event.target.files[0] && event.target.files[0].size < 8000000 && this.props.user.superadmin) {
             document.getElementById("settingForm").submit();
         } else {
-            if (event.target.files[0] && event.target.files[0].size >= 2000000) {
-                alert("The background picture you uploaded exceeded the max size of 2Mb ("
+            if (event.target.files[0] && event.target.files[0].size >= 8000000) {
+                alert("The background picture you uploaded exceeded the max size of 8Mb ("
                 + (event.target.files[0].size / 1000) + "ko)");
                 event.target.value = "";
             } else {
@@ -63,11 +63,11 @@ class SettingForm extends React.Component {
     }
 
     handleIdPicture(event) {
-        if (event.target.files[0] && event.target.files[0].size < 3000000 && this.props.user.superadmin) {
+        if (event.target.files[0] && event.target.files[0].size < 8000000 && this.props.user.superadmin) {
             document.getElementById("settingForm").submit();
         } else {
-            if (event.target.files[0] && event.target.files[0].size >= 3000000) {
-                alert("The ID picture you uploaded exceeded the max size of 3Mb ("
+            if (event.target.files[0] && event.target.files[0].size >= 8000000) {
+                alert("The ID picture you uploaded exceeded the max size of 8Mb ("
                 + (event.target.files[0].size / 1000) + "ko)");
                 event.target.value = "";
             } else {

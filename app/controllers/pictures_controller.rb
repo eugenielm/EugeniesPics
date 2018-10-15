@@ -20,7 +20,7 @@ class PicturesController < ApplicationController
         if d.language # condition needeed for the pictures_controller_test to pass
           all_descriptions[d.language.abbreviation] = d.content
         end
-      end 
+      end
       @pictures.push({
         id: pic.id,
         title: pic.title,
@@ -29,6 +29,7 @@ class PicturesController < ApplicationController
         category_name: pic.category.name,
         pic_url_small: pic.picfile.url(:small),
         pic_url_medium: pic.picfile.url(:medium),
+        pic_url_large: File.exist?(pic.picfile.url(:large)) ? pic.picfile.url(:large) : pic.picfile.url(:medium),
       })
     end
     category_descriptions = {}
@@ -42,7 +43,7 @@ class PicturesController < ApplicationController
     respond_to do |format|
       format.html
       format.json {render :json => @pictures}
-      # @pictures = [{id, title, author, descriptions, category_name, pic_url_small, pic_url_medium}, 
+      # @pictures = [{id, title, author, descriptions, category_name, pic_url_small, pic_url_medium, pic_url_large}, 
       #              {PictN2},
       #              {PictN3},
       #              {category_lang_abbr1: category_content1, category_lang_abbrN: category_contentN},
@@ -67,7 +68,6 @@ class PicturesController < ApplicationController
                                    :content => d.content})
     end
     @pic_with_descriptions.push({ picture_title: @picture.title,
-                                  picfile_url: @picture.picfile.url(:small),
                                   picfile_name: @picture.picfile_file_name })
 
     respond_to do |format|

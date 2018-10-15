@@ -46,7 +46,8 @@ class App extends React.Component {
       mainTheme(props, settings) {
             if (settings) {
                   return {
-                        backgroundImage: settings.background_url,
+                        backgroundImage: screen.width < 600 || screen.height < 600 ? settings.background_url_small 
+                                                                                   : settings.background_url_medium,
                         backgroundImageName: settings.background_name,
                         backgroundColor: this.props.setting_data ? this.props.setting_data.background_color 
                                                             : settings.background_color,
@@ -59,7 +60,8 @@ class App extends React.Component {
                         navbarfont: this.props.setting_data ? this.props.setting_data.navbarfont 
                                                                   : settings.navbarfont,
                         settingId: settings.id,
-                        idPicture: settings.id_picture_url,
+                        idPicture: screen.width < 600 || screen.height < 600 ? settings.id_picture_url_small
+                                                                              : settings.id_picture_url_medium,
                         idPictureName: settings.id_picture_name,
                         langPref: (typeof(Storage) !== "undefined") && (window.localStorage.getItem("langPref")) ? 
                                     window.localStorage.getItem("langPref") : '',
