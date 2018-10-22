@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Button, Table, OverlayTrigger, Popover } from 'react-bootstrap';
 import ErrorsComponent from './ErrorsComponent';
 import { SketchPicker } from 'react-color';
@@ -162,7 +161,7 @@ class SettingForm extends React.Component {
             <div className="form-layout">
                 <div className="admin-page-title">{page_title}</div>
 
-                { this.props.setting_errors ? (<ErrorsComponent errors={this.props.setting_errors} model={"setting"} />) : null }
+                { this.props.settingErrors ? (<ErrorsComponent errors={this.props.settingErrors} model={"setting"} />) : null }
                 <form encType="multipart/form-data" 
                       action={form_action} 
                       method="post" 

@@ -1,6 +1,5 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import 'babel-polyfill' // needed for the generator IndexMaker()
+import React from 'react';
+import 'babel-polyfill'; // needed for the generator IndexMaker()
 
 function* IndexMaker(){
     let i = 0;

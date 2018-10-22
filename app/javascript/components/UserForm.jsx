@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import { Button, Table } from 'react-bootstrap';
 import ErrorsComponent from './ErrorsComponent';
@@ -8,12 +7,12 @@ class UserForm extends React.Component {
 
     componentWillMount() {
         this.setState({ token: this.props.token,
-                        errors: this.props.user_errors || null,
-                        id: this.props.user_data.id || null,
-                        username: this.props.user_data.username || '',
-                        email: this.props.user_data.email || '',
-                        password: this.props.user_data.password_digest || '',
-                        password_confirmation: this.props.user_data.password_digest || '',
+                        errors: this.props.userErrors || null,
+                        id: this.props.userData.id || null,
+                        username: this.props.userData.username || '',
+                        email: this.props.userData.email || '',
+                        password: this.props.userData.password_digest || '',
+                        passwordConfirmation: this.props.userData.password_digest || '',
                         user: this.props.user,
                         passwordFieldDisabled: true,
                         })
@@ -40,7 +39,7 @@ class UserForm extends React.Component {
     }
 
     handlePasswordConfirmation(event) {
-        this.setState({password_confirmation: event.target.value});
+        this.setState({passwordConfirmation: event.target.value});
     }
 
     handleSubmit(event) {
@@ -67,7 +66,7 @@ class UserForm extends React.Component {
     }
 
     handlePasswordField() {
-        this.setState({passwordFieldDisabled: false, password: '', password_confirmation: ''});
+        this.setState({passwordFieldDisabled: false, password: '', passwordConfirmation: ''});
     }
 
     render() {
@@ -136,7 +135,7 @@ class UserForm extends React.Component {
                                 <tr>
                                     <td><label htmlFor="user_password_confirmation">Password confirmation</label></td>
                                     <td><input id="user_password_confirmation" type="password" name="user[password_confirmation]" 
-                                               value={this.state.password_confirmation || ''} 
+                                               value={this.state.passwordConfirmation || ''} 
                                                onChange={this.handlePasswordConfirmation} /></td>
                                 </tr>
                             </tbody>

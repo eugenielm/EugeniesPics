@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import { Button, DropdownButton, MenuItem } from 'react-bootstrap';
 import { IndexLinkContainer } from 'react-router-bootstrap';
@@ -7,8 +6,8 @@ import { IndexLinkContainer } from 'react-router-bootstrap';
 
 const CategoriesLinks = (props) => {
   return (
-    <IndexLinkContainer to={'/categories/' + props.cat_id + '/pictures'}>
-      <MenuItem eventKey={(2 + props.index).toString()}>{props.cat_name}</MenuItem>
+    <IndexLinkContainer to={'/categories/' + props.catId + '/pictures'}>
+      <MenuItem eventKey={(2 + props.index).toString()}>{props.catName}</MenuItem>
     </IndexLinkContainer>)
 }
 
@@ -87,13 +86,13 @@ class Navibar extends React.Component {
             }
 
               { this.state.categories.map(c => <CategoriesLinks key={c.id} 
-                                                                cat_id={c.id} 
-                                                                cat_name={c.name} 
+                                                                catId={c.id} 
+                                                                catName={c.name} 
                                                                 path={this.state.path} 
                                                                 index={this.state.categories.indexOf(c)} />) }
 
             <IndexLinkContainer to='/about' id="about_button">
-              <Button>* Info & <span className="glyphicon glyphicon-envelope"></span> *</Button>
+              <Button>* Info &amp; <span className="glyphicon glyphicon-envelope"></span> *</Button>
             </IndexLinkContainer>
             
         </div>
@@ -110,14 +109,14 @@ class Navibar extends React.Component {
           }
 
           <IndexLinkContainer to='/about' id="about_button">
-            <MenuItem eventKey={2} >Info & <span className="glyphicon glyphicon-envelope"></span></MenuItem>
+            <MenuItem eventKey={2} >Info &amp; <span className="glyphicon glyphicon-envelope"></span></MenuItem>
           </IndexLinkContainer>
 
           <MenuItem divider/>
 
           { this.state.categories.map(c => <CategoriesLinks key={c.id} 
-                                                            cat_id={c.id} 
-                                                            cat_name={c.name} 
+                                                            catId={c.id} 
+                                                            catName={c.name} 
                                                             path={this.state.path} 
                                                             index={this.state.categories.indexOf(c)} />) }
         </DropdownButton>
@@ -159,14 +158,14 @@ class Navibar extends React.Component {
           
         : null}
 
-        {!this.props.user && this.props.demo_mode ?
+        {!this.props.user && this.props.demoMode ?
           <Link to="/login" 
                 style={{position: "absolute", top: '10px', right: '10px', color: 'white', textShadow: '2px 2px 10px black'}}>
             Log in
           </Link>
           : null}
 
-        {!this.props.demo_mode ?
+        {!this.props.demoMode ?
 
           <button id="fb_share_btn" onClick={this.triggerShareDialog}>
             <i className="fa fa-facebook-official"></i>
@@ -175,7 +174,7 @@ class Navibar extends React.Component {
           
           : null}
 
-        {this.props.demo_mode && !this.props.user ?
+        {this.props.demoMode && !this.props.user ?
           <p id="demo_warning">
             You need to be logged in to fully experience this demo!
           </p>

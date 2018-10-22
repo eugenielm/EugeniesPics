@@ -1,6 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Link } from 'react-router-dom';
 import { Button, FormGroup, FormControl, Table } from 'react-bootstrap';
 import ErrorsComponent from './ErrorsComponent';
 
@@ -19,13 +17,13 @@ class PresentationForm extends React.Component {
     componentWillMount() {
         this.setState({ display: "none",
                         token: this.props.token,
-                        errors: this.props.presentation_errors || null,
+                        errors: this.props.presentationErrors || null,
                         user: this.props.user || null,
                         languages: [],
                         usedLanguages: {},
                         presentation_id: this.props.match.params ? this.props.match.params.presentation_id : '',
-                        presentation_content: this.props.presentation_data ? this.props.presentation_data.content : '',
-                        presentation_language_id: this.props.presentation_data ? this.props.presentation_data.language_id : '' });
+                        presentation_content: this.props.presentationData ? this.props.presentationData.content : '',
+                        presentation_language_id: this.props.presentationData ? this.props.presentationData.language_id : '' });
         this.handleLanguageId = this.handleLanguageId.bind(this);
         this.handleContent = this.handleContent.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);

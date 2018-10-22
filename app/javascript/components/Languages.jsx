@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Button, Table, Modal, Popover, OverlayTrigger } from 'react-bootstrap';
 
 
@@ -19,7 +18,7 @@ class EditDeleteLanguage extends React.Component {
       <div id="edit-delete-lang" style={{ display: "inline" }}>
         
         <Button bsSize="xsmall" bsStyle="info" style={{ marginRight: "20px", opacity: '0.75' }} 
-                href={ "/languages/" + this.props.lang_id + "/edit" }>
+                href={ "/languages/" + this.props.langId + "/edit" }>
           <span className="glyphicon glyphicon-edit"></span>
         </Button>
         
@@ -32,12 +31,12 @@ class EditDeleteLanguage extends React.Component {
           <Modal.Body>
             {this.props.user && this.props.user.superadmin ?
               <div className="confirm_delete_modal">
-                Are you sure you want to destroy the {this.props.lang_name} language?
+                Are you sure you want to destroy the {this.props.langName} language?
                 <br/><br/>
                 <Button bsStyle="danger" 
                         bsSize="xsmall"
                         onClick={() => this.setState({displayDeleteModal: false})}
-                        href={ "/languages/" + this.props.lang_id }
+                        href={ "/languages/" + this.props.langId }
                         data-method="delete"
                         >Yes
                 </Button>
@@ -47,7 +46,7 @@ class EditDeleteLanguage extends React.Component {
           :
             <OverlayTrigger trigger={['hover', 'click']} placement="bottom" overlay={unauthorizedActionPopover}>
               <div className="confirm_delete_modal">
-                  Are you sure you want to destroy the {this.props.lang_name} language?
+                  Are you sure you want to destroy the {this.props.langName} language?
                   <br/><br/>
                   <Button bsStyle="danger" 
                           bsSize="xsmall"
@@ -73,7 +72,7 @@ const LanguageComponent = props => (
         <td>{props.language.id}</td>
         <td>{props.language.name}</td>
         <td>{props.language.abbreviation}</td>
-        <td><EditDeleteLanguage lang_id={props.language.id} lang_name={props.language.name} user={props.user} /></td>
+        <td><EditDeleteLanguage langId={props.language.id} langName={props.language.name} user={props.user} /></td>
     </tr>
 );
 

@@ -1,7 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
-import { Button, Grid, Modal, Popover, OverlayTrigger } from 'react-bootstrap';
+import { Button, Modal, Popover, OverlayTrigger } from 'react-bootstrap';
 
 
 const unauthorizedActionPopover = (
@@ -12,14 +11,14 @@ const unauthorizedActionPopover = (
 
 
 const CatAdminActionsElement = (props) => {
-  const edit_cat_link = <Button bsStyle="primary" 
+  const editCatLink = <Button bsStyle="primary" 
                                 bsSize="xsmall" 
                                 style={{marginRight: '30px'}}
-                                href={"/categories/" + props.category_id + "/edit"}>
+                                href={"/categories/" + props.categoryId + "/edit"}>
                           <span className="glyphicon glyphicon-edit"></span>
                         </Button>;
 
-  const delete_cat_link = <Button bsStyle="danger" 
+  const deleteCatLink = <Button bsStyle="danger" 
                                   bsSize="xsmall" 
                                   style={{outline: 0}}
                                   onClick={() => props.handleCatDeleteModal(true)}>
@@ -33,7 +32,7 @@ const CatAdminActionsElement = (props) => {
                 positionLeft={props.positionLeft} 
                 positionTop={props.positionTop}
                 placement="right">
-          {edit_cat_link}{delete_cat_link}
+          {editCatLink}{deleteCatLink}
       </Popover>
   );
 };
@@ -57,7 +56,7 @@ class EditDeleteCategory extends React.Component {
           <OverlayTrigger trigger="click" 
                           placement="right" 
                           overlay={<CatAdminActionsElement {...this.props} 
-                                                           category_id={this.props.cat_id}
+                                                           categoryId={this.props.catId}
                                                            user={this.props.user}
                                                            handleCatDeleteModal={this.handleCatDeleteModal} />} >
             <Button className="cat_admin_overlay_btn">
@@ -70,12 +69,12 @@ class EditDeleteCategory extends React.Component {
             <Modal.Body>
               {this.props.user && this.props.user.superadmin ?
                 <div className="confirm_delete_modal">
-                  Are you sure you want to destroy the '{this.props.cat_name}' category?
+                  Are you sure you want to destroy the '{this.props.catName}' category?
                   <br/><br/>
                   <Button bsStyle="danger" 
                           bsSize="xsmall"
                           onClick={() => this.setState({displayDeleteModal: false})}
-                          href={ "/categories/" + this.props.cat_id}
+                          href={ "/categories/" + this.props.catId}
                           data-method="delete"
                           >Yes
                   </Button>
@@ -85,7 +84,7 @@ class EditDeleteCategory extends React.Component {
             :
               <OverlayTrigger trigger={['hover', 'click']} placement="bottom" overlay={unauthorizedActionPopover}>
                 <div className="confirm_delete_modal">
-                    Are you sure you want to destroy the '{this.props.cat_name}' category?
+                    Are you sure you want to destroy the '{this.props.catName}' category?
                     <br/><br/>
                     <Button bsStyle="danger" 
                             bsSize="xsmall"
@@ -128,8 +127,8 @@ class CategoryComponent extends React.Component {
             <p className="catname">{this.props.category.name.toUpperCase()}</p>
           </Link>
           { this.props.user ?
-            <EditDeleteCategory cat_id={this.props.category.id} 
-                                cat_name={this.props.category.name} 
+            <EditDeleteCategory catId={this.props.category.id} 
+                                catName={this.props.category.name} 
                                 user={this.props.user} /> 
             : null }
         </div>

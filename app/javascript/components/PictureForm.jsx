@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Button, Table, FormGroup, FormControl, OverlayTrigger, Popover, Modal } from 'react-bootstrap';
 import ErrorsComponent from './ErrorsComponent';
 
@@ -20,20 +19,20 @@ class PictureContent extends React.Component {
     }
 
     render() {
-        const sentences = this.props.pic_description.content.split('\r\n');
+        const sentences = this.props.picDescription.content.split('\r\n');
         return (
             <Popover id="popover-positioned-bottom" 
                      positionLeft={this.props.positionLeft} 
                      positionTop={this.props.positionTop} 
                      placement="bottom" 
                      style={{textAlign: 'center'}}
-                     title={this.props.pic_description.language_name + " description"}>
+                     title={this.props.picDescription.language_name + " description"}>
                 {sentences.map((s, index) => <p key={index}>{s}</p>)}
                 <Button bsStyle="primary" 
                         bsSize="xsmall"
-                        href={"/categories/" + this.props.category_id 
-                            + "/pictures/" + this.props.picture_id
-                            + "/pic_descriptions/" + this.props.pic_description.description_id 
+                        href={"/categories/" + this.props.categoryId 
+                            + "/pictures/" + this.props.pictureId
+                            + "/pic_descriptions/" + this.props.picDescription.description_id 
                             + "/edit"}>
                     <span className="glyphicon glyphicon-edit"></span>
                 </Button>
@@ -47,15 +46,15 @@ class PictureContent extends React.Component {
                     <Modal.Body>
                         {this.props.user && this.props.user.superadmin ?
                             <div className="confirm_delete_modal">
-                                Are you sure you want to destroy the {this.props.pic_description.language_name} description 
-                                of {this.props.picture_title}?
+                                Are you sure you want to destroy the {this.props.picDescription.language_name} description 
+                                of {this.props.pictureTitle}?
                                 <br/><br/>
                                 <Button bsStyle="danger" 
                                         bsSize="xsmall"
                                         onClick={() => this.setState({displayDeleteModal: false})}
-                                        href={"/categories/" + this.props.category_id 
-                                            + "/pictures/" + this.props.picture_id
-                                            + "/pic_descriptions/" + this.props.pic_description.description_id}
+                                        href={"/categories/" + this.props.categoryId 
+                                            + "/pictures/" + this.props.pictureId
+                                            + "/pic_descriptions/" + this.props.picDescription.description_id}
                                         data-method="delete"
                                         >Yes
                                 </Button>
@@ -65,8 +64,8 @@ class PictureContent extends React.Component {
                         :
                         <OverlayTrigger trigger={['hover', 'click']} placement="bottom" overlay={unauthorizedActionPopover}>
                             <div className="confirm_delete_modal">
-                                Are you sure you want to destroy the {this.props.pic_description.language_name} description 
-                                of {this.props.picture_title}?
+                                Are you sure you want to destroy the {this.props.picDescription.language_name} description 
+                                of {this.props.pictureTitle}?
                                 <br/><br/>
                                 <Button bsStyle="danger" 
                                         bsSize="xsmall"
@@ -89,18 +88,18 @@ class PictureContent extends React.Component {
 class PictureForm extends React.Component {
 
     componentWillMount() {
-        this.setState({ category_id: this.props.match.params.category_id,
-                        picture_id: this.props.match.params.picture_id,
-                        picture_title: this.props.picture_data.title || '',
-                        author: this.props.demo_mode ? this.props.picture_data.author || 'Eugénie Le Moulec (*demo*)' : this.props.picture_data.author || 'Eugénie Le Moulec',
-                        pic_descriptions: [],
-                        pic_url: '',
-                        prev_pic_url: '',
-                        picfile_name: '',
+        this.setState({ categoryId: this.props.match.params.category_id,
+                        pictureId: this.props.match.params.picture_id,
+                        pictureTitle: this.props.pictureData.title || '',
+                        author: this.props.demoMode ? this.props.pictureData.author || 'Eugénie Le Moulec (*demo*)' : this.props.pictureData.author || 'Eugénie Le Moulec',
+                        picDescriptions: [],
+                        picUrl: '',
+                        prevPicUrl: '',
+                        picfileName: '',
                         all_categories: [],
                         user: this.props.user || null,
                         token: this.props.token,
-                        errors: this.props.picture_errors || null });
+                        errors: this.props.pictureErrors || null });
         this.handleTitle = this.handleTitle.bind(this);
         this.handleAuthor = this.handleAuthor.bind(this);
         this.handlePicfile = this.handlePicfile.bind(this);
@@ -109,7 +108,7 @@ class PictureForm extends React.Component {
     }
 
     componentDidMount() {
-        fetch('/categories/' + this.state.category_id + '/pictures.json', {
+        fetch('/categories/' + this.state.categoryId + '/pictures.json', {
             credentials: 'same-origin'
           })
         .then(function(resp) {
@@ -120,8 +119,8 @@ class PictureForm extends React.Component {
             this.setState({ all_categories });
           }.bind(this))
 
-        if (this.state.picture_id) {
-            fetch('/categories/' + this.state.category_id + '/pictures/' + this.state.picture_id + '.json',
+        if (this.state.pictureId) {
+            fetch('/categories/' + this.state.categoryId + '/pictures/' + this.state.pictureId + '.json',
                  {credentials: 'same-origin'}
                  )
             .then(function(resp) {
@@ -129,18 +128,18 @@ class PictureForm extends React.Component {
               })
               .then(function(pic) {
                 const pic_info = pic.pop();
-                this.setState({ pic_url: pic_info.picfile_url, 
-                                prev_pic_url: pic_info.picfile_url, 
-                                picfile_name: pic_info.picfile_name, 
-                                picture_title: pic_info.picture_title, 
-                                pic_descriptions: pic });
+                this.setState({ picUrl: pic_info.picfile_url, 
+                                prevPicUrl: pic_info.picfile_url, 
+                                picfileName: pic_info.picfile_name, 
+                                pictureTitle: pic_info.picture_title, 
+                                picDescriptions: pic });
               }.bind(this))
         }
     }
 
     handleTitle(event) {
         if (event.target.value.match(/^[\w\ \u00E0-\u00FC\-¨()[\]_&=+*ˆ@#%\^\']{0,30}$/)) {
-            this.setState({picture_title: event.target.value});
+            this.setState({pictureTitle: event.target.value});
         }  
     }
 
@@ -152,25 +151,25 @@ class PictureForm extends React.Component {
 
     handlePicfile(event) {
         if (event.target.files[0].size < 8000000) {
-            this.setState({ pic_url: event.target.files[0], picfile_name: event.target.files[0].name });
+            this.setState({ picUrl: event.target.files[0], picfileName: event.target.files[0].name });
         } else {
             alert("The picture you uploaded exceeded the max size of 8Mb (" + (event.target.files[0].size / 1000) + "ko)");
         }
     }
 
     handleCategoryId(event) {
-        this.setState({category_id: event.target.value});
+        this.setState({categoryId: event.target.value});
     }
 
     handleSubmit(event) {
         var alerts = "";
-        if (!this.state.picture_title) {
+        if (!this.state.pictureTitle) {
             alerts += "A picture title must be at least 1 character long (max 30 char). "
         }
         if (!this.state.author || this.state.author.length < 2) {
             alerts += "A picture author name must be at least 2 characters long (max 30 char). ";
         }
-        if (!this.state.pic_url) {
+        if (!this.state.picUrl) {
             alerts += "You must upload a picture (max size = 4Mb). ";
         }
         if (this.state.user && !this.state.user.superadmin) {
@@ -183,46 +182,46 @@ class PictureForm extends React.Component {
     }
 
     render() {
-        const form_action = this.state.picture_id ?
-                            ("/categories/" + (this.state.category_id) + "/pictures/" + this.state.picture_id) :
-                            ("/categories/" + (this.state.category_id) + "/pictures");
+        const form_action = this.state.pictureId ?
+                            ("/categories/" + (this.state.categoryId) + "/pictures/" + this.state.pictureId) :
+                            ("/categories/" + (this.state.categoryId) + "/pictures");
         
-        const descriptions_popovers = this.state.pic_descriptions.map((d, index) => 
+        const descriptions_popovers = this.state.picDescriptions.map((d, index) => 
             (<OverlayTrigger key={index}
                              trigger="click" 
                              placement="bottom"
                              overlay={<PictureContent {...this.props}
                                                       user={this.state.user}
-                                                      pic_description={d} 
-                                                      picture_title={this.state.picture_title}
-                                                      category_id={this.state.category_id}
-                                                      picture_id={this.state.picture_id} />}>
+                                                      picDescription={d} 
+                                                      pictureTitle={this.state.pictureTitle}
+                                                      categoryId={this.state.categoryId}
+                                                      pictureId={this.state.pictureId} />}>
                 <Button bsSize="xsmall" style={{margin: "3px 10px 3px 0"}}>{d.language_abbr}</Button>
             </OverlayTrigger>));
         
         const input_edit = React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'});
-        const pic_info = this.state.picture_id ?
-            (this.state.pic_url == this.state.prev_pic_url ?
+        const pic_info = this.state.pictureId ?
+            (this.state.picUrl == this.state.prevPicUrl ?
                     (<div>
                         <p style={{color: 'white', fontSize: '14px', textShadow: '1px 1px 10px black'}}>Current picture:</p>
-                        <img src={this.state.pic_url} />
+                        <img src={this.state.picUrl} />
                         <p style={{color: 'white', fontSize: '12px', textShadow: '1px 1px 10px black', marginTop: '5px', 
                            MsWordBreak: "break-all", wordBreak: "break-all", wordBreak: "break-word"}}>
-                           ({this.state.picfile_name})
+                           ({this.state.picfileName})
                         </p>
                     </div>)
                     : (<p style={{color: 'white', fontSize: '14px', textShadow: '1px 1px 10px black',
                                   MsWordBreak: "break-all", wordBreak: "break-all", wordBreak: "break-word"}}>
-                            Picture about to be uploaded: {this.state.picfile_name}
+                            Picture about to be uploaded: {this.state.picfileName}
                        </p>))
-            : (this.state.pic_url ?
+            : (this.state.picUrl ?
                 (<p style={{color: 'white', fontSize: '14px', textShadow: '1px 1px 10px black',
                     MsWordBreak: "break-all", wordBreak: "break-all", wordBreak: "break-word"}}>
-                    Picture about to be uploaded: {this.state.picfile_name}
+                    Picture about to be uploaded: {this.state.picfileName}
                  </p>)
                 : null)
 
-        const category_form = this.state.picture_id ?
+        const category_form = this.state.pictureId ?
             (<form encType="multipart/form-data" action={form_action} method="post" 
                    acceptCharset="UTF-8" onSubmit={this.handleSubmit} style={{marginTop: '20px'}} >
                 <input name="utf8" type="hidden" value="✓" />
@@ -234,7 +233,7 @@ class PictureForm extends React.Component {
                             <td><label htmlFor="choose-cat">Category</label></td>
                             <td>
                                 <FormGroup controlId="formControlsSelect">
-                                    <FormControl componentClass="select" value={this.state.category_id} name="picture[category_id]" onChange={this.handleCategoryId}>
+                                    <FormControl componentClass="select" value={this.state.categoryId} name="picture[category_id]" onChange={this.handleCategoryId}>
                                         { this.state.all_categories.map(c => <CategoryChoice key={c.id} data={c} />) }>
                                     </FormControl>
                                 </FormGroup>
@@ -242,7 +241,7 @@ class PictureForm extends React.Component {
                         </tr>
                         <tr>
                             <td><label htmlFor="picture_title">Title</label></td>
-                            <td><input id="picture_title" type="text" name="picture[title]" maxLength="30" value={this.state.picture_title || ''} onChange={this.handleTitle} /></td>
+                            <td><input id="picture_title" type="text" name="picture[title]" maxLength="30" value={this.state.pictureTitle || ''} onChange={this.handleTitle} /></td>
                         </tr>
                         <tr>
                             <td><label htmlFor="picture_author">Author</label></td>
@@ -284,7 +283,7 @@ class PictureForm extends React.Component {
                                 <td><label htmlFor="choose-cat">Category</label></td>
                                 <td>
                                     <FormGroup controlId="formControlsSelect">
-                                        <FormControl componentClass="select" value={this.state.category_id} name="picture[category_id]" onChange={this.handleCategoryId}>
+                                        <FormControl componentClass="select" value={this.state.categoryId} name="picture[category_id]" onChange={this.handleCategoryId}>
                                             { this.state.all_categories.map(c => <CategoryChoice key={c.id} data={c} />) }>
                                         </FormControl>
                                     </FormGroup>
@@ -292,7 +291,7 @@ class PictureForm extends React.Component {
                             </tr>
                             <tr>
                                 <td><label htmlFor="picture_title">Title</label></td>
-                                <td><input id="picture_title" type="text" name="picture[title]" maxLength="30" value={this.state.picture_title || ''} onChange={this.handleTitle} /></td>
+                                <td><input id="picture_title" type="text" name="picture[title]" maxLength="30" value={this.state.pictureTitle || ''} onChange={this.handleTitle} /></td>
                             </tr>
 
                             <tr>
@@ -313,7 +312,7 @@ class PictureForm extends React.Component {
 
         return (
             <div className="form-layout" style={{display: this.state.display}}>
-                <div className="admin-page-title">{ this.state.picture_id ? ("Edit '" + this.state.picture_title + "'") : "New picture"} 
+                <div className="admin-page-title">{ this.state.pictureId ? ("Edit '" + this.state.pictureTitle + "'") : "New picture"} 
                     <Button bsStyle="primary" bsSize="xsmall" className="back-link" 
                             href={"/categories/" + this.props.match.params.category_id + "/pictures"} style={{marginLeft: '5px'}}>
                         <span className="glyphicon glyphicon-arrow-left"></span>

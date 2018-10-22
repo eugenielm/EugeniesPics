@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Button, Modal, Popover, OverlayTrigger } from 'react-bootstrap';
 
 
@@ -18,7 +17,7 @@ class EditDeletePresentation extends React.Component {
     return (
       <span>
         <Button bsSize="xsmall" bsStyle="info" style={{ marginLeft: '17px', opacity: '0.75' }} 
-                href={ "/presentations/" + this.props.pres_id + "/edit" }>
+                href={ "/presentations/" + this.props.presId + "/edit" }>
           <span className="glyphicon glyphicon-edit"></span>
         </Button>
 
@@ -31,12 +30,12 @@ class EditDeletePresentation extends React.Component {
             <Modal.Body>
               {this.props.user && this.props.user.superadmin ?
                 <div className="confirm_delete_modal">
-                    Are you sure you want to destroy {this.props.pres_lang} presentation?
+                    Are you sure you want to destroy {this.props.presLang} presentation?
                     <br/><br/>
                     <Button bsStyle="danger" 
                             bsSize="xsmall"
                             onClick={() => this.setState({displayDeleteModal: false})}
-                            href={ "/presentations/" + this.props.pres_id }
+                            href={ "/presentations/" + this.props.presId }
                             data-method="delete"
                             >Yes
                     </Button>
@@ -46,7 +45,7 @@ class EditDeletePresentation extends React.Component {
               :
                 <OverlayTrigger trigger={['hover', 'click']} placement="bottom" overlay={unauthorizedActionPopover}>
                   <div className="confirm_delete_modal">
-                    Are you sure you want to destroy {this.props.pres_lang} presentation?
+                    Are you sure you want to destroy {this.props.presLang} presentation?
                     <br/><br/>
                     <Button bsStyle="danger" 
                             bsSize="xsmall"
@@ -75,8 +74,8 @@ const PresentationComponent = props => {
       <h4>
         {props.presentation[1][1][0].toUpperCase() + props.presentation[1][1].slice(1)} presentation
         <EditDeletePresentation user={props.user}
-                                pres_id={props.presentation[1][2]} 
-                                pres_lang={props.presentation[1][1]} />
+                                presId={props.presentation[1][2]} 
+                                presLang={props.presentation[1][1]} />
       </h4>
       <div className="presentation-content">
         {sentences.map((s, index) => <p key={index}>{s}</p>)}

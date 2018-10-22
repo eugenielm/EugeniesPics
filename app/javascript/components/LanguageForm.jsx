@@ -1,6 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Link } from 'react-router-dom';
 import { Button, Table } from 'react-bootstrap';
 import ErrorsComponent from './ErrorsComponent';
 
@@ -9,12 +7,12 @@ class LanguageForm extends React.Component {
 
     componentWillMount() {
         this.setState({ token: this.props.token,
-                        errors: this.props.language_errors || null,
+                        errors: this.props.languageErrors || null,
                         user: this.props.user || null,
                         languages: [],
                         language_id: this.props.match.params ? this.props.match.params.language_id : '',
-                        language_name: this.props.language_data ? this.props.language_data.name : '',
-                        language_abbr: this.props.language_data ? this.props.language_data.abbreviation : ''})
+                        language_name: this.props.languageData ? this.props.languageData.name : '',
+                        language_abbr: this.props.languageData ? this.props.languageData.abbreviation : ''})
         this.handleLanguageName = this.handleLanguageName.bind(this);
         this.handleLanguageAbbr = this.handleLanguageAbbr.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);

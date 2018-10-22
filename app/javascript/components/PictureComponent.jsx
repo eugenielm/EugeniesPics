@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import { Button, Col, Image, Modal, OverlayTrigger, Tooltip, Panel, Popover } from 'react-bootstrap';
 import ReactEventComponent from "react-swipe-event-component";
@@ -19,7 +18,7 @@ const PicAdminActionsElement = (props) => {
     const edit_cat_link = <Button bsStyle="primary" 
                                   bsSize="xsmall" 
                                   style={{marginRight: '30px'}}
-                                  href={"/categories/" + props.category_id + "/pictures/" + props.picture_id + "/edit"}>
+                                  href={"/categories/" + props.categoryId + "/pictures/" + props.pictureId + "/edit"}>
                             <span className="glyphicon glyphicon-edit"></span>
                           </Button>;
 
@@ -59,8 +58,8 @@ class EditDeletePicture extends React.Component {
                 <OverlayTrigger trigger="click" 
                                 placement="right" 
                                 overlay={<PicAdminActionsElement {...this.props} 
-                                                                 category_id={this.props.cat_id}
-                                                                 picture_id={this.props.pic_id}
+                                                                 categoryId={this.props.catId}
+                                                                 pictureId={this.props.picId}
                                                                  handleDeleteModal={this.handleDeleteModal} />} >
                     <Button className="pic_admin_overlay_btn">
                         <span className="glyphicon glyphicon-cog"></span>
@@ -71,12 +70,12 @@ class EditDeletePicture extends React.Component {
                     <Modal.Body>
                         {this.props.user && this.props.user.superadmin ?
                             <div className="confirm_delete_modal">
-                                Are you sure you want to destroy '{this.props.pic_title}'?
+                                Are you sure you want to destroy '{this.props.picTitle}'?
                                 <br/><br/>
                                 <Button bsStyle="danger" 
                                         bsSize="xsmall"
                                         onClick={() => this.setState({displayDelePicteModal: false})}
-                                        href={ "/categories/" + this.props.cat_id + "/pictures/" + this.props.pic_id }
+                                        href={ "/categories/" + this.props.catId + "/pictures/" + this.props.picId }
                                         data-method="delete"
                                         style={{marginLeft: '5px'}}
                                         >Yes
@@ -87,7 +86,7 @@ class EditDeletePicture extends React.Component {
                         :
                             <OverlayTrigger trigger={['hover', 'click']} placement="bottom" overlay={unauthorizedActionPopover}>
                                 <div className="confirm_delete_modal">
-                                    Are you sure you want to destroy '{this.props.pic_title}'?
+                                    Are you sure you want to destroy '{this.props.picTitle}'?
                                     <br/><br/>
                                     <Button bsStyle="danger" 
                                             bsSize="xsmall"
@@ -117,28 +116,28 @@ class SwipableModal extends ReactEventComponent {
 
     handlePicWithKeyboard(event) {
         if (event.keyCode == 37) {
-            this.props.history.push('/categories/' + this.props.category_id + '/pictures/' + this.props.prevPicture.id);
+            this.props.history.push('/categories/' + this.props.categoryId + '/pictures/' + this.props.prevPicture.id);
         }
         if (event.keyCode == 39) {
-            this.props.history.push('/categories/' + this.props.category_id + '/pictures/' + this.props.nextPicture.id);
+            this.props.history.push('/categories/' + this.props.categoryId + '/pictures/' + this.props.nextPicture.id);
         }
         if (event.keyCode == 27) {
-            this.props.history.push('/categories/' + this.props.category_id + '/pictures');
+            this.props.history.push('/categories/' + this.props.categoryId + '/pictures');
         }
     }
 
     handleSwipeRight() {
-        this.props.history.push('/categories/' + this.props.category_id + '/pictures/' + this.props.prevPicture.id);
+        this.props.history.push('/categories/' + this.props.categoryId + '/pictures/' + this.props.prevPicture.id);
     }
 
     handleSwipeLeft() {
-        this.props.history.push('/categories/' + this.props.category_id + '/pictures/' + this.props.nextPicture.id);
+        this.props.history.push('/categories/' + this.props.categoryId + '/pictures/' + this.props.nextPicture.id);
     }
 
     triggerShareDialog() {
         FB.ui({
             method: 'share',
-            href: window.location.origin + "/categories/" + this.props.category_id + '/pictures/' + this.props.picture_id,
+            href: window.location.origin + "/categories/" + this.props.categoryId + '/pictures/' + this.props.pictureId,
         }, function(response) {
             if (typeof(response) === 'undefined') {
                 alert('Posting was cancelled!');
@@ -161,7 +160,7 @@ class SwipableModal extends ReactEventComponent {
                 {...this.touchEventProperties}
             >
                 <Modal.Header>
-                    <Link to={'/categories/' + this.props.category_id + '/pictures'} id="close_button">X</Link>
+                    <Link to={'/categories/' + this.props.categoryId + '/pictures'} id="close_button">X</Link>
                     <Modal.Title id="contained-modal-title-lg">
                         <span>{this.props.currentPicture.title}</span>
                     </Modal.Title>
@@ -169,7 +168,7 @@ class SwipableModal extends ReactEventComponent {
                 
                 <Modal.Body>
                     <Link className="prev-pic" 
-                        to={'/categories/' + this.props.category_id + '/pictures/' + this.props.prevPicture.id}>
+                        to={'/categories/' + this.props.categoryId + '/pictures/' + this.props.prevPicture.id}>
                         <span id="chevron-left" className="glyphicon glyphicon-menu-left"></span>
                     </Link>
                     
@@ -204,7 +203,7 @@ class SwipableModal extends ReactEventComponent {
                     : null}
                     
                     <Link className="next-pic" 
-                        to={'/categories/' + this.props.category_id + '/pictures/' + this.props.nextPicture.id}>
+                        to={'/categories/' + this.props.categoryId + '/pictures/' + this.props.nextPicture.id}>
                         <span id="chevron-right" className="glyphicon glyphicon-menu-right"></span>
                     </Link>
                 </Modal.Body>
@@ -233,7 +232,7 @@ class PictureComponent extends React.Component {
 
     initialState(props) {
         return {
-            showModal: props.picture_id && props.picture_id == props.currentPicture.id ? true : false, 
+            showModal: props.pictureId && props.pictureId == props.currentPicture.id ? true : false, 
             showDescription: this.props.showPicDesc, 
             picIndex: 0,
             language: props.language
@@ -260,7 +259,7 @@ class PictureComponent extends React.Component {
             <Col lg={4} md={6} sm={6} xs={12} className="picture-element">
                 <div className="picture_pic">
                     <Link onClick={() => {this.setState({showModal: true})}} 
-                          to={'/categories/' + this.props.category_id + '/pictures/' + this.props.currentPicture.id.toString()}>
+                          to={'/categories/' + this.props.categoryId + '/pictures/' + this.props.currentPicture.id.toString()}>
                         <Image src={screen.width < 600 || screen.height < 600 ? this.props.currentPicture.pic_url_small 
                                                                               : this.props.currentPicture.pic_url_medium} 
                                alt={this.props.currentPicture.title}/>
@@ -277,10 +276,10 @@ class PictureComponent extends React.Component {
                                     />
 
                     {this.props.user ?
-                        (<EditDeletePicture cat_id={this.props.category_id} 
-                                            pic_id={this.props.currentPicture.id} 
+                        (<EditDeletePicture catId={this.props.categoryId} 
+                                            picId={this.props.currentPicture.id} 
                                             user={this.props.user}
-                                            pic_title={this.props.currentPicture.title} />) : null}
+                                            picTitle={this.props.currentPicture.title} />) : null}
                 </div>
         </Col>
         )

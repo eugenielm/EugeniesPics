@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Button, Table, Popover, OverlayTrigger, Modal } from 'react-bootstrap';
 import ErrorsComponent from './ErrorsComponent';
 
@@ -17,19 +16,19 @@ class CategoryContent extends React.Component {
     }
 
     render() {
-        const sentences = this.props.cat_description.content.split('\r\n');
+        const sentences = this.props.catDescription.content.split('\r\n');
         return (
             <Popover id="popover-positioned-bottom" 
                      positionLeft={this.props.positionLeft} 
                      positionTop={this.props.positionTop} 
                      placement="bottom" 
                      style={{textAlign: 'center'}}
-                     title={this.props.cat_description.language_name + " description"}>
+                     title={this.props.catDescription.language_name + " description"}>
                 {sentences.map((s, index) => <p key={index}>{s}</p>)}
                 <Button bsStyle="primary" 
                         bsSize="xsmall"
-                        href={"/categories/" + this.props.category_id 
-                            + "/cat_descriptions/" + this.props.cat_description.description_id 
+                        href={"/categories/" + this.props.categoryId 
+                            + "/cat_descriptions/" + this.props.catDescription.description_id 
                             + "/edit"}>
                     <span className="glyphicon glyphicon-edit"></span>
                 </Button>
@@ -43,14 +42,14 @@ class CategoryContent extends React.Component {
                     <Modal.Body>
                         {this.props.user && this.props.user.superadmin ?
                             <div className="confirm_delete_modal">
-                                Are you sure you want to destroy the {this.props.cat_description.language_name} description 
-                                of {this.props.category_name}?
+                                Are you sure you want to destroy the {this.props.catDescription.language_name} description 
+                                of {this.props.categoryName}?
                                 <br/><br/>
                                 <Button bsStyle="danger" 
                                         bsSize="xsmall"
                                         onClick={() => this.setState({displayDeleteModal: false})}
-                                        href={"/categories/" + this.props.category_id 
-                                            + "/cat_descriptions/" + this.props.cat_description.description_id}
+                                        href={"/categories/" + this.props.categoryId 
+                                            + "/cat_descriptions/" + this.props.catDescription.description_id}
                                         data-method="delete"
                                         style={{marginLeft: '5px'}}
                                         >Yes
@@ -61,8 +60,8 @@ class CategoryContent extends React.Component {
                         :
                             <OverlayTrigger trigger={['hover', 'click']} placement="bottom" overlay={unauthorizedActionPopover}>
                                 <div className="confirm_delete_modal">
-                                    Are you sure you want to destroy the {this.props.cat_description.language_name} description 
-                                    of {this.props.category_name}?
+                                    Are you sure you want to destroy the {this.props.catDescription.language_name} description 
+                                    of {this.props.categoryName}?
                                     <br/><br/>
                                     <Button bsStyle="danger" 
                                             bsSize="xsmall"
@@ -87,14 +86,14 @@ class CategoryForm extends React.Component {
 
     componentWillMount() {
         this.setState({ token: this.props.token,
-                        errors: this.props.category_errors || null,
+                        errors: this.props.categoryErrors || null,
                         user: this.props.user || null,
-                        category_id: this.props.match.params ? this.props.match.params.category_id : '',
-                        category_name: '',
-                        catpic_url: '',
-                        prev_catpic_url: '',
-                        catpic_name: '',
-                        cat_descriptions: [] })
+                        categoryId: this.props.match.params ? this.props.match.params.category_id : '',
+                        categoryName: '',
+                        catpicUrl: '',
+                        prevCatpicUrl: '',
+                        catpicName: '',
+                        catDescriptions: [] })
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleCatpic = this.handleCatpic.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -102,33 +101,33 @@ class CategoryForm extends React.Component {
 
     componentDidMount() {
 
-        if (this.state.category_id) {
-            fetch('/categories/' + this.state.category_id + '.json',
+        if (this.state.categoryId) {
+            fetch('/categories/' + this.state.categoryId + '.json',
                  {credentials: 'same-origin'}
                  )
             .then(function(resp) {
                 return resp.json();
               })
               .then(function(category) {
-                const cat_info = category.pop();
-                this.setState({ category_name: cat_info.category_name,
-                                catpic_url: cat_info.catpic_url, 
-                                prev_catpic_url: cat_info.catpic_url, 
-                                catpic_name: cat_info.catpic_name,
-                                cat_descriptions: category });
+                const catInfo = category.pop();
+                this.setState({ categoryName: catInfo.category_name,
+                                catpicUrl: catInfo.catpic_url, 
+                                prevCatpicUrl: catInfo.catpic_url, 
+                                catpicName: catInfo.catpic_name,
+                                catDescriptions: category });
               }.bind(this))
         }
     }
 
     handleNameChange(event) {
         if (event.target.value.match(/^[\w\ \u00E0-\u00FC\-¨()[\]_&=+*ˆ@#%\^\']{0,20}$/)) {
-            this.setState({category_name: event.target.value});
+            this.setState({categoryName: event.target.value});
         }  
     }
 
     handleCatpic(event) {
         if (event.target.files[0].size < 8000000) {
-            this.setState({ catpic_url: event.target.files[0], catpic_name: event.target.files[0].name });
+            this.setState({ catpicUrl: event.target.files[0], catpicName: event.target.files[0].name });
         } else {
             alert("The picture you uploaded exceeded the max size of 8Mb (" + (event.target.files[0].size / 1000) + "ko)");
         }
@@ -136,7 +135,7 @@ class CategoryForm extends React.Component {
 
     handleSubmit(event) {
         let alerts = "";
-        if (!this.state.category_name || this.state.category_name.length < 2 || this.state.category_name.length > 20) {
+        if (!this.state.categoryName || this.state.categoryName.length < 2 || this.state.categoryName.length > 20) {
             alerts += "A category name must be at least 2 characters long and at most 20 characters. ";
         }
         if (this.state.user && !this.state.user.superadmin) {
@@ -149,44 +148,44 @@ class CategoryForm extends React.Component {
     }
 
     render() {
-        const input_edit = React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'});
-        const catpic_info = this.state.catpic_url == this.state.prev_catpic_url ? 
+        const inputEdit = React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'});
+        const catpicInfo = this.state.catpicUrl == this.state.prevCatpicUrl ? 
                                 (<div>
                                     <p style={{color: 'white', fontSize: '14px', textShadow: '1px 1px 10px black'}}>Current picture:</p>
-                                    <img src={this.state.catpic_url} />
+                                    <img src={this.state.catpicUrl} />
                                     <p style={{color: 'white', fontSize: '12px', textShadow: '1px 1px 10px black', marginTop: '5px', 
                                         MsWordBreak: "break-all", wordBreak: "break-all", wordBreak: "break-word"}}>
-                                        ({this.state.catpic_name})
+                                        ({this.state.catpicName})
                                     </p>
                                 </div>)
                                 : (<p style={{color: 'white', fontSize: '14px', textShadow: '1px 1px 10px black'}}>
-                                    Picture about to be uploaded: {this.state.catpic_name}
+                                    Picture about to be uploaded: {this.state.catpicName}
                                   </p>);
 
-        const descriptions_popovers = this.state.cat_descriptions.map((d, index) => 
+        const descriptionsPopovers = this.state.cat_descriptions.map((d, index) => 
                                         (<OverlayTrigger key={index} trigger="click" 
                                                          placement="bottom"
                                                          overlay={<CategoryContent {...this.props} 
-                                                                                   cat_description={d} 
+                                                                                   catDescription={d} 
                                                                                    user={this.state.user}
-                                                                                   category_name={this.state.category_name}
-                                                                                   category_id={this.state.category_id} />}>
+                                                                                   categoryName={this.state.categoryName}
+                                                                                   categoryId={this.state.categoryId} />}>
                                             <Button bsSize="xsmall" style={{marginLeft: '10px'}}>{d.language_abbr}</Button>
                                         </OverlayTrigger>));
 
-        const category_form = this.state.category_id ?
-                            (<form encType="multipart/form-data" action={"/categories/" + this.state.category_id} 
+        const catForm = this.state.categoryId ?
+                            (<form encType="multipart/form-data" action={"/categories/" + this.state.categoryId} 
                                    method="post" acceptCharset="UTF-8" onSubmit={this.handleSubmit}
                                    style={{marginTop: '20px'}} >
                                 <input name="utf8" type="hidden" value="✓" />
                                 <input type="hidden" name="authenticity_token" value={this.state.token || ''} readOnly={true} />
-                                {input_edit}
+                                {inputEdit}
                                 <Table bordered id="category_form_table">
                                     <tbody>
                                         <tr>
                                             <td><label htmlFor="category_name">Name</label></td>
                                             <td><input id="category_name" type="text" name="category[name]" 
-                                                       value={this.state.category_name} onChange={this.handleNameChange} /></td>
+                                                       value={this.state.categoryName} onChange={this.handleNameChange} /></td>
                                         </tr>
                                         <tr>
                                             <td><label htmlFor="category_descriptions">Category descriptions</label></td>
@@ -197,7 +196,7 @@ class CategoryForm extends React.Component {
                                                              + "/cat_descriptions/new"}>
                                                     <span style={{paddingLeft: 2 + 'px'}} className="glyphicon glyphicon-plus"></span>
                                                 </Button>
-                                                {descriptions_popovers}
+                                                {descriptionsPopovers}
                                             </td>
                                         </tr>
                                         <tr>
@@ -207,7 +206,7 @@ class CategoryForm extends React.Component {
                                         </tr>
                                     </tbody>
                                 </Table>
-                                { catpic_info }
+                                { catpicInfo }
                                 <div className="actions">
                                     <input type="submit" name="commit" value="Submit changes" />
                                 </div>
@@ -222,7 +221,7 @@ class CategoryForm extends React.Component {
                                             <tr>
                                                 <td><label htmlFor="category_name">Category name</label></td>
                                                 <td><input id="category_name" type="text" name="category[name]" 
-                                                           value={this.state.category_name} onChange={this.handleNameChange} /></td>
+                                                           value={this.state.categoryName} onChange={this.handleNameChange} /></td>
                                             </tr>
                                         </tbody>
                                     </Table>
@@ -234,10 +233,10 @@ class CategoryForm extends React.Component {
         return (
             <div className="form-layout" style={{display: this.state.display}}>
                 
-                <div className="admin-page-title">{ this.state.category_id ? ("Edit '" + this.state.category_name + "' category") : "New category"}
-                    {this.state.category_name && this.state.category_id?
+                <div className="admin-page-title">{ this.state.categoryId ? ("Edit '" + this.state.categoryName + "' category") : "New category"}
+                    {this.state.categoryName && this.state.categoryId?
                         <Button bsStyle="primary" bsSize="xsmall" className="back-link" 
-                                href={"/categories/" + this.state.category_id} style={{marginLeft: 5 + 'px'}}>
+                                href={"/categories/" + this.state.categoryId} style={{marginLeft: 5 + 'px'}}>
                             <span className="glyphicon glyphicon-arrow-left"></span>
                         </Button>
                         : <Button bsStyle="primary" bsSize="xsmall" className="back-link" href="/categories" 
@@ -249,7 +248,7 @@ class CategoryForm extends React.Component {
                 
                 { this.state.errors ? (<ErrorsComponent errors={this.state.errors} model={"category"} />) : null }
                 
-                {category_form}
+                {catForm}
                 
             </div>
         );

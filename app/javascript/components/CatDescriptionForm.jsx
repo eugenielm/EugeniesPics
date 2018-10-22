@@ -1,6 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Link } from 'react-router-dom';
 import { Button, FormGroup, FormControl, Table } from 'react-bootstrap';
 import ErrorsComponent from './ErrorsComponent';
 
@@ -14,15 +12,15 @@ class CatDescriptionForm extends React.Component {
 
     componentWillMount() {
         this.setState({ token: this.props.token,
-                        errors: this.props.cat_description_errors || null,
+                        errors: this.props.catDescriptionErrors || null,
                         user: this.props.user || null,
                         languages: [],
                         existingCatdescriptions: [],
                         category_name: '',
                         cat_description_id: this.props.match.params.cat_description_id || '',
-                        language_id: this.props.cat_description_data ? this.props.cat_description_data.language_id : '',
+                        language_id: this.props.catDescriptionData ? this.props.catDescriptionData.language_id : '',
                         cat_descr_language_name: '',
-                        content: this.props.cat_description_data ? this.props.cat_description_data.content : ''});
+                        content: this.props.catDescriptionData ? this.props.catDescriptionData.content : ''});
         this.handleLanguageId = this.handleLanguageId.bind(this);
         this.handleContent = this.handleContent.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);

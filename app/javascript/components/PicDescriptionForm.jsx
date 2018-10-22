@@ -1,6 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Link } from 'react-router-dom';
 import { Button, FormGroup, FormControl, Table } from 'react-bootstrap';
 import ErrorsComponent from './ErrorsComponent';
 
@@ -14,15 +12,15 @@ class PicDescriptionForm extends React.Component {
 
     componentWillMount() {
         this.setState({ token: this.props.token,
-                        errors: this.props.pic_description_errors || null,
+                        errors: this.props.picDescriptionErrors || null,
                         user: this.props.user || null,
                         languages: [],
                         picture_title: '',
                         existingPicdescriptions: [],
                         pic_description_id: this.props.match.params.pic_description_id || '',
-                        language_id: this.props.pic_description_data ? this.props.pic_description_data.language_id : '',
+                        language_id: this.props.picDescriptionData ? this.props.picDescriptionData.language_id : '',
                         pic_descr_language_name: '',
-                        content: this.props.pic_description_data ? this.props.pic_description_data.content : ''});
+                        content: this.props.picDescriptionData ? this.props.picDescriptionData.content : ''});
         this.handleLanguageId = this.handleLanguageId.bind(this);
         this.handleContent = this.handleContent.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);

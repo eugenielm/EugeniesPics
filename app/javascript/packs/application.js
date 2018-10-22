@@ -19,83 +19,83 @@ document.addEventListener('turbolinks:load', () => {
   const csrf_token = document.getElementById('csrf_token') ?
                      document.getElementById('csrf_token').getAttribute('data').split('content=')[2].slice(1, -4) : null;
   
-  const setting_errors = document.getElementById('setting_errors') 
+  const settingErrors = document.getElementById('setting_errors') 
                          && JSON.parse(document.getElementById('setting_errors').getAttribute('data')).length > 0 ?
                          JSON.parse(document.getElementById('setting_errors').getAttribute('data')) : null;
-  const category_errors = document.getElementById('category_errors') 
+  const categoryErrors = document.getElementById('category_errors') 
                           && JSON.parse(document.getElementById('category_errors').getAttribute('data')).length > 0 ?
                           JSON.parse(document.getElementById('category_errors').getAttribute('data')) : null;
-  const picture_errors = document.getElementById('picture_errors') 
+  const pictureErrors = document.getElementById('picture_errors') 
                          && JSON.parse(document.getElementById('picture_errors').getAttribute('data')).length > 0 ?
                          JSON.parse(document.getElementById('picture_errors').getAttribute('data')) : null;
-  const user_errors = document.getElementById('user_errors') 
+  const userErrors = document.getElementById('user_errors') 
                       && JSON.parse(document.getElementById('user_errors').getAttribute('data')).length > 0 ?
                       JSON.parse(document.getElementById('user_errors').getAttribute('data')) : null;
-  const presentation_errors = document.getElementById('presentation_errors') 
+  const presentationErrors = document.getElementById('presentation_errors') 
                               && JSON.parse(document.getElementById('presentation_errors').getAttribute('data')).length > 0 ?
                               JSON.parse(document.getElementById('presentation_errors').getAttribute('data')) : null;
-  const language_errors = document.getElementById('language_errors') 
+  const languageErrors = document.getElementById('language_errors') 
                           && JSON.parse(document.getElementById('language_errors').getAttribute('data')).length > 0 ?
                           JSON.parse(document.getElementById('language_errors').getAttribute('data')) : null;
-  const cat_description_errors = document.getElementById('cat_description_errors') 
+  const catDescriptionErrors = document.getElementById('cat_description_errors') 
                                  && JSON.parse(document.getElementById('cat_description_errors').getAttribute('data')).length > 0 ?
                                  JSON.parse(document.getElementById('cat_description_errors').getAttribute('data')) : null;
-  const pic_description_errors = document.getElementById('pic_description_errors') 
+  const picDescriptionErrors = document.getElementById('pic_description_errors') 
                                  && JSON.parse(document.getElementById('pic_description_errors').getAttribute('data')).length > 0 ?
                                  JSON.parse(document.getElementById('pic_description_errors').getAttribute('data')) : null;              
   
-  const setting_data = document.getElementById('setting_data') ?
+  const settingData = document.getElementById('setting_data') ?
                        JSON.parse(document.getElementById('setting_data').getAttribute('data')) : null;
-  const user_data = document.getElementById('user_data') ?
+  const userData = document.getElementById('user_data') ?
                     JSON.parse(document.getElementById('user_data').getAttribute('data')) : null;
-  const category_data = document.getElementById('category_data') ?
+  const categoryData = document.getElementById('category_data') ?
                         JSON.parse(document.getElementById('category_data').getAttribute('data')) : null;
-  const picture_data = document.getElementById('picture_data') ?
+  const pictureData = document.getElementById('picture_data') ?
                        JSON.parse(document.getElementById('picture_data').getAttribute('data')) : null;
-  const presentation_data = document.getElementById('presentation_data') ?
+  const presentationData = document.getElementById('presentation_data') ?
                             JSON.parse(document.getElementById('presentation_data').getAttribute('data')) : null;
-  const language_data = document.getElementById('language_data') ?
+  const languageData = document.getElementById('language_data') ?
                         JSON.parse(document.getElementById('language_data').getAttribute('data')) : null;
-  const cat_description_data = document.getElementById('cat_description_data') ?
+  const catDescriptionData = document.getElementById('cat_description_data') ?
                                JSON.parse(document.getElementById('cat_description_data').getAttribute('data')) : null;
-  const pic_description_data = document.getElementById('pic_description_data') ?
+  const picDescriptionData = document.getElementById('pic_description_data') ?
                                JSON.parse(document.getElementById('pic_description_data').getAttribute('data')) : null;
   
-  const flash_info = [];
+  const flashInfo = [];
   document.getElementsByClassName('info') ?
     Array.from(document.getElementsByClassName('info')).map(e => flash_info.push(JSON.parse(e.getAttribute('data')))) : [];
   
-  const flash_danger = [];
+  const flashDanger = [];
   document.getElementsByClassName('danger') ?
     Array.from(document.getElementsByClassName('danger')).map(e => flash_danger.push(JSON.parse(e.getAttribute('data')))) : [];
 
-  const flash_success = [];
+  const flashSuccess = [];
   document.getElementsByClassName('success') ?
     Array.from(document.getElementsByClassName('success')).map(e => flash_success.push(JSON.parse(e.getAttribute('data')))) : [];
 
   ReactDOM.render(
     <App user={window.user} 
          token={csrf_token}
-         demo_mode={demoMode} 
-         setting_errors={setting_errors}
-         category_errors={category_errors} 
-         picture_errors={picture_errors} 
-         user_errors={user_errors} 
-         presentation_errors={presentation_errors} 
-         language_errors={language_errors} 
-         cat_description_errors={cat_description_errors}
-         pic_description_errors={pic_description_errors} 
-         setting_data={setting_data}
-         user_data={user_data} 
-         category_data={category_data} 
-         picture_data={picture_data} 
-         presentation_data={presentation_data} 
-         language_data={language_data} 
-         cat_description_data={cat_description_data}
-         pic_description_data={pic_description_data} 
-         flash_info={flash_info}
-         flash_danger={flash_danger}
-         flash_success={flash_success} />, 
+         demoMode={demoMode} 
+         settingErrors={settingErrors}
+         categoryErrors={categoryErrors} 
+         pictureErrors={pictureErrors} 
+         userErrors={userErrors} 
+         presentationErrors={presentationErrors} 
+         languageErrors={languageErrors} 
+         catDescriptionErrors={catDescriptionErrors}
+         picDescriptionErrors={picDescriptionErrors} 
+         settingData={settingData}
+         userData={userData} 
+         categoryData={categoryData} 
+         pictureData={pictureData} 
+         presentationData={presentationData} 
+         languageData={languageData} 
+         catDescriptionData={catDescriptionData}
+         picDescriptionData={picDescriptionData} 
+         flashInfo={flashInfo}
+         flashDanger={flashDanger}
+         flashSuccess={flashSuccess} />, 
     document.getElementById('app-component')
   );
 })

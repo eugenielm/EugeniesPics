@@ -1,6 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Link } from 'react-router-dom';
 import { Button, Grid, Row, Panel, Modal, OverlayTrigger, Popover } from 'react-bootstrap';
 import PictureComponent from './PictureComponent';
 
@@ -16,7 +14,7 @@ const CatAdminActionsElement = (props) => {
     const edit_cat_link = <Button bsStyle="primary" 
                                   bsSize="xsmall" 
                                   style={{marginRight: '30px'}}
-                                  href={"/categories/" + props.category_id + "/edit"}>
+                                  href={"/categories/" + props.categoryId + "/edit"}>
                             <span className="glyphicon glyphicon-edit"></span>
                           </Button>;
 
@@ -28,7 +26,7 @@ const CatAdminActionsElement = (props) => {
                             </Button>;
 
     const new_picture_link = <Button bsStyle="success" bsSize="xsmall" 
-                                     href={"/categories/" + props.category_id + "/pictures/new"}>
+                                     href={"/categories/" + props.categoryId + "/pictures/new"}>
                                 <span className="glyphicon glyphicon-picture"></span>
                             </Button>;
 
@@ -192,7 +190,7 @@ class PicturesIndex extends React.Component {
                                     placement="left" 
                                     overlay={<CatAdminActionsElement {...this.props} 
                                                                     user={this.props.user}
-                                                                    category_id={this.props.match.params.category_id}
+                                                                    categoryId={this.props.match.params.category_id}
                                                                     handleDeleteModal={this.handleDeleteModal} />} >
                         <Button className="cat_admin_overlay_btn" style={{display: "inline"}}>
                             <span className="glyphicon glyphicon-cog"></span>
@@ -229,8 +227,8 @@ class PicturesIndex extends React.Component {
                                                             nextPicture={(this.state.pictures.indexOf(pic) == this.state.pictures.length -1)
                                                                         ? this.state.pictures[0]
                                                                         : this.state.pictures[this.state.pictures.indexOf(pic) + 1]}
-                                                            category_id={this.props.match.params.category_id}
-                                                            picture_id={this.props.match.params.picture_id}
+                                                            categoryId={this.props.match.params.category_id}
+                                                            pictureId={this.props.match.params.picture_id}
                                                             language={this.state.language}
                                                             user={this.props.user}
                                                             showPicDescription={this.showPicDescription}

@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Alert } from 'react-bootstrap';
 
 const SingleNotice = props => {
@@ -24,7 +23,7 @@ class NoticeDanger extends React.Component {
         if (this.state.alertVisible) {
             return (
                 <Alert bsStyle="danger" onDismiss={this.handleAlertDismiss} className="notice">
-                    {this.props.flash_danger.map(f => <SingleNotice key={this.props.flash_danger.indexOf(f)} flash={f}/>)}
+                    {this.props.flashDanger.map(f => <SingleNotice key={this.props.flashDanger.indexOf(f)} flash={f}/>)}
                 </Alert>
             );
         }
