@@ -16,7 +16,7 @@ document.addEventListener('turbolinks:load', () => {
 
   const demoMode = document.getElementById('demo_mode').getAttribute('data');
 
-  const csrf_token = document.getElementById('csrf_token') ?
+  const csrfToken = document.getElementById('csrf_token') ?
                      document.getElementById('csrf_token').getAttribute('data').split('content=')[2].slice(1, -4) : null;
   
   const settingErrors = document.getElementById('setting_errors') 
@@ -60,22 +60,25 @@ document.addEventListener('turbolinks:load', () => {
                                JSON.parse(document.getElementById('cat_description_data').getAttribute('data')) : null;
   const picDescriptionData = document.getElementById('pic_description_data') ?
                                JSON.parse(document.getElementById('pic_description_data').getAttribute('data')) : null;
-  
+  const currentUser = document.getElementById('current_user_id') ?
+                      {id: JSON.parse(document.getElementById('current_user_id').getAttribute('data')),
+                       superadmin: JSON.parse(document.getElementById('current_user_superadmin').getAttribute('data')) } : null;
+
   const flashInfo = [];
   document.getElementsByClassName('info') ?
-    Array.from(document.getElementsByClassName('info')).map(e => flash_info.push(JSON.parse(e.getAttribute('data')))) : [];
+    Array.from(document.getElementsByClassName('info')).map(e => flashInfo.push(JSON.parse(e.getAttribute('data')))) : [];
   
   const flashDanger = [];
   document.getElementsByClassName('danger') ?
-    Array.from(document.getElementsByClassName('danger')).map(e => flash_danger.push(JSON.parse(e.getAttribute('data')))) : [];
+    Array.from(document.getElementsByClassName('danger')).map(e => flashDanger.push(JSON.parse(e.getAttribute('data')))) : [];
 
   const flashSuccess = [];
   document.getElementsByClassName('success') ?
-    Array.from(document.getElementsByClassName('success')).map(e => flash_success.push(JSON.parse(e.getAttribute('data')))) : [];
+    Array.from(document.getElementsByClassName('success')).map(e => flashSuccess.push(JSON.parse(e.getAttribute('data')))) : [];
 
   ReactDOM.render(
-    <App user={window.user} 
-         token={csrf_token}
+    <App user={currentUser}
+         token={csrfToken}
          demoMode={demoMode} 
          settingErrors={settingErrors}
          categoryErrors={categoryErrors} 

@@ -56,15 +56,6 @@
       <meta property="og:image"       content="<%= asset_path('eugeniespics.jpg') %>" />
     <% end %>
 
-    <script>
-      <% if current_user %>
-        window.user = {
-          id: <%= current_user.id.to_json.html_safe %>,
-          superadmin: <%= current_user.superadmin.to_json.html_safe %>
-        };
-      <% end %>
-    </script>
-
     <% if false %> for reCAPTCHA support in the contact form <% end %>
     <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 
@@ -109,6 +100,17 @@
       data: ENV["DEMO_MODE"] do %>
     <% end %>
 
+
+    <% if current_user %>
+      <%= content_tag :div,
+      id: "current_user_id",
+      data: current_user.id.to_json do %>
+      <% end %>
+      <%= content_tag :div,
+      id: "current_user_superadmin",
+      data: current_user.superadmin.to_json do %>
+      <% end %>
+    <% end %>
 
     <% if @category %>
       <%= content_tag :div,
