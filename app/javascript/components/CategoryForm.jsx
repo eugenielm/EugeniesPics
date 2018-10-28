@@ -42,7 +42,7 @@ class CategoryContent extends React.Component {
                     <Modal.Body>
                         {this.props.user && this.props.user.superadmin ?
                             <div className="confirm_delete_modal">
-                                Are you sure you want to destroy the {this.props.catDescription.language_name} description 
+                                Are you sure you want to delete the {this.props.catDescription.language_name} description 
                                 of {this.props.categoryName}?
                                 <br/><br/>
                                 <Button bsStyle="danger" 
@@ -60,7 +60,7 @@ class CategoryContent extends React.Component {
                         :
                             <OverlayTrigger trigger={['hover', 'click']} placement="bottom" overlay={unauthorizedActionPopover}>
                                 <div className="confirm_delete_modal">
-                                    Are you sure you want to destroy the {this.props.catDescription.language_name} description 
+                                    Are you sure you want to delete the {this.props.catDescription.language_name} description 
                                     of {this.props.categoryName}?
                                     <br/><br/>
                                     <Button bsStyle="danger" 
@@ -136,7 +136,7 @@ class CategoryForm extends React.Component {
     handleSubmit(event) {
         let alerts = "";
         if (!this.state.categoryName || this.state.categoryName.length < 2 || this.state.categoryName.length > 20) {
-            alerts += "A category name must be at least 2 characters long and at most 20 characters. ";
+            alerts += "A category name must be at least 2 characters long and at most 20 characters.\n";
         }
         if (this.state.user && !this.state.user.superadmin) {
             alerts += "You don't have the required permissions to create or edit a category.";
@@ -155,14 +155,14 @@ class CategoryForm extends React.Component {
                                     <img src={this.state.catpicUrl} />
                                     <p style={{color: 'white', fontSize: '12px', textShadow: '1px 1px 10px black', marginTop: '5px', 
                                         MsWordBreak: "break-all", wordBreak: "break-all", wordBreak: "break-word"}}>
-                                        ({this.state.catpicName})
+                                        ({this.state.catpicName ? this.state.catpicName : "default picture"})
                                     </p>
                                 </div>)
                                 : (<p style={{color: 'white', fontSize: '14px', textShadow: '1px 1px 10px black'}}>
                                     Picture about to be uploaded: {this.state.catpicName}
                                   </p>);
 
-        const descriptionsPopovers = this.state.cat_descriptions.map((d, index) => 
+        const descriptionsPopovers = this.state.catDescriptions.map((d, index) => 
                                         (<OverlayTrigger key={index} trigger="click" 
                                                          placement="bottom"
                                                          overlay={<CategoryContent {...this.props} 

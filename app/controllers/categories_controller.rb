@@ -35,7 +35,7 @@ class CategoriesController < ApplicationController
                                    :content => d.content})
     end
     @cat_with_descriptions.push({ category_name: @category.name,
-                                  catpic_url_small: @category.catpic.url(:small),
+                                  catpic_url: @category.catpic.url(:small),
                                   catpic_name: @category.catpic_file_name })
 
     respond_to do |format|
