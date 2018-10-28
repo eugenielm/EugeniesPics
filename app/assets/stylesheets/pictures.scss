@@ -1,5 +1,5 @@
 #pictures-page {
-    width: 98vw;
+    width: 100vw;
     margin: 160px auto 0 auto; /* 150px for the header + 10px margin for the title */
     text-align: center;
     /* for footer proper layout (NB: footer height is 30px + 10px margin to breath) */
@@ -80,36 +80,36 @@
     border-radius: 3px;
 }
 
-.picture_pic {
-    height: 100%;
+
+/* Masonry layout */
+
+#grid-sizer { width: calc(25vw - 2px); margin: 1px; }
+
+.grid-item {
+    cursor: pointer;
+    width: calc(25vw - 2px);
+    margin: 1px;
+    height: auto;
+}
+
+.grid-item img {
     width: 100%;
-    background-color: black;
-    border-radius: 3px;
-    position: relative;
-    box-shadow: 5px 5px 60px #909090;
 }
 
-.picture-element {
-    padding: 5px !important;
+@media screen and (max-width: 900px) {
+    #grid-sizer, .grid-item { width: calc(33.333vw - 2px) }
 }
 
-.picture-element img {
-    max-height: 94%;
-    max-width: 94%;
-    margin: auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -webkit-transform: translateY(-50%) translateX(-50%);
+@media screen and (max-width: 600px) {
+    #grid-sizer, .grid-item { width: calc(50vw - 2px) }
 }
 
-.picture_pic:hover a {background-color: transparent}
+.grid-item:hover a {background-color: transparent}
 
-.picture_pic p {
+.grid-item p {
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     font-weight: lighter;
-    font-size: 14px;
+    font-size: 12px;
     letter-spacing: 0.7px;
     color: white;
     text-shadow: 1px 1px 5px black;
@@ -121,24 +121,24 @@
 }
 
 /* Picture title position */
-.picture_pic p:nth-child(2) {
-    top: 15px; left: 0; right: 0;
+.grid-item p:nth-child(2) {
+    top: 5px; left: 0; right: 0;
 }
 
 /* Picture copyright position */
-.picture_pic p:nth-child(3) {
-    bottom: 10px; left: 0; right: 0;
+.grid-item p:nth-child(3) {
+    bottom: -5px; left: 0; right: 0;
 }
 
-@media screen and (max-width: 768px) {
-    .picture_pic p {font-size: 12px}
+@media screen and (max-width: 900px) {
+    .grid-item p {font-size: 10px}
 }
 
-@media screen and (max-width: 425px) {
-    .picture_pic p {font-size: 11px}
+@media screen and (max-width: 600px) {
+    .grid-item p {font-size: 9px}
 }
 
-.picture_pic:hover p {
+.grid-item:hover p {
     opacity: 1;
     -webkit-transition: opacity 0.3s linear 0s;
     transition: opacity 0.3s linear 0s;
@@ -177,32 +177,11 @@ button.pic_admin_overlay_btn:hover {
 }
 
 
-@media screen and (min-width: 1720px) {
-    .picture-element.col-lg-4.col-md-6.col-sm-6.col-xs-12 { height: 540px }
-}
-
 @media screen and (min-width: 768px) and (max-width: 1719px) {
-    .picture-element.col-lg-4.col-md-6.col-sm-6.col-xs-12 { height: 350px }
     #pictures-page button.cat_admin_overlay_btn {margin-top: -18px;}
 }
 
-@media screen and (min-width: 426px) and (max-width: 767px) {
-    .picture-element.col-lg-4.col-md-6.col-sm-6.col-xs-12 {
-        height: 280px;
-        max-width: 420px;
-        float: none;
-        margin: auto;
-    }
-}
-
 @media screen and (max-width: 425px) {
-    .picture-element.col-lg-4.col-md-6.col-sm-6.col-xs-12 {
-        height: 280px;
-        max-height: 100vw;
-        max-width: 420px;
-        float: none;
-        margin: auto;
-    }
     #pictures-page button.cat_admin_overlay_btn {margin-top: -12px;}
 }
 
@@ -413,3 +392,7 @@ div.picture_modal div.modal-footer button.btn {
 }
 
 #fb_share_btn_pic:hover { opacity: 0.9 }
+
+
+/* picture form */
+#picture_form_table input { padding: 0 5px }

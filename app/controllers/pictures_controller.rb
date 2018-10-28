@@ -68,7 +68,8 @@ class PicturesController < ApplicationController
                                    :content => d.content})
     end
     @pic_with_descriptions.push({ picture_title: @picture.title,
-                                  picfile_name: @picture.picfile_file_name })
+                                  picfile_name: @picture.picfile_file_name,
+                                  picfile_url: @picture.picfile.url(:small) })
 
     respond_to do |format|
       format.html

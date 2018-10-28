@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Col, Image, Modal, OverlayTrigger, Tooltip, Panel, Popover } from 'react-bootstrap';
+import { Button, Image, Modal, OverlayTrigger, Tooltip, Popover } from 'react-bootstrap';
 import ReactEventComponent from "react-swipe-event-component";
 
 
@@ -70,7 +70,7 @@ class EditDeletePicture extends React.Component {
                     <Modal.Body>
                         {this.props.user && this.props.user.superadmin ?
                             <div className="confirm_delete_modal">
-                                Are you sure you want to destroy '{this.props.picTitle}'?
+                                Are you sure you want to delete '{this.props.picTitle}'?
                                 <br/><br/>
                                 <Button bsStyle="danger" 
                                         bsSize="xsmall"
@@ -86,7 +86,7 @@ class EditDeletePicture extends React.Component {
                         :
                             <OverlayTrigger trigger={['hover', 'click']} placement="bottom" overlay={unauthorizedActionPopover}>
                                 <div className="confirm_delete_modal">
-                                    Are you sure you want to destroy '{this.props.picTitle}'?
+                                    Are you sure you want to delete '{this.props.picTitle}'?
                                     <br/><br/>
                                     <Button bsStyle="danger" 
                                             bsSize="xsmall"
@@ -116,10 +116,10 @@ class SwipableModal extends ReactEventComponent {
 
     handlePicWithKeyboard(event) {
         if (event.keyCode == 37) {
-            this.props.history.push('/categories/' + this.props.categoryId + '/pictures/' + this.props.prevPicture.id);
+            this.props.history.push('/categories/' + this.props.categoryId + '/pictures/' + this.props.prevPictureId);
         }
         if (event.keyCode == 39) {
-            this.props.history.push('/categories/' + this.props.categoryId + '/pictures/' + this.props.nextPicture.id);
+            this.props.history.push('/categories/' + this.props.categoryId + '/pictures/' + this.props.nextPictureId);
         }
         if (event.keyCode == 27) {
             this.props.history.push('/categories/' + this.props.categoryId + '/pictures');
@@ -127,11 +127,11 @@ class SwipableModal extends ReactEventComponent {
     }
 
     handleSwipeRight() {
-        this.props.history.push('/categories/' + this.props.categoryId + '/pictures/' + this.props.prevPicture.id);
+        this.props.history.push('/categories/' + this.props.categoryId + '/pictures/' + this.props.prevPictureId);
     }
 
     handleSwipeLeft() {
-        this.props.history.push('/categories/' + this.props.categoryId + '/pictures/' + this.props.nextPicture.id);
+        this.props.history.push('/categories/' + this.props.categoryId + '/pictures/' + this.props.nextPictureId);
     }
 
     triggerShareDialog() {
@@ -168,7 +168,7 @@ class SwipableModal extends ReactEventComponent {
                 
                 <Modal.Body>
                     <Link className="prev-pic" 
-                        to={'/categories/' + this.props.categoryId + '/pictures/' + this.props.prevPicture.id}>
+                        to={'/categories/' + this.props.categoryId + '/pictures/' + this.props.prevPictureId}>
                         <span id="chevron-left" className="glyphicon glyphicon-menu-left"></span>
                     </Link>
                     
@@ -203,7 +203,7 @@ class SwipableModal extends ReactEventComponent {
                     : null}
                     
                     <Link className="next-pic" 
-                        to={'/categories/' + this.props.categoryId + '/pictures/' + this.props.nextPicture.id}>
+                        to={'/categories/' + this.props.categoryId + '/pictures/' + this.props.nextPictureId}>
                         <span id="chevron-right" className="glyphicon glyphicon-menu-right"></span>
                     </Link>
                 </Modal.Body>
@@ -256,32 +256,31 @@ class PictureComponent extends React.Component {
         const descriptionsLength = Object.entries(this.props.currentPicture.descriptions).length;
         
         return (
-            <Col lg={4} md={6} sm={6} xs={12} className="picture-element">
-                <div className="picture_pic">
-                    <Link onClick={() => {this.setState({showModal: true})}} 
-                          to={'/categories/' + this.props.categoryId + '/pictures/' + this.props.currentPicture.id.toString()}>
-                        <Image src={screen.width < 600 || screen.height < 600 ? this.props.currentPicture.pic_url_small 
-                                                                              : this.props.currentPicture.pic_url_medium} 
-                               alt={this.props.currentPicture.title}/>
-                        <p>{this.props.currentPicture.title}</p>
-                        <p>(c) {this.props.currentPicture.author} - all rights reserved</p>
-                    </Link>
-                    
-                    <SwipableModal {...this.props}
-                                   showModal={this.state.showModal}
-                                   showDescription={this.state.showDescription}
-                                   descriptionsLength={descriptionsLength}
-                                   language={this.state.language}
+            <div className="grid-item">
+                <Link onClick={() => {this.setState({showModal: true})}} 
+                        to={'/categories/' + this.props.categoryId + '/pictures/' + this.props.currentPicture.id.toString()}>
+                    <img 
+                            srcSet={this.props.currentPicture.pic_url_large, this.props.currentPicture.pic_url_medium} 
+                            src={this.props.currentPicture.pic_url_small}
+                            alt={this.props.currentPicture.title}/>
+                    <p>{this.props.currentPicture.title}</p>
+                    <p>(c) {this.props.currentPicture.author} - all rights reserved</p>
+                </Link>
+                
+                <SwipableModal {...this.props}
+                                showModal={this.state.showModal}
+                                showDescription={this.state.showDescription}
+                                descriptionsLength={descriptionsLength}
+                                language={this.state.language}
 
-                                    />
+                                />
 
-                    {this.props.user ?
-                        (<EditDeletePicture catId={this.props.categoryId} 
-                                            picId={this.props.currentPicture.id} 
-                                            user={this.props.user}
-                                            picTitle={this.props.currentPicture.title} />) : null}
-                </div>
-        </Col>
+                {this.props.user ?
+                    (<EditDeletePicture catId={this.props.categoryId} 
+                                        picId={this.props.currentPicture.id} 
+                                        user={this.props.user}
+                                        picTitle={this.props.currentPicture.title} />) : null}
+            </div>
         )
     }
 }

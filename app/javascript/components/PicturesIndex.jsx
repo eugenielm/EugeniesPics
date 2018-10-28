@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Grid, Row, Panel, Modal, OverlayTrigger, Popover } from 'react-bootstrap';
+import Masonry from 'react-masonry-component';
 import PictureComponent from './PictureComponent';
 
 
@@ -151,7 +152,7 @@ class PicturesIndex extends React.Component {
                     <Modal.Body>
                         {this.props.user && this.props.user.superadmin ?
                             <div className="confirm_delete_modal">
-                                Are you sure you want to destroy '{this.state.categoryName}' category?
+                                Are you sure you want to delete '{this.state.categoryName}' category?
                                 <br/><br/>
                                 <Button bsStyle="danger" 
                                         bsSize="xsmall"
@@ -167,7 +168,7 @@ class PicturesIndex extends React.Component {
                         :
                             <OverlayTrigger trigger={['hover', 'click']} placement="bottom" overlay={unauthorizedActionPopover}>
                                 <div className="confirm_delete_modal">
-                                    Are you sure you want to destroy '{this.state.categoryName}' category?
+                                    Are you sure you want to delete '{this.state.categoryName}' category?
                                     <br/><br/>
                                     <Button bsStyle="danger" 
                                             bsSize="xsmall"
@@ -216,17 +217,17 @@ class PicturesIndex extends React.Component {
                     : null
                 }
 
-                <Grid fluid>
+                {/* <Grid fluid>
                     <Row id='all_pictures' className="show-grid">
                         {this.state.pictures.map(pic => <PictureComponent
                                                             key={pic.id}
                                                             currentPicture={pic}
-                                                            prevPicture={(this.state.pictures.indexOf(pic) == 0)
-                                                                        ? this.state.pictures[this.state.pictures.length - 1]
-                                                                        : this.state.pictures[this.state.pictures.indexOf(pic) - 1]}
-                                                            nextPicture={(this.state.pictures.indexOf(pic) == this.state.pictures.length -1)
-                                                                        ? this.state.pictures[0]
-                                                                        : this.state.pictures[this.state.pictures.indexOf(pic) + 1]}
+                                                            prevPictureId={(this.state.pictures.indexOf(pic) == 0)
+                                                                        ? this.state.pictures[this.state.pictures.length - 1].id
+                                                                        : this.state.pictures[this.state.pictures.indexOf(pic) - 1].id}
+                                                            nextPictureId={(this.state.pictures.indexOf(pic) == this.state.pictures.length -1)
+                                                                        ? this.state.pictures[0].id
+                                                                        : this.state.pictures[this.state.pictures.indexOf(pic) + 1].id}
                                                             categoryId={this.props.match.params.category_id}
                                                             pictureId={this.props.match.params.picture_id}
                                                             language={this.state.language}
@@ -235,7 +236,37 @@ class PicturesIndex extends React.Component {
                                                             showPicDesc={this.state.showPicDesc}
                                                             history={this.props.history} />)}
                     </Row>
-                </Grid>
+                </Grid> */}
+
+                <Masonry
+                    className={'all_pictures'}
+                    // itemSelector={'.grid-item'}
+                    // columnWidth={'#grid-sizer'}
+                    // percentPosition={true}
+                    // elementType={'ul'} // default 'div'
+                    options={{percentPosition: true, columnWidth: '#grid-sizer', itemSelector: '.grid-item'}} // default {}
+                    // disableImagesLoaded={false} // default false
+                    // updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
+                    // imagesLoadedOptions={imagesLoadedOptions} // default {}
+                >
+                    <div id="grid-sizer"></div>
+                    {this.state.pictures.map(pic => <PictureComponent
+                                                    key={pic.id}
+                                                    currentPicture={pic}
+                                                    prevPictureId={(this.state.pictures.indexOf(pic) == 0)
+                                                                ? this.state.pictures[this.state.pictures.length - 1].id
+                                                                : this.state.pictures[this.state.pictures.indexOf(pic) - 1].id}
+                                                    nextPictureId={(this.state.pictures.indexOf(pic) == this.state.pictures.length -1)
+                                                                ? this.state.pictures[0].id
+                                                                : this.state.pictures[this.state.pictures.indexOf(pic) + 1].id}
+                                                    categoryId={this.props.match.params.category_id}
+                                                    pictureId={this.props.match.params.picture_id}
+                                                    language={this.state.language}
+                                                    user={this.props.user}
+                                                    showPicDescription={this.showPicDescription}
+                                                    showPicDesc={this.state.showPicDesc}
+                                                    history={this.props.history} />)}
+                </Masonry>
             </div>
         );
     }
