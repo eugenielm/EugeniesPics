@@ -131,13 +131,13 @@ class SettingForm extends React.Component {
     handleSubmit(event) {
         let alerts = '';
         if (!this.props.settings.navbarcolor.match(/#[0-9a-z]{6}/i)) {
-            alerts += "Please provide a background color for the navigation bar. "
+            alerts += "Please provide a background color for the navigation bar.\n"
         }
         if (!this.props.settings.navbarfont.match(/#[0-9a-z]{6}/i)) {
-            alerts += "Please provide a background color for the website main title and subtitle fonts. "
+            alerts += "Please provide a background color for the website main title and subtitle fonts.\n"
         }
         if (!this.props.settings.backgroundImage && !this.props.settings.backgroundColor.match(/#[0-9a-z]{6}/i)) {
-            alerts += "Please provide a background color for the website body. "
+            alerts += "Please provide a background color for the website body.\n"
         }
         if (this.props.user && !this.props.user.superadmin) {
             alerts += "You don't have the required permissions to edit the website layout."

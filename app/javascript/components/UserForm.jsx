@@ -45,16 +45,16 @@ class UserForm extends React.Component {
     handleSubmit(event) {
         var alerts = "";
         if (!this.state.username || this.state.username.length < 4) {
-            alerts += "A username must be at least 4 characters long (max 72 char). ";
+            alerts += "A username must be at least 4 characters long (max 72 char).\n";
         }
         if (!this.state.email || this.state.email.length > 255 || (this.state.email.match(/\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i)) !== null) {
-            alerts += "Please enter a valid email address. ";
+            alerts += "Please enter a valid email address.\n";
         }
         if (this.state.password !== this.state.password_confirmation) {
-            alerts += "Your password doesn't match the confirmation. ";
+            alerts += "Your password doesn't match the confirmation.\n";
         }
         if (!this.state.password || this.state.password.length < 6) {
-            alerts += "Your password must be at least 6 characters long. ";
+            alerts += "Your password must be at least 6 characters long.\n";
         }
         if (this.state.user && !this.state.user.superadmin && this.state.user.id != this.state.id) {
             alerts += "You don't have the required permissions for this action."

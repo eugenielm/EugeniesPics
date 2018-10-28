@@ -76,10 +76,10 @@ class PicDescriptionForm extends React.Component {
     handleSubmit(event) {
         let alerts = '';
         if (this.state.content.length < 2) {
-            alerts += "A picture description must be at least 2 characters long and at most 500 characters. "
+            alerts += "A picture description must be at least 2 characters long and at most 500 characters.\n"
         }
         if (!this.state.language_id || this.state.language_id == "-- select --") {
-            alerts += "Please select a language. "
+            alerts += "Please select a language.\n"
         }
         if (this.state.user && !this.state.user.superadmin) {
             alerts += "You don't have the required permissions to create a picture description."

@@ -31,7 +31,7 @@ class EditDeletePresentation extends React.Component {
               <Modal.Body>
                 {this.props.user && this.props.user.superadmin ?
                   <div className="confirm_delete_modal">
-                      Are you sure you want to destroy {this.props.presLang} presentation?
+                      Are you sure you want to delete {this.props.presLang} presentation?
                       <br/><br/>
                       <Button bsStyle="danger" 
                               bsSize="xsmall"
@@ -46,7 +46,7 @@ class EditDeletePresentation extends React.Component {
                 :
                   <OverlayTrigger trigger={['hover', 'click']} placement="bottom" overlay={unauthorizedActionPopover}>
                     <div className="confirm_delete_modal">
-                      Are you sure you want to destroy {this.props.presLang} presentation?
+                      Are you sure you want to delete {this.props.presLang} presentation?
                       <br/><br/>
                       <Button bsStyle="danger" 
                               bsSize="xsmall"

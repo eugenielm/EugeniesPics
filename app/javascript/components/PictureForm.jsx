@@ -5,7 +5,7 @@ import ErrorsComponent from './ErrorsComponent';
 
 const unauthorizedActionPopover = (
     <Popover id="popover-trigger-click-hover" title="">
-      You don't have the permissions to destroy this description.
+      You don't have the permissions to delete this description.
     </Popover>
 );
 
@@ -46,7 +46,7 @@ class PictureContent extends React.Component {
                     <Modal.Body>
                         {this.props.user && this.props.user.superadmin ?
                             <div className="confirm_delete_modal">
-                                Are you sure you want to destroy the {this.props.picDescription.language_name} description 
+                                Are you sure you want to delete the {this.props.picDescription.language_name} description 
                                 of {this.props.pictureTitle}?
                                 <br/><br/>
                                 <Button bsStyle="danger" 
@@ -64,7 +64,7 @@ class PictureContent extends React.Component {
                         :
                         <OverlayTrigger trigger={['hover', 'click']} placement="bottom" overlay={unauthorizedActionPopover}>
                             <div className="confirm_delete_modal">
-                                Are you sure you want to destroy the {this.props.picDescription.language_name} description 
+                                Are you sure you want to delete the {this.props.picDescription.language_name} description 
                                 of {this.props.pictureTitle}?
                                 <br/><br/>
                                 <Button bsStyle="danger" 
@@ -91,7 +91,9 @@ class PictureForm extends React.Component {
         this.setState({ categoryId: this.props.match.params.category_id,
                         pictureId: this.props.match.params.picture_id,
                         pictureTitle: this.props.pictureData.title || '',
-                        author: this.props.demoMode ? this.props.pictureData.author || 'Eugénie Le Moulec (*demo*)' : this.props.pictureData.author || 'Eugénie Le Moulec',
+                        author: this.props.demoMode ? 
+                                this.props.pictureData.author || 'Eugénie Le Moulec (*demo*)' 
+                                : this.props.pictureData.author || 'Eugénie Le Moulec',
                         picDescriptions: [],
                         picUrl: '',
                         prevPicUrl: '',
@@ -127,11 +129,11 @@ class PictureForm extends React.Component {
                 return resp.json();
               })
               .then(function(pic) {
-                const pic_info = pic.pop();
-                this.setState({ picUrl: pic_info.picfile_url, 
-                                prevPicUrl: pic_info.picfile_url, 
-                                picfileName: pic_info.picfile_name, 
-                                pictureTitle: pic_info.picture_title, 
+                const picInfo = pic.pop();
+                this.setState({ picUrl: picInfo.picfile_url, 
+                                prevPicUrl: picInfo.picfile_url, 
+                                picfileName: picInfo.picfile_name, 
+                                pictureTitle: picInfo.picture_title, 
                                 picDescriptions: pic });
               }.bind(this))
         }
@@ -164,13 +166,13 @@ class PictureForm extends React.Component {
     handleSubmit(event) {
         var alerts = "";
         if (!this.state.pictureTitle) {
-            alerts += "A picture title must be at least 1 character long (max 30 char). "
+            alerts += "A picture title must be at least 1 character long (max 30 char).\n"
         }
         if (!this.state.author || this.state.author.length < 2) {
-            alerts += "A picture author name must be at least 2 characters long (max 30 char). ";
+            alerts += "A picture author name must be at least 2 characters long (max 30 char).\n";
         }
         if (!this.state.picUrl) {
-            alerts += "You must upload a picture (max size = 4Mb). ";
+            alerts += "You must upload a picture (max size = 8Mb).\n";
         }
         if (this.state.user && !this.state.user.superadmin) {
             alerts += "You don't have the required permissions to create or edit a picture."
@@ -200,7 +202,7 @@ class PictureForm extends React.Component {
             </OverlayTrigger>));
         
         const input_edit = React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'});
-        const pic_info = this.state.pictureId ?
+        const picInfo = this.state.pictureId ?
             (this.state.picUrl == this.state.prevPicUrl ?
                     (<div>
                         <p style={{color: 'white', fontSize: '14px', textShadow: '1px 1px 10px black'}}>Current picture:</p>
@@ -267,7 +269,7 @@ class PictureForm extends React.Component {
                         </tr>
                     </tbody>
                 </Table>
-                { pic_info }
+                { picInfo }
                 <div className="actions">
                     <input type="submit" name="commit" value="Submit changes" />
                 </div>

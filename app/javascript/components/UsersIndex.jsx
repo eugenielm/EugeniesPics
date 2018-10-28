@@ -36,7 +36,7 @@ class UserComponent extends React.Component {
                 <Modal show={this.state.displayDeleteModal}>
                     <Modal.Body>
                         <div className="confirm_delete_modal">
-                            Are you sure you want to destroy {user.username}'s profile?
+                            Are you sure you want to delete {user.username}'s profile?
                             <br/><br/>
                             <Button bsStyle="danger" 
                                     bsSize="xsmall"

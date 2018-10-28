@@ -31,7 +31,7 @@ class EditDeleteLanguage extends React.Component {
           <Modal.Body>
             {this.props.user && this.props.user.superadmin ?
               <div className="confirm_delete_modal">
-                Are you sure you want to destroy the {this.props.langName} language?
+                Are you sure you want to delete the {this.props.langName} language?
                 <br/><br/>
                 <Button bsStyle="danger" 
                         bsSize="xsmall"
@@ -46,7 +46,7 @@ class EditDeleteLanguage extends React.Component {
           :
             <OverlayTrigger trigger={['hover', 'click']} placement="bottom" overlay={unauthorizedActionPopover}>
               <div className="confirm_delete_modal">
-                  Are you sure you want to destroy the {this.props.langName} language?
+                  Are you sure you want to delete the {this.props.langName} language?
                   <br/><br/>
                   <Button bsStyle="danger" 
                           bsSize="xsmall"
