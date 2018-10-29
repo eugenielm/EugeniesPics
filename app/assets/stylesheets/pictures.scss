@@ -1,7 +1,6 @@
 #pictures-page {
     width: 100vw;
     margin: 160px auto 0 auto; /* 150px for the header + 10px margin for the title */
-    text-align: center;
     /* for footer proper layout (NB: footer height is 30px + 10px margin to breath) */
     padding-bottom: 40px;
 }
@@ -10,6 +9,7 @@
     -ms-word-break: break-all;
     word-break: break-all;
     word-break: break-word;
+    margin: 30px auto 20px 10px !important;
 }
 
 @media screen and (max-width: 767px) and (min-width: 426px) {
@@ -25,9 +25,11 @@
 }
 
 #pictures-page .panel {
-    width: 96%;
+    width: calc(100% - 20px);
     max-width: 600px;
-    margin: -20px auto 20px auto;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: -15px;
     border: none;
 }
 
@@ -35,6 +37,10 @@
     font-size: 14px;
     margin: 0;
     line-height: 20px;
+}
+
+#pictures-page .panel-body {
+    box-shadow: 1px 1px 5px #dadada;
 }
 
 @media screen and (max-width: 767px) and (min-width: 426px) {

@@ -19,7 +19,7 @@
     margin: 220px auto 0 auto;
     background-color: rgba(255,255,255,0.3);
     border-radius: 5px;
-    box-shadow: 2px 2px 20px #656363;
+    box-shadow: 1px 1px 20px #ababab;
 }
 
 #home-page ol.carousel-indicators {
@@ -57,6 +57,7 @@
 
 #home-page div.carousel.slide div.carousel-inner div.item div.carousel-caption p {
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    color: black;
     font-weight: 300;
     letter-spacing: 1px;
     font-size: 2em;
@@ -64,7 +65,6 @@
     margin: auto;
     padding: 10px;
     border-radius: 25px;
-    text-shadow: 2px 2px 2px black;
     -ms-word-break: break-all;
     word-break: break-all;
     word-break: break-word;
@@ -79,8 +79,20 @@
 #home-page a.carousel-control:hover { background-color: none }
 
 #home-page a.carousel-control:hover span.glyphicon {
-    text-shadow: 3px 3px 10px black;
+    text-shadow: 3px 3px 10px #4c4c4c;
 }
+
+#home-page .glyphicon-menu-left, #home-page .glyphicon-menu-right {
+    font-size: 3em;
+    text-shadow: 1px 1px 15px #bfbfbf;
+    position: absolute;
+    top: 90%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translateY(-50%) translateX(-50%);
+}
+
+#home-page .glyphicon-menu-left { left: 30% }
+#home-page .glyphicon-menu-right { left: 70% }
 
 #home-page ol.carousel-indicators li { background-color: white; border-color: rgb(93, 93, 93); }
 #home-page ol.carousel-indicators li.active { background-color: black; border-color: white; }
@@ -92,6 +104,16 @@
     }
     #home-page div.carousel.slide {
         margin: 150px auto 0 auto;
+    }
+    #home-page .glyphicon-menu-left {
+        left: 32%;
+        top: 92%;
+        font-size: 2.5em;
+    }
+    #home-page .glyphicon-menu-right {
+        left: 68%;
+        top: 92%;
+        font-size: 2.5em;
     }
 }
 
@@ -106,6 +128,16 @@
     }
     #home-page div.carousel.slide div.carousel-inner div.item div.carousel-caption p {
         font-size: 1.5em;
+    }
+    #home-page .glyphicon-menu-left {
+        left: 35%;
+        top: 94%;
+        font-size: 2em;
+    }
+    #home-page .glyphicon-menu-right {
+        left: 65%;
+        top: 94%;
+        font-size: 2em;
     }
 }
 

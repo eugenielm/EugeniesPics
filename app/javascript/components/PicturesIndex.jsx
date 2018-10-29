@@ -217,37 +217,10 @@ class PicturesIndex extends React.Component {
                     : null
                 }
 
-                {/* <Grid fluid>
-                    <Row id='all_pictures' className="show-grid">
-                        {this.state.pictures.map(pic => <PictureComponent
-                                                            key={pic.id}
-                                                            currentPicture={pic}
-                                                            prevPictureId={(this.state.pictures.indexOf(pic) == 0)
-                                                                        ? this.state.pictures[this.state.pictures.length - 1].id
-                                                                        : this.state.pictures[this.state.pictures.indexOf(pic) - 1].id}
-                                                            nextPictureId={(this.state.pictures.indexOf(pic) == this.state.pictures.length -1)
-                                                                        ? this.state.pictures[0].id
-                                                                        : this.state.pictures[this.state.pictures.indexOf(pic) + 1].id}
-                                                            categoryId={this.props.match.params.category_id}
-                                                            pictureId={this.props.match.params.picture_id}
-                                                            language={this.state.language}
-                                                            user={this.props.user}
-                                                            showPicDescription={this.showPicDescription}
-                                                            showPicDesc={this.state.showPicDesc}
-                                                            history={this.props.history} />)}
-                    </Row>
-                </Grid> */}
-
                 <Masonry
                     className={'all_pictures'}
-                    // itemSelector={'.grid-item'}
-                    // columnWidth={'#grid-sizer'}
-                    // percentPosition={true}
-                    // elementType={'ul'} // default 'div'
-                    options={{percentPosition: true, columnWidth: '#grid-sizer', itemSelector: '.grid-item'}} // default {}
-                    // disableImagesLoaded={false} // default false
-                    // updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
-                    // imagesLoadedOptions={imagesLoadedOptions} // default {}
+                    options={{percentPosition: true, columnWidth: '#grid-sizer', itemSelector: '.grid-item'}}
+                    updateOnEachImageLoad={true}
                 >
                     <div id="grid-sizer"></div>
                     {this.state.pictures.map(pic => <PictureComponent

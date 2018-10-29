@@ -15,7 +15,7 @@
     width: 100%;
     background-color: black;
     z-index: 2; /* needed for the dropdown menus to be above the page content when opened */
-    box-shadow: 1px 1px 20px white;
+    box-shadow: 1px 1px 20px #9c9c9c;
 }
 
 a#home-link { text-decoration: none }
@@ -66,25 +66,24 @@ a.btn.btn-default { color: black }
     box-shadow: none;
     background: none;
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-weight: 100;
+    font-weight: 300;
     letter-spacing: 1px;
     padding: 0.2vw 0.6vw;
     margin-left: 1.2vh;
     margin-right: 1.2vh;
     font-size: 16px;
     display: inline-block;
-    text-shadow: 1px 1px 30px black;
-    color: white; /* font-color for categories menu items */
-    text-shadow: 1px 1px 5px black;
+    text-shadow: 1px 1px 10px #e0e0e0;
+    color: black; /* font-color for categories menu items */
 }
 
 /* categories menu items */
 #page-header #menuitems li a {
-    color: white; /* font-color for All galleries and Info menu items */
+    color: black; /* font-color for All galleries and Info menu items */
     background: none;
     text-decoration: none;
     outline: 0;
-    text-shadow: 1px 1px 5px black;
+    text-shadow: 1px 1px 10px #e0e0e0;
 }
 
 /* All categories and About buttons hover */
@@ -115,7 +114,7 @@ a.btn.btn-default { color: black }
 button#menuitems.visible-xs,
 .dropdown.btn-group button#menuitems.visible-xs {
     border: none;
-    background-color: #cebaba;
+    background-color: white;
     background-image: none;
     text-shadow: none;
     box-shadow: 1px 1px 10px #b9b9b9;
@@ -123,7 +122,7 @@ button#menuitems.visible-xs,
 
 button#menuitems.visible-xs:hover,
 .dropdown.open button#menuitems.visible-xs {
-    border: solid thin #cebaba !important;
+    border: solid thin white !important;
 }
 
 /* Main menu dropdown items (categories, etc.) */
@@ -134,14 +133,15 @@ button#menuitems.visible-xs:hover,
 }
 
 #page-header div.dropdown.open.btn-group:nth-of-type(2) li:hover a {
-    background-color: rgba(206, 186, 186, 0.3);
+    background-color: #f5f5f5;
     background-image: none;
 }
 
 /* Active links in open collapsed main menu */
 #page-header div.dropdown.open.btn-group:nth-of-type(2) li.active a {
     background-image: none; /* needed to set a background color */
-    background-color: #cebaba !important;
+    background-color: #f5f5f5 !important;
+    color: black !important;
     cursor: default;
 }
 
@@ -172,7 +172,7 @@ button#menuitems.visible-xs:hover,
     font-size: 16px;
     padding: 8px;
     border: none;
-    background-color: #86a8d0;
+    background-color: #94a1b1;
     background-image: none;
     text-shadow: none;
     box-shadow: 1px 1px 10px #adadad;
@@ -180,7 +180,7 @@ button#menuitems.visible-xs:hover,
 
 .dropdown.open button#admin_dropdown,
 .dropdown.btn-group button#admin_dropdown:hover {
-    border: solid thin #86a8d0 !important;
+    border: solid thin #94a1b1 !important;
 }
 
 /* Admin menu dropdown items */
@@ -200,7 +200,7 @@ button#menuitems.visible-xs:hover,
 /* Active links in open admin dropdown */
 #page-header div.dropdown.open.btn-group:nth-of-type(3) li.active a {
     background-image: none; /* needed to set a background color */
-    background-color: #86a8d0  !important;
+    background-color: #94a1b1  !important;
     cursor: default;
 }
 
@@ -328,8 +328,6 @@ button#menuitems.visible-xs:hover,
 }
 
 #footer p {
-    color: white;
-    text-shadow: 1px 1px 1px black;
     font-size: 13px;
     font-family: ubuntu;
     display: table-cell;
@@ -355,7 +353,7 @@ button#menuitems.visible-xs:hover,
     display: flex;
     position: absolute;
     bottom: -30px;
-    left: 10px;
+    right: 10px;
     padding: 3px 5px;
     border-radius: 3px;
     box-shadow: 1px 1px 10px #ffffff;
@@ -365,11 +363,11 @@ button#menuitems.visible-xs:hover,
 }
 
 @media screen and (max-width: 768px) {
-    #fb_share_btn {bottom: -25px; left: 5px;}
+    #fb_share_btn {bottom: -25px; right: 5px;}
 }
 
 @media screen and (max-width: 425px) {
-    #fb_share_btn {bottom: -22px; left: 2px;}
+    #fb_share_btn {bottom: -22px; right: 2px;}
 }
 
 #fb_share_btn > span {

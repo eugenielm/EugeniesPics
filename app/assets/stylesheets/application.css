@@ -51,8 +51,7 @@ a.btn { color: white }
 a:hover { background: none }
 
 .page-title {
-    color: white;
-    text-shadow: 1px 1px 5px black;
+    text-shadow: 1px 1px 5px #a7a7a7;
     font-size: 36px;
     margin: 20px auto;
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
@@ -63,8 +62,7 @@ a:hover { background: none }
 
 .admin-page-title {
     font-size: 26px;
-    color: white;
-    text-shadow: 1px 1px 5px black;
+    text-shadow: 1px 1px 5px #a7a7a7;
     margin: 0 auto;
     text-align: center;
 }

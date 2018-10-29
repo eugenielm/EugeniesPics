@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Carousel } from 'react-bootstrap';
+import { Carousel, Glyphicon } from 'react-bootstrap';
 
 class HomePage extends React.Component {
 
@@ -24,7 +24,8 @@ class HomePage extends React.Component {
             <div id="home-page">
 
                 {this.state.picsSelection.length > 0 ?
-                    (<Carousel>
+                    (<Carousel prevIcon={<Glyphicon glyph="glyphicon glyphicon-menu-left" />}
+                               nextIcon={<Glyphicon glyph="glyphicon glyphicon-menu-right" />}>
                         {this.state.picsSelection.map(p => 
                             (<Carousel.Item key={p.selectionPicCatId ? p.selectionPicCatId : 0}>
                                 <Link to={"/categories/" + p.selectionPicCatId + "/pictures"}>
