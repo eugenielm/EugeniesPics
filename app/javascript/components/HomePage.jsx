@@ -33,7 +33,9 @@ class HomePage extends React.Component {
                                             alt={p.selectionPicCatName ? p.selectionPicCatName : 'no gallery available'} />
                                 </Link>
                                 <Carousel.Caption>
-                                    <p>{p.selectionPicCatName ? p.selectionPicCatName : 'no gallery yet'}</p>
+                                    <Link to={"/categories/" + p.selectionPicCatId + "/pictures"}>
+                                        <p>{p.selectionPicCatName ? p.selectionPicCatName : 'no gallery yet'}</p>
+                                    </Link>
                                 </Carousel.Caption>
                             </Carousel.Item>)
                         )}

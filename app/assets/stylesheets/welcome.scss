@@ -13,17 +13,13 @@
 
 #home-page div.carousel.slide {
     position: relative;
-    width: 98%;
-    max-width: 95vh;
+    width: 100%;
     height: 85%;
-    margin: 220px auto 0 auto;
-    background-color: rgba(255,255,255,0.3);
-    border-radius: 5px;
-    box-shadow: 1px 1px 20px #ababab;
+    margin: 200px auto 0 auto;
 }
 
 #home-page ol.carousel-indicators {
-    bottom: 25px;
+    bottom: -20px;
 }
 
 #home-page div.carousel.slide div.carousel-inner {
@@ -41,18 +37,28 @@
 }
 
 #home-page div.carousel.slide div.carousel-inner div.item img {
+    z-index: 100;
     max-width: 100%;
-    max-height: 82%;
+    max-height: 70%;
+    border-radius: 3px;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     -webkit-transform: translateY(-50%) translateX(-50%);
+    box-shadow: 1px 1px 15px rgb(183, 183, 183);
 }
 
 #home-page div.carousel.slide div.carousel-inner div.item div.carousel-caption {
-    bottom: 2px;
+    text-align: left !important;
+    top: 0;
+    left: 0;
+    padding-top: 0;
     padding-bottom: 0;
+}
+
+#home-page div.carousel.slide div.carousel-inner div.item div.carousel-caption a {
+    text-decoration: none !important;
 }
 
 #home-page div.carousel.slide div.carousel-inner div.item div.carousel-caption p {
@@ -60,11 +66,11 @@
     color: black;
     font-weight: 300;
     letter-spacing: 1px;
-    font-size: 2em;
+    font-size: 2.2em;
     display: inline;
     margin: auto;
-    padding: 10px;
-    border-radius: 25px;
+    // border-radius: 25px;
+    line-height: 22px;
     -ms-word-break: break-all;
     word-break: break-all;
     word-break: break-word;
@@ -74,6 +80,8 @@
     background: none !important;
     color: white;
     opacity: .9;
+    height: 80%;
+    margin-top: 5%;
 }
 
 #home-page a.carousel-control:hover { background-color: none }
@@ -83,21 +91,18 @@
 }
 
 #home-page .glyphicon-menu-left, #home-page .glyphicon-menu-right {
-    font-size: 3em;
+    font-size: 7em;
     text-shadow: 1px 1px 15px #bfbfbf;
     position: absolute;
-    top: 90%;
+    top: 103%;
     transform: translate(-50%, -50%);
     -webkit-transform: translateY(-50%) translateX(-50%);
 }
 
-#home-page .glyphicon-menu-left { left: 30% }
-#home-page .glyphicon-menu-right { left: 70% }
-
 #home-page ol.carousel-indicators li { background-color: white; border-color: rgb(93, 93, 93); }
 #home-page ol.carousel-indicators li.active { background-color: black; border-color: white; }
 
-@media screen and (max-width: 767px) and (min-width: 426px) {
+@media screen and (max-width: 768px) {
     #home-page {
         margin-top: 100px;
         height: calc(100vh - 150px); /* header is 100px + 80px to center vertically */
@@ -106,14 +111,12 @@
         margin: 150px auto 0 auto;
     }
     #home-page .glyphicon-menu-left {
-        left: 32%;
-        top: 92%;
-        font-size: 2.5em;
+        font-size: 5em;
+        left: 40px;
     }
     #home-page .glyphicon-menu-right {
-        left: 68%;
-        top: 92%;
-        font-size: 2.5em;
+        font-size: 5em;
+        right: -60px;
     }
 }
 
@@ -129,24 +132,79 @@
     #home-page div.carousel.slide div.carousel-inner div.item div.carousel-caption p {
         font-size: 1.5em;
     }
-    #home-page .glyphicon-menu-left {
-        left: 35%;
-        top: 94%;
-        font-size: 2em;
+    #home-page .glyphicon-menu-left,  {
+        font-size: 4em;
+        left: 60%;
+        top: 120%;
     }
     #home-page .glyphicon-menu-right {
-        left: 65%;
-        top: 94%;
-        font-size: 2em;
+        font-size: 4em;
+        right: -50px;
+        top: 120%;
     }
 }
 
-/* if using a mobile device horizontally */
-@media screen and (max-height: 425px) and (orientation: landscape) {
-    #home-page div.carousel-caption p {font-size: 14px !important}
-    #home-page div.carousel.slide ol.carousel-indicators {bottom: 10px !important}
+/* if using an iPhone X device horizontally */
+@media screen and (max-height: 425px) and (max-width: 850px) and (min-height: 300px) and (min-width: 750px) and (orientation: landscape) {
+    #home-page {
+        height: calc(100vh - 180px);
+    }
+    #home-page div.carousel.slide div.carousel-inner div.item div.carousel-caption {
+        margin-top: 12px;
+    }
+    #home-page div.carousel.slide {
+        margin-top: 120px;
+        height: 100%;
+    }
+    #home-page ol.carousel-indicators { bottom: -5px; }
+    #home-page .glyphicon-menu-left {
+        top: 40%;
+        font-size: 4em;
+        left: 40px;
+    }
+    #home-page .glyphicon-menu-right {
+        top: 40%;
+        font-size: 4em;
+        right: -40px;
+    }
+    #home-page div.carousel.slide div.carousel-inner div.item div.carousel-caption p { font-size: 1.8em }
     #home-page div.carousel.slide div.carousel-inner {height: 100% !important} 
 }
+
+/* if using a mobile device horizontally */
+@media screen and (max-height: 425px) and (max-width: 740px) and (orientation: landscape) {
+    #home-page div.carousel.slide {
+        margin-top: 120px;
+        height: 100%;
+    }
+    #home-page ol.carousel-indicators { bottom: -10px; }
+    #home-page .glyphicon-menu-left {
+        font-size: 3em;
+        left: 40%;
+    }
+    #home-page .glyphicon-menu-right {
+        font-size: 3em;
+        right: -35%;
+    }
+    #home-page div.carousel.slide div.carousel-inner div.item div.carousel-caption p { font-size: 1.8em }
+    #home-page div.carousel.slide div.carousel-inner {height: 100% !important} 
+}
+
+/* if using a mobile device horizontally */
+@media screen and (min-height: 1300px) and (min-width: 100px) {
+    #home-page div.carousel.slide {
+        height: 90%;
+    }
+    #home-page .glyphicon-menu-right, #home-page .glyphicon-menu-left {
+        top: 115%;
+    }
+    #home-page div.carousel.slide div.carousel-inner div.item div.carousel-caption p { 
+        font-size: 3em;
+        line-height: 36px;
+    }
+    #home-page ol.carousel-indicators { font-size: 5em }
+}
+
 
 /*********************************************************************/
 /* about/contact page */

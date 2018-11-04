@@ -266,12 +266,10 @@ button#menuitems.visible-xs:hover,
     #site-name {
         line-height: 55px;
         font-size: 7vw;
-        font-family: ubuntu; // for the titles to be readable on small devices
     }
     #site-name-2 {
         margin-top: -20px;
         font-size: 3vw;
-        font-family: ubuntu; // for the titles to be readable on small devices
     }
 
     /* dropdown menu with categories */
@@ -329,7 +327,8 @@ button#menuitems.visible-xs:hover,
 
 #footer p {
     font-size: 13px;
-    font-family: ubuntu;
+    font-family: italiana;
+    font-weight: 600;
     display: table-cell;
     vertical-align: middle;
 }
