@@ -1,7 +1,8 @@
 import React from 'react';
-import { Button, Grid, Row, Panel, Modal, OverlayTrigger, Popover } from 'react-bootstrap';
+import { Button, Modal, OverlayTrigger, Popover } from 'react-bootstrap';
 import Masonry from 'react-masonry-component';
 import PictureComponent from './PictureComponent';
+import plusIcon from '../images/plus.png';
 
 
 const unauthorizedActionPopover = (
@@ -52,6 +53,7 @@ class PicturesIndex extends React.Component {
         this.handleCategoryDescription = this.handleCategoryDescription.bind(this);
         this.showPicDescription = this.showPicDescription.bind(this);
         this.handleDeleteModal = this.handleDeleteModal.bind(this);
+        this.handleCatDescriptionModal = this.handleCatDescriptionModal.bind(this);
     }
 
     initialState() {
@@ -62,7 +64,7 @@ class PicturesIndex extends React.Component {
             categoryDescriptions: {}, 
             availableLanguages: [],
             language: '',
-            panelOpen: false,
+            showCatDescription: false,
             showPicDesc: false,
             displayDeleteModal: false,
         };
@@ -86,9 +88,10 @@ class PicturesIndex extends React.Component {
             const categoryDescriptions = pics.pop();
             const pictures = pics;
             const availableLanguages = Object.keys(categoryDescriptions);
-            const language = this.props.langPref ? (availableLanguages.includes(this.props.langPref) ? this.props.langPref
-                                                                                                     : (availableLanguages.includes('EN') ? 'EN' : availableLanguages[0]))
-                                                 : (availableLanguages.includes('EN') ? 'EN' : availableLanguages[0]);
+            const language = this.props.langPref ? 
+                (availableLanguages.includes(this.props.langPref) ? this.props.langPref
+                                                                  : (availableLanguages.includes('EN') ? 'EN' : availableLanguages[0]))
+                : (availableLanguages.includes('EN') ? 'EN' : availableLanguages[0]);
             const categoryDescription = categoryDescriptions[language];
             const descriptionContent = categoryDescription ? categoryDescription.split('\r\n') : null;
             this.setState({categoryName, pictures, availableLanguages, language, categoryDescriptions, descriptionContent});
@@ -109,13 +112,15 @@ class PicturesIndex extends React.Component {
                 const categoryDescriptions = pics.pop();
                 const pictures = pics;
                 const availableLanguages = Object.keys(categoryDescriptions);
-                const language = this.props.langPref ? (availableLanguages.includes(this.props.langPref) ? this.props.langPref
-                                                                                                         : (availableLanguages.includes('EN') ? 'EN'
+                const language = this.props.langPref ? 
+                    (availableLanguages.includes(this.props.langPref) ? this.props.langPref
+                                                                     : (availableLanguages.includes('EN') ? 'EN'
                                                                                                                                               : availableLanguages[0]))
-                                                    : (availableLanguages.includes('EN') ? 'EN' : availableLanguages[0]);
+                    : (availableLanguages.includes('EN') ? 'EN' : availableLanguages[0]);
                 const categoryDescription = categoryDescriptions[language];
                 const descriptionContent = categoryDescription ? categoryDescription.split('\r\n') : null;
-                this.setState({categoryName, pictures, availableLanguages, language, categoryDescriptions, descriptionContent, panelOpen: false});
+                this.setState({categoryName, pictures, availableLanguages, language, categoryDescriptions, 
+                               descriptionContent, showCatDescription: false});
             }.bind(this));
         }
     }
@@ -125,6 +130,10 @@ class PicturesIndex extends React.Component {
         const descriptionContent = categoryDescription.split('\r\n');
         this.props.updateLangPref(lang); // update language preference in App (parent) component
         this.setState({categoryDescription, descriptionContent, language: lang});
+    }
+
+    handleCatDescriptionModal() {
+        this.setState({showCatDescription: !this.state.showCatDescription});
     }
 
     showPicDescription() {
@@ -184,7 +193,25 @@ class PicturesIndex extends React.Component {
                     </Modal.Body>
                 </Modal>
                 
-                <div className="page-title">{this.state.categoryName.toUpperCase()}</div>
+                <div className="page-title">
+                    <span>{this.state.categoryName.toUpperCase()}</span>
+                    {this.state.descriptionContent ? 
+                        <span><img id="cat_desc_btn" src={plusIcon} width={30} height={25} 
+                                    onClick={this.handleCatDescriptionModal}></img></span>
+                        : null }
+                </div>
+                {this.state.descriptionContent ?
+                    <Modal className="cat_desc_modal" backdropClassName="cat_desc_backdrop" 
+                           show={this.state.showCatDescription} onHide={this.handleCatDescriptionModal}>
+                        <Modal.Header>
+                            <div id="language_buttons" style={{float: 'left'}}>{languageButtons}</div>
+                            <span id="close_button" onClick={this.handleCatDescriptionModal}>X</span>
+                        </Modal.Header>
+                        <Modal.Body>
+                            {this.state.descriptionContent.map((s, index) => <p key={index} style={{textAlign: 'justify'}}>{s}</p>)}
+                        </Modal.Body>
+                    </Modal>
+                : null }
 
                 { this.props.user ?
                     <OverlayTrigger trigger="click" 
@@ -197,23 +224,6 @@ class PicturesIndex extends React.Component {
                             <span className="glyphicon glyphicon-cog"></span>
                         </Button>
                     </OverlayTrigger>
-                    : null
-                }
-                
-                {this.state.descriptionContent ? 
-                    <div className="inline">
-                        <Button id="cat_desc_btn" bsSize="xsmall"
-                                onClick={() => this.setState({ panelOpen: !this.state.panelOpen })}>
-                            <span className={this.state.panelOpen ? "glyphicon glyphicon-circle-arrow-up"
-                                                                  : "glyphicon glyphicon-circle-arrow-down"}></span>
-                                
-                        </Button>
-                        
-                        <Panel collapsible expanded={this.state.panelOpen}>
-                            <div id="language_buttons">{languageButtons}</div>
-                            {this.state.descriptionContent.map((s, index) => <p key={index} style={{textAlign: 'justify'}}>{s}</p>)}
-                        </Panel>
-                    </div>
                     : null
                 }
 

@@ -24,57 +24,91 @@
     }
 }
 
-#pictures-page .panel {
-    width: calc(100% - 20px);
-    max-width: 600px;
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-top: -15px;
-    border: none;
-}
-
-#pictures-page .panel p {
-    font-size: 14px;
-    margin: 0;
-    line-height: 20px;
-}
-
-#pictures-page .panel-body {
-    box-shadow: 1px 1px 5px #dadada;
-}
-
 @media screen and (max-width: 767px) and (min-width: 426px) {
-    #pictures-page .panel p {
-        font-size: 13px;
-        line-height: 19px;
-    }
     #pictures-page .page-title {margin-bottom: 20px;}
 }
 
 @media screen and (max-width: 426px) {
-    #pictures-page .panel p {
-        font-size: 12px;
-        line-height: 17px;
-    }
     #pictures-page .page-title {margin-bottom: 20px;}
 }
 
 #cat_desc_btn {
-    background: white;
-    opacity: 0.7;
-    margin-left: 15px;
+    margin-left: 5px;
+    cursor: pointer;
+    margin-top: -10px;
+}
+
+.modal-backdrop.cat_desc_backdrop.in {
+    background-color: white; // important
+    opacity: .9 !important; // important
+}
+
+.modal-backdrop.cat_desc_backdrop.fade {
+    background-color: white; // important
+}
+
+.cat_desc_modal #language_buttons .lang_btns:first-of-type { 
+    margin-left: 0 !important;
+ }
+
+.cat_desc_modal .modal-dialog {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: auto;
+    transform: translate(-50%, -50%) !important;
+    -webkit-transform: translateY(-50%) translateX(-50%) !important;
+}
+
+.cat_desc_modal .modal-content {
+    border: none;
+    padding: 20px;
+    background-color: white;
+    min-width: 280px;
+    max-width: 600px;
+    overflow-y: scroll;
+    margin: auto;
+    box-shadow: 1px 1px 20px #c5c5c5 !important;
+    border-radius: 3px;
+}
+
+.cat_desc_modal .modal-content .modal-header {
+    padding: 0 !important;
+    margin-bottom: 10px;
+    border: none;
+}
+
+.cat_desc_modal .modal-content .modal-body { padding: 0 }
+
+.cat_desc_modal #close_button {
     margin-top: -18px;
-    outline: none;
-    padding: 6px 10px 5px 10px;
-    border-radius: 5px;
+    margin-right: -12px;    
+}
+
+.cat_desc_modal #close_button {
+    display: inline;
+    float: right;
+    cursor: pointer;
+    font-size: 1.5em;
+    font-weight: 300;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.cat_desc_modal #close_button:hover {
+    opacity: 0.6;
+}
+
+.cat_desc_modal .modal-body {
+    height: auto !important;
 }
 
 @media screen and (max-width: 767px) and (min-width: 426px) {
-    #cat_desc_btn {margin-top: -14px;}
+    #cat_desc_btn {margin-top: -6px;}
 }
 
 @media screen and (max-width: 425px) {
-    #cat_desc_btn {margin-top: -12px}
+    #cat_desc_btn {margin-top: -6px}
 }
 
 #category_description {
@@ -182,7 +216,6 @@ button.pic_admin_overlay_btn:hover {
     border: solid thin white;
 }
 
-
 @media screen and (min-width: 768px) and (max-width: 1719px) {
     #pictures-page button.cat_admin_overlay_btn {margin-top: -18px;}
 }
@@ -192,113 +225,119 @@ button.pic_admin_overlay_btn:hover {
 }
 
 
-/* modal */
+/* large picture modal */
 
-div.picture_modal.in.modal { background-color: rgba(0, 0, 0, 0.9) }
-
-.custom-modal.modal-dialog {
-    height: 90vh;
-    width: 100%;
-    margin: 5vh 0;
+.picture_modal.in.modal {
+    background-color: transparent; // important
 }
 
-@media screen and (max-width: 425px) {
-    .custom-modal.modal-dialog {
-        height: 76vh;
-        margin: 9vh 0 15vh 0;
-    }
+.picture_modal_backdrop.in {
+    background-color: white; // important
+    opacity: 0.97 !important; // important
 }
 
-.modal-header h4.modal-title {
-    font-size: 28px;
-    line-height: 30px;
-    font-weight: 300;
-    letter-spacing: 0.4px;
+.picture_modal_dialog.modal-dialog {
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
 }
 
-@media screen and (min-width: 426px) and (max-width: 768px) {
-    .modal-header h4.modal-title { font-size: 22px }
-}
-
-@media screen and (max-width: 425px) {
-    .modal-header h4.modal-title { font-size: 16px }
-}
-
-.modal-header {
-    text-align: center;
-    border-bottom: none !important;
-}
-
-.modal-header #close_button { 
-    color: white;
-    font-weight: lighter;
-    opacity: 1;
-    display: inline;
-    float: right;
-    font-size: 20px;
-}
-
-.modal-header #close_button:hover {
-    opacity: 0.3;
-    text-decoration: none;
-    background-color: transparent;
-}
-
-.modal-header, .modal-footer {
-    background-color: transparent;
-    color: white;
-    padding: 0 10px !important;
-}
-
-.modal-header { padding-bottom: 10px !important }
-.modal-footer { padding-top: 10px !important }
-
-.modal-content {
+.picture_modal .modal-content {
     height: 100%;
-    width: 96%;
-    margin: auto;
+    width: 100%;
     font-size: 12px;
     background-color: transparent !important;
     border: none !important;
     box-shadow: none !important;
 }
+.picture_modal #close_button { 
+    color: rgb(28, 28, 28);
+    font-size: 1.7em;
+    position: absolute;
+    top: 2vh;
+    right: 2vh;
+}
 
-.modal-body {
-    // 90vh is the height of its parent .custom-modal.modal-dialog
-    // header + footer heights = 70px (see below)
-    height: calc(90vh - 70px);
+.picture_modal #close_button:hover {
+    opacity: 0.4;
+}
+
+.picture_modal .modal-header, .picture_modal .modal-footer {
+    background-color: transparent;
+    color: black;
+}
+
+.picture_modal .modal-header {
+    padding: 5px;
+    position: absolute;
+    top: 20px; left: 0; right: 0;
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    border-bottom: none !important;
+}
+
+.picture_modal .modal-header h4 {
+    font-weight: 400;
+    letter-spacing: 0.4px;
+    font-size: 20px;
+    color: black;
+    line-height: 30px; // total height is 40px
+}
+
+@media screen and (min-width: 426px) and (max-width: 768px) {
+    .picture_modal .modal-header h4 { font-size: 16px; }
+}
+
+@media screen and (max-width: 425px) {
+    .picture_modal .modal-header h4 { font-size: 12px; }
+}
+
+.picture_modal .modal-footer {
+    padding: 5px;
+    line-height: 30px;
+    position: absolute;
+    bottom: 20px; left: 0; right: 0;
+}
+
+.picture_modal .modal-body {
+    position: absolute;
+    // modal header line-height + padding is 40px, and add a 20px margin on top § bottom => 80px
+    top: 80px; left: 0; right: 0;
+    width: 100%;
+    margin: auto;
+    height: calc(100% - 160px);
     padding: 0px !important;
     /* needed to center picture description */
     text-align: center;
 }
 
-@media screen and (max-width: 425px) {
-    .modal-body {
-        // 76vh is the height of its parent .custom-modal.modal-dialog
-        // header + footer heights = 70px (see below)
-        height: calc(76vh - 70px)}
-}
-
-.modal-body img {
+.picture_modal .modal-body img {
     margin: auto;
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     -webkit-transform: translateY(-50%) translateX(-50%);
     max-height: 100%;
-    max-width: 100%;
+    max-width: 75%;
+    box-shadow: 1px 1px 12px gray;
 }
 
-.prev-pic, .next-pic {
+.prev-pic #chevron-left, .next-pic #chevron-right {
+    font-size: 60px;
     position: absolute;
-    width: 8%;
-    height: 100%;
-    text-align: center;
     z-index: 10;
+    color: #c5c5c5;
+    top: 102%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translateY(-50%) translateX(-50%);
 }
 
-@media screen and (max-width: 425px) {
-    .prev-pic span, .next-pic span {display: none}
+.prev-pic #chevron-left { left: 30px }
+.next-pic #chevron-right { right: -30px }
+
+.prev-pic:hover #chevron-left, .next-pic:hover #chevron-right {
+    color: gray;
 }
 
 .prev-pic { left: 0 }
@@ -307,18 +346,6 @@ div.picture_modal.in.modal { background-color: rgba(0, 0, 0, 0.9) }
 .prev-pic:hover, .next-pic:hover {
     cursor: pointer;
     background-color: transparent;
-}
-
-#chevron-left, #chevron-right { 
-    top: 50%;
-    font-size: 30px;
-    color: #fff;
-    margin-top: -10px;
-    text-shadow: 3px 3px 10px black;;
-}
-
-.prev-pic:hover #chevron-left, .next-pic:hover #chevron-right {
-    text-shadow: 5px 5px 12px black; 
 }
 
 span.pic-description {
@@ -334,37 +361,36 @@ span.pic-description {
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     font-weight: 300;
     letter-spacing: 0.5;
-    font-size: 18px;
+    font-size: 16px;
     border-radius: 25px;
 }
 
-@media screen and (min-width: 426px) and (max-width: 767px) {
-    span.pic-description { font-size: 14px }
-}
-
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 767px) {
     span.pic-description { font-size: 12px }
 }
 
+@media screen and (max-width: 425px) {
+    span.pic-description { font-size: 11px }
+}
+
 /* picture modal footer */
-div.modal-footer {
+.picture_modal div.modal-footer {
     text-align: center !important;
     border-top: none;
     line-height: 20px;
 }
 
 #pic_copyright {
-    font-size: 20px;
-    font-weight: 300;
+    font-size: 14px;
     letter-spacing: 0.4px;
 }
 
-@media screen and (min-width: 426px) and (max-width: 767px) {
-    #pic_copyright { font-size: 16px }
+@media screen and (max-width: 767px) {
+    #pic_copyright { font-size: 10px }
 }
 
 @media screen and (max-width: 425px) {
-    #pic_copyright { font-size: 12px }
+    #pic_copyright { font-size: 9px }
 }
 
 div.picture_modal div.modal-footer button.btn {

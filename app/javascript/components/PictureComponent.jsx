@@ -1,12 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Image, Modal, OverlayTrigger, Tooltip, Popover } from 'react-bootstrap';
+import { Button, Image, Modal, OverlayTrigger, Popover } from 'react-bootstrap';
 import ReactEventComponent from "react-swipe-event-component";
 
-
-const tooltip = (
-    <Tooltip id="tooltip">~ C ~ L ~ I ~ C ~ K ~</Tooltip>
-);
 
 const unauthorizedActionPopover = (
     <Popover id="popover-trigger-click-hover" title="">
@@ -153,14 +149,17 @@ class SwipableModal extends ReactEventComponent {
     render() {
         return (
             <Modal className="picture_modal"
+                backdropClassName="picture_modal_backdrop" 
                 show={this.props.showModal}
-                dialogClassName="custom-modal"
+                dialogClassName="picture_modal_dialog"
                 animation={false}
                 onKeyDown={this.handlePicWithKeyboard}
                 {...this.touchEventProperties}
             >
+                <Link to={'/categories/' + this.props.categoryId + '/pictures'}>
+                    <div id="close_button">X</div>
+                </Link>
                 <Modal.Header>
-                    <Link to={'/categories/' + this.props.categoryId + '/pictures'} id="close_button">X</Link>
                     <Modal.Title id="contained-modal-title-lg">
                         <span>{this.props.currentPicture.title}</span>
                     </Modal.Title>
@@ -172,22 +171,12 @@ class SwipableModal extends ReactEventComponent {
                         <span id="chevron-left" className="glyphicon glyphicon-menu-left"></span>
                     </Link>
                     
-                        {(this.props.showModal && !this.props.showDescription && this.props.descriptionsLength > 0) ?
-                            
-                            <OverlayTrigger placement="bottom" overlay={tooltip}>
-                                <Image src={screen.width < 510 || screen.height < 510 ? this.props.currentPicture.pic_url_medium
-                                                                                      : this.props.currentPicture.pic_url_large}
-                                        alt={this.props.currentPicture.title}
-                                        onClick={this.props.showPicDescription}
-                                        responsive />
-                            </OverlayTrigger>
-
-                            : <Image src={screen.width < 510 || screen.height < 510 ? this.props.currentPicture.pic_url_medium
-                                                                                    : this.props.currentPicture.pic_url_large}
-                                        alt={this.props.currentPicture.title}
-                                        onClick={this.props.showPicDescription}
-                                        responsive />
-                        }
+                    <Image src={screen.width < 510 || screen.height < 510 ? this.props.currentPicture.pic_url_medium
+                                                                                : this.props.currentPicture.pic_url_large}
+                                    alt={this.props.currentPicture.title}
+                                    onClick={this.props.showPicDescription}
+                                    style={this.props.descriptionsLength > 0 ? {cursor: "pointer"} : {cursor: "defautl"}}
+                                    responsive />
 
                     {this.props.showDescription && this.props.descriptionsLength > 0 ? 
                         (this.props.language ?
