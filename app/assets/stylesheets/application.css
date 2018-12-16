@@ -62,9 +62,9 @@ a:hover { background: none }
 
 .admin-page-title {
     font-size: 26px;
-    text-shadow: 1px 1px 5px #a7a7a7;
     margin: 0 auto;
     text-align: center;
+    color: #5d5c5c;
 }
 
 .form-layout .admin-page-title { margin-bottom: 20px }

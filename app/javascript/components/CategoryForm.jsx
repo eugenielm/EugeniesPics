@@ -151,14 +151,14 @@ class CategoryForm extends React.Component {
         const inputEdit = React.createElement('input', {type: 'hidden', name: '_method', value: 'patch'});
         const catpicInfo = this.state.catpicUrl == this.state.prevCatpicUrl ? 
                                 (<div>
-                                    <p style={{color: 'white', fontSize: '14px', textShadow: '1px 1px 10px black'}}>Current picture:</p>
+                                    <p style={{color: '#5d5c5c', fontSize: '14px'}}>Current picture:</p>
                                     <img src={this.state.catpicUrl} />
-                                    <p style={{color: 'white', fontSize: '12px', textShadow: '1px 1px 10px black', marginTop: '5px', 
+                                    <p style={{color: '#5d5c5c', fontSize: '12px', marginTop: '5px', 
                                         MsWordBreak: "break-all", wordBreak: "break-all", wordBreak: "break-word"}}>
                                         ({this.state.catpicName ? this.state.catpicName : "default picture"})
                                     </p>
                                 </div>)
-                                : (<p style={{color: 'white', fontSize: '14px', textShadow: '1px 1px 10px black'}}>
+                                : (<p style={{color: '#5d5c5c', fontSize: '14px'}}>
                                     Picture about to be uploaded: {this.state.catpicName}
                                   </p>);
 

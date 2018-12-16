@@ -205,20 +205,20 @@ class PictureForm extends React.Component {
         const picInfo = this.state.pictureId ?
             (this.state.picUrl == this.state.prevPicUrl ?
                     (<div>
-                        <p style={{color: 'white', fontSize: '14px', textShadow: '1px 1px 10px black'}}>Current picture:</p>
+                        <p style={{color: '#5d5c5c', fontSize: '14px'}}>Current picture:</p>
                         <img src={this.state.picUrl} />
-                        <p style={{color: 'white', fontSize: '12px', textShadow: '1px 1px 10px black', marginTop: '5px', 
+                        <p style={{color: '#5d5c5c', fontSize: '12px', marginTop: '5px', 
                            MsWordBreak: "break-all", wordBreak: "break-all", wordBreak: "break-word"}}>
                            ({this.state.picfileName})
                         </p>
                     </div>)
-                    : (<p style={{color: 'white', fontSize: '14px', textShadow: '1px 1px 10px black',
-                                  MsWordBreak: "break-all", wordBreak: "break-all", wordBreak: "break-word"}}>
+                    : (<p style={{color: '#5d5c5c', fontSize: '14px', MsWordBreak: "break-all", 
+                                  wordBreak: "break-all", wordBreak: "break-word"}}>
                             Picture about to be uploaded: {this.state.picfileName}
                        </p>))
             : (this.state.picUrl ?
-                (<p style={{color: 'white', fontSize: '14px', textShadow: '1px 1px 10px black',
-                    MsWordBreak: "break-all", wordBreak: "break-all", wordBreak: "break-word"}}>
+                (<p style={{color: '#5d5c5c', fontSize: '14px', MsWordBreak: "break-all", 
+                            wordBreak: "break-all", wordBreak: "break-word"}}>
                     Picture about to be uploaded: {this.state.picfileName}
                  </p>)
                 : null)
