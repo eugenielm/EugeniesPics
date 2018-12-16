@@ -114,17 +114,21 @@ class CategoryComponent extends React.Component {
   }
 
   render() {
+    const device = window.navigator.userAgent.includes("Mobile") ?
+                   "mobile" : "desktop";
+    const catPicDisplay = device === "mobile" ? {opacity: 0.6, filter: "blur(1px)"} : {};
+    const catnameDisplay = device === "mobile" ? {opacity: 1} : {};
     return (
-        <div className="cat_pic" style={{display: this.state.display}}>
+        <div className="cat_pic" style={{display: this.props.display}}>
           <Link to={"/categories/" + this.props.category.id + "/pictures"}>
             <img src={screen.width < 1000 || screen.height < 1000 ? 
                           (screen.width < 600 || screen.height < 600 ? this.props.category.catpic_url_small 
                                                                      : this.props.category.catpic_url_medium)
                           : this.props.category.catpic_url_large} 
                  alt={this.props.category.name + "'s category'"} 
-                 style={{height: '100%', overflow: 'hidden'}}
-                 onLoad={this.handleLoading}/>
-            <p className="catname">{this.props.category.name.toUpperCase()}</p>
+                 onLoad={this.handleLoading}
+                 style={catPicDisplay}/>
+            <p className="catname" style={catnameDisplay}>{this.props.category.name.toUpperCase()}</p>
           </Link>
           { this.props.user ?
             <EditDeleteCategory catId={this.props.category.id} 

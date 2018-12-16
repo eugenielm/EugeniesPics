@@ -20,35 +20,31 @@
 
 #all_cats {
     width: 100%;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-evenly;
 }
 
 .cat_pic {
     position: relative;
-    width: 32.8%;
-    margin-bottom: 6px;
+    margin-bottom: 2px;
+    width: 100%;
+    height: 25vh;
+    overflow: hidden;
 }
 
 .cat_pic img {
-    height: 100%;
     width: 100%;
-    border: solid black;
-}
-
-.cat_pic:hover {
-    background-color: black;
+    position:absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translateY(-50%) translateX(-50%);
 }
 
 .cat_pic:hover a {
     text-decoration: none;
-    background-color: transparent;
 }
 
 .cat_pic:hover img {
-    opacity: 0.8;
-    filter: blur(4px);
+    opacity: 0.6;
+    filter: blur(2px);
     -webkit-transition: opacity 0.2s linear 0s; /* For Safari 3.1 to 6.0 */
     transition: opacity 0.2s linear 0s;
 }
@@ -62,7 +58,7 @@
     letter-spacing: 0.5px;
     position: absolute;
     margin: 0 15px;
-    left: 0; right: 0; top: 48%;
+    left: 0; right: 0; top: calc(12.5vh - 17px);
     opacity: 0;
     -webkit-transition: opacity 0.2s linear 0s; /* For Safari 3.1 to 6.0 */
     transition: opacity 0.2s linear 0s;
@@ -79,39 +75,26 @@
 }
 
 
-
-@media screen and (max-width: 1500px) and (min-width: 993px) {
-    .cat_pic {
-        width: 49.3%;
-    }
-}
-
-@media screen and (max-width: 992px) {
-    .cat_pic {
-        width: calc(100% - 12px);
-    }
-}
-
 @media screen and (max-width: 768px) {
     .catname {
-        opacity: 1;
+        // opacity: 1;
         font-size: 36px;
         line-height: 30px;
+        top: calc(12.5vh - 15px);
     }
 
-    .cat_pic {background-color: black}
-
-    .cat_pic img {
-        filter: blur(1px);
-        opacity: 0.8;
-    }
+    // .cat_pic img {
+    //     filter: blur(1px);
+    //     opacity: 0.8;
+    // }
 }
 
 @media screen and (max-width: 425px) {
     .catname {
-        opacity: 1;
+        // opacity: 1;
         font-size: 30px;
         line-height: 25px;
+        top: calc(12.5vh - 10px);
     }
 }
 
