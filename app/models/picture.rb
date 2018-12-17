@@ -24,5 +24,6 @@ class Picture < ApplicationRecord
                        :size => { in: 0..8000.kilobytes }
   validates_attachment_file_name :picfile, :matches => [/png\z/i, /jpe?g\z/i]
   validates :picfile_file_name, :uniqueness => { :case_sensitive => false }
+  process_in_background :picfile
 
 end
